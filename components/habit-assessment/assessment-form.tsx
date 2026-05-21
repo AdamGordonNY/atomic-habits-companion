@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { AssessmentCard } from "./assessment-card";
 import type { AssessmentRating } from "@/types/habit";
@@ -348,6 +349,12 @@ export function AssessmentForm({ assessmentId }: AssessmentFormProps) {
             >
               Review answers
             </button>
+            <Link
+              href={`/habit-assessment/${assessmentId}/part-two`}
+              className="inline-flex h-11 items-center justify-center rounded-full border border-slate-200 bg-white px-5 text-sm font-medium text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50"
+            >
+              Continue to Part Two
+            </Link>
             <button
               type="button"
               onClick={() => {

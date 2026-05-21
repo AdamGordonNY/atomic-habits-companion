@@ -5,6 +5,7 @@ export type AssessmentRating = 1 | 2 | 3 | 4 | 5;
 export type AssessmentCategory = "personal" | "professional" | string;
 
 export type AssessmentEnergyLevel = "UP" | "DOWN" | "NEUTRAL";
+export type AssessmentEnergyDirection = "UP" | "DOWN";
 
 export type times =
   | "12:00 AM"
@@ -66,6 +67,23 @@ export interface AssessmentCalendar {
   date: string; // ISO 8601 date string for the assessment entry
   hour: times;
   energyLevel: AssessmentEnergyLevel; // User's energy level at the time of assessment
+}
+
+export interface AssessmentHourlyEntry {
+  hour: times;
+  activity: string;
+  energyLevel: AssessmentEnergyDirection;
+}
+
+export interface AssessmentDayLog {
+  date: string; // ISO 8601 date string
+  entries: AssessmentHourlyEntry[];
+}
+
+export interface HabitAssessmentPartTwo {
+  id: string;
+  days: AssessmentDayLog[]; // 7 day logs with hour-by-hour entries
+  updatedAt: string;
 }
 
 export type AsessmentCalendar = AssessmentCalendar;
