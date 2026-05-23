@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type {
   HabitAssessmentPartThree,
+  HabitInventoryEntry,
+  HabitInventoryScorecard,
   HabitRecord,
   HabitAttempt,
 } from "@/types/habit";
@@ -11,7 +13,7 @@ import type {
 // ─── constants ────────────────────────────────────────────────────────────────
 
 const STORAGE_VERSION = 1;
-const TOTAL_STEPS = 13;
+const TOTAL_STEPS = 17;
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
 
@@ -32,7 +34,11 @@ function createDraft(assessmentId: string): HabitAssessmentPartThree {
     successfulHabits: [{ habit: "", explanation: "" }],
     stickinessPatterns: "",
     habitAttempts: [{ habit: "", mode: "building", whatDidntWork: "", obstacle: "" }],
+    morningScorecard: { entries: [{ habit: "", score: "+", reasoning: "" }], takeaway: "", wantToAdd: [""], wantToRemove: [""] },
+    afternoonScorecard: { entries: [{ habit: "", score: "+", reasoning: "" }], takeaway: "", wantToAdd: [""], wantToRemove: [""] },
+    eveningScorecard: { entries: [{ habit: "", score: "+", reasoning: "" }], takeaway: "", wantToAdd: [""], wantToRemove: [""] },
     finalReflection: "",
+    part1WrapUpReflection: "",
     updatedAt: new Date().toISOString(),
     completedAt: null,
   };
@@ -81,7 +87,11 @@ const SECTION_LABELS: Record<number, string> = {
   9: "Section 3 · Past Habit History",
   10: "Section 3 · Past Habit History",
   11: "Section 4 · Building & Breaking",
-  12: "Section 5 · Final Reflection",
+  12: "Section 5 · Habit Inventory · Morning",
+  13: "Section 5 · Habit Inventory · Afternoon",
+  14: "Section 5 · Habit Inventory · Evening",
+  15: "Section 6 · Final Reflection",
+  16: "Part 1 Complete · Wrap-Up",
 };
 
 // ─── reusable input primitives ────────────────────────────────────────────────
@@ -714,8 +724,39 @@ export function AssessmentPartThreeForm({ assessmentId }: AssessmentPartThreeFor
           </StepCard>
         );
 
-      // ── Q13: Final reflection ────────────────────────────────────────────
+      // ── Q13–15: Habit Inventory scorecards ──────────────────────────────
       case 12:
+        return (
+          <ScorecardStep
+            label="Morning"
+            timeHint="Habits you do from waking up through mid-morning"
+            scorecard={draft.morningScorecard}
+            onChange={(v) => update("morningScorecard", v)}
+          />
+        );
+
+      case 13:
+        return (
+          <ScorecardStep
+            label="Afternoon"
+            timeHint="Habits spanning lunch through late afternoon"
+            scorecard={draft.afternoonScorecard}
+            onChange={(v) => update("afternoonScorecard", v)}
+          />
+        );
+
+      case 14:
+        return (
+          <ScorecardStep
+            label="Evening"
+            timeHint="Habits from dinner time through your wind-down routine"
+            scorecard={draft.eveningScorecard}
+            onChange={(v) => update("eveningScorecard", v)}
+          />
+        );
+
+      // ── Q16: Final reflection ────────────────────────────────────────────
+      case 15:
         return (
           <StepCard
             question="Reflect on all of this data."
@@ -728,6 +769,33 @@ export function AssessmentPartThreeForm({ assessmentId }: AssessmentPartThreeFor
               rows={10}
             />
           </StepCard>
+        );
+
+      // ── Q17: Part 1 wrap-up ──────────────────────────────────────────────
+      case 16:
+        return (
+          <div className="flex flex-col gap-6">
+            {/* Completion banner */}
+            <div className="rounded-3xl border border-slate-200 bg-slate-950 px-6 py-8 text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">Part 1 Complete</p>
+              <h2 className="mt-2 text-2xl font-semibold text-white">You've finished the full assessment.</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-400">
+                You've completed the baseline questions, the 7-day energy log, and the deep-dive into your time, habits, and history. Take a moment to reflect on the whole journey.
+              </p>
+            </div>
+
+            <StepCard
+              question="Looking back on everything — what do you now understand about yourself that you didn't before?"
+              hint="Consider your energy patterns, your habit history, your biggest time drains, and the habits you want to build or break."
+            >
+              <Textarea
+                value={draft.part1WrapUpReflection}
+                onChange={(v) => update("part1WrapUpReflection", v)}
+                placeholder="Write freely — what surprised you, what confirmed what you already knew, and what you're most motivated to change…"
+                rows={10}
+              />
+            </StepCard>
+          </div>
         );
 
       default:
@@ -828,6 +896,191 @@ export function AssessmentPartThreeForm({ assessmentId }: AssessmentPartThreeFor
           </div>
         </div>
       </main>
+    </div>
+  );
+}
+
+// ─── ScorecardStep ────────────────────────────────────────────────────────────
+
+function HabitInventoryList({
+  entries,
+  onChange,
+}: {
+  entries: HabitInventoryEntry[];
+  onChange: (entries: HabitInventoryEntry[]) => void;
+}) {
+  function updateEntry(idx: number, key: keyof HabitInventoryEntry, val: string) {
+    const next = [...entries];
+    next[idx] = { ...next[idx], [key]: val } as HabitInventoryEntry;
+    onChange(next);
+  }
+  function add() {
+    onChange([...entries, { habit: "", score: "+", reasoning: "" }]);
+  }
+  function remove(idx: number) {
+    if (entries.length === 1) return;
+    onChange(entries.filter((_, i) => i !== idx));
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      {entries.map((entry, idx) => (
+        <div key={idx} className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+          <div className="mb-3 flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+              Habit #{idx + 1}
+            </span>
+            {entries.length > 1 && (
+              <button
+                type="button"
+                onClick={() => remove(idx)}
+                className="text-xs text-slate-400 hover:text-slate-600"
+              >
+                Remove
+              </button>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-3">
+            {/* Habit name */}
+            <TextInput
+              value={entry.habit}
+              onChange={(v) => updateEntry(idx, "habit", v)}
+              placeholder="Habit name"
+            />
+
+            {/* Score toggle */}
+            <div className="flex gap-2">
+              {(["+", "-"] as const).map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => updateEntry(idx, "score", s)}
+                  className={`flex h-9 w-14 items-center justify-center rounded-xl border text-sm font-bold transition ${
+                    entry.score === s
+                      ? s === "+"
+                        ? "border-emerald-400 bg-emerald-50 text-emerald-700"
+                        : "border-rose-400 bg-rose-50 text-rose-700"
+                      : "border-slate-200 bg-white text-slate-400 hover:bg-slate-50"
+                  }`}
+                >
+                  {s}
+                </button>
+              ))}
+              <span className="flex items-center text-xs text-slate-400">
+                {entry.score === "+" ? "Positive habit" : "Negative habit"}
+              </span>
+            </div>
+
+            {/* Reasoning */}
+            <Textarea
+              value={entry.reasoning}
+              onChange={(v) => updateEntry(idx, "reasoning", v)}
+              placeholder="Why is this habit positive or negative for you?"
+              rows={2}
+            />
+          </div>
+        </div>
+      ))}
+      <button
+        type="button"
+        onClick={add}
+        className="self-start text-xs font-medium text-slate-500 hover:text-slate-800"
+      >
+        + Add habit
+      </button>
+    </div>
+  );
+}
+
+function ScorecardStep({
+  label,
+  timeHint,
+  scorecard,
+  onChange,
+}: {
+  label: string;
+  timeHint: string;
+  scorecard: HabitInventoryScorecard;
+  onChange: (sc: HabitInventoryScorecard) => void;
+}) {
+  function set<K extends keyof HabitInventoryScorecard>(
+    key: K,
+    value: HabitInventoryScorecard[K],
+  ) {
+    onChange({ ...scorecard, [key]: value });
+  }
+
+  return (
+    <div className="flex flex-col gap-6">
+      {/* Scorecard header */}
+      <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+        <div className="mb-1 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1">
+          <span className="text-xs font-semibold text-slate-600">{label}</span>
+        </div>
+        <h2 className="mt-2 text-lg font-semibold leading-snug text-slate-950">
+          {label} Habit Scorecard
+        </h2>
+        <p className="mt-1 text-sm text-slate-500">{timeHint}</p>
+        <p className="mt-1 text-xs text-slate-400">
+          List all habits you do in the {label.toLowerCase()}, rate them + or −, and explain your reasoning.
+        </p>
+
+        <div className="mt-5">
+          <HabitInventoryList
+            entries={scorecard.entries}
+            onChange={(v) => set("entries", v)}
+          />
+        </div>
+      </div>
+
+      {/* Takeaway */}
+      <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+        <h3 className="mb-1 text-base font-semibold text-slate-950">
+          {label} takeaway
+        </h3>
+        <p className="mb-3 text-sm text-slate-500">
+          What's the most important insight from your {label.toLowerCase()} habits?
+        </p>
+        <Textarea
+          value={scorecard.takeaway}
+          onChange={(v) => set("takeaway", v)}
+          placeholder={`e.g. My ${label.toLowerCase()} is mostly reactive — I want to protect it for focused work…`}
+          rows={4}
+        />
+      </div>
+
+      {/* Want to add / remove */}
+      <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+        <h3 className="mb-4 text-base font-semibold text-slate-950">
+          Redesign your {label.toLowerCase()}
+        </h3>
+
+        <div className="flex flex-col gap-5">
+          <div>
+            <p className="mb-2 text-sm font-medium text-emerald-700">
+              Habits to add in the {label.toLowerCase()}
+            </p>
+            <ListInput
+              items={scorecard.wantToAdd}
+              onChange={(v) => set("wantToAdd", v)}
+              placeholder="e.g. 10 minutes of reading"
+              addLabel="+ Add"
+            />
+          </div>
+          <div>
+            <p className="mb-2 text-sm font-medium text-rose-600">
+              Habits to remove from the {label.toLowerCase()}
+            </p>
+            <ListInput
+              items={scorecard.wantToRemove}
+              onChange={(v) => set("wantToRemove", v)}
+              placeholder="e.g. Checking social media first thing"
+              addLabel="+ Add"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

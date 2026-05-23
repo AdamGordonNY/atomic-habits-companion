@@ -90,6 +90,19 @@ export type AsessmentCalendar = AssessmentCalendar;
 
 // ─── Part Three ───────────────────────────────────────────────────────────────
 
+export interface HabitInventoryEntry {
+  habit: string;
+  score: "+" | "-";
+  reasoning: string;
+}
+
+export interface HabitInventoryScorecard {
+  entries: HabitInventoryEntry[];
+  takeaway: string;
+  wantToAdd: string[];
+  wantToRemove: string[];
+}
+
 export interface HabitRecord {
   habit: string;
   explanation: string;
@@ -127,8 +140,16 @@ export interface HabitAssessmentPartThree {
   // Section 4 – Building / Breaking
   habitAttempts: HabitAttempt[];      // Q12
 
-  // Section 5 – Final Reflection
-  finalReflection: string;            // Q13
+  // Section 5 – Habit Inventory
+  morningScorecard: HabitInventoryScorecard;    // Q13
+  afternoonScorecard: HabitInventoryScorecard;  // Q14
+  eveningScorecard: HabitInventoryScorecard;    // Q15
+
+  // Section 6 – Final Reflection
+  finalReflection: string;            // Q16
+
+  // Section 7 – Part 1 Wrap-Up
+  part1WrapUpReflection: string;      // Q17 — reflects on the entire assessment so far
 
   updatedAt: string;
   completedAt: string | null;

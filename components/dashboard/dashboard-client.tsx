@@ -122,7 +122,7 @@ export function DashboardClient() {
 
   const hasPartThreeProgress = mounted && partThree !== null;
   const partThreeComplete = partThree?.completedAt != null;
-  const partThreeTotalSteps = 13;
+  const partThreeTotalSteps = 17;
   const partThreeStep = partThree?.stepIndex ?? 0;
 
   // Determine the primary resume action
