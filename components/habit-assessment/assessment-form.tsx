@@ -342,6 +342,12 @@ export function AssessmentForm({ assessmentId }: AssessmentFormProps) {
             still be waiting in localStorage for this route id.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link
+              href="/dashboard"
+              className="inline-flex h-11 items-center justify-center rounded-full border border-slate-200 bg-white px-5 text-sm font-medium text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50"
+            >
+              ← Dashboard
+            </Link>
             <button
               type="button"
               onClick={() => setCompletedAt(null)}
@@ -351,9 +357,9 @@ export function AssessmentForm({ assessmentId }: AssessmentFormProps) {
             </button>
             <Link
               href={`/habit-assessment/${assessmentId}/part-two`}
-              className="inline-flex h-11 items-center justify-center rounded-full border border-slate-200 bg-white px-5 text-sm font-medium text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50"
+              className="inline-flex h-11 items-center justify-center rounded-full bg-slate-950 px-5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-800"
             >
-              Continue to Part Two
+              Continue to Part Two →
             </Link>
             <button
               type="button"

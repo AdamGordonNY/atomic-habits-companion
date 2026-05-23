@@ -6,6 +6,6 @@ export const metadata: Metadata = {
   description: "Your habit assessment dashboard and progress overview.",
 };
 
-export default function Home() {
+export default function DashboardPage() {
   return <DashboardClient />;
 }
