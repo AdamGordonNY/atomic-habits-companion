@@ -14,8 +14,14 @@ interface PartTwoSnapshot {
   startDate: string | null; // first day's date
 }
 
+interface PartThreeSnapshot {
+  stepIndex: number;
+  completedAt: string | null;
+}
+
 const PART_ONE_KEY = "habit-assessment:onboarding";
 const PART_TWO_KEY = "habit-assessment:onboarding:part-two";
+const PART_THREE_KEY = "habit-assessment:onboarding:part-three";
 
 function readPartOne(): PartOneSnapshot | null {
   try {
@@ -53,6 +59,23 @@ function readPartTwo(): PartTwoSnapshot | null {
   }
 }
 
+function readPartThree(): PartThreeSnapshot | null {
+  try {
+    const raw = localStorage.getItem(PART_THREE_KEY);
+    if (!raw) return null;
+    const p = JSON.parse(raw) as {
+      stepIndex?: number;
+      completedAt?: string | null;
+    };
+    return {
+      stepIndex: p.stepIndex ?? 0,
+      completedAt: p.completedAt ?? null,
+    };
+  } catch {
+    return null;
+  }
+}
+
 function formatDate(iso: string): string {
   try {
     return new Date(iso).toLocaleDateString(undefined, {
@@ -75,12 +98,14 @@ function greeting(): string {
 export function DashboardClient() {
   const [partOne, setPartOne] = useState<PartOneSnapshot | null>(null);
   const [partTwo, setPartTwo] = useState<PartTwoSnapshot | null>(null);
+  const [partThree, setPartThree] = useState<PartThreeSnapshot | null>(null);
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     setPartOne(readPartOne());
     setPartTwo(readPartTwo());
+    setPartThree(readPartThree());
     setMounted(true);
     const frame = requestAnimationFrame(() => setVisible(true));
     return () => cancelAnimationFrame(frame);
@@ -94,6 +119,11 @@ export function DashboardClient() {
   const hasPartTwoProgress = mounted && partTwo !== null;
   const partTwoComplete = partTwo?.completedAt != null;
   const partTwoDay = (partTwo?.dayIndex ?? 0) + 1;
+
+  const hasPartThreeProgress = mounted && partThree !== null;
+  const partThreeComplete = partThree?.completedAt != null;
+  const partThreeTotalSteps = 13;
+  const partThreeStep = partThree?.stepIndex ?? 0;
 
   // Determine the primary resume action
   let resumeHref = "/habit-assessment/onboarding";
@@ -112,10 +142,18 @@ export function DashboardClient() {
     resumeHref = "/habit-assessment/onboarding/part-two";
     resumeLabel = "Start Part Two — daily energy log";
     resumeHint = "7-day hour-by-hour activity and energy tracking";
-  } else if (partOneComplete && partTwoComplete) {
+  } else if (partOneComplete && partTwoComplete && hasPartThreeProgress && !partThreeComplete) {
+    resumeHref = "/habit-assessment/onboarding/part-three";
+    resumeLabel = `Resume Part Three — question ${Math.min(partThreeStep + 1, partThreeTotalSteps)} of ${partThreeTotalSteps}`;
+    resumeHint = `${partThreeTotalSteps - partThreeStep - 1} question${partThreeTotalSteps - partThreeStep - 1 === 1 ? "" : "s"} remaining`;
+  } else if (partOneComplete && partTwoComplete && !hasPartThreeProgress) {
+    resumeHref = "/habit-assessment/onboarding/part-three";
+    resumeLabel = "Start Part Three — time & habit deep-dive";
+    resumeHint = "Reflect on energy patterns and past habit attempts";
+  } else if (partOneComplete && partTwoComplete && partThreeComplete) {
     resumeLabel = "Assessment complete";
-    resumeHint = "Return to Part Two to review or edit your log";
-    resumeHref = "/habit-assessment/onboarding/part-two";
+    resumeHint = "All three parts done — review any section below";
+    resumeHref = "/habit-assessment/onboarding/part-three";
   }
 
   return (
@@ -185,14 +223,14 @@ export function DashboardClient() {
 
           {/* Progress cards */}
           {mounted ? (
-            <section className="grid grid-cols-2 gap-3">
+            <section className="grid grid-cols-3 gap-3">
               <ProgressCard
                 label="Part One"
-                subtitle="Baseline assessment"
+                subtitle="Baseline"
                 done={partOneComplete}
                 detail={
                   hasPartOneProgress && !partOneComplete
-                    ? `Question ${Math.min(partOneStep + 1, partOneTotalSteps)} of ${partOneTotalSteps}`
+                    ? `Q${Math.min(partOneStep + 1, partOneTotalSteps)} of ${partOneTotalSteps}`
                     : partOneComplete
                       ? "Complete"
                       : "Not started"
@@ -201,11 +239,11 @@ export function DashboardClient() {
               />
               <ProgressCard
                 label="Part Two"
-                subtitle="7-day energy log"
+                subtitle="7-day log"
                 done={partTwoComplete}
                 detail={
                   hasPartTwoProgress && !partTwoComplete
-                    ? `Day ${partTwoDay} of 7${partTwo?.startDate ? ` · from ${formatDate(partTwo.startDate)}` : ""}`
+                    ? `Day ${partTwoDay} / 7`
                     : partTwoComplete
                       ? "Complete"
                       : "Not started"
@@ -216,9 +254,27 @@ export function DashboardClient() {
                     : "/habit-assessment/onboarding"
                 }
               />
+              <ProgressCard
+                label="Part Three"
+                subtitle="Deep-dive"
+                done={partThreeComplete}
+                detail={
+                  hasPartThreeProgress && !partThreeComplete
+                    ? `Q${Math.min(partThreeStep + 1, partThreeTotalSteps)} of ${partThreeTotalSteps}`
+                    : partThreeComplete
+                      ? "Complete"
+                      : "Not started"
+                }
+                href={
+                  partTwoComplete
+                    ? "/habit-assessment/onboarding/part-three"
+                    : "/habit-assessment/onboarding/part-two"
+                }
+              />
             </section>
           ) : (
-            <section className="grid grid-cols-2 gap-3">
+            <section className="grid grid-cols-3 gap-3">
+              <SkeletonCard />
               <SkeletonCard />
               <SkeletonCard />
             </section>
@@ -233,6 +289,7 @@ export function DashboardClient() {
               {[
                 "Complete the baseline assessment (Part One) once.",
                 "Log your hourly activities and energy for 7 days (Part Two).",
+                "Reflect on your time, energy, and habit history (Part Three).",
                 "Use your patterns to build habits that fit your real life.",
               ].map((step, i) => (
                 <li key={i} className="flex gap-3 text-sm text-slate-600">

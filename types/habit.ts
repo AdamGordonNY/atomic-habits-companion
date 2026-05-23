@@ -87,3 +87,49 @@ export interface HabitAssessmentPartTwo {
 }
 
 export type AsessmentCalendar = AssessmentCalendar;
+
+// ─── Part Three ───────────────────────────────────────────────────────────────
+
+export interface HabitRecord {
+  habit: string;
+  explanation: string;
+}
+
+export interface HabitAttempt {
+  habit: string;
+  mode: "building" | "breaking";
+  whatDidntWork: string;
+  obstacle: string;
+}
+
+export interface HabitAssessmentPartThree {
+  id: string;
+
+  // Section 1 – Time & Energy Mapping
+  majorTimeSpends: string[];          // Q1  – major ways time is spent
+  highEnergyHoursPerDay: number | null; // Q2a – typical # of high-energy hours
+  highEnergyHoursList: string[];      // Q2b – which hours they are
+  highEnergyActivities: string;       // Q3  – activities in high-energy hours
+  lowEnergyHours: string[];           // Q4  – low-energy hours
+  wantHighEnergySpend: string[];      // Q5a – how they want to use high-energy hours
+  wantLowEnergySpend: string[];       // Q5b – how they want to use low-energy hours
+
+  // Section 2 – Big Picture
+  timeSinksReflection: string;        // Q6
+  stressSource: string;               // Q7
+  anticipatedChanges: string;         // Q8
+
+  // Section 3 – Past Habit History
+  beneficialHabits: HabitRecord[];    // Q9
+  successfulHabits: HabitRecord[];    // Q10
+  stickinessPatterns: string;         // Q11
+
+  // Section 4 – Building / Breaking
+  habitAttempts: HabitAttempt[];      // Q12
+
+  // Section 5 – Final Reflection
+  finalReflection: string;            // Q13
+
+  updatedAt: string;
+  completedAt: string | null;
+}

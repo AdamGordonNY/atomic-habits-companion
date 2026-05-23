@@ -250,7 +250,7 @@ export function AssessmentPartTwoForm({ assessmentId }: AssessmentPartTwoFormPro
 
   function finishAll() {
     persist(new Date().toISOString());
-    router.push("/dashboard");
+    router.push(`/habit-assessment/${assessmentId}/part-three`);
   }
 
   const activeDay = draft.days[dayIndex];
@@ -280,7 +280,7 @@ export function AssessmentPartTwoForm({ assessmentId }: AssessmentPartTwoFormPro
                 onClick={finishAll}
                 className="inline-flex h-9 items-center justify-center rounded-full bg-slate-950 px-4 text-xs font-semibold text-white transition hover:bg-slate-800"
               >
-                Finish all 7
+                Continue to Part Three →
               </button>
             )}
           </div>
