@@ -168,12 +168,20 @@ export function DashboardClient() {
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
             Atomic Habits
           </span>
-          <Link
-            href="/habit-assessment/onboarding"
-            className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
-          >
-            Assessment
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/habit-assessment/onboarding/review"
+              className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+            >
+              Review
+            </Link>
+            <Link
+              href="/habit-assessment/onboarding"
+              className="rounded-full bg-slate-950 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-slate-800"
+            >
+              Assessment
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -277,6 +285,37 @@ export function DashboardClient() {
               <SkeletonCard />
               <SkeletonCard />
               <SkeletonCard />
+            </section>
+          )}
+
+          {/* Review CTA */}
+          {mounted && (hasPartOneProgress || hasPartTwoProgress || hasPartThreeProgress) && (
+            <section>
+              <Link
+                href="/habit-assessment/onboarding/review"
+                className="group flex w-full items-center justify-between gap-4 rounded-[1.5rem] border border-slate-100 bg-slate-50 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-200 hover:bg-white hover:shadow-sm active:translate-y-0"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white text-base">
+                    📋
+                  </div>
+                  <div className="text-left">
+                    <p className="text-sm font-semibold text-slate-950">Review your answers</p>
+                    <p className="mt-0.5 text-xs text-slate-500">
+                      Browse everything you've entered across all three parts
+                    </p>
+                  </div>
+                </div>
+                <svg
+                  className="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform duration-200 group-hover:translate-x-0.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
             </section>
           )}
 
