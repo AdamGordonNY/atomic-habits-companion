@@ -88,6 +88,19 @@ export interface HabitAssessmentPartTwo {
 
 export type AsessmentCalendar = AssessmentCalendar;
 
+// ─── Notes ────────────────────────────────────────────────────────────────────
+
+export interface Note {
+  id: string;
+  title: string;
+  content: string;       // TipTap JSON serialised as string
+  contentText: string;   // Plain-text excerpt for previews
+  createdAt: string;     // ISO 8601
+  updatedAt: string;     // ISO 8601
+  tags: string[];
+  pinned: boolean;
+}
+
 // ─── Part Three ───────────────────────────────────────────────────────────────
 
 export interface HabitInventoryEntry {
