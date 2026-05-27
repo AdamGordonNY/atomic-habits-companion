@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 
 interface PartOneSnapshot {
   stepIndex: number;
@@ -96,6 +97,7 @@ function greeting(): string {
 }
 
 export function DashboardClient() {
+  const { data: session, status } = useSession();
   const [partOne, setPartOne] = useState<PartOneSnapshot | null>(null);
   const [partTwo, setPartTwo] = useState<PartTwoSnapshot | null>(null);
   const [partThree, setPartThree] = useState<PartThreeSnapshot | null>(null);
@@ -187,6 +189,23 @@ export function DashboardClient() {
             >
               Assessment
             </Link>
+            {status === "authenticated" && session?.user ? (
+              <button
+                type="button"
+                onClick={() => signOut({ callbackUrl: "/" })}
+                title={session.user.email ?? "Signed in"}
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-950 text-[10px] font-bold text-white transition hover:bg-slate-700"
+              >
+                {(session.user.name ?? session.user.email ?? "?")[0].toUpperCase()}
+              </button>
+            ) : (
+              <Link
+                href="/auth/sign-in"
+                className="rounded-full border border-slate-950 bg-slate-950 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-slate-800"
+              >
+                Make account
+              </Link>
+            )}
           </div>
         </div>
       </header>

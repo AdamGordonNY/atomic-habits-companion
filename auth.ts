@@ -44,6 +44,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
 
   // ── Pages ──────────────────────────────────────────────────────────────────
-  // Uncomment to use custom sign-in UI:
-  // pages: { signIn: "/auth/sign-in" },
+  pages: { signIn: "/auth/sign-in" },
 });

@@ -1,0 +1,291 @@
+// Prisma schema — Atomic Habits Companion
+// Docs: https://pris.ly/d/prisma-schema
+//
+// Run `npx prisma migrate dev --name init` after connecting DATABASE_URL in .env
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+  runtime  = "vercel-edge"
+}
+
+// In Prisma 7, connection URLs are configured in prisma.config.ts (for migrations)
+// and passed to the PrismaClient adapter at runtime — not in the schema.
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Auth ─────────────────────────────────────────────────────────────────────
+// Minimal user model. Extend or replace with NextAuth / Supabase Auth as needed.
+
+model User {
+  id                  String               @id @default(cuid())
+  email               String               @unique
+  name                String?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  emailVerified       DateTime?            @map("email_verified")
+  image               String?
+  accounts            Account[]
+  sessions            Session[]
+  notes               Note[]
+  assessmentPartOne   AssessmentPartOne?
+  assessmentPartTwo   AssessmentPartTwo?
+  assessmentPartThree AssessmentPartThree?
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ─── Notes ────────────────────────────────────────────────────────────────────
+
+model Note {
+  id          String   @id @default(cuid())
+  title       String   @default("")
+  /// TipTap ProseMirror JSON stored as text
+  content     String   @default("")
+  /// Plain-text stripped version used for search previews
+  contentText String   @default("")
+  tags        String[] @default([])
+  pinned      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([pinned])
+  @@map("notes")
+}
+
+// ─── Part One — Baseline Assessment ──────────────────────────────────────────
+
+model AssessmentPartOne {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  /// 1–5 rating
+  personalRating     Int?
+  personalWhy        String   @default("")
+  professionalRating Int?
+  professionalWhy    String   @default("")
+  topPriorities      String[] @default([])
+  optimizationWhat   String   @default("")
+  optimizationWhy    String   @default("")
+  obligations        String[] @default([])
+  workingWell        String[] @default([])
+  notWorkingWell     String[] @default([])
+  blockerWhat        String   @default("")
+  blockerOvercome    String   @default("")
+  blockerWhy         String   @default("")
+  changesWhat        String   @default("")
+  changesWhy         String   @default("")
+
+  completedAt DateTime?
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  projects Project[]
+
+  @@map("assessment_part_one")
+}
+
+model Project {
+  id       String @id @default(cuid())
+  name     String
+  progress String @default("")
+
+  assessmentId String
+  assessment   AssessmentPartOne @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@map("projects")
+}
+
+// ─── Part Two — 7-Day Energy Log ─────────────────────────────────────────────
+
+model AssessmentPartTwo {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  completedAt DateTime?
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  days DayLog[]
+
+  @@map("assessment_part_two")
+}
+
+model DayLog {
+  id   String   @id @default(cuid())
+  date DateTime
+
+  assessmentId String
+  assessment   AssessmentPartTwo @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  entries HourlyEntry[]
+
+  @@index([assessmentId])
+  @@map("day_logs")
+}
+
+model HourlyEntry {
+  id          String @id @default(cuid())
+  /// e.g. "09:00 AM"
+  hour        String
+  activity    String @default("")
+  /// "UP" | "DOWN"
+  energyLevel String @default("UP")
+
+  dayLogId String
+  dayLog   DayLog @relation(fields: [dayLogId], references: [id], onDelete: Cascade)
+
+  @@index([dayLogId])
+  @@map("hourly_entries")
+}
+
+// ─── Part Three — Deep Dive ───────────────────────────────────────────────────
+
+model AssessmentPartThree {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Section 1 — Time & Energy
+  majorTimeSpends       String[]
+  highEnergyHoursPerDay Int?
+  highEnergyHoursList   String[]
+  highEnergyActivities  String   @default("")
+  lowEnergyHours        String[]
+  wantHighEnergySpend   String[]
+  wantLowEnergySpend    String[]
+
+  // Section 2 — Big Picture
+  timeSinksReflection String @default("")
+  stressSource        String @default("")
+  anticipatedChanges  String @default("")
+
+  // Section 3 — Past Habit History
+  stickinessPatterns String @default("")
+
+  // Section 5 — Final Reflection
+  finalReflection       String @default("")
+  part1WrapUpReflection String @default("")
+
+  completedAt DateTime?
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  beneficialHabits   HabitRecord[]   @relation("BeneficialHabits")
+  successfulHabits   HabitRecord[]   @relation("SuccessfulHabits")
+  habitAttempts      HabitAttempt[]
+  morningScorecard   HabitScorecard? @relation("MorningScorecard")
+  afternoonScorecard HabitScorecard? @relation("AfternoonScorecard")
+  eveningScorecard   HabitScorecard? @relation("EveningScorecard")
+
+  @@map("assessment_part_three")
+}
+
+model HabitRecord {
+  id          String @id @default(cuid())
+  habit       String
+  explanation String @default("")
+
+  beneficialForId String?
+  beneficialFor   AssessmentPartThree? @relation("BeneficialHabits", fields: [beneficialForId], references: [id], onDelete: Cascade)
+  successfulForId String?
+  successfulFor   AssessmentPartThree? @relation("SuccessfulHabits", fields: [successfulForId], references: [id], onDelete: Cascade)
+
+  @@map("habit_records")
+}
+
+model HabitAttempt {
+  id            String @id @default(cuid())
+  habit         String
+  /// "building" | "breaking"
+  mode          String
+  whatDidntWork String @default("")
+  obstacle      String @default("")
+
+  assessmentId String
+  assessment   AssessmentPartThree @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@map("habit_attempts")
+}
+
+/// Morning / Afternoon / Evening scorecard
+model HabitScorecard {
+  id           String   @id @default(cuid())
+  /// "morning" | "afternoon" | "evening"
+  period       String
+  takeaway     String   @default("")
+  wantToAdd    String[]
+  wantToRemove String[]
+
+  morningForId   String?              @unique
+  morningFor     AssessmentPartThree? @relation("MorningScorecard", fields: [morningForId], references: [id], onDelete: Cascade)
+  afternoonForId String?              @unique
+  afternoonFor   AssessmentPartThree? @relation("AfternoonScorecard", fields: [afternoonForId], references: [id], onDelete: Cascade)
+  eveningForId   String?              @unique
+  eveningFor     AssessmentPartThree? @relation("EveningScorecard", fields: [eveningForId], references: [id], onDelete: Cascade)
+
+  entries HabitScorecardEntry[]
+
+  @@map("habit_scorecards")
+}
+
+model HabitScorecardEntry {
+  id        String @id @default(cuid())
+  habit     String
+  /// "+" | "-"
+  score     String
+  reasoning String @default("")
+
+  scorecardId String
+  scorecard   HabitScorecard @relation(fields: [scorecardId], references: [id], onDelete: Cascade)
+
+  @@map("habit_scorecard_entries")
+}

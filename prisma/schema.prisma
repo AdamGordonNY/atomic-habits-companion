@@ -4,7 +4,7 @@
 // Run `npx prisma migrate dev --name init` after connecting DATABASE_URL in .env
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../app/generated/prisma"
   runtime  = "vercel-edge"
 }
