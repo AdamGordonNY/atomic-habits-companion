@@ -9,7 +9,7 @@
  * Called once after sign-in by components/auth/post-signin-sync.tsx.
  */
 
-import { auth } from "@/auth";
+import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import type {
   Note,
@@ -20,9 +20,9 @@ import type {
 // ─── helpers ──────────────────────────────────────────────────────────────────
 
 async function requireUserId(): Promise<string> {
-  const session = await auth();
-  if (!session?.user?.id) throw new Error("Not authenticated");
-  return session.user.id;
+  const { userId } = await auth();
+  if (!userId) throw new Error("Not authenticated");
+  return userId;
 }
 
 // ─── Notes sync ───────────────────────────────────────────────────────────────

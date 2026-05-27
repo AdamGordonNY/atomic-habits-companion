@@ -7,7 +7,7 @@
  * per browser session.
  */
 
-import { useSession } from "next-auth/react";
+import { useUser } from "@clerk/nextjs";
 import { useEffect, useRef } from "react";
 import { syncNotes } from "@/lib/sync-actions";
 import { syncPartOne } from "@/lib/sync-actions";
@@ -17,16 +17,16 @@ import { syncPartThree } from "@/lib/sync-actions";
 const SYNC_FLAG = "atomic-habits:synced";
 
 export function PostSigninSync() {
-  const { data: session, status } = useSession();
+  const { isSignedIn, isLoaded, user } = useUser();
   const ran = useRef(false);
 
   useEffect(() => {
-    if (status !== "authenticated" || !session?.user?.id) return;
+    if (!isLoaded || !isSignedIn || !user?.id) return;
     if (ran.current) return;
     if (typeof window === "undefined") return;
 
     // Only run once per session
-    if (sessionStorage.getItem(SYNC_FLAG) === session.user.id) return;
+    if (sessionStorage.getItem(SYNC_FLAG) === user.id) return;
     ran.current = true;
 
     (async () => {
@@ -62,13 +62,13 @@ export function PostSigninSync() {
           await syncPartThree(JSON.parse(rawP3));
         }
 
-        sessionStorage.setItem(SYNC_FLAG, session.user.id);
+        sessionStorage.setItem(SYNC_FLAG, user!.id);
       } catch (err) {
         // Non-critical — localStorage data stays intact on failure
         console.error("[PostSigninSync] sync failed:", err);
       }
     })();
-  }, [status, session?.user?.id]);
+  }, [isLoaded, isSignedIn, user?.id]);
 
   // Renders nothing — purely side-effectful
   return null;

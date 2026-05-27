@@ -12,7 +12,7 @@
  *   const notes = await actionGetNotes();
  */
 
-import { auth } from "@/auth";
+import { auth } from "@clerk/nextjs/server";
 import {
   dbCreateNote,
   dbDeleteNote,
@@ -27,9 +27,9 @@ import type { Note } from "@/types/habit";
 // ─── auth guard ───────────────────────────────────────────────────────────────
 
 async function requireUserId(): Promise<string> {
-  const session = await auth();
-  if (!session?.user?.id) throw new Error("Not authenticated");
-  return session.user.id;
+  const { userId } = await auth();
+  if (!userId) throw new Error("Not authenticated");
+  return userId;
 }
 
 // ─── actions ──────────────────────────────────────────────────────────────────

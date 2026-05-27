@@ -1,8 +1,8 @@
 "use client";
 
-import { SessionProvider } from "next-auth/react";
 import type { ReactNode } from "react";
 
+// ClerkProvider is in app/layout.tsx — no wrapper needed here.
 export function Providers({ children }: { children: ReactNode }) {
-  return <SessionProvider>{children}</SessionProvider>;
+  return <>{children}</>;
 }
