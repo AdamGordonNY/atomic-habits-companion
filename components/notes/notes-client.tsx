@@ -457,20 +457,44 @@ export function NotesClient() {
                   />
                 </>
               ) : (
-                /* ── VIEW MODE ──────────────────────────────────────────── */
-                <>
-                  <h1 className="mb-4 text-3xl font-bold leading-tight text-slate-950">
-                    {editTitle || <span className="text-slate-300">Untitled note</span>}
-                  </h1>
+                /* ── VIEW MODE — styled card ────────────────────────────── */
+                <div className="rounded-3xl border border-slate-100 bg-white shadow-sm">
+                  {/* card header */}
+                  <div className="border-b border-slate-100 px-7 py-6">
+                    <h1 className="text-2xl font-bold leading-snug text-slate-950">
+                      {editTitle || <span className="text-slate-300">Untitled note</span>}
+                    </h1>
+                    <p className="mt-1.5 text-[11px] text-slate-400">
+                      {formatRelative(selected.updatedAt)}
+                      {selected.createdAt !== selected.updatedAt ? " · edited" : " · created"}
+                      {selected.pinned && " · 📌 pinned"}
+                    </p>
+                    {editTags.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {editTags.map((t) => (
+                          <TagPill key={t} tag={t} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
 
-                  {/* meta row */}
-                  <div className="mb-5 flex flex-wrap items-center gap-2 text-[11px] text-slate-400">
-                    <span>{formatRelative(selected.updatedAt)} · {selected.createdAt !== selected.updatedAt ? "edited" : "created"}</span>
+                  {/* card body — plain text content */}
+                  <div className="px-7 py-6">
+                    {editContentText.trim() ? (
+                      <p className="whitespace-pre-wrap text-base leading-7 text-slate-700">
+                        {editContentText}
+                      </p>
+                    ) : (
+                      <p className="text-sm italic text-slate-300">No content yet.</p>
+                    )}
+                  </div>
 
+                  {/* card footer — actions */}
+                  <div className="flex items-center gap-2 border-t border-slate-100 px-7 py-4">
                     <button
                       type="button"
                       onClick={() => setIsEditing(true)}
-                      className="rounded-full border border-slate-200 px-2.5 py-0.5 font-medium text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                      className="inline-flex h-8 items-center gap-1.5 rounded-full bg-slate-950 px-4 text-xs font-semibold text-white transition hover:bg-slate-700"
                     >
                       ✏️ Edit
                     </button>
@@ -478,41 +502,45 @@ export function NotesClient() {
                     <button
                       type="button"
                       onClick={handlePin}
-                      className={`flex items-center gap-1 rounded-full border px-2.5 py-0.5 transition ${
+                      className={`inline-flex h-8 items-center gap-1.5 rounded-full border px-4 text-xs font-semibold transition ${
                         selected.pinned
-                          ? "border-amber-300 bg-amber-50 text-amber-700"
-                          : "border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-600"
+                          ? "border-amber-300 bg-amber-50 text-amber-700 hover:bg-amber-100"
+                          : "border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50"
                       }`}
                     >
-                      📌 {selected.pinned ? "Pinned" : "Pin"}
+                      📌 {selected.pinned ? "Unpin" : "Pin"}
                     </button>
 
-                    {showDelete ? (
-                      <span className="flex items-center gap-1">
-                        <button type="button" onClick={handleDelete} className="rounded-full border border-rose-200 bg-rose-50 px-2.5 py-0.5 text-rose-600 hover:bg-rose-100">Confirm delete</button>
-                        <button type="button" onClick={() => setShowDelete(false)} className="rounded-full border border-slate-200 px-2.5 py-0.5 text-slate-500 hover:bg-slate-50">Cancel</button>
-                      </span>
-                    ) : (
-                      <button type="button" onClick={() => setShowDelete(true)} className="rounded-full border border-slate-200 px-2.5 py-0.5 text-slate-400 hover:border-rose-200 hover:text-rose-500">Delete</button>
-                    )}
-                  </div>
-
-                  {/* read-only tags */}
-                  {editTags.length > 0 && (
-                    <div className="mb-5 flex flex-wrap gap-2">
-                      {editTags.map((t) => <TagPill key={t} tag={t} />)}
+                    <div className="ml-auto">
+                      {showDelete ? (
+                        <span className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={handleDelete}
+                            className="inline-flex h-8 items-center rounded-full border border-rose-200 bg-rose-50 px-4 text-xs font-semibold text-rose-600 hover:bg-rose-100"
+                          >
+                            Confirm delete
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setShowDelete(false)}
+                            className="inline-flex h-8 items-center rounded-full border border-slate-200 px-4 text-xs text-slate-500 hover:bg-slate-50"
+                          >
+                            Cancel
+                          </button>
+                        </span>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => setShowDelete(true)}
+                          className="inline-flex h-8 items-center rounded-full border border-slate-200 px-4 text-xs text-slate-400 hover:border-rose-200 hover:text-rose-500"
+                        >
+                          Delete
+                        </button>
+                      )}
                     </div>
-                  )}
-
-                  {/* read-only TipTap content */}
-                  <RichEditor
-                    key={editorKey}
-                    initialContent={editContent}
-                    resetKey={editorKey}
-                    readOnly
-                    minHeight="4rem"
-                  />
-                </>
+                  </div>
+                </div>
               )}
             </div>
           ) : (
