@@ -375,7 +375,7 @@ export function NotesClient() {
 
         {/* editor pane */}
         <main
-          className={`flex-1 overflow-y-auto bg-white sm:!flex ${
+          className={`flex-1 overflow-y-auto bg-slate-50/70 sm:!flex ${
             showSidebar ? "hidden" : "flex"
           } flex-col`}
         >
@@ -457,14 +457,15 @@ export function NotesClient() {
                   />
                 </>
               ) : (
-                /* ── VIEW MODE — styled card ────────────────────────────── */
-                <div className="rounded-3xl border border-slate-100 bg-white shadow-sm">
-                  {/* card header */}
-                  <div className="border-b border-slate-100 px-7 py-6">
-                    <h1 className="text-2xl font-bold leading-snug text-slate-950">
-                      {editTitle || <span className="text-slate-300">Untitled note</span>}
+                /* ── VIEW MODE — dashboard-style card ──────────────────── */
+                <div className="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white/90 shadow-sm">
+
+                  {/* dark header band — mirrors dashboard CTA card */}
+                  <div className="bg-slate-950 px-6 py-5">
+                    <h1 className="text-xl font-semibold leading-snug text-white">
+                      {editTitle || <span className="text-slate-500">Untitled note</span>}
                     </h1>
-                    <p className="mt-1.5 text-[11px] text-slate-400">
+                    <p className="mt-1 text-[11px] text-slate-400">
                       {formatRelative(selected.updatedAt)}
                       {selected.createdAt !== selected.updatedAt ? " · edited" : " · created"}
                       {selected.pinned && " · 📌 pinned"}
@@ -472,16 +473,21 @@ export function NotesClient() {
                     {editTags.length > 0 && (
                       <div className="mt-3 flex flex-wrap gap-1.5">
                         {editTags.map((t) => (
-                          <TagPill key={t} tag={t} />
+                          <span
+                            key={t}
+                            className="rounded-full bg-slate-800 px-2.5 py-0.5 text-[11px] font-medium text-slate-300"
+                          >
+                            {t}
+                          </span>
                         ))}
                       </div>
                     )}
                   </div>
 
-                  {/* card body — plain text content */}
-                  <div className="px-7 py-6">
+                  {/* body — content */}
+                  <div className="px-6 py-5">
                     {editContentText.trim() ? (
-                      <p className="whitespace-pre-wrap text-base leading-7 text-slate-700">
+                      <p className="whitespace-pre-wrap text-sm leading-7 text-slate-700">
                         {editContentText}
                       </p>
                     ) : (
@@ -489,8 +495,8 @@ export function NotesClient() {
                     )}
                   </div>
 
-                  {/* card footer — actions */}
-                  <div className="flex items-center gap-2 border-t border-slate-100 px-7 py-4">
+                  {/* footer — action buttons matching dashboard link style */}
+                  <div className="flex items-center gap-2 border-t border-slate-100 bg-slate-50/80 px-6 py-3">
                     <button
                       type="button"
                       onClick={() => setIsEditing(true)}
@@ -502,10 +508,10 @@ export function NotesClient() {
                     <button
                       type="button"
                       onClick={handlePin}
-                      className={`inline-flex h-8 items-center gap-1.5 rounded-full border px-4 text-xs font-semibold transition ${
+                      className={`inline-flex h-8 items-center gap-1 rounded-full border px-4 text-xs font-semibold transition ${
                         selected.pinned
                           ? "border-amber-300 bg-amber-50 text-amber-700 hover:bg-amber-100"
-                          : "border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                          : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
                       }`}
                     >
                       📌 {selected.pinned ? "Unpin" : "Pin"}
@@ -524,7 +530,7 @@ export function NotesClient() {
                           <button
                             type="button"
                             onClick={() => setShowDelete(false)}
-                            className="inline-flex h-8 items-center rounded-full border border-slate-200 px-4 text-xs text-slate-500 hover:bg-slate-50"
+                            className="inline-flex h-8 items-center rounded-full border border-slate-200 bg-white px-4 text-xs text-slate-500 hover:bg-slate-50"
                           >
                             Cancel
                           </button>
@@ -533,7 +539,7 @@ export function NotesClient() {
                         <button
                           type="button"
                           onClick={() => setShowDelete(true)}
-                          className="inline-flex h-8 items-center rounded-full border border-slate-200 px-4 text-xs text-slate-400 hover:border-rose-200 hover:text-rose-500"
+                          className="inline-flex h-8 items-center rounded-full border border-slate-200 bg-white px-4 text-xs text-slate-400 hover:border-rose-200 hover:text-rose-500"
                         >
                           Delete
                         </button>
