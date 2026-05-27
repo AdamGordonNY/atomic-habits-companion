@@ -144,9 +144,15 @@ export function NotesClient() {
   const [dirty, setDirty] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Signals the selection useEffect to open the incoming note in edit mode.
+  // Set to true only by handleNew(); the effect resets it after reading.
+  const openInEditModeRef = useRef(false);
 
   // sidebar visibility on mobile
   const [showSidebar, setShowSidebar] = useState(true);
+
+  // true = read-only view, false = editing
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const loaded = getNotes();
@@ -166,6 +172,8 @@ export function NotesClient() {
     setEditorKey((k) => k + 1);
     setDirty(false);
     setShowDelete(false);
+    setIsEditing(openInEditModeRef.current); // true only for brand-new notes
+    openInEditModeRef.current = false;       // reset for next selection
     // on mobile, switch to editor pane
     setShowSidebar(false);
   }, [selected?.id]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -183,7 +191,19 @@ export function NotesClient() {
       pinned: false,
     });
     refreshList();
+    openInEditModeRef.current = true; // new note → open directly in editor
     setSelected(note);
+  }
+
+  function selectNote(note: Note) {
+    setSelected(note);
+    setIsEditing(false); // existing notes open in view mode
+  }
+
+  function handleDoneEditing() {
+    if (autosaveTimer.current) clearTimeout(autosaveTimer.current);
+    if (selected) save(selected, editTitle, editContent, editContentText, editTags);
+    setIsEditing(false);
   }
 
   function save(note: Note, title: string, content: string, contentText: string, tags: string[]) {
@@ -289,9 +309,6 @@ export function NotesClient() {
           <span className="text-sm font-semibold text-slate-950">Notes</span>
         </div>
         <div className="flex items-center gap-2">
-          {dirty && selected && (
-            <span className="text-[10px] text-slate-400">saving…</span>
-          )}
           <button
             type="button"
             onClick={handleNew}
@@ -348,7 +365,7 @@ export function NotesClient() {
                     key={note.id}
                     note={note}
                     active={selected?.id === note.id}
-                    onClick={() => setSelected(note)}
+                    onClick={() => selectNote(note)}
                   />
                 ))}
               </div>
@@ -364,89 +381,139 @@ export function NotesClient() {
         >
           {selected ? (
             <div className="mx-auto w-full max-w-2xl px-4 pb-16 pt-6">
-              {/* title */}
-              <input
-                type="text"
-                value={editTitle}
-                onChange={(e) => handleTitleChange(e.target.value)}
-                placeholder="Note title"
-                className="mb-4 w-full border-none bg-transparent text-2xl font-bold text-slate-950 placeholder:text-slate-300 focus:outline-none"
-              />
-
-              {/* meta row */}
-              <div className="mb-5 flex flex-wrap items-center gap-3 text-[11px] text-slate-400">
-                <span>{formatRelative(selected.updatedAt)} · {selected.createdAt !== selected.updatedAt ? "edited" : "created"}</span>
-
-                {/* pin */}
-                <button
-                  type="button"
-                  onClick={handlePin}
-                  className={`flex items-center gap-1 rounded-full border px-2.5 py-0.5 transition ${
-                    selected.pinned
-                      ? "border-amber-300 bg-amber-50 text-amber-700"
-                      : "border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-600"
-                  }`}
-                >
-                  📌 {selected.pinned ? "Pinned" : "Pin"}
-                </button>
-
-                {/* delete */}
-                {showDelete ? (
-                  <span className="flex items-center gap-1">
-                    <button
-                      type="button"
-                      onClick={handleDelete}
-                      className="rounded-full border border-rose-200 bg-rose-50 px-2.5 py-0.5 text-rose-600 hover:bg-rose-100"
-                    >
-                      Confirm delete
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setShowDelete(false)}
-                      className="rounded-full border border-slate-200 px-2.5 py-0.5 text-slate-500 hover:bg-slate-50"
-                    >
-                      Cancel
-                    </button>
-                  </span>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setShowDelete(true)}
-                    className="rounded-full border border-slate-200 px-2.5 py-0.5 text-slate-400 hover:border-rose-200 hover:text-rose-500"
-                  >
-                    Delete
-                  </button>
-                )}
-              </div>
-
-              {/* tags */}
-              <div className="mb-5 flex flex-wrap items-center gap-2">
-                {editTags.map((t) => (
-                  <TagPill key={t} tag={t} onRemove={() => handleRemoveTag(t)} />
-                ))}
-                <form
-                  onSubmit={(e) => { e.preventDefault(); handleAddTag(); }}
-                  className="flex items-center"
-                >
+              {isEditing ? (
+                /* ── EDIT MODE ──────────────────────────────────────────── */
+                <>
                   <input
                     type="text"
-                    value={tagInput}
-                    onChange={(e) => setTagInput(e.target.value)}
-                    placeholder="+ add tag"
-                    className="w-20 border-none bg-transparent text-[11px] text-slate-400 placeholder:text-slate-300 focus:outline-none"
+                    value={editTitle}
+                    onChange={(e) => handleTitleChange(e.target.value)}
+                    placeholder="Note title"
+                    className="mb-4 w-full border-none bg-transparent text-2xl font-bold text-slate-950 placeholder:text-slate-300 focus:outline-none"
                   />
-                </form>
-              </div>
 
-              {/* rich editor */}
-              <RichEditor
-                key={editorKey}
-                initialContent={editContent}
-                resetKey={editorKey}
-                placeholder="Start writing…"
-                onChange={handleEditorChange}
-                minHeight="16rem"
-              />
+                  {/* meta row */}
+                  <div className="mb-5 flex flex-wrap items-center gap-2 text-[11px] text-slate-400">
+                    <span>{formatRelative(selected.updatedAt)} · {selected.createdAt !== selected.updatedAt ? "edited" : "created"}</span>
+
+                    <button
+                      type="button"
+                      onClick={handleDoneEditing}
+                      className="rounded-full border border-slate-200 px-2.5 py-0.5 font-medium text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                    >
+                      ✓ Done
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handlePin}
+                      className={`flex items-center gap-1 rounded-full border px-2.5 py-0.5 transition ${
+                        selected.pinned
+                          ? "border-amber-300 bg-amber-50 text-amber-700"
+                          : "border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-600"
+                      }`}
+                    >
+                      📌 {selected.pinned ? "Pinned" : "Pin"}
+                    </button>
+
+                    {showDelete ? (
+                      <span className="flex items-center gap-1">
+                        <button type="button" onClick={handleDelete} className="rounded-full border border-rose-200 bg-rose-50 px-2.5 py-0.5 text-rose-600 hover:bg-rose-100">Confirm delete</button>
+                        <button type="button" onClick={() => setShowDelete(false)} className="rounded-full border border-slate-200 px-2.5 py-0.5 text-slate-500 hover:bg-slate-50">Cancel</button>
+                      </span>
+                    ) : (
+                      <button type="button" onClick={() => setShowDelete(true)} className="rounded-full border border-slate-200 px-2.5 py-0.5 text-slate-400 hover:border-rose-200 hover:text-rose-500">Delete</button>
+                    )}
+
+                    {dirty && <span className="text-slate-300">saving…</span>}
+                  </div>
+
+                  {/* tags with add */}
+                  <div className="mb-5 flex flex-wrap items-center gap-2">
+                    {editTags.map((t) => (
+                      <TagPill key={t} tag={t} onRemove={() => handleRemoveTag(t)} />
+                    ))}
+                    <form onSubmit={(e) => { e.preventDefault(); handleAddTag(); }} className="flex items-center">
+                      <input
+                        type="text"
+                        value={tagInput}
+                        onChange={(e) => setTagInput(e.target.value)}
+                        placeholder="+ add tag"
+                        className="w-20 border-none bg-transparent text-[11px] text-slate-400 placeholder:text-slate-300 focus:outline-none"
+                      />
+                    </form>
+                  </div>
+
+\
+
+
+\                  <RichEditor
+                    key={editorKey}
+                    initialContent={editContent}
+                    resetKey={editorKey}
+                    placeholder="Start writing…"
+                    onChange={handleEditorChange}
+                    minHeight="16rem"
+                  />
+                </>
+              ) : (
+                /* ── VIEW MODE ──────────────────────────────────────────── */
+                <>
+                  <h1 className="mb-4 text-3xl font-bold leading-tight text-slate-950">
+                    {editTitle || <span className="text-slate-300">Untitled note</span>}
+                  </h1>
+
+                  {/* meta row */}
+                  <div className="mb-5 flex flex-wrap items-center gap-2 text-[11px] text-slate-400">
+                    <span>{formatRelative(selected.updatedAt)} · {selected.createdAt !== selected.updatedAt ? "edited" : "created"}</span>
+
+                    <button
+                      type="button"
+                      onClick={() => setIsEditing(true)}
+                      className="rounded-full border border-slate-200 px-2.5 py-0.5 font-medium text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                    >
+                      ✏️ Edit
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handlePin}
+                      className={`flex items-center gap-1 rounded-full border px-2.5 py-0.5 transition ${
+                        selected.pinned
+                          ? "border-amber-300 bg-amber-50 text-amber-700"
+                          : "border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-600"
+                      }`}
+                    >
+                      📌 {selected.pinned ? "Pinned" : "Pin"}
+                    </button>
+
+                    {showDelete ? (
+                      <span className="flex items-center gap-1">
+                        <button type="button" onClick={handleDelete} className="rounded-full border border-rose-200 bg-rose-50 px-2.5 py-0.5 text-rose-600 hover:bg-rose-100">Confirm delete</button>
+                        <button type="button" onClick={() => setShowDelete(false)} className="rounded-full border border-slate-200 px-2.5 py-0.5 text-slate-500 hover:bg-slate-50">Cancel</button>
+                      </span>
+                    ) : (
+                      <button type="button" onClick={() => setShowDelete(true)} className="rounded-full border border-slate-200 px-2.5 py-0.5 text-slate-400 hover:border-rose-200 hover:text-rose-500">Delete</button>
+                    )}
+                  </div>
+
+                  {/* read-only tags */}
+                  {editTags.length > 0 && (
+                    <div className="mb-5 flex flex-wrap gap-2">
+                      {editTags.map((t) => <TagPill key={t} tag={t} />)}
+                    </div>
+                  )}
+
+                  {/* read-only TipTap content */}
+                  <RichEditor
+                    key={editorKey}
+                    initialContent={editContent}
+                    resetKey={editorKey}
+                    readOnly
+                    minHeight="4rem"
+                  />
+                </>
+              )}
             </div>
           ) : (
             <div className="flex flex-1 flex-col items-center justify-center gap-4 text-center">
