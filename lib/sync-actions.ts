@@ -9,7 +9,7 @@
  * Called once after sign-in by components/auth/post-signin-sync.tsx.
  */
 
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import type {
   Note,
@@ -23,6 +23,41 @@ async function requireUserId(): Promise<string> {
   const { userId } = await auth();
   if (!userId) throw new Error("Not authenticated");
   return userId;
+}
+
+// ─── User provisioning ────────────────────────────────────────────────────────
+
+/**
+ * Upserts a DB User row from the currently authenticated Clerk user.
+ * Must be called before any sync action on a new account so FK constraints
+ * on notes / assessments are satisfied.
+ *
+ * Returns { isNew: true } when the row didn't exist yet (first ever sign-in).
+ */
+export async function ensureDbUser(): Promise<{ isNew: boolean }> {
+  const clerkUser = await currentUser();
+  if (!clerkUser) throw new Error("Not authenticated");
+
+  const userId = clerkUser.id;
+  const email =
+    clerkUser.emailAddresses.find(
+      (e) => e.id === clerkUser.primaryEmailAddressId,
+    )?.emailAddress ??
+    clerkUser.emailAddresses[0]?.emailAddress ??
+    "";
+  const name =
+    [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(" ") || null;
+  const image = clerkUser.imageUrl || null;
+
+  const existing = await prisma.user.findUnique({ where: { id: userId } });
+
+  await prisma.user.upsert({
+    where: { id: userId },
+    create: { id: userId, email, name, image, emailVerified: null },
+    update: { email, name, image },
+  });
+
+  return { isNew: !existing };
 }
 
 // ─── Notes sync ───────────────────────────────────────────────────────────────
