@@ -3,6 +3,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Show, SignUpButton, UserButton } from "@clerk/nextjs";
+import {
+  ensureDbUser,
+  syncNotes,
+  syncPartOne,
+  syncPartTwo,
+  syncPartThree,
+} from "@/lib/sync-actions";
 
 interface PartOneSnapshot {
   stepIndex: number;
@@ -102,6 +109,36 @@ export function DashboardClient() {
   const [partThree, setPartThree] = useState<PartThreeSnapshot | null>(null);
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [syncing, setSyncing] = useState(false);
+  const [syncDone, setSyncDone] = useState(false);
+
+  async function handleSync() {
+    if (syncing) return;
+    setSyncing(true);
+    setSyncDone(false);
+    try {
+      await ensureDbUser();
+      const rawNotes = localStorage.getItem("atomic-habits:notes");
+      if (rawNotes) {
+        const parsed = JSON.parse(rawNotes) as { notes?: unknown[] };
+        if (Array.isArray(parsed?.notes) && parsed.notes.length > 0) {
+          await syncNotes(parsed.notes as Parameters<typeof syncNotes>[0]);
+        }
+      }
+      const rawP1 = localStorage.getItem("habit-assessment:onboarding");
+      if (rawP1) await syncPartOne(JSON.parse(rawP1));
+      const rawP2 = localStorage.getItem("habit-assessment:onboarding:part-two");
+      if (rawP2) await syncPartTwo(JSON.parse(rawP2));
+      const rawP3 = localStorage.getItem("habit-assessment:onboarding:part-three");
+      if (rawP3) await syncPartThree(JSON.parse(rawP3));
+      setSyncDone(true);
+      setTimeout(() => setSyncDone(false), 3000);
+    } catch (err) {
+      console.error("[handleSync]", err);
+    } finally {
+      setSyncing(false);
+    }
+  }
 
   useEffect(() => {
     setPartOne(readPartOne());
@@ -199,7 +236,33 @@ export function DashboardClient() {
               </SignUpButton>
             </Show>
             <Show when="signed-in">
-              <UserButton />
+              <UserButton>
+                <UserButton.MenuItems>
+                  <UserButton.Action
+                    label={
+                      syncing ? "Syncing…" : syncDone ? "Synced!" : "Sync data"
+                    }
+                    labelIcon={
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M21 2v6h-6" />
+                        <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
+                        <path d="M3 22v-6h6" />
+                        <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
+                      </svg>
+                    }
+                    onClick={handleSync}
+                  />
+                </UserButton.MenuItems>
+              </UserButton>
             </Show>
           </div>
         </div>
