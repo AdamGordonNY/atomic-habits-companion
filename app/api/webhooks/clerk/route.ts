@@ -1,7 +1,11 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import {
+  createUser,
+  updateUser,
+  deleteUser,
+} from "@/lib/actions/user-actions";
 
 // ─── Clerk webhook event types (subset) ──────────────────────────────────────
 
@@ -44,6 +48,7 @@ function extractUserFields(data: ClerkUserPayload) {
 // ─── Route handler ───────────────────────────────────────────────────────────
 
 export async function POST(req: Request) {
+  console.log("[Clerk Webhook] Received event");
   const secret = process.env.CLERK_WEBHOOK_SECRET;
   if (!secret) {
     return NextResponse.json(
@@ -69,12 +74,14 @@ export async function POST(req: Request) {
 
   let event: ClerkWebhookEvent;
   try {
+
     const wh = new Webhook(secret);
     event = wh.verify(body, {
       "svix-id": svixId,
       "svix-timestamp": svixTimestamp,
       "svix-signature": svixSignature,
     }) as ClerkWebhookEvent;
+    console.log(event);
   } catch {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
@@ -83,38 +90,12 @@ export async function POST(req: Request) {
 
   switch (event.type) {
     case "user.created": {
-      const fields = extractUserFields(event.data as ClerkUserPayload);
-      await prisma.user.upsert({
-        where: { id: fields.id },
-        create: {
-          id: fields.id,
-          email: fields.email,
-          name: fields.name,
-          image: fields.image,
-          emailVerified: null,
-        },
-        update: {}, // already exists — nothing to overwrite on create
-      });
+      await createUser(extractUserFields(event.data as ClerkUserPayload));
       break;
     }
 
     case "user.updated": {
-      const fields = extractUserFields(event.data as ClerkUserPayload);
-      await prisma.user.upsert({
-        where: { id: fields.id },
-        create: {
-          id: fields.id,
-          email: fields.email,
-          name: fields.name,
-          image: fields.image,
-          emailVerified: null,
-        },
-        update: {
-          email: fields.email,
-          name: fields.name,
-          image: fields.image,
-        },
-      });
+      await updateUser(extractUserFields(event.data as ClerkUserPayload));
       break;
     }
 
@@ -122,7 +103,7 @@ export async function POST(req: Request) {
     // Cascade deletes on the schema handle all child records automatically.
     case "user.deleted": {
       const { id } = event.data as { id: string };
-      await prisma.user.deleteMany({ where: { id } });
+      await deleteUser(id);
       break;
     }
   }
