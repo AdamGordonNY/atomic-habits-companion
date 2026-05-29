@@ -18,15 +18,34 @@ function createPrismaClient() {
   // PgBouncer transaction-mode URL (DATABASE_URL with ?pgbouncer=true)
   // causes P1001 "Can't reach database server" because the two poolers
   // interfere.  DIRECT_URL (port 5432, no pgbouncer param) is correct here.
-  const connectionString = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
-  if (!connectionString) {
+  const raw = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
+  if (!raw) {
     throw new Error(
       "Neither DIRECT_URL nor DATABASE_URL is set. " +
         "Add them to your .env file.",
     );
   }
 
-  const adapter = new PrismaPg({ connectionString });
+  // Strip Prisma-only query params (?pgbouncer=true, ?connection_limit=…)
+  // before handing the URL to the pg driver — pg ignores them but they can
+  // confuse connection-string parsers and cause host resolution failures.
+  let connectionString = raw;
+  try {
+    const url = new URL(raw);
+    url.searchParams.delete("pgbouncer");
+    url.searchParams.delete("connection_limit");
+    url.searchParams.delete("pool_timeout");
+    connectionString = url.toString();
+  } catch {
+    throw new Error(
+      `DIRECT_URL / DATABASE_URL is not a valid URL. ` +
+        `Check your environment variables. Received: "${raw.slice(0, 30)}…"`,
+    );
+  }
+
+  // Pass the connection string directly (not wrapped in { connectionString })
+  // so the pg driver doesn't fall back to PGHOST/PGDATABASE env vars.
+  const adapter = new PrismaPg(connectionString);
   return new PrismaClient({
     adapter,
     log:
