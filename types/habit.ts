@@ -72,7 +72,7 @@ export interface AssessmentCalendar {
 export interface AssessmentHourlyEntry {
   hour: times;
   activity: string;
-  energyLevel: AssessmentEnergyDirection;
+  energyLevel: AssessmentEnergyLevel;
 }
 
 export interface AssessmentDayLog {
@@ -87,6 +87,52 @@ export interface HabitAssessmentPartTwo {
 }
 
 export type AsessmentCalendar = AssessmentCalendar;
+
+// ─── Part Two — Energy Analysis ───────────────────────────────────────────────
+
+/**
+ * Aggregated energy statistics for a single hour slot across all tracked days.
+ * All rate and score fields are in the range [0, 1] or [-1, 1].
+ */
+export interface HourEnergyStats {
+  /** The clock hour this row describes, e.g. "09:00 AM" */
+  hour: times;
+  /** Number of days this hour was logged as UP */
+  upCount: number;
+  /** Number of days this hour was logged as DOWN */
+  downCount: number;
+  /** Number of days this hour was logged as NEUTRAL */
+  neutralCount: number;
+  /** Total days where any entry existed for this hour */
+  totalTracked: number;
+  /** Fraction of tracked days that were UP (0–1) */
+  upRate: number;
+  /** Fraction of tracked days that were DOWN (0–1) */
+  downRate: number;
+  /**
+   * Composite energy score = (upCount - downCount) / totalTracked.
+   * +1 = always high energy, -1 = always low energy, 0 = balanced / neutral.
+   */
+  energyScore: number;
+  /** Up to 3 most-frequently logged activities during this hour */
+  topActivities: string[];
+}
+
+/** Full result of running analyzePartTwoEnergy() on a Part Two data set. */
+export interface EnergyAnalysis {
+  /** Number of days that were analysed */
+  daysTracked: number;
+  /** All hours that had at least one entry, in chronological order */
+  hourStats: HourEnergyStats[];
+  /** Same hours sorted by energyScore descending (best first) */
+  highEnergyRanking: HourEnergyStats[];
+  /** Same hours sorted by energyScore ascending (worst first) */
+  lowEnergyRanking: HourEnergyStats[];
+  /** The single hour with the highest energy score, or null if no data */
+  peakHour: HourEnergyStats | null;
+  /** The single hour with the lowest energy score, or null if no data */
+  lowestHour: HourEnergyStats | null;
+}
 
 // ─── Notes ────────────────────────────────────────────────────────────────────
 

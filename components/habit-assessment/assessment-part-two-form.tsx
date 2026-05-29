@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type {
   AssessmentDayLog,
-  AssessmentEnergyDirection,
+  AssessmentEnergyLevel,
   HabitAssessmentPartTwo,
   times,
 } from "@/types/habit";
@@ -227,7 +227,7 @@ export function AssessmentPartTwoForm({ assessmentId }: AssessmentPartTwoFormPro
     });
   }
 
-  function setEnergy(hourIndex: number, level: AssessmentEnergyDirection) {
+  function setEnergy(hourIndex: number, level: AssessmentEnergyLevel) {
     updateEntry(hourIndex, "energyLevel", level);
   }
 
@@ -400,9 +400,9 @@ export function AssessmentPartTwoForm({ assessmentId }: AssessmentPartTwoFormPro
 interface HourRowProps {
   hour: times;
   activity: string;
-  energyLevel: AssessmentEnergyDirection;
+  energyLevel: AssessmentEnergyLevel;
   onActivity: (value: string) => void;
-  onEnergy: (value: AssessmentEnergyDirection) => void;
+  onEnergy: (value: AssessmentEnergyLevel) => void;
 }
 
 function HourRow({ hour, activity, energyLevel, onActivity, onEnergy }: HourRowProps) {
@@ -430,6 +430,15 @@ function HourRow({ hour, activity, energyLevel, onActivity, onEnergy }: HourRowP
           }`}
         >
           UP
+        </button>
+        <button
+          type="button"
+          onClick={() => onEnergy("NEUTRAL")}
+          className={`h-7 rounded-full px-2.5 text-[10px] font-bold transition-colors duration-150 ${
+            energyLevel === "NEUTRAL" ? "bg-slate-400 text-white" : "text-slate-500 hover:bg-slate-100"
+          }`}
+        >
+          –
         </button>
         <button
           type="button"
