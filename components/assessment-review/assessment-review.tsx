@@ -12,6 +12,7 @@ import type {
 import {
   analyzePartTwoEnergy,
   analyzeDaysEnergy,
+  analyzeActivities,
 } from "@/lib/energy-analysis";
 
 // ─── local types mirroring assessment-form draft ─────────────────────────────
@@ -403,6 +404,86 @@ function PartOneView({
   );
 }
 
+// ─── Activity patterns panel ──────────────────────────────────────────────────
+
+function ActivityPatternsPanel({ days }: { days: HabitAssessmentPartTwo["days"] }) {
+  const activities = analyzeActivities(days, 15);
+
+  if (activities.length === 0) {
+    return (
+      <div className="rounded-3xl border border-slate-100 bg-slate-50 px-5 py-6 text-center text-sm text-slate-400">
+        Log activities in the 7-day tracker to see your patterns.
+      </div>
+    );
+  }
+
+  const maxCount = activities[0].count;
+
+  return (
+    <div className="rounded-3xl border border-slate-100 bg-white shadow-sm overflow-hidden">
+      <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-slate-50">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+          Most frequent activities
+        </p>
+        <p className="text-[10px] text-slate-400">{activities.length} unique</p>
+      </div>
+      <div className="divide-y divide-slate-50">
+        {activities.map((a) => {
+          const barPct = (a.count / maxCount) * 100;
+          const energyColor =
+            a.dominantEnergy === "UP"
+              ? "text-emerald-600 bg-emerald-50 border-emerald-100"
+              : a.dominantEnergy === "DOWN"
+              ? "text-rose-600 bg-rose-50 border-rose-100"
+              : "text-slate-500 bg-slate-50 border-slate-100";
+          const energyLabel =
+            a.dominantEnergy === "UP" ? "↑" : a.dominantEnergy === "DOWN" ? "↓" : "–";
+
+          return (
+            <div key={a.activity} className="flex items-center gap-3 px-5 py-3">
+              {/* frequency bar + activity name */}
+              <div className="min-w-0 flex-1">
+                <div className="mb-1.5 flex items-center gap-2">
+                  <span className="truncate text-sm font-medium text-slate-800">
+                    {a.activity}
+                  </span>
+                  <span
+                    className={`flex-shrink-0 rounded-full border px-1.5 py-px text-[10px] font-bold ${energyColor}`}
+                  >
+                    {energyLabel}
+                  </span>
+                </div>
+                <div className="relative h-1 overflow-hidden rounded-full bg-slate-100">
+                  <div
+                    className={`absolute inset-y-0 left-0 rounded-full transition-all ${
+                      a.dominantEnergy === "UP"
+                        ? "bg-emerald-400"
+                        : a.dominantEnergy === "DOWN"
+                        ? "bg-rose-400"
+                        : "bg-slate-300"
+                    }`}
+                    style={{ width: `${barPct}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* count + top hours */}
+              <div className="flex flex-shrink-0 flex-col items-end gap-0.5">
+                <span className="text-xs font-semibold tabular-nums text-slate-700">
+                  ×{a.count}
+                </span>
+                <span className="text-[10px] text-slate-400">
+                  {a.topHours.slice(0, 2).join(", ")}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ─── Energy insights panel ────────────────────────────────────────────────────
 
 function ScoreBar({ score }: { score: number }) {
@@ -568,6 +649,10 @@ function PartTwoView({
     <div className="flex flex-col gap-4">
       <ReviewSection id="p2-insights" label="Energy Patterns">
         <EnergyInsightsPanel days={data.draft.days} />
+      </ReviewSection>
+
+      <ReviewSection id="p2-activities" label="Activity Patterns">
+        <ActivityPatternsPanel days={data.draft.days} />
       </ReviewSection>
 
       <ReviewSection id="p2-days" label="7-Day Energy Log">

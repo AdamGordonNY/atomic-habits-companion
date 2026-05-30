@@ -10,7 +10,9 @@
  */
 
 import type {
+  ActivityStats,
   AssessmentDayLog,
+  AssessmentEnergyLevel,
   EnergyAnalysis,
   HourEnergyStats,
   times,
@@ -181,6 +183,95 @@ export function energyScoreLabel(score: number): "High" | "Mixed" | "Low" {
   if (score >= 0.5) return "High";
   if (score <= -0.5) return "Low";
   return "Mixed";
+}
+
+// ─── Activity aggregation ─────────────────────────────────────────────────────
+
+type ActivityBucket = {
+  displayName: string;          // original casing of first occurrence
+  count: number;
+  up: number;
+  down: number;
+  neutral: number;
+  hourFrequency: Map<times, number>;
+};
+
+/**
+ * Aggregates all logged activity phrases across the 7-day log and ranks them
+ * by frequency. Matching is case-insensitive and trims whitespace.
+ *
+ * Returns up to `limit` results (default 20), sorted by count descending.
+ */
+export function analyzeActivities(
+  days: AssessmentDayLog[],
+  limit = 20,
+): ActivityStats[] {
+  const buckets = new Map<string, ActivityBucket>();
+
+  for (const day of days) {
+    for (const entry of day.entries ?? []) {
+      const raw = entry.activity?.trim();
+      if (!raw) continue;
+
+      const key = raw.toLowerCase();
+      const level = (entry.energyLevel ?? "UP") as AssessmentEnergyLevel;
+
+      if (!buckets.has(key)) {
+        buckets.set(key, {
+          displayName: raw,
+          count: 0,
+          up: 0,
+          down: 0,
+          neutral: 0,
+          hourFrequency: new Map(),
+        });
+      }
+
+      const b = buckets.get(key)!;
+      b.count++;
+      if (level === "UP") b.up++;
+      else if (level === "DOWN") b.down++;
+      else b.neutral++;
+
+      if (entry.hour) {
+        const h = entry.hour as times;
+        b.hourFrequency.set(h, (b.hourFrequency.get(h) ?? 0) + 1);
+      }
+    }
+  }
+
+  return [...buckets.values()]
+    .sort((a, b) => b.count - a.count)
+    .slice(0, limit)
+    .map((b) => {
+      const energyScore = (b.up - b.down) / b.count;
+      const dominantEnergy: AssessmentEnergyLevel =
+        b.up >= b.down && b.up >= b.neutral
+          ? "UP"
+          : b.down >= b.up && b.down >= b.neutral
+          ? "DOWN"
+          : "NEUTRAL";
+
+      // Top 3 hours sorted by frequency then chronological order
+      const topHours: times[] = [...b.hourFrequency.entries()]
+        .sort((a, b) => {
+          if (b[1] !== a[1]) return b[1] - a[1];
+          return HOURS_IN_ORDER.indexOf(a[0]) - HOURS_IN_ORDER.indexOf(b[0]);
+        })
+        .slice(0, 3)
+        .map(([h]) => h);
+
+      return {
+        activity: b.displayName,
+        count: b.count,
+        topHours,
+        upCount: b.up,
+        downCount: b.down,
+        neutralCount: b.neutral,
+        dominantEnergy,
+        energyScore,
+      };
+    });
 }
 
 // ─── Day-level analysis ───────────────────────────────────────────────────────

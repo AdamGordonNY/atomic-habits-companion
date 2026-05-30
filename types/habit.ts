@@ -118,6 +118,23 @@ export interface HourEnergyStats {
   topActivities: string[];
 }
 
+/** Aggregated stats for a single recurring activity phrase across the 7-day log. */
+export interface ActivityStats {
+  /** The activity as the user typed it (original casing of first occurrence) */
+  activity: string;
+  /** Total times this activity appeared across all logged days */
+  count: number;
+  /** Up to 3 most common hours this activity occurs at, in chronological order */
+  topHours: times[];
+  upCount: number;
+  downCount: number;
+  neutralCount: number;
+  /** Most common energy level for this activity */
+  dominantEnergy: AssessmentEnergyLevel;
+  /** (upCount - downCount) / count; range -1 to +1 */
+  energyScore: number;
+}
+
 /** Full result of running analyzePartTwoEnergy() on a Part Two data set. */
 export interface EnergyAnalysis {
   /** Number of days that were analysed */
