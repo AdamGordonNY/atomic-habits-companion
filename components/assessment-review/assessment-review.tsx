@@ -9,6 +9,10 @@ import type {
   HabitRecord,
   HabitAttempt,
 } from "@/types/habit";
+import {
+  analyzePartTwoEnergy,
+  analyzeDaysEnergy,
+} from "@/lib/energy-analysis";
 
 // ─── local types mirroring assessment-form draft ─────────────────────────────
 
@@ -399,6 +403,152 @@ function PartOneView({
   );
 }
 
+// ─── Energy insights panel ────────────────────────────────────────────────────
+
+function ScoreBar({ score }: { score: number }) {
+  const pct = Math.abs(score) * 100;
+  const positive = score >= 0;
+  return (
+    <div className="flex items-center gap-2">
+      <div className="relative h-1.5 w-24 overflow-hidden rounded-full bg-slate-100">
+        <div
+          className={`absolute inset-y-0 left-0 rounded-full ${positive ? "bg-emerald-500" : "bg-rose-500"}`}
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+      <span className={`w-10 text-right text-[11px] font-semibold tabular-nums ${positive ? "text-emerald-600" : "text-rose-600"}`}>
+        {score > 0 ? "+" : ""}{Math.round(score * 100)}%
+      </span>
+    </div>
+  );
+}
+
+function EnergyInsightsPanel({ days }: { days: HabitAssessmentPartTwo["days"] }) {
+  const analysis = analyzePartTwoEnergy(days);
+  const dayStats = analyzeDaysEnergy(days);
+
+  const hasData = analysis.hourStats.length > 0;
+
+  if (!hasData) {
+    return (
+      <div className="rounded-3xl border border-slate-100 bg-slate-50 px-5 py-6 text-center text-sm text-slate-400">
+        Log activities in the 7-day tracker to see your energy patterns.
+      </div>
+    );
+  }
+
+  const topHigh = analysis.highEnergyRanking.slice(0, 5);
+  const topLow = analysis.lowEnergyRanking.slice(0, 5);
+
+  return (
+    <div className="flex flex-col gap-4">
+      {/* Hour rankings */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {/* Highest energy hours */}
+        <div className="rounded-3xl border border-emerald-100 bg-emerald-50/50 p-4">
+          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-emerald-700">
+            Highest energy hours
+          </p>
+          <div className="flex flex-col gap-2.5">
+            {topHigh.map((h) => (
+              <div key={h.hour} className="flex items-center gap-3">
+                <span className="w-[4.5rem] flex-shrink-0 text-[11px] font-semibold text-slate-700">
+                  {h.hour}
+                </span>
+                <ScoreBar score={h.energyScore} />
+                {h.topActivities[0] && (
+                  <span className="truncate text-[11px] text-slate-400">{h.topActivities[0]}</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Lowest energy hours */}
+        <div className="rounded-3xl border border-rose-100 bg-rose-50/50 p-4">
+          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-rose-700">
+            Lowest energy hours
+          </p>
+          <div className="flex flex-col gap-2.5">
+            {topLow.map((h) => (
+              <div key={h.hour} className="flex items-center gap-3">
+                <span className="w-[4.5rem] flex-shrink-0 text-[11px] font-semibold text-slate-700">
+                  {h.hour}
+                </span>
+                <ScoreBar score={h.energyScore} />
+                {h.topActivities[0] && (
+                  <span className="truncate text-[11px] text-slate-400">{h.topActivities[0]}</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Day breakdown */}
+      <div className="rounded-3xl border border-slate-100 bg-white p-4 shadow-sm">
+        <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+          Energy by day
+        </p>
+        <div className="flex flex-col gap-2.5">
+          {dayStats.map((d) => {
+            const hasEntries = d.totalLogged > 0;
+            return (
+              <div key={d.date} className="flex items-center gap-3">
+                <span className="w-14 flex-shrink-0 text-[11px] font-semibold text-slate-600">
+                  Day {d.dayNumber}
+                </span>
+                <span className="w-24 flex-shrink-0 text-[11px] text-slate-400">
+                  {d.date
+                    ? new Date(d.date + "T00:00:00").toLocaleDateString(undefined, {
+                        weekday: "short",
+                        month: "short",
+                        day: "numeric",
+                      })
+                    : "—"}
+                </span>
+                {hasEntries ? (
+                  <>
+                    {/* stacked UP / NEUTRAL / DOWN bar */}
+                    <div className="flex h-1.5 flex-1 overflow-hidden rounded-full bg-slate-100">
+                      <div
+                        className="bg-emerald-500 transition-all"
+                        style={{ width: `${d.upRate * 100}%` }}
+                      />
+                      <div
+                        className="bg-slate-300 transition-all"
+                        style={{ width: `${(d.neutralCount / d.totalLogged) * 100}%` }}
+                      />
+                      <div
+                        className="bg-rose-500 transition-all"
+                        style={{ width: `${d.downRate * 100}%` }}
+                      />
+                    </div>
+                    <span
+                      className={`w-10 text-right text-[11px] font-semibold tabular-nums ${
+                        d.energyScore > 0
+                          ? "text-emerald-600"
+                          : d.energyScore < 0
+                          ? "text-rose-600"
+                          : "text-slate-400"
+                      }`}
+                    >
+                      {d.energyScore > 0 ? "+" : ""}
+                      {Math.round(d.energyScore * 100)}%
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-[11px] italic text-slate-300">No entries</span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Part Two view ────────────────────────────────────────────────────────────
 
 function PartTwoView({
@@ -416,11 +566,16 @@ function PartTwoView({
 
   return (
     <div className="flex flex-col gap-4">
+      <ReviewSection id="p2-insights" label="Energy Patterns">
+        <EnergyInsightsPanel days={data.draft.days} />
+      </ReviewSection>
+
       <ReviewSection id="p2-days" label="7-Day Energy Log">
         {data.draft.days.map((day, di) => {
           const filled = day.entries.filter((e) => e.activity.trim());
           const upCount = filled.filter((e) => e.energyLevel === "UP").length;
           const downCount = filled.filter((e) => e.energyLevel === "DOWN").length;
+          const neutralCount = filled.filter((e) => e.energyLevel === "NEUTRAL").length;
           const isExpanded = expanded === di;
 
           return (
@@ -450,7 +605,7 @@ function PartTwoView({
                     </p>
                     {filled.length > 0 ? (
                       <p className="text-xs text-slate-500">
-                        {filled.length} hours logged · {upCount}↑ {downCount}↓
+                        {filled.length} hours logged · {upCount}↑ {neutralCount > 0 ? `${neutralCount}– ` : ""}{downCount}↓
                       </p>
                     ) : (
                       <p className="text-xs text-slate-400">No entries</p>
@@ -503,10 +658,12 @@ function PartTwoView({
                               className={`flex-shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${
                                 e.energyLevel === "UP"
                                   ? "bg-emerald-100 text-emerald-700"
-                                  : "bg-rose-100 text-rose-700"
+                                  : e.energyLevel === "DOWN"
+                                  ? "bg-rose-100 text-rose-700"
+                                  : "bg-slate-100 text-slate-500"
                               }`}
                             >
-                              {e.energyLevel === "UP" ? "↑" : "↓"}
+                              {e.energyLevel === "UP" ? "↑" : e.energyLevel === "DOWN" ? "↓" : "–"}
                             </span>
                           </div>
                         ))}

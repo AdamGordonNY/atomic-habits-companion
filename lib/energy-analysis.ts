@@ -71,7 +71,7 @@ export function analyzePartTwoEnergy(
 
   for (const day of days) {
     for (const entry of day.entries ?? []) {
-      if (!entry.hour) continue;
+      if (!entry.hour || !entry.activity?.trim()) continue; // skip unlogged slots
 
       const hour = entry.hour as times;
       if (!buckets.has(hour)) {
@@ -181,4 +181,53 @@ export function energyScoreLabel(score: number): "High" | "Mixed" | "Low" {
   if (score >= 0.5) return "High";
   if (score <= -0.5) return "Low";
   return "Mixed";
+}
+
+// ─── Day-level analysis ───────────────────────────────────────────────────────
+
+/** Aggregated energy statistics for a single logged day. */
+export interface DayEnergyStats {
+  /** ISO date string, e.g. "2026-05-27" */
+  date: string;
+  /** 1-based day number within the tracking period */
+  dayNumber: number;
+  /** Number of hours that had an activity logged */
+  totalLogged: number;
+  upCount: number;
+  downCount: number;
+  neutralCount: number;
+  upRate: number;
+  downRate: number;
+  /**
+   * (upCount - downCount) / totalLogged.
+   * +1 = all-UP day, -1 = all-DOWN day, 0 = balanced/no data.
+   */
+  energyScore: number;
+}
+
+/**
+ * Returns per-day energy stats for each day in the tracking period.
+ * Only hours where the user logged an activity are counted.
+ */
+export function analyzeDaysEnergy(days: AssessmentDayLog[]): DayEnergyStats[] {
+  return days.map((day, i) => {
+    const logged = day.entries.filter((e) => e.activity?.trim());
+
+    const upCount = logged.filter((e) => e.energyLevel === "UP").length;
+    const downCount = logged.filter((e) => e.energyLevel === "DOWN").length;
+    const neutralCount = logged.filter((e) => e.energyLevel === "NEUTRAL").length;
+    const total = logged.length;
+
+    return {
+      date: day.date,
+      dayNumber: i + 1,
+      totalLogged: total,
+      upCount,
+      downCount,
+      neutralCount,
+      upRate: total > 0 ? upCount / total : 0,
+      downRate: total > 0 ? downCount / total : 0,
+      energyScore: total > 0 ? (upCount - downCount) / total : 0,
+    };
+  });
 }
