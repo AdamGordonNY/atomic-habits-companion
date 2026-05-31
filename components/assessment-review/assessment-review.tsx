@@ -2,6 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import {
+  fetchPartOneForReview,
+  fetchPartTwoForReview,
+  fetchPartThreeForReview,
+} from "@/lib/assessment-reads";
 import type {
   HabitAssessmentPartThree,
   HabitAssessmentPartTwo,
@@ -58,16 +63,6 @@ interface StoredPartThree {
 }
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
-
-function readJson<T>(key: string): T | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? (JSON.parse(raw) as T) : null;
-  } catch {
-    return null;
-  }
-}
 
 function formatDate(iso: string): string {
   try {
@@ -1147,13 +1142,23 @@ export function AssessmentReview({ assessmentId }: { assessmentId: string }) {
   const tabStripRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setPartOne(readJson<StoredPartOne>(`habit-assessment:${assessmentId}`));
-    setPartTwo(readJson<StoredPartTwo>(`habit-assessment:${assessmentId}:part-two`));
-    setPartThree(readJson<StoredPartThree>(`habit-assessment:${assessmentId}:part-three`));
-    setMounted(true);
-    const f = requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(f);
-  }, [assessmentId]);
+    let cancelled = false;
+    async function load() {
+      const [p1, p2, p3] = await Promise.all([
+        fetchPartOneForReview(),
+        fetchPartTwoForReview(),
+        fetchPartThreeForReview(),
+      ]);
+      if (cancelled) return;
+      setPartOne(p1 as StoredPartOne | null);
+      setPartTwo(p2 as StoredPartTwo | null);
+      setPartThree(p3 as StoredPartThree | null);
+      setMounted(true);
+      requestAnimationFrame(() => setVisible(true));
+    }
+    load();
+    return () => { cancelled = true; };
+  }, []);
 
   function completionLabel(completed: string | null | undefined) {
     if (!completed) return null;

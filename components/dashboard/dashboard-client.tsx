@@ -10,6 +10,7 @@ import {
   syncPartTwo,
   syncPartThree,
 } from "@/lib/sync-actions";
+import { fetchAssessmentStatus, type AssessmentStatus } from "@/lib/assessment-reads";
 
 interface PartOneSnapshot {
   stepIndex: number;
@@ -19,7 +20,7 @@ interface PartOneSnapshot {
 interface PartTwoSnapshot {
   dayIndex: number;
   completedAt: string | null;
-  startDate: string | null; // first day's date
+  startDate: string | null;
 }
 
 interface PartThreeSnapshot {
@@ -27,61 +28,26 @@ interface PartThreeSnapshot {
   completedAt: string | null;
 }
 
-const PART_ONE_KEY = "habit-assessment:onboarding";
-const PART_TWO_KEY = "habit-assessment:onboarding:part-two";
-const PART_THREE_KEY = "habit-assessment:onboarding:part-three";
-
-function readPartOne(): PartOneSnapshot | null {
-  try {
-    const raw = localStorage.getItem(PART_ONE_KEY);
-    if (!raw) return null;
-    const p = JSON.parse(raw) as {
-      stepIndex?: number;
-      completedAt?: string | null;
-    };
-    return {
-      stepIndex: p.stepIndex ?? 0,
-      completedAt: p.completedAt ?? null,
-    };
-  } catch {
-    return null;
-  }
-}
-
-function readPartTwo(): PartTwoSnapshot | null {
-  try {
-    const raw = localStorage.getItem(PART_TWO_KEY);
-    if (!raw) return null;
-    const p = JSON.parse(raw) as {
-      dayIndex?: number;
-      completedAt?: string | null;
-      draft?: { days?: { date: string }[] };
-    };
-    return {
-      dayIndex: p.dayIndex ?? 0,
-      completedAt: p.completedAt ?? null,
-      startDate: p.draft?.days?.[0]?.date ?? null,
-    };
-  } catch {
-    return null;
-  }
-}
-
-function readPartThree(): PartThreeSnapshot | null {
-  try {
-    const raw = localStorage.getItem(PART_THREE_KEY);
-    if (!raw) return null;
-    const p = JSON.parse(raw) as {
-      stepIndex?: number;
-      completedAt?: string | null;
-    };
-    return {
-      stepIndex: p.stepIndex ?? 0,
-      completedAt: p.completedAt ?? null,
-    };
-  } catch {
-    return null;
-  }
+function statusToSnapshots(status: AssessmentStatus): {
+  partOne: PartOneSnapshot | null;
+  partTwo: PartTwoSnapshot | null;
+  partThree: PartThreeSnapshot | null;
+} {
+  return {
+    partOne: status.partOne?.exists
+      ? { stepIndex: 0, completedAt: status.partOne.completedAt }
+      : null,
+    partTwo: status.partTwo?.exists
+      ? {
+          dayIndex: status.partTwo.dayIndex,
+          completedAt: status.partTwo.completedAt,
+          startDate: status.partTwo.startDate,
+        }
+      : null,
+    partThree: status.partThree?.exists
+      ? { stepIndex: 0, completedAt: status.partThree.completedAt }
+      : null,
+  };
 }
 
 function formatDate(iso: string): string {
@@ -141,12 +107,19 @@ export function DashboardClient() {
   }
 
   useEffect(() => {
-    setPartOne(readPartOne());
-    setPartTwo(readPartTwo());
-    setPartThree(readPartThree());
-    setMounted(true);
-    const frame = requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(frame);
+    let cancelled = false;
+    async function load() {
+      const status = await fetchAssessmentStatus();
+      if (cancelled) return;
+      const snaps = statusToSnapshots(status);
+      setPartOne(snaps.partOne);
+      setPartTwo(snaps.partTwo);
+      setPartThree(snaps.partThree);
+      setMounted(true);
+      requestAnimationFrame(() => setVisible(true));
+    }
+    load();
+    return () => { cancelled = true; };
   }, []);
 
   const hasPartOneProgress = mounted && partOne !== null;
