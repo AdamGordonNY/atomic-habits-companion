@@ -2,7 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { fetchPartTwoForReview } from "@/lib/assessment-reads";
+import { analyzePartTwoEnergy } from "@/lib/energy-analysis";
 import type {
+  EnergyAnalysis,
   HabitAssessmentPartThree,
   HabitInventoryEntry,
   HabitInventoryScorecard,
@@ -386,6 +389,70 @@ function HabitAttemptList({
   );
 }
 
+// ─── EnergyAuditPanel ────────────────────────────────────────────────────────
+
+function EnergyAuditPanel({ analysis }: { analysis: EnergyAnalysis | null }) {
+  if (!analysis || analysis.daysTracked === 0) return null;
+
+  const highHours = analysis.highEnergyRanking
+    .filter((h) => h.energyScore > 0)
+    .slice(0, 4);
+  const lowHours = analysis.lowEnergyRanking
+    .filter((h) => h.energyScore < 0)
+    .slice(0, 4);
+  const peakActivities = analysis.peakHour?.topActivities ?? [];
+
+  return (
+    <div className="mb-6 rounded-2xl border border-sky-100 bg-sky-50/60 p-4">
+      <p className="mb-3 text-[10px] font-semibold uppercase tracking-widest text-sky-700">
+        Time &amp; Energy Audit · {analysis.daysTracked} day{analysis.daysTracked !== 1 ? "s" : ""} tracked
+      </p>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <p className="mb-1.5 text-xs font-medium text-emerald-700">↑ High energy</p>
+          <div className="flex flex-wrap gap-1">
+            {highHours.length > 0 ? (
+              highHours.map((h) => (
+                <span
+                  key={h.hour}
+                  className="rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-medium text-emerald-800"
+                >
+                  {h.hour}
+                </span>
+              ))
+            ) : (
+              <span className="text-xs text-slate-400">No clear peaks</span>
+            )}
+          </div>
+        </div>
+        <div>
+          <p className="mb-1.5 text-xs font-medium text-rose-600">↓ Low energy</p>
+          <div className="flex flex-wrap gap-1">
+            {lowHours.length > 0 ? (
+              lowHours.map((h) => (
+                <span
+                  key={h.hour}
+                  className="rounded-full bg-rose-100 px-2 py-0.5 text-[11px] font-medium text-rose-700"
+                >
+                  {h.hour}
+                </span>
+              ))
+            ) : (
+              <span className="text-xs text-slate-400">No clear dips</span>
+            )}
+          </div>
+        </div>
+      </div>
+      {peakActivities.length > 0 && (
+        <p className="mt-2.5 text-[11px] text-slate-500">
+          <span className="font-medium text-slate-600">At your peak: </span>
+          {peakActivities.join(" · ")}
+        </p>
+      )}
+    </div>
+  );
+}
+
 // ─── component ───────────────────────────────────────────────────────────────
 
 interface AssessmentPartThreeFormProps {
@@ -407,10 +474,11 @@ export function AssessmentPartThreeForm({ assessmentId }: AssessmentPartThreeFor
   const [slideDir, setSlideDir] = useState<"right" | "left">("right");
   const [panelKey, setPanelKey] = useState(0);
   const [panelVisible, setPanelVisible] = useState(false);
+  const [energyAnalysis, setEnergyAnalysis] = useState<EnergyAnalysis | null>(null);
 
   const progressBarRef = useRef<HTMLDivElement>(null);
 
-  // hydrate
+  // hydrate + load energy data
   useEffect(() => {
     const stored = readStoredState(storageKey);
     if (stored) {
@@ -418,6 +486,13 @@ export function AssessmentPartThreeForm({ assessmentId }: AssessmentPartThreeFor
       setStepIndex(stored.stepIndex);
     }
     setHydrated(true);
+
+    fetchPartTwoForReview().then((p2) => {
+      const days = p2?.draft?.days;
+      if (days && days.length > 0) {
+        setEnergyAnalysis(analyzePartTwoEnergy(days));
+      }
+    });
   }, [storageKey]);
 
   // persist
@@ -862,6 +937,7 @@ export function AssessmentPartThreeForm({ assessmentId }: AssessmentPartThreeFor
               panelVisible ? "translate-x-0 opacity-100" : slideIn
             }`}
           >
+            <EnergyAuditPanel analysis={energyAnalysis} />
             {hydrated ? renderStep() : <SkeletonCard />}
           </div>
 

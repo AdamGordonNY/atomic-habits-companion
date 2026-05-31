@@ -28,10 +28,15 @@ interface PartThreeSnapshot {
   completedAt: string | null;
 }
 
+interface PartFourSnapshot {
+  completedAt: string | null;
+}
+
 function statusToSnapshots(status: AssessmentStatus): {
   partOne: PartOneSnapshot | null;
   partTwo: PartTwoSnapshot | null;
   partThree: PartThreeSnapshot | null;
+  partFour: PartFourSnapshot | null;
 } {
   return {
     partOne: status.partOne?.exists
@@ -46,6 +51,9 @@ function statusToSnapshots(status: AssessmentStatus): {
       : null,
     partThree: status.partThree?.exists
       ? { stepIndex: 0, completedAt: status.partThree.completedAt }
+      : null,
+    partFour: status.partFour?.exists
+      ? { completedAt: status.partFour.completedAt }
       : null,
   };
 }
@@ -73,6 +81,7 @@ export function DashboardClient() {
   const [partOne, setPartOne] = useState<PartOneSnapshot | null>(null);
   const [partTwo, setPartTwo] = useState<PartTwoSnapshot | null>(null);
   const [partThree, setPartThree] = useState<PartThreeSnapshot | null>(null);
+  const [partFour, setPartFour] = useState<PartFourSnapshot | null>(null);
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const [syncing, setSyncing] = useState(false);
@@ -115,6 +124,7 @@ export function DashboardClient() {
       setPartOne(snaps.partOne);
       setPartTwo(snaps.partTwo);
       setPartThree(snaps.partThree);
+      setPartFour(snaps.partFour);
       setMounted(true);
       requestAnimationFrame(() => setVisible(true));
     }
@@ -135,6 +145,9 @@ export function DashboardClient() {
   const partThreeComplete = partThree?.completedAt != null;
   const partThreeTotalSteps = 17;
   const partThreeStep = partThree?.stepIndex ?? 0;
+
+  const hasPartFourProgress = mounted && partFour !== null;
+  const partFourComplete = partFour?.completedAt != null;
 
   // Determine the primary resume action
   let resumeHref = "/habit-assessment/onboarding";
@@ -161,10 +174,18 @@ export function DashboardClient() {
     resumeHref = "/habit-assessment/onboarding/part-three";
     resumeLabel = "Start Part Three — time & habit deep-dive";
     resumeHint = "Reflect on energy patterns and past habit attempts";
-  } else if (partOneComplete && partTwoComplete && partThreeComplete) {
+  } else if (partOneComplete && partTwoComplete && partThreeComplete && hasPartFourProgress && !partFourComplete) {
+    resumeHref = "/habit-assessment/onboarding/part-four";
+    resumeLabel = "Resume Part Four — where do you want to end up?";
+    resumeHint = "Define your ideal future and the identity you want to build";
+  } else if (partOneComplete && partTwoComplete && partThreeComplete && !hasPartFourProgress) {
+    resumeHref = "/habit-assessment/onboarding/part-four";
+    resumeLabel = "Start Part Four — where do you want to end up?";
+    resumeHint = "Define your ideal future and the identity you want to build";
+  } else if (partOneComplete && partTwoComplete && partThreeComplete && partFourComplete) {
     resumeLabel = "Assessment complete";
-    resumeHint = "All three parts done — review any section below";
-    resumeHref = "/habit-assessment/onboarding/part-three";
+    resumeHint = "All four parts done — review your answers below";
+    resumeHref = "/habit-assessment/onboarding/review";
   }
 
   return (
@@ -287,7 +308,7 @@ export function DashboardClient() {
 
           {/* Progress cards */}
           {mounted ? (
-            <section className="grid grid-cols-3 gap-3">
+            <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               <ProgressCard
                 label="Part One"
                 subtitle="Baseline"
@@ -335,9 +356,27 @@ export function DashboardClient() {
                     : "/habit-assessment/onboarding/part-two"
                 }
               />
+              <ProgressCard
+                label="Part Four"
+                subtitle="Ideal future"
+                done={partFourComplete}
+                detail={
+                  hasPartFourProgress && !partFourComplete
+                    ? "In progress"
+                    : partFourComplete
+                      ? "Complete"
+                      : "Not started"
+                }
+                href={
+                  partThreeComplete
+                    ? "/habit-assessment/onboarding/part-four"
+                    : "/habit-assessment/onboarding/part-three"
+                }
+              />
             </section>
           ) : (
-            <section className="grid grid-cols-3 gap-3">
+            <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <SkeletonCard />
               <SkeletonCard />
               <SkeletonCard />
               <SkeletonCard />
@@ -345,7 +384,7 @@ export function DashboardClient() {
           )}
 
           {/* Review CTA */}
-          {mounted && (hasPartOneProgress || hasPartTwoProgress || hasPartThreeProgress) && (
+          {mounted && (hasPartOneProgress || hasPartTwoProgress || hasPartThreeProgress || hasPartFourProgress) && (
             <section>
               <Link
                 href="/habit-assessment/onboarding/review"
@@ -358,7 +397,7 @@ export function DashboardClient() {
                   <div className="text-left">
                     <p className="text-sm font-semibold text-slate-950">Review your answers</p>
                     <p className="mt-0.5 text-xs text-slate-500">
-                      Browse everything you've entered across all three parts
+                      Browse everything you've entered across all four parts
                     </p>
                   </div>
                 </div>
@@ -414,7 +453,7 @@ export function DashboardClient() {
                 "Complete the baseline assessment (Part One) once.",
                 "Log your hourly activities and energy for 7 days (Part Two).",
                 "Reflect on your time, energy, and habit history (Part Three).",
-                "Use your patterns to build habits that fit your real life.",
+                "Define where you want to end up and the identity you want to build (Part Four).",
               ].map((step, i) => (
                 <li key={i} className="flex gap-3 text-sm text-slate-600">
                   <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-slate-200 text-[10px] font-bold text-slate-600">
