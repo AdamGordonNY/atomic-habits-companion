@@ -13,6 +13,7 @@ import {
   analyzePartTwoEnergy,
   analyzeDaysEnergy,
   analyzeActivities,
+  HOURS_IN_ORDER,
 } from "@/lib/energy-analysis";
 
 // ─── local types mirroring assessment-form draft ─────────────────────────────
@@ -486,6 +487,165 @@ function ActivityPatternsPanel({ days }: { days: HabitAssessmentPartTwo["days"] 
 
 // ─── Energy insights panel ────────────────────────────────────────────────────
 
+// ─── Energy line chart ───────────────────────────────────────────────────────
+
+const DAY_COLORS = [
+  "#10b981", // emerald
+  "#0ea5e9", // sky
+  "#8b5cf6", // violet
+  "#f59e0b", // amber
+  "#f43f5e", // rose
+  "#06b6d4", // cyan
+  "#f97316", // orange
+];
+
+const ENERGY_TO_SCORE: Record<string, number> = { UP: 1, NEUTRAL: 0, DOWN: -1 };
+
+function EnergyLineChart({ days }: { days: HabitAssessmentPartTwo["days"] }) {
+  // Collect all hours that appear across any logged entry, in chronological order
+  const loggedHourSet = new Set<string>();
+  for (const day of days) {
+    for (const entry of day.entries) {
+      if (entry.activity.trim()) loggedHourSet.add(entry.hour);
+    }
+  }
+  const xHours = HOURS_IN_ORDER.filter((h) => loggedHourSet.has(h));
+
+  if (xHours.length < 2) return null;
+
+  // SVG coordinate system
+  const VW = 400, VH = 130;
+  const PL = 22, PR = 8, PT = 10, PB = 30;
+  const plotW = VW - PL - PR;
+  const plotH = VH - PT - PB;
+
+  const xOf = (hour: string) => {
+    const idx = xHours.indexOf(hour as (typeof xHours)[number]);
+    return idx < 0 ? null : PL + (idx / (xHours.length - 1)) * plotW;
+  };
+  const yOf = (score: number) => PT + ((1 - score) / 2) * plotH;
+
+  // Decide which hour labels to show (at most ~6)
+  const labelStep = Math.max(1, Math.ceil(xHours.length / 6));
+  const labelHours = xHours.filter((_, i) => i % labelStep === 0 || i === xHours.length - 1);
+
+  return (
+    <div className="rounded-3xl border border-slate-100 bg-white p-4 shadow-sm">
+      <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+        Energy levels over time
+      </p>
+      <svg
+        viewBox={`0 0 ${VW} ${VH}`}
+        className="w-full"
+        aria-label="Energy levels line chart"
+        role="img"
+      >
+        {/* ── Gridlines ── */}
+        <line
+          x1={PL} y1={yOf(1)} x2={VW - PR} y2={yOf(1)}
+          stroke="#e2e8f0" strokeWidth="0.6" strokeDasharray="3,3"
+        />
+        <line
+          x1={PL} y1={yOf(0)} x2={VW - PR} y2={yOf(0)}
+          stroke="#e2e8f0" strokeWidth="1"
+        />
+        <line
+          x1={PL} y1={yOf(-1)} x2={VW - PR} y2={yOf(-1)}
+          stroke="#e2e8f0" strokeWidth="0.6" strokeDasharray="3,3"
+        />
+
+        {/* ── Y-axis labels ── */}
+        <text x={PL - 3} y={yOf(1)} textAnchor="end" dominantBaseline="middle" fontSize="8" fill="#10b981" fontWeight="600">↑</text>
+        <text x={PL - 3} y={yOf(0)} textAnchor="end" dominantBaseline="middle" fontSize="8" fill="#94a3b8">–</text>
+        <text x={PL - 3} y={yOf(-1)} textAnchor="end" dominantBaseline="middle" fontSize="8" fill="#f43f5e" fontWeight="600">↓</text>
+
+        {/* ── X-axis labels ── */}
+        {labelHours.map((h) => {
+          const x = xOf(h);
+          if (x === null) return null;
+          return (
+            <text key={h} x={x} y={VH - 6} textAnchor="middle" fontSize="6.5" fill="#94a3b8">
+              {h.replace(":00 ", "")}
+            </text>
+          );
+        })}
+
+        {/* ── Per-day lines ── */}
+        {days.map((day, di) => {
+          const pts = day.entries
+            .filter((e) => e.activity.trim() && loggedHourSet.has(e.hour))
+            .sort((a, b) => HOURS_IN_ORDER.indexOf(a.hour) - HOURS_IN_ORDER.indexOf(b.hour));
+
+          if (pts.length === 0) return null;
+
+          const color = DAY_COLORS[di % DAY_COLORS.length];
+          const polyPts = pts
+            .map((e) => {
+              const x = xOf(e.hour);
+              return x !== null ? `${x},${yOf(ENERGY_TO_SCORE[e.energyLevel] ?? 0)}` : null;
+            })
+            .filter(Boolean)
+            .join(" ");
+
+          return (
+            <g key={di}>
+              <polyline
+                points={polyPts}
+                fill="none"
+                stroke={color}
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                opacity="0.75"
+              />
+              {pts.map((e) => {
+                const x = xOf(e.hour);
+                if (x === null) return null;
+                return (
+                  <circle
+                    key={e.hour}
+                    cx={x}
+                    cy={yOf(ENERGY_TO_SCORE[e.energyLevel] ?? 0)}
+                    r="2"
+                    fill={color}
+                    opacity="0.85"
+                  />
+                );
+              })}
+            </g>
+          );
+        })}
+      </svg>
+
+      {/* Legend */}
+      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+        {days.map((day, di) => {
+          const hasData = day.entries.some((e) => e.activity.trim());
+          if (!hasData) return null;
+          const label = day.date
+            ? new Date(day.date + "T00:00:00").toLocaleDateString(undefined, {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+              })
+            : `Day ${di + 1}`;
+          return (
+            <div key={di} className="flex items-center gap-1.5">
+              <div
+                className="h-1.5 w-4 rounded-full"
+                style={{ backgroundColor: DAY_COLORS[di % DAY_COLORS.length] }}
+              />
+              <span className="text-[10px] text-slate-500">{label}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ─── Score bar ────────────────────────────────────────────────────────────────
+
 function ScoreBar({ score }: { score: number }) {
   const pct = Math.abs(score) * 100;
   const positive = score >= 0;
@@ -523,6 +683,9 @@ function EnergyInsightsPanel({ days }: { days: HabitAssessmentPartTwo["days"] })
 
   return (
     <div className="flex flex-col gap-4">
+      {/* Line chart */}
+      <EnergyLineChart days={days} />
+
       {/* Hour rankings */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {/* Highest energy hours */}
