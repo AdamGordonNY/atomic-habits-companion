@@ -3,8 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetchPartFour, upsertPartFour } from "@/lib/actions/part-four-actions";
+import { fetchPartTwoForReview } from "@/lib/assessment-reads";
+import { analyzePartTwoEnergy } from "@/lib/energy-analysis";
 import { LIFE_DOMAINS } from "@/types/habit";
-import type { DomainVision, HabitAssessmentPartFour, IdentityEntry } from "@/types/habit";
+import type { DomainVision, EnergyAnalysis, HabitAssessmentPartFour, IdentityEntry } from "@/types/habit";
 
 // ─── constants ────────────────────────────────────────────────────────────────
 
@@ -197,6 +199,70 @@ function ListInput({
   );
 }
 
+// ─── EnergyAuditPanel ────────────────────────────────────────────────────────
+
+function EnergyAuditPanel({ analysis }: { analysis: EnergyAnalysis | null }) {
+  if (!analysis || analysis.daysTracked === 0) return null;
+
+  const highHours = analysis.highEnergyRanking
+    .filter((h) => h.energyScore > 0)
+    .slice(0, 4);
+  const lowHours = analysis.lowEnergyRanking
+    .filter((h) => h.energyScore < 0)
+    .slice(0, 4);
+  const peakActivities = analysis.peakHour?.topActivities ?? [];
+
+  return (
+    <div className="mb-6 rounded-2xl border border-sky-100 bg-sky-50/60 p-4">
+      <p className="mb-3 text-[10px] font-semibold uppercase tracking-widest text-sky-700">
+        Time &amp; Energy Audit · {analysis.daysTracked} day{analysis.daysTracked !== 1 ? "s" : ""} tracked
+      </p>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <p className="mb-1.5 text-xs font-medium text-emerald-700">↑ High energy</p>
+          <div className="flex flex-wrap gap-1">
+            {highHours.length > 0 ? (
+              highHours.map((h) => (
+                <span
+                  key={h.hour}
+                  className="rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-medium text-emerald-800"
+                >
+                  {h.hour}
+                </span>
+              ))
+            ) : (
+              <span className="text-xs text-slate-400">No clear peaks</span>
+            )}
+          </div>
+        </div>
+        <div>
+          <p className="mb-1.5 text-xs font-medium text-rose-600">↓ Low energy</p>
+          <div className="flex flex-wrap gap-1">
+            {lowHours.length > 0 ? (
+              lowHours.map((h) => (
+                <span
+                  key={h.hour}
+                  className="rounded-full bg-rose-100 px-2 py-0.5 text-[11px] font-medium text-rose-700"
+                >
+                  {h.hour}
+                </span>
+              ))
+            ) : (
+              <span className="text-xs text-slate-400">No clear dips</span>
+            )}
+          </div>
+        </div>
+      </div>
+      {peakActivities.length > 0 && (
+        <p className="mt-2.5 text-[11px] text-slate-500">
+          <span className="font-medium text-slate-600">At your peak: </span>
+          {peakActivities.join(" · ")}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function StepCard({ question, hint, children }: { question: string; hint?: string; children: React.ReactNode }) {
   return (
     <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
@@ -316,6 +382,7 @@ export function AssessmentPartFourForm({ assessmentId: _assessmentId }: { assess
   const [draft, setDraft] = useState<DraftState>(defaultDraft);
   const [stepIndex, setStepIndex] = useState(0);
   const [hydrated, setHydrated] = useState(false);
+  const [energyAnalysis, setEnergyAnalysis] = useState<EnergyAnalysis | null>(null);
   const [saving, setSaving] = useState(false);
   const [slideDir, setSlideDir] = useState<"right" | "left">("right");
   const [panelKey, setPanelKey] = useState(0);
@@ -328,8 +395,12 @@ export function AssessmentPartFourForm({ assessmentId: _assessmentId }: { assess
 
   // Load from DB
   useEffect(() => {
-    fetchPartFour().then((data) => {
-      if (data) setDraft(dbToDraft(data));
+    Promise.all([fetchPartFour(), fetchPartTwoForReview()]).then(([p4, p2]) => {
+      if (p4) setDraft(dbToDraft(p4));
+      const days = p2?.draft?.days;
+      if (days && days.length > 0) {
+        setEnergyAnalysis(analyzePartTwoEnergy(days));
+      }
       setHydrated(true);
     });
   }, []);
@@ -718,6 +789,7 @@ export function AssessmentPartFourForm({ assessmentId: _assessmentId }: { assess
       {/* Step content */}
       <main className="flex-1 px-4 py-8">
         <div className="mx-auto max-w-2xl">
+          <EnergyAuditPanel analysis={energyAnalysis} />
           <div
             key={panelKey}
             className={`transition-all duration-300 ease-out ${
