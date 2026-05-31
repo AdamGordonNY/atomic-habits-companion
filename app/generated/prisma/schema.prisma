@@ -32,6 +32,7 @@ model User {
   assessmentPartOne   AssessmentPartOne?
   assessmentPartTwo   AssessmentPartTwo?
   assessmentPartThree AssessmentPartThree?
+  assessmentPartFour  AssessmentPartFour?
 
   @@map("users")
 }
@@ -288,4 +289,65 @@ model HabitScorecardEntry {
   scorecard   HabitScorecard @relation(fields: [scorecardId], references: [id], onDelete: Cascade)
 
   @@map("habit_scorecard_entries")
+}
+
+// ─── Part Four — Ideal Life Design ────────────────────────────────────────────
+
+model AssessmentPartFour {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Q1 – Clean Slate
+  existingCommitments  String[] @default([])
+  desiredCommitments   String[] @default([])
+  unwantedCommitments  String[] @default([])
+  idealMorning         String   @default("")
+  idealAfternoon       String   @default("")
+  idealEvening         String   @default("")
+  cleanSlateReflection String   @default("")
+
+  // Q2 – Ideal Future
+  majorGoals        String[] @default([])
+  vision6Months     String   @default("")
+  vision2Years      String   @default("")
+  vision5Years      String   @default("")
+  majorChanges      String[] @default([])
+  successDefinition String   @default("")
+  futureReflection  String   @default("")
+  reflectionGoals   String[] @default([])
+
+  completedAt DateTime?
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  domainVisions DomainVisionEntry[]
+  identities    IdentityRecord[]
+
+  @@map("assessment_part_four")
+}
+
+model DomainVisionEntry {
+  id     String @id @default(cuid())
+  domain String
+  vision String @default("")
+
+  assessmentId String
+  assessment   AssessmentPartFour @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@index([assessmentId])
+  @@map("domain_vision_entries")
+}
+
+model IdentityRecord {
+  id       String   @id @default(cuid())
+  identity String
+  habits   String[] @default([])
+
+  assessmentId String
+  assessment   AssessmentPartFour @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@index([assessmentId])
+  @@map("identity_records")
 }

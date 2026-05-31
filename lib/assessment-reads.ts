@@ -8,6 +8,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import type {
+  HabitAssessmentPartFour,
   HabitAssessmentPartThree,
   HabitAssessmentPartTwo,
   HabitInventoryScorecard,
@@ -236,13 +237,14 @@ export interface AssessmentStatus {
     exists: boolean;
   } | null;
   partThree: { completedAt: string | null; exists: boolean } | null;
+  partFour: { completedAt: string | null; exists: boolean } | null;
 }
 
 export async function fetchAssessmentStatus(): Promise<AssessmentStatus> {
   const userId = await getUserId();
-  if (!userId) return { partOne: null, partTwo: null, partThree: null };
+  if (!userId) return { partOne: null, partTwo: null, partThree: null, partFour: null };
 
-  const [p1, p2, p3] = await Promise.all([
+  const [p1, p2, p3, p4] = await Promise.all([
     prisma.assessmentPartOne.findUnique({
       where: { userId },
       select: { completedAt: true },
@@ -257,6 +259,10 @@ export async function fetchAssessmentStatus(): Promise<AssessmentStatus> {
       },
     }),
     prisma.assessmentPartThree.findUnique({
+      where: { userId },
+      select: { completedAt: true },
+    }),
+    prisma.assessmentPartFour.findUnique({
       where: { userId },
       select: { completedAt: true },
     }),
@@ -277,5 +283,45 @@ export async function fetchAssessmentStatus(): Promise<AssessmentStatus> {
     partThree: p3
       ? { completedAt: p3.completedAt?.toISOString() ?? null, exists: true }
       : null,
+    partFour: p4
+      ? { completedAt: p4.completedAt?.toISOString() ?? null, exists: true }
+      : null,
+  };
+}
+
+// ─── Part Four read ───────────────────────────────────────────────────────────
+
+export async function fetchPartFourForReview(): Promise<HabitAssessmentPartFour | null> {
+  const userId = await getUserId();
+  if (!userId) return null;
+
+  const row = await prisma.assessmentPartFour.findUnique({
+    where: { userId },
+    include: { domainVisions: true, identities: true },
+  });
+
+  if (!row) return null;
+
+  return {
+    id: row.id,
+    updatedAt: row.updatedAt.toISOString(),
+    completedAt: row.completedAt?.toISOString() ?? null,
+    existingCommitments: row.existingCommitments,
+    desiredCommitments: row.desiredCommitments,
+    unwantedCommitments: row.unwantedCommitments,
+    idealMorning: row.idealMorning,
+    idealAfternoon: row.idealAfternoon,
+    idealEvening: row.idealEvening,
+    cleanSlateReflection: row.cleanSlateReflection,
+    majorGoals: row.majorGoals,
+    vision6Months: row.vision6Months,
+    vision2Years: row.vision2Years,
+    vision5Years: row.vision5Years,
+    majorChanges: row.majorChanges,
+    successDefinition: row.successDefinition,
+    domainVisions: row.domainVisions.map((d: { domain: string; vision: string }) => ({ domain: d.domain, vision: d.vision })),
+    identities: row.identities.map((i: { identity: string; habits: string[] }) => ({ identity: i.identity, habits: i.habits })),
+    futureReflection: row.futureReflection,
+    reflectionGoals: row.reflectionGoals,
   };
 }

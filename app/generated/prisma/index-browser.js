@@ -279,6 +279,43 @@ exports.Prisma.HabitScorecardEntryScalarFieldEnum = {
   scorecardId: 'scorecardId'
 };
 
+exports.Prisma.AssessmentPartFourScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  existingCommitments: 'existingCommitments',
+  desiredCommitments: 'desiredCommitments',
+  unwantedCommitments: 'unwantedCommitments',
+  idealMorning: 'idealMorning',
+  idealAfternoon: 'idealAfternoon',
+  idealEvening: 'idealEvening',
+  cleanSlateReflection: 'cleanSlateReflection',
+  majorGoals: 'majorGoals',
+  vision6Months: 'vision6Months',
+  vision2Years: 'vision2Years',
+  vision5Years: 'vision5Years',
+  majorChanges: 'majorChanges',
+  successDefinition: 'successDefinition',
+  futureReflection: 'futureReflection',
+  reflectionGoals: 'reflectionGoals',
+  completedAt: 'completedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.DomainVisionEntryScalarFieldEnum = {
+  id: 'id',
+  domain: 'domain',
+  vision: 'vision',
+  assessmentId: 'assessmentId'
+};
+
+exports.Prisma.IdentityRecordScalarFieldEnum = {
+  id: 'id',
+  identity: 'identity',
+  habits: 'habits',
+  assessmentId: 'assessmentId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -310,7 +347,10 @@ exports.Prisma.ModelName = {
   HabitRecord: 'HabitRecord',
   HabitAttempt: 'HabitAttempt',
   HabitScorecard: 'HabitScorecard',
-  HabitScorecardEntry: 'HabitScorecardEntry'
+  HabitScorecardEntry: 'HabitScorecardEntry',
+  AssessmentPartFour: 'AssessmentPartFour',
+  DomainVisionEntry: 'DomainVisionEntry',
+  IdentityRecord: 'IdentityRecord'
 };
 
 /**

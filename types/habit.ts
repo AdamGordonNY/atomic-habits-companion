@@ -230,3 +230,60 @@ export interface HabitAssessmentPartThree {
   updatedAt: string;
   completedAt: string | null;
 }
+
+// ─── Part Four — Ideal Life Design ───────────────────────────────────────────
+
+export interface DomainVision {
+  domain: string;
+  vision: string;
+}
+
+export interface IdentityEntry {
+  identity: string;
+  habits: string[];
+}
+
+export const LIFE_DOMAINS = [
+  "Physical Health",
+  "Mental Health",
+  "Career",
+  "Relationships & Social Connections",
+  "Learning & Personal Growth",
+  "Financial Security",
+  "Financial Freedom",
+  "Recreation & Fun",
+  "Creativity",
+  "Community & Contribution",
+  "Spirituality",
+  "Family",
+  "Legacy",
+] as const;
+
+export type LifeDomain = (typeof LIFE_DOMAINS)[number];
+
+export interface HabitAssessmentPartFour {
+  id: string;
+  updatedAt: string;
+  completedAt: string | null;
+
+  // Q1 — Clean Slate
+  existingCommitments: string[];   // commitments you already have
+  desiredCommitments: string[];    // commitments you'd like to have
+  unwantedCommitments: string[];   // commitments you don't want
+  idealMorning: string;
+  idealAfternoon: string;
+  idealEvening: string;
+  cleanSlateReflection: string;
+
+  // Q2 — Ideal Future
+  majorGoals: string[];
+  vision6Months: string;
+  vision2Years: string;
+  vision5Years: string;
+  majorChanges: string[];
+  successDefinition: string;
+  domainVisions: DomainVision[];
+  identities: IdentityEntry[];
+  futureReflection: string;
+  reflectionGoals: string[];
+}

@@ -88,6 +88,21 @@ export type HabitScorecard = $Result.DefaultSelection<Prisma.$HabitScorecardPayl
  * 
  */
 export type HabitScorecardEntry = $Result.DefaultSelection<Prisma.$HabitScorecardEntryPayload>
+/**
+ * Model AssessmentPartFour
+ * 
+ */
+export type AssessmentPartFour = $Result.DefaultSelection<Prisma.$AssessmentPartFourPayload>
+/**
+ * Model DomainVisionEntry
+ * 
+ */
+export type DomainVisionEntry = $Result.DefaultSelection<Prisma.$DomainVisionEntryPayload>
+/**
+ * Model IdentityRecord
+ * 
+ */
+export type IdentityRecord = $Result.DefaultSelection<Prisma.$IdentityRecordPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -359,6 +374,36 @@ export class PrismaClient<
     * ```
     */
   get habitScorecardEntry(): Prisma.HabitScorecardEntryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.assessmentPartFour`: Exposes CRUD operations for the **AssessmentPartFour** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AssessmentPartFours
+    * const assessmentPartFours = await prisma.assessmentPartFour.findMany()
+    * ```
+    */
+  get assessmentPartFour(): Prisma.AssessmentPartFourDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.domainVisionEntry`: Exposes CRUD operations for the **DomainVisionEntry** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DomainVisionEntries
+    * const domainVisionEntries = await prisma.domainVisionEntry.findMany()
+    * ```
+    */
+  get domainVisionEntry(): Prisma.DomainVisionEntryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.identityRecord`: Exposes CRUD operations for the **IdentityRecord** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more IdentityRecords
+    * const identityRecords = await prisma.identityRecord.findMany()
+    * ```
+    */
+  get identityRecord(): Prisma.IdentityRecordDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -807,7 +852,10 @@ export namespace Prisma {
     HabitRecord: 'HabitRecord',
     HabitAttempt: 'HabitAttempt',
     HabitScorecard: 'HabitScorecard',
-    HabitScorecardEntry: 'HabitScorecardEntry'
+    HabitScorecardEntry: 'HabitScorecardEntry',
+    AssessmentPartFour: 'AssessmentPartFour',
+    DomainVisionEntry: 'DomainVisionEntry',
+    IdentityRecord: 'IdentityRecord'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -823,7 +871,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "note" | "assessmentPartOne" | "project" | "assessmentPartTwo" | "dayLog" | "hourlyEntry" | "assessmentPartThree" | "habitRecord" | "habitAttempt" | "habitScorecard" | "habitScorecardEntry"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "note" | "assessmentPartOne" | "project" | "assessmentPartTwo" | "dayLog" | "hourlyEntry" | "assessmentPartThree" | "habitRecord" | "habitAttempt" | "habitScorecard" | "habitScorecardEntry" | "assessmentPartFour" | "domainVisionEntry" | "identityRecord"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1937,6 +1985,228 @@ export namespace Prisma {
           }
         }
       }
+      AssessmentPartFour: {
+        payload: Prisma.$AssessmentPartFourPayload<ExtArgs>
+        fields: Prisma.AssessmentPartFourFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AssessmentPartFourFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPartFourPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AssessmentPartFourFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPartFourPayload>
+          }
+          findFirst: {
+            args: Prisma.AssessmentPartFourFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPartFourPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AssessmentPartFourFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPartFourPayload>
+          }
+          findMany: {
+            args: Prisma.AssessmentPartFourFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPartFourPayload>[]
+          }
+          create: {
+            args: Prisma.AssessmentPartFourCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPartFourPayload>
+          }
+          createMany: {
+            args: Prisma.AssessmentPartFourCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AssessmentPartFourCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPartFourPayload>[]
+          }
+          delete: {
+            args: Prisma.AssessmentPartFourDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPartFourPayload>
+          }
+          update: {
+            args: Prisma.AssessmentPartFourUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPartFourPayload>
+          }
+          deleteMany: {
+            args: Prisma.AssessmentPartFourDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AssessmentPartFourUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AssessmentPartFourUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPartFourPayload>[]
+          }
+          upsert: {
+            args: Prisma.AssessmentPartFourUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentPartFourPayload>
+          }
+          aggregate: {
+            args: Prisma.AssessmentPartFourAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAssessmentPartFour>
+          }
+          groupBy: {
+            args: Prisma.AssessmentPartFourGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AssessmentPartFourGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AssessmentPartFourCountArgs<ExtArgs>
+            result: $Utils.Optional<AssessmentPartFourCountAggregateOutputType> | number
+          }
+        }
+      }
+      DomainVisionEntry: {
+        payload: Prisma.$DomainVisionEntryPayload<ExtArgs>
+        fields: Prisma.DomainVisionEntryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DomainVisionEntryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DomainVisionEntryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DomainVisionEntryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DomainVisionEntryPayload>
+          }
+          findFirst: {
+            args: Prisma.DomainVisionEntryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DomainVisionEntryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DomainVisionEntryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DomainVisionEntryPayload>
+          }
+          findMany: {
+            args: Prisma.DomainVisionEntryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DomainVisionEntryPayload>[]
+          }
+          create: {
+            args: Prisma.DomainVisionEntryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DomainVisionEntryPayload>
+          }
+          createMany: {
+            args: Prisma.DomainVisionEntryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DomainVisionEntryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DomainVisionEntryPayload>[]
+          }
+          delete: {
+            args: Prisma.DomainVisionEntryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DomainVisionEntryPayload>
+          }
+          update: {
+            args: Prisma.DomainVisionEntryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DomainVisionEntryPayload>
+          }
+          deleteMany: {
+            args: Prisma.DomainVisionEntryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DomainVisionEntryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DomainVisionEntryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DomainVisionEntryPayload>[]
+          }
+          upsert: {
+            args: Prisma.DomainVisionEntryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DomainVisionEntryPayload>
+          }
+          aggregate: {
+            args: Prisma.DomainVisionEntryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDomainVisionEntry>
+          }
+          groupBy: {
+            args: Prisma.DomainVisionEntryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DomainVisionEntryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DomainVisionEntryCountArgs<ExtArgs>
+            result: $Utils.Optional<DomainVisionEntryCountAggregateOutputType> | number
+          }
+        }
+      }
+      IdentityRecord: {
+        payload: Prisma.$IdentityRecordPayload<ExtArgs>
+        fields: Prisma.IdentityRecordFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IdentityRecordFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IdentityRecordFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>
+          }
+          findFirst: {
+            args: Prisma.IdentityRecordFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IdentityRecordFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>
+          }
+          findMany: {
+            args: Prisma.IdentityRecordFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>[]
+          }
+          create: {
+            args: Prisma.IdentityRecordCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>
+          }
+          createMany: {
+            args: Prisma.IdentityRecordCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.IdentityRecordCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>[]
+          }
+          delete: {
+            args: Prisma.IdentityRecordDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>
+          }
+          update: {
+            args: Prisma.IdentityRecordUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>
+          }
+          deleteMany: {
+            args: Prisma.IdentityRecordDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IdentityRecordUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.IdentityRecordUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>[]
+          }
+          upsert: {
+            args: Prisma.IdentityRecordUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>
+          }
+          aggregate: {
+            args: Prisma.IdentityRecordAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIdentityRecord>
+          }
+          groupBy: {
+            args: Prisma.IdentityRecordGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IdentityRecordGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IdentityRecordCountArgs<ExtArgs>
+            result: $Utils.Optional<IdentityRecordCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2060,6 +2330,9 @@ export namespace Prisma {
     habitAttempt?: HabitAttemptOmit
     habitScorecard?: HabitScorecardOmit
     habitScorecardEntry?: HabitScorecardEntryOmit
+    assessmentPartFour?: AssessmentPartFourOmit
+    domainVisionEntry?: DomainVisionEntryOmit
+    identityRecord?: IdentityRecordOmit
   }
 
   /* Types for Logging */
@@ -2358,6 +2631,46 @@ export namespace Prisma {
 
 
   /**
+   * Count Type AssessmentPartFourCountOutputType
+   */
+
+  export type AssessmentPartFourCountOutputType = {
+    domainVisions: number
+    identities: number
+  }
+
+  export type AssessmentPartFourCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    domainVisions?: boolean | AssessmentPartFourCountOutputTypeCountDomainVisionsArgs
+    identities?: boolean | AssessmentPartFourCountOutputTypeCountIdentitiesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AssessmentPartFourCountOutputType without action
+   */
+  export type AssessmentPartFourCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFourCountOutputType
+     */
+    select?: AssessmentPartFourCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AssessmentPartFourCountOutputType without action
+   */
+  export type AssessmentPartFourCountOutputTypeCountDomainVisionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DomainVisionEntryWhereInput
+  }
+
+  /**
+   * AssessmentPartFourCountOutputType without action
+   */
+  export type AssessmentPartFourCountOutputTypeCountIdentitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdentityRecordWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -2547,6 +2860,7 @@ export namespace Prisma {
     assessmentPartOne?: boolean | User$assessmentPartOneArgs<ExtArgs>
     assessmentPartTwo?: boolean | User$assessmentPartTwoArgs<ExtArgs>
     assessmentPartThree?: boolean | User$assessmentPartThreeArgs<ExtArgs>
+    assessmentPartFour?: boolean | User$assessmentPartFourArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2588,6 +2902,7 @@ export namespace Prisma {
     assessmentPartOne?: boolean | User$assessmentPartOneArgs<ExtArgs>
     assessmentPartTwo?: boolean | User$assessmentPartTwoArgs<ExtArgs>
     assessmentPartThree?: boolean | User$assessmentPartThreeArgs<ExtArgs>
+    assessmentPartFour?: boolean | User$assessmentPartFourArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2602,6 +2917,7 @@ export namespace Prisma {
       assessmentPartOne: Prisma.$AssessmentPartOnePayload<ExtArgs> | null
       assessmentPartTwo: Prisma.$AssessmentPartTwoPayload<ExtArgs> | null
       assessmentPartThree: Prisma.$AssessmentPartThreePayload<ExtArgs> | null
+      assessmentPartFour: Prisma.$AssessmentPartFourPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3011,6 +3327,7 @@ export namespace Prisma {
     assessmentPartOne<T extends User$assessmentPartOneArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentPartOneArgs<ExtArgs>>): Prisma__AssessmentPartOneClient<$Result.GetResult<Prisma.$AssessmentPartOnePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     assessmentPartTwo<T extends User$assessmentPartTwoArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentPartTwoArgs<ExtArgs>>): Prisma__AssessmentPartTwoClient<$Result.GetResult<Prisma.$AssessmentPartTwoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     assessmentPartThree<T extends User$assessmentPartThreeArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentPartThreeArgs<ExtArgs>>): Prisma__AssessmentPartThreeClient<$Result.GetResult<Prisma.$AssessmentPartThreePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    assessmentPartFour<T extends User$assessmentPartFourArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentPartFourArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3566,6 +3883,25 @@ export namespace Prisma {
      */
     include?: AssessmentPartThreeInclude<ExtArgs> | null
     where?: AssessmentPartThreeWhereInput
+  }
+
+  /**
+   * User.assessmentPartFour
+   */
+  export type User$assessmentPartFourArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFour
+     */
+    select?: AssessmentPartFourSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentPartFour
+     */
+    omit?: AssessmentPartFourOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentPartFourInclude<ExtArgs> | null
+    where?: AssessmentPartFourWhereInput
   }
 
   /**
@@ -19364,6 +19700,3394 @@ export namespace Prisma {
 
 
   /**
+   * Model AssessmentPartFour
+   */
+
+  export type AggregateAssessmentPartFour = {
+    _count: AssessmentPartFourCountAggregateOutputType | null
+    _min: AssessmentPartFourMinAggregateOutputType | null
+    _max: AssessmentPartFourMaxAggregateOutputType | null
+  }
+
+  export type AssessmentPartFourMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    idealMorning: string | null
+    idealAfternoon: string | null
+    idealEvening: string | null
+    cleanSlateReflection: string | null
+    vision6Months: string | null
+    vision2Years: string | null
+    vision5Years: string | null
+    successDefinition: string | null
+    futureReflection: string | null
+    completedAt: Date | null
+    userId: string | null
+  }
+
+  export type AssessmentPartFourMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    idealMorning: string | null
+    idealAfternoon: string | null
+    idealEvening: string | null
+    cleanSlateReflection: string | null
+    vision6Months: string | null
+    vision2Years: string | null
+    vision5Years: string | null
+    successDefinition: string | null
+    futureReflection: string | null
+    completedAt: Date | null
+    userId: string | null
+  }
+
+  export type AssessmentPartFourCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    existingCommitments: number
+    desiredCommitments: number
+    unwantedCommitments: number
+    idealMorning: number
+    idealAfternoon: number
+    idealEvening: number
+    cleanSlateReflection: number
+    majorGoals: number
+    vision6Months: number
+    vision2Years: number
+    vision5Years: number
+    majorChanges: number
+    successDefinition: number
+    futureReflection: number
+    reflectionGoals: number
+    completedAt: number
+    userId: number
+    _all: number
+  }
+
+
+  export type AssessmentPartFourMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    idealMorning?: true
+    idealAfternoon?: true
+    idealEvening?: true
+    cleanSlateReflection?: true
+    vision6Months?: true
+    vision2Years?: true
+    vision5Years?: true
+    successDefinition?: true
+    futureReflection?: true
+    completedAt?: true
+    userId?: true
+  }
+
+  export type AssessmentPartFourMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    idealMorning?: true
+    idealAfternoon?: true
+    idealEvening?: true
+    cleanSlateReflection?: true
+    vision6Months?: true
+    vision2Years?: true
+    vision5Years?: true
+    successDefinition?: true
+    futureReflection?: true
+    completedAt?: true
+    userId?: true
+  }
+
+  export type AssessmentPartFourCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    existingCommitments?: true
+    desiredCommitments?: true
+    unwantedCommitments?: true
+    idealMorning?: true
+    idealAfternoon?: true
+    idealEvening?: true
+    cleanSlateReflection?: true
+    majorGoals?: true
+    vision6Months?: true
+    vision2Years?: true
+    vision5Years?: true
+    majorChanges?: true
+    successDefinition?: true
+    futureReflection?: true
+    reflectionGoals?: true
+    completedAt?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type AssessmentPartFourAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssessmentPartFour to aggregate.
+     */
+    where?: AssessmentPartFourWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssessmentPartFours to fetch.
+     */
+    orderBy?: AssessmentPartFourOrderByWithRelationInput | AssessmentPartFourOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AssessmentPartFourWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssessmentPartFours from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssessmentPartFours.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AssessmentPartFours
+    **/
+    _count?: true | AssessmentPartFourCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AssessmentPartFourMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AssessmentPartFourMaxAggregateInputType
+  }
+
+  export type GetAssessmentPartFourAggregateType<T extends AssessmentPartFourAggregateArgs> = {
+        [P in keyof T & keyof AggregateAssessmentPartFour]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAssessmentPartFour[P]>
+      : GetScalarType<T[P], AggregateAssessmentPartFour[P]>
+  }
+
+
+
+
+  export type AssessmentPartFourGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssessmentPartFourWhereInput
+    orderBy?: AssessmentPartFourOrderByWithAggregationInput | AssessmentPartFourOrderByWithAggregationInput[]
+    by: AssessmentPartFourScalarFieldEnum[] | AssessmentPartFourScalarFieldEnum
+    having?: AssessmentPartFourScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AssessmentPartFourCountAggregateInputType | true
+    _min?: AssessmentPartFourMinAggregateInputType
+    _max?: AssessmentPartFourMaxAggregateInputType
+  }
+
+  export type AssessmentPartFourGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    existingCommitments: string[]
+    desiredCommitments: string[]
+    unwantedCommitments: string[]
+    idealMorning: string
+    idealAfternoon: string
+    idealEvening: string
+    cleanSlateReflection: string
+    majorGoals: string[]
+    vision6Months: string
+    vision2Years: string
+    vision5Years: string
+    majorChanges: string[]
+    successDefinition: string
+    futureReflection: string
+    reflectionGoals: string[]
+    completedAt: Date | null
+    userId: string
+    _count: AssessmentPartFourCountAggregateOutputType | null
+    _min: AssessmentPartFourMinAggregateOutputType | null
+    _max: AssessmentPartFourMaxAggregateOutputType | null
+  }
+
+  type GetAssessmentPartFourGroupByPayload<T extends AssessmentPartFourGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AssessmentPartFourGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AssessmentPartFourGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AssessmentPartFourGroupByOutputType[P]>
+            : GetScalarType<T[P], AssessmentPartFourGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AssessmentPartFourSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    existingCommitments?: boolean
+    desiredCommitments?: boolean
+    unwantedCommitments?: boolean
+    idealMorning?: boolean
+    idealAfternoon?: boolean
+    idealEvening?: boolean
+    cleanSlateReflection?: boolean
+    majorGoals?: boolean
+    vision6Months?: boolean
+    vision2Years?: boolean
+    vision5Years?: boolean
+    majorChanges?: boolean
+    successDefinition?: boolean
+    futureReflection?: boolean
+    reflectionGoals?: boolean
+    completedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    domainVisions?: boolean | AssessmentPartFour$domainVisionsArgs<ExtArgs>
+    identities?: boolean | AssessmentPartFour$identitiesArgs<ExtArgs>
+    _count?: boolean | AssessmentPartFourCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assessmentPartFour"]>
+
+  export type AssessmentPartFourSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    existingCommitments?: boolean
+    desiredCommitments?: boolean
+    unwantedCommitments?: boolean
+    idealMorning?: boolean
+    idealAfternoon?: boolean
+    idealEvening?: boolean
+    cleanSlateReflection?: boolean
+    majorGoals?: boolean
+    vision6Months?: boolean
+    vision2Years?: boolean
+    vision5Years?: boolean
+    majorChanges?: boolean
+    successDefinition?: boolean
+    futureReflection?: boolean
+    reflectionGoals?: boolean
+    completedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assessmentPartFour"]>
+
+  export type AssessmentPartFourSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    existingCommitments?: boolean
+    desiredCommitments?: boolean
+    unwantedCommitments?: boolean
+    idealMorning?: boolean
+    idealAfternoon?: boolean
+    idealEvening?: boolean
+    cleanSlateReflection?: boolean
+    majorGoals?: boolean
+    vision6Months?: boolean
+    vision2Years?: boolean
+    vision5Years?: boolean
+    majorChanges?: boolean
+    successDefinition?: boolean
+    futureReflection?: boolean
+    reflectionGoals?: boolean
+    completedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assessmentPartFour"]>
+
+  export type AssessmentPartFourSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    existingCommitments?: boolean
+    desiredCommitments?: boolean
+    unwantedCommitments?: boolean
+    idealMorning?: boolean
+    idealAfternoon?: boolean
+    idealEvening?: boolean
+    cleanSlateReflection?: boolean
+    majorGoals?: boolean
+    vision6Months?: boolean
+    vision2Years?: boolean
+    vision5Years?: boolean
+    majorChanges?: boolean
+    successDefinition?: boolean
+    futureReflection?: boolean
+    reflectionGoals?: boolean
+    completedAt?: boolean
+    userId?: boolean
+  }
+
+  export type AssessmentPartFourOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "existingCommitments" | "desiredCommitments" | "unwantedCommitments" | "idealMorning" | "idealAfternoon" | "idealEvening" | "cleanSlateReflection" | "majorGoals" | "vision6Months" | "vision2Years" | "vision5Years" | "majorChanges" | "successDefinition" | "futureReflection" | "reflectionGoals" | "completedAt" | "userId", ExtArgs["result"]["assessmentPartFour"]>
+  export type AssessmentPartFourInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    domainVisions?: boolean | AssessmentPartFour$domainVisionsArgs<ExtArgs>
+    identities?: boolean | AssessmentPartFour$identitiesArgs<ExtArgs>
+    _count?: boolean | AssessmentPartFourCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AssessmentPartFourIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AssessmentPartFourIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $AssessmentPartFourPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AssessmentPartFour"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      domainVisions: Prisma.$DomainVisionEntryPayload<ExtArgs>[]
+      identities: Prisma.$IdentityRecordPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      existingCommitments: string[]
+      desiredCommitments: string[]
+      unwantedCommitments: string[]
+      idealMorning: string
+      idealAfternoon: string
+      idealEvening: string
+      cleanSlateReflection: string
+      majorGoals: string[]
+      vision6Months: string
+      vision2Years: string
+      vision5Years: string
+      majorChanges: string[]
+      successDefinition: string
+      futureReflection: string
+      reflectionGoals: string[]
+      completedAt: Date | null
+      userId: string
+    }, ExtArgs["result"]["assessmentPartFour"]>
+    composites: {}
+  }
+
+  type AssessmentPartFourGetPayload<S extends boolean | null | undefined | AssessmentPartFourDefaultArgs> = $Result.GetResult<Prisma.$AssessmentPartFourPayload, S>
+
+  type AssessmentPartFourCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AssessmentPartFourFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AssessmentPartFourCountAggregateInputType | true
+    }
+
+  export interface AssessmentPartFourDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AssessmentPartFour'], meta: { name: 'AssessmentPartFour' } }
+    /**
+     * Find zero or one AssessmentPartFour that matches the filter.
+     * @param {AssessmentPartFourFindUniqueArgs} args - Arguments to find a AssessmentPartFour
+     * @example
+     * // Get one AssessmentPartFour
+     * const assessmentPartFour = await prisma.assessmentPartFour.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AssessmentPartFourFindUniqueArgs>(args: SelectSubset<T, AssessmentPartFourFindUniqueArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AssessmentPartFour that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AssessmentPartFourFindUniqueOrThrowArgs} args - Arguments to find a AssessmentPartFour
+     * @example
+     * // Get one AssessmentPartFour
+     * const assessmentPartFour = await prisma.assessmentPartFour.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AssessmentPartFourFindUniqueOrThrowArgs>(args: SelectSubset<T, AssessmentPartFourFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssessmentPartFour that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentPartFourFindFirstArgs} args - Arguments to find a AssessmentPartFour
+     * @example
+     * // Get one AssessmentPartFour
+     * const assessmentPartFour = await prisma.assessmentPartFour.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AssessmentPartFourFindFirstArgs>(args?: SelectSubset<T, AssessmentPartFourFindFirstArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssessmentPartFour that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentPartFourFindFirstOrThrowArgs} args - Arguments to find a AssessmentPartFour
+     * @example
+     * // Get one AssessmentPartFour
+     * const assessmentPartFour = await prisma.assessmentPartFour.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AssessmentPartFourFindFirstOrThrowArgs>(args?: SelectSubset<T, AssessmentPartFourFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AssessmentPartFours that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentPartFourFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AssessmentPartFours
+     * const assessmentPartFours = await prisma.assessmentPartFour.findMany()
+     * 
+     * // Get first 10 AssessmentPartFours
+     * const assessmentPartFours = await prisma.assessmentPartFour.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const assessmentPartFourWithIdOnly = await prisma.assessmentPartFour.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AssessmentPartFourFindManyArgs>(args?: SelectSubset<T, AssessmentPartFourFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AssessmentPartFour.
+     * @param {AssessmentPartFourCreateArgs} args - Arguments to create a AssessmentPartFour.
+     * @example
+     * // Create one AssessmentPartFour
+     * const AssessmentPartFour = await prisma.assessmentPartFour.create({
+     *   data: {
+     *     // ... data to create a AssessmentPartFour
+     *   }
+     * })
+     * 
+     */
+    create<T extends AssessmentPartFourCreateArgs>(args: SelectSubset<T, AssessmentPartFourCreateArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AssessmentPartFours.
+     * @param {AssessmentPartFourCreateManyArgs} args - Arguments to create many AssessmentPartFours.
+     * @example
+     * // Create many AssessmentPartFours
+     * const assessmentPartFour = await prisma.assessmentPartFour.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AssessmentPartFourCreateManyArgs>(args?: SelectSubset<T, AssessmentPartFourCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AssessmentPartFours and returns the data saved in the database.
+     * @param {AssessmentPartFourCreateManyAndReturnArgs} args - Arguments to create many AssessmentPartFours.
+     * @example
+     * // Create many AssessmentPartFours
+     * const assessmentPartFour = await prisma.assessmentPartFour.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AssessmentPartFours and only return the `id`
+     * const assessmentPartFourWithIdOnly = await prisma.assessmentPartFour.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AssessmentPartFourCreateManyAndReturnArgs>(args?: SelectSubset<T, AssessmentPartFourCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AssessmentPartFour.
+     * @param {AssessmentPartFourDeleteArgs} args - Arguments to delete one AssessmentPartFour.
+     * @example
+     * // Delete one AssessmentPartFour
+     * const AssessmentPartFour = await prisma.assessmentPartFour.delete({
+     *   where: {
+     *     // ... filter to delete one AssessmentPartFour
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AssessmentPartFourDeleteArgs>(args: SelectSubset<T, AssessmentPartFourDeleteArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AssessmentPartFour.
+     * @param {AssessmentPartFourUpdateArgs} args - Arguments to update one AssessmentPartFour.
+     * @example
+     * // Update one AssessmentPartFour
+     * const assessmentPartFour = await prisma.assessmentPartFour.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AssessmentPartFourUpdateArgs>(args: SelectSubset<T, AssessmentPartFourUpdateArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AssessmentPartFours.
+     * @param {AssessmentPartFourDeleteManyArgs} args - Arguments to filter AssessmentPartFours to delete.
+     * @example
+     * // Delete a few AssessmentPartFours
+     * const { count } = await prisma.assessmentPartFour.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AssessmentPartFourDeleteManyArgs>(args?: SelectSubset<T, AssessmentPartFourDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssessmentPartFours.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentPartFourUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AssessmentPartFours
+     * const assessmentPartFour = await prisma.assessmentPartFour.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AssessmentPartFourUpdateManyArgs>(args: SelectSubset<T, AssessmentPartFourUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssessmentPartFours and returns the data updated in the database.
+     * @param {AssessmentPartFourUpdateManyAndReturnArgs} args - Arguments to update many AssessmentPartFours.
+     * @example
+     * // Update many AssessmentPartFours
+     * const assessmentPartFour = await prisma.assessmentPartFour.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AssessmentPartFours and only return the `id`
+     * const assessmentPartFourWithIdOnly = await prisma.assessmentPartFour.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AssessmentPartFourUpdateManyAndReturnArgs>(args: SelectSubset<T, AssessmentPartFourUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AssessmentPartFour.
+     * @param {AssessmentPartFourUpsertArgs} args - Arguments to update or create a AssessmentPartFour.
+     * @example
+     * // Update or create a AssessmentPartFour
+     * const assessmentPartFour = await prisma.assessmentPartFour.upsert({
+     *   create: {
+     *     // ... data to create a AssessmentPartFour
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AssessmentPartFour we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AssessmentPartFourUpsertArgs>(args: SelectSubset<T, AssessmentPartFourUpsertArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AssessmentPartFours.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentPartFourCountArgs} args - Arguments to filter AssessmentPartFours to count.
+     * @example
+     * // Count the number of AssessmentPartFours
+     * const count = await prisma.assessmentPartFour.count({
+     *   where: {
+     *     // ... the filter for the AssessmentPartFours we want to count
+     *   }
+     * })
+    **/
+    count<T extends AssessmentPartFourCountArgs>(
+      args?: Subset<T, AssessmentPartFourCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AssessmentPartFourCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AssessmentPartFour.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentPartFourAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AssessmentPartFourAggregateArgs>(args: Subset<T, AssessmentPartFourAggregateArgs>): Prisma.PrismaPromise<GetAssessmentPartFourAggregateType<T>>
+
+    /**
+     * Group by AssessmentPartFour.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentPartFourGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AssessmentPartFourGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AssessmentPartFourGroupByArgs['orderBy'] }
+        : { orderBy?: AssessmentPartFourGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AssessmentPartFourGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssessmentPartFourGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AssessmentPartFour model
+   */
+  readonly fields: AssessmentPartFourFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AssessmentPartFour.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AssessmentPartFourClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    domainVisions<T extends AssessmentPartFour$domainVisionsArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentPartFour$domainVisionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DomainVisionEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    identities<T extends AssessmentPartFour$identitiesArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentPartFour$identitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AssessmentPartFour model
+   */
+  interface AssessmentPartFourFieldRefs {
+    readonly id: FieldRef<"AssessmentPartFour", 'String'>
+    readonly createdAt: FieldRef<"AssessmentPartFour", 'DateTime'>
+    readonly updatedAt: FieldRef<"AssessmentPartFour", 'DateTime'>
+    readonly existingCommitments: FieldRef<"AssessmentPartFour", 'String[]'>
+    readonly desiredCommitments: FieldRef<"AssessmentPartFour", 'String[]'>
+    readonly unwantedCommitments: FieldRef<"AssessmentPartFour", 'String[]'>
+    readonly idealMorning: FieldRef<"AssessmentPartFour", 'String'>
+    readonly idealAfternoon: FieldRef<"AssessmentPartFour", 'String'>
+    readonly idealEvening: FieldRef<"AssessmentPartFour", 'String'>
+    readonly cleanSlateReflection: FieldRef<"AssessmentPartFour", 'String'>
+    readonly majorGoals: FieldRef<"AssessmentPartFour", 'String[]'>
+    readonly vision6Months: FieldRef<"AssessmentPartFour", 'String'>
+    readonly vision2Years: FieldRef<"AssessmentPartFour", 'String'>
+    readonly vision5Years: FieldRef<"AssessmentPartFour", 'String'>
+    readonly majorChanges: FieldRef<"AssessmentPartFour", 'String[]'>
+    readonly successDefinition: FieldRef<"AssessmentPartFour", 'String'>
+    readonly futureReflection: FieldRef<"AssessmentPartFour", 'String'>
+    readonly reflectionGoals: FieldRef<"AssessmentPartFour", 'String[]'>
+    readonly completedAt: FieldRef<"AssessmentPartFour", 'DateTime'>
+    readonly userId: FieldRef<"AssessmentPartFour", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AssessmentPartFour findUnique
+   */
+  export type AssessmentPartFourFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFour
+     */
+    select?: AssessmentPartFourSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentPartFour
+     */
+    omit?: AssessmentPartFourOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentPartFourInclude<ExtArgs> | null
+    /**
+     * Filter, which AssessmentPartFour to fetch.
+     */
+    where: AssessmentPartFourWhereUniqueInput
+  }
+
+  /**
+   * AssessmentPartFour findUniqueOrThrow
+   */
+  export type AssessmentPartFourFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFour
+     */
+    select?: AssessmentPartFourSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentPartFour
+     */
+    omit?: AssessmentPartFourOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentPartFourInclude<ExtArgs> | null
+    /**
+     * Filter, which AssessmentPartFour to fetch.
+     */
+    where: AssessmentPartFourWhereUniqueInput
+  }
+
+  /**
+   * AssessmentPartFour findFirst
+   */
+  export type AssessmentPartFourFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFour
+     */
+    select?: AssessmentPartFourSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentPartFour
+     */
+    omit?: AssessmentPartFourOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentPartFourInclude<ExtArgs> | null
+    /**
+     * Filter, which AssessmentPartFour to fetch.
+     */
+    where?: AssessmentPartFourWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssessmentPartFours to fetch.
+     */
+    orderBy?: AssessmentPartFourOrderByWithRelationInput | AssessmentPartFourOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssessmentPartFours.
+     */
+    cursor?: AssessmentPartFourWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssessmentPartFours from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssessmentPartFours.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssessmentPartFours.
+     */
+    distinct?: AssessmentPartFourScalarFieldEnum | AssessmentPartFourScalarFieldEnum[]
+  }
+
+  /**
+   * AssessmentPartFour findFirstOrThrow
+   */
+  export type AssessmentPartFourFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFour
+     */
+    select?: AssessmentPartFourSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentPartFour
+     */
+    omit?: AssessmentPartFourOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentPartFourInclude<ExtArgs> | null
+    /**
+     * Filter, which AssessmentPartFour to fetch.
+     */
+    where?: AssessmentPartFourWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssessmentPartFours to fetch.
+     */
+    orderBy?: AssessmentPartFourOrderByWithRelationInput | AssessmentPartFourOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssessmentPartFours.
+     */
+    cursor?: AssessmentPartFourWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssessmentPartFours from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssessmentPartFours.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssessmentPartFours.
+     */
+    distinct?: AssessmentPartFourScalarFieldEnum | AssessmentPartFourScalarFieldEnum[]
+  }
+
+  /**
+   * AssessmentPartFour findMany
+   */
+  export type AssessmentPartFourFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFour
+     */
+    select?: AssessmentPartFourSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentPartFour
+     */
+    omit?: AssessmentPartFourOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentPartFourInclude<ExtArgs> | null
+    /**
+     * Filter, which AssessmentPartFours to fetch.
+     */
+    where?: AssessmentPartFourWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssessmentPartFours to fetch.
+     */
+    orderBy?: AssessmentPartFourOrderByWithRelationInput | AssessmentPartFourOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AssessmentPartFours.
+     */
+    cursor?: AssessmentPartFourWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssessmentPartFours from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssessmentPartFours.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssessmentPartFours.
+     */
+    distinct?: AssessmentPartFourScalarFieldEnum | AssessmentPartFourScalarFieldEnum[]
+  }
+
+  /**
+   * AssessmentPartFour create
+   */
+  export type AssessmentPartFourCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFour
+     */
+    select?: AssessmentPartFourSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentPartFour
+     */
+    omit?: AssessmentPartFourOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentPartFourInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AssessmentPartFour.
+     */
+    data: XOR<AssessmentPartFourCreateInput, AssessmentPartFourUncheckedCreateInput>
+  }
+
+  /**
+   * AssessmentPartFour createMany
+   */
+  export type AssessmentPartFourCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AssessmentPartFours.
+     */
+    data: AssessmentPartFourCreateManyInput | AssessmentPartFourCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AssessmentPartFour createManyAndReturn
+   */
+  export type AssessmentPartFourCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFour
+     */
+    select?: AssessmentPartFourSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentPartFour
+     */
+    omit?: AssessmentPartFourOmit<ExtArgs> | null
+    /**
+     * The data used to create many AssessmentPartFours.
+     */
+    data: AssessmentPartFourCreateManyInput | AssessmentPartFourCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentPartFourIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssessmentPartFour update
+   */
+  export type AssessmentPartFourUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFour
+     */
+    select?: AssessmentPartFourSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentPartFour
+     */
+    omit?: AssessmentPartFourOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentPartFourInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AssessmentPartFour.
+     */
+    data: XOR<AssessmentPartFourUpdateInput, AssessmentPartFourUncheckedUpdateInput>
+    /**
+     * Choose, which AssessmentPartFour to update.
+     */
+    where: AssessmentPartFourWhereUniqueInput
+  }
+
+  /**
+   * AssessmentPartFour updateMany
+   */
+  export type AssessmentPartFourUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AssessmentPartFours.
+     */
+    data: XOR<AssessmentPartFourUpdateManyMutationInput, AssessmentPartFourUncheckedUpdateManyInput>
+    /**
+     * Filter which AssessmentPartFours to update
+     */
+    where?: AssessmentPartFourWhereInput
+    /**
+     * Limit how many AssessmentPartFours to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssessmentPartFour updateManyAndReturn
+   */
+  export type AssessmentPartFourUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFour
+     */
+    select?: AssessmentPartFourSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentPartFour
+     */
+    omit?: AssessmentPartFourOmit<ExtArgs> | null
+    /**
+     * The data used to update AssessmentPartFours.
+     */
+    data: XOR<AssessmentPartFourUpdateManyMutationInput, AssessmentPartFourUncheckedUpdateManyInput>
+    /**
+     * Filter which AssessmentPartFours to update
+     */
+    where?: AssessmentPartFourWhereInput
+    /**
+     * Limit how many AssessmentPartFours to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentPartFourIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssessmentPartFour upsert
+   */
+  export type AssessmentPartFourUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFour
+     */
+    select?: AssessmentPartFourSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentPartFour
+     */
+    omit?: AssessmentPartFourOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentPartFourInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AssessmentPartFour to update in case it exists.
+     */
+    where: AssessmentPartFourWhereUniqueInput
+    /**
+     * In case the AssessmentPartFour found by the `where` argument doesn't exist, create a new AssessmentPartFour with this data.
+     */
+    create: XOR<AssessmentPartFourCreateInput, AssessmentPartFourUncheckedCreateInput>
+    /**
+     * In case the AssessmentPartFour was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AssessmentPartFourUpdateInput, AssessmentPartFourUncheckedUpdateInput>
+  }
+
+  /**
+   * AssessmentPartFour delete
+   */
+  export type AssessmentPartFourDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFour
+     */
+    select?: AssessmentPartFourSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentPartFour
+     */
+    omit?: AssessmentPartFourOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentPartFourInclude<ExtArgs> | null
+    /**
+     * Filter which AssessmentPartFour to delete.
+     */
+    where: AssessmentPartFourWhereUniqueInput
+  }
+
+  /**
+   * AssessmentPartFour deleteMany
+   */
+  export type AssessmentPartFourDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssessmentPartFours to delete
+     */
+    where?: AssessmentPartFourWhereInput
+    /**
+     * Limit how many AssessmentPartFours to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssessmentPartFour.domainVisions
+   */
+  export type AssessmentPartFour$domainVisionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DomainVisionEntry
+     */
+    select?: DomainVisionEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DomainVisionEntry
+     */
+    omit?: DomainVisionEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DomainVisionEntryInclude<ExtArgs> | null
+    where?: DomainVisionEntryWhereInput
+    orderBy?: DomainVisionEntryOrderByWithRelationInput | DomainVisionEntryOrderByWithRelationInput[]
+    cursor?: DomainVisionEntryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DomainVisionEntryScalarFieldEnum | DomainVisionEntryScalarFieldEnum[]
+  }
+
+  /**
+   * AssessmentPartFour.identities
+   */
+  export type AssessmentPartFour$identitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordInclude<ExtArgs> | null
+    where?: IdentityRecordWhereInput
+    orderBy?: IdentityRecordOrderByWithRelationInput | IdentityRecordOrderByWithRelationInput[]
+    cursor?: IdentityRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IdentityRecordScalarFieldEnum | IdentityRecordScalarFieldEnum[]
+  }
+
+  /**
+   * AssessmentPartFour without action
+   */
+  export type AssessmentPartFourDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentPartFour
+     */
+    select?: AssessmentPartFourSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentPartFour
+     */
+    omit?: AssessmentPartFourOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentPartFourInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DomainVisionEntry
+   */
+
+  export type AggregateDomainVisionEntry = {
+    _count: DomainVisionEntryCountAggregateOutputType | null
+    _min: DomainVisionEntryMinAggregateOutputType | null
+    _max: DomainVisionEntryMaxAggregateOutputType | null
+  }
+
+  export type DomainVisionEntryMinAggregateOutputType = {
+    id: string | null
+    domain: string | null
+    vision: string | null
+    assessmentId: string | null
+  }
+
+  export type DomainVisionEntryMaxAggregateOutputType = {
+    id: string | null
+    domain: string | null
+    vision: string | null
+    assessmentId: string | null
+  }
+
+  export type DomainVisionEntryCountAggregateOutputType = {
+    id: number
+    domain: number
+    vision: number
+    assessmentId: number
+    _all: number
+  }
+
+
+  export type DomainVisionEntryMinAggregateInputType = {
+    id?: true
+    domain?: true
+    vision?: true
+    assessmentId?: true
+  }
+
+  export type DomainVisionEntryMaxAggregateInputType = {
+    id?: true
+    domain?: true
+    vision?: true
+    assessmentId?: true
+  }
+
+  export type DomainVisionEntryCountAggregateInputType = {
+    id?: true
+    domain?: true
+    vision?: true
+    assessmentId?: true
+    _all?: true
+  }
+
+  export type DomainVisionEntryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DomainVisionEntry to aggregate.
+     */
+    where?: DomainVisionEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DomainVisionEntries to fetch.
+     */
+    orderBy?: DomainVisionEntryOrderByWithRelationInput | DomainVisionEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DomainVisionEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DomainVisionEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DomainVisionEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DomainVisionEntries
+    **/
+    _count?: true | DomainVisionEntryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DomainVisionEntryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DomainVisionEntryMaxAggregateInputType
+  }
+
+  export type GetDomainVisionEntryAggregateType<T extends DomainVisionEntryAggregateArgs> = {
+        [P in keyof T & keyof AggregateDomainVisionEntry]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDomainVisionEntry[P]>
+      : GetScalarType<T[P], AggregateDomainVisionEntry[P]>
+  }
+
+
+
+
+  export type DomainVisionEntryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DomainVisionEntryWhereInput
+    orderBy?: DomainVisionEntryOrderByWithAggregationInput | DomainVisionEntryOrderByWithAggregationInput[]
+    by: DomainVisionEntryScalarFieldEnum[] | DomainVisionEntryScalarFieldEnum
+    having?: DomainVisionEntryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DomainVisionEntryCountAggregateInputType | true
+    _min?: DomainVisionEntryMinAggregateInputType
+    _max?: DomainVisionEntryMaxAggregateInputType
+  }
+
+  export type DomainVisionEntryGroupByOutputType = {
+    id: string
+    domain: string
+    vision: string
+    assessmentId: string
+    _count: DomainVisionEntryCountAggregateOutputType | null
+    _min: DomainVisionEntryMinAggregateOutputType | null
+    _max: DomainVisionEntryMaxAggregateOutputType | null
+  }
+
+  type GetDomainVisionEntryGroupByPayload<T extends DomainVisionEntryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DomainVisionEntryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DomainVisionEntryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DomainVisionEntryGroupByOutputType[P]>
+            : GetScalarType<T[P], DomainVisionEntryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DomainVisionEntrySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    domain?: boolean
+    vision?: boolean
+    assessmentId?: boolean
+    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["domainVisionEntry"]>
+
+  export type DomainVisionEntrySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    domain?: boolean
+    vision?: boolean
+    assessmentId?: boolean
+    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["domainVisionEntry"]>
+
+  export type DomainVisionEntrySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    domain?: boolean
+    vision?: boolean
+    assessmentId?: boolean
+    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["domainVisionEntry"]>
+
+  export type DomainVisionEntrySelectScalar = {
+    id?: boolean
+    domain?: boolean
+    vision?: boolean
+    assessmentId?: boolean
+  }
+
+  export type DomainVisionEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "domain" | "vision" | "assessmentId", ExtArgs["result"]["domainVisionEntry"]>
+  export type DomainVisionEntryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  }
+  export type DomainVisionEntryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  }
+  export type DomainVisionEntryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  }
+
+  export type $DomainVisionEntryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DomainVisionEntry"
+    objects: {
+      assessment: Prisma.$AssessmentPartFourPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      domain: string
+      vision: string
+      assessmentId: string
+    }, ExtArgs["result"]["domainVisionEntry"]>
+    composites: {}
+  }
+
+  type DomainVisionEntryGetPayload<S extends boolean | null | undefined | DomainVisionEntryDefaultArgs> = $Result.GetResult<Prisma.$DomainVisionEntryPayload, S>
+
+  type DomainVisionEntryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DomainVisionEntryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DomainVisionEntryCountAggregateInputType | true
+    }
+
+  export interface DomainVisionEntryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DomainVisionEntry'], meta: { name: 'DomainVisionEntry' } }
+    /**
+     * Find zero or one DomainVisionEntry that matches the filter.
+     * @param {DomainVisionEntryFindUniqueArgs} args - Arguments to find a DomainVisionEntry
+     * @example
+     * // Get one DomainVisionEntry
+     * const domainVisionEntry = await prisma.domainVisionEntry.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DomainVisionEntryFindUniqueArgs>(args: SelectSubset<T, DomainVisionEntryFindUniqueArgs<ExtArgs>>): Prisma__DomainVisionEntryClient<$Result.GetResult<Prisma.$DomainVisionEntryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DomainVisionEntry that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DomainVisionEntryFindUniqueOrThrowArgs} args - Arguments to find a DomainVisionEntry
+     * @example
+     * // Get one DomainVisionEntry
+     * const domainVisionEntry = await prisma.domainVisionEntry.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DomainVisionEntryFindUniqueOrThrowArgs>(args: SelectSubset<T, DomainVisionEntryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DomainVisionEntryClient<$Result.GetResult<Prisma.$DomainVisionEntryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DomainVisionEntry that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DomainVisionEntryFindFirstArgs} args - Arguments to find a DomainVisionEntry
+     * @example
+     * // Get one DomainVisionEntry
+     * const domainVisionEntry = await prisma.domainVisionEntry.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DomainVisionEntryFindFirstArgs>(args?: SelectSubset<T, DomainVisionEntryFindFirstArgs<ExtArgs>>): Prisma__DomainVisionEntryClient<$Result.GetResult<Prisma.$DomainVisionEntryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DomainVisionEntry that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DomainVisionEntryFindFirstOrThrowArgs} args - Arguments to find a DomainVisionEntry
+     * @example
+     * // Get one DomainVisionEntry
+     * const domainVisionEntry = await prisma.domainVisionEntry.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DomainVisionEntryFindFirstOrThrowArgs>(args?: SelectSubset<T, DomainVisionEntryFindFirstOrThrowArgs<ExtArgs>>): Prisma__DomainVisionEntryClient<$Result.GetResult<Prisma.$DomainVisionEntryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DomainVisionEntries that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DomainVisionEntryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DomainVisionEntries
+     * const domainVisionEntries = await prisma.domainVisionEntry.findMany()
+     * 
+     * // Get first 10 DomainVisionEntries
+     * const domainVisionEntries = await prisma.domainVisionEntry.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const domainVisionEntryWithIdOnly = await prisma.domainVisionEntry.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DomainVisionEntryFindManyArgs>(args?: SelectSubset<T, DomainVisionEntryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DomainVisionEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DomainVisionEntry.
+     * @param {DomainVisionEntryCreateArgs} args - Arguments to create a DomainVisionEntry.
+     * @example
+     * // Create one DomainVisionEntry
+     * const DomainVisionEntry = await prisma.domainVisionEntry.create({
+     *   data: {
+     *     // ... data to create a DomainVisionEntry
+     *   }
+     * })
+     * 
+     */
+    create<T extends DomainVisionEntryCreateArgs>(args: SelectSubset<T, DomainVisionEntryCreateArgs<ExtArgs>>): Prisma__DomainVisionEntryClient<$Result.GetResult<Prisma.$DomainVisionEntryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DomainVisionEntries.
+     * @param {DomainVisionEntryCreateManyArgs} args - Arguments to create many DomainVisionEntries.
+     * @example
+     * // Create many DomainVisionEntries
+     * const domainVisionEntry = await prisma.domainVisionEntry.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DomainVisionEntryCreateManyArgs>(args?: SelectSubset<T, DomainVisionEntryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DomainVisionEntries and returns the data saved in the database.
+     * @param {DomainVisionEntryCreateManyAndReturnArgs} args - Arguments to create many DomainVisionEntries.
+     * @example
+     * // Create many DomainVisionEntries
+     * const domainVisionEntry = await prisma.domainVisionEntry.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DomainVisionEntries and only return the `id`
+     * const domainVisionEntryWithIdOnly = await prisma.domainVisionEntry.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DomainVisionEntryCreateManyAndReturnArgs>(args?: SelectSubset<T, DomainVisionEntryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DomainVisionEntryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DomainVisionEntry.
+     * @param {DomainVisionEntryDeleteArgs} args - Arguments to delete one DomainVisionEntry.
+     * @example
+     * // Delete one DomainVisionEntry
+     * const DomainVisionEntry = await prisma.domainVisionEntry.delete({
+     *   where: {
+     *     // ... filter to delete one DomainVisionEntry
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DomainVisionEntryDeleteArgs>(args: SelectSubset<T, DomainVisionEntryDeleteArgs<ExtArgs>>): Prisma__DomainVisionEntryClient<$Result.GetResult<Prisma.$DomainVisionEntryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DomainVisionEntry.
+     * @param {DomainVisionEntryUpdateArgs} args - Arguments to update one DomainVisionEntry.
+     * @example
+     * // Update one DomainVisionEntry
+     * const domainVisionEntry = await prisma.domainVisionEntry.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DomainVisionEntryUpdateArgs>(args: SelectSubset<T, DomainVisionEntryUpdateArgs<ExtArgs>>): Prisma__DomainVisionEntryClient<$Result.GetResult<Prisma.$DomainVisionEntryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DomainVisionEntries.
+     * @param {DomainVisionEntryDeleteManyArgs} args - Arguments to filter DomainVisionEntries to delete.
+     * @example
+     * // Delete a few DomainVisionEntries
+     * const { count } = await prisma.domainVisionEntry.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DomainVisionEntryDeleteManyArgs>(args?: SelectSubset<T, DomainVisionEntryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DomainVisionEntries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DomainVisionEntryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DomainVisionEntries
+     * const domainVisionEntry = await prisma.domainVisionEntry.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DomainVisionEntryUpdateManyArgs>(args: SelectSubset<T, DomainVisionEntryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DomainVisionEntries and returns the data updated in the database.
+     * @param {DomainVisionEntryUpdateManyAndReturnArgs} args - Arguments to update many DomainVisionEntries.
+     * @example
+     * // Update many DomainVisionEntries
+     * const domainVisionEntry = await prisma.domainVisionEntry.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DomainVisionEntries and only return the `id`
+     * const domainVisionEntryWithIdOnly = await prisma.domainVisionEntry.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DomainVisionEntryUpdateManyAndReturnArgs>(args: SelectSubset<T, DomainVisionEntryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DomainVisionEntryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DomainVisionEntry.
+     * @param {DomainVisionEntryUpsertArgs} args - Arguments to update or create a DomainVisionEntry.
+     * @example
+     * // Update or create a DomainVisionEntry
+     * const domainVisionEntry = await prisma.domainVisionEntry.upsert({
+     *   create: {
+     *     // ... data to create a DomainVisionEntry
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DomainVisionEntry we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DomainVisionEntryUpsertArgs>(args: SelectSubset<T, DomainVisionEntryUpsertArgs<ExtArgs>>): Prisma__DomainVisionEntryClient<$Result.GetResult<Prisma.$DomainVisionEntryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DomainVisionEntries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DomainVisionEntryCountArgs} args - Arguments to filter DomainVisionEntries to count.
+     * @example
+     * // Count the number of DomainVisionEntries
+     * const count = await prisma.domainVisionEntry.count({
+     *   where: {
+     *     // ... the filter for the DomainVisionEntries we want to count
+     *   }
+     * })
+    **/
+    count<T extends DomainVisionEntryCountArgs>(
+      args?: Subset<T, DomainVisionEntryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DomainVisionEntryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DomainVisionEntry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DomainVisionEntryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DomainVisionEntryAggregateArgs>(args: Subset<T, DomainVisionEntryAggregateArgs>): Prisma.PrismaPromise<GetDomainVisionEntryAggregateType<T>>
+
+    /**
+     * Group by DomainVisionEntry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DomainVisionEntryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DomainVisionEntryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DomainVisionEntryGroupByArgs['orderBy'] }
+        : { orderBy?: DomainVisionEntryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DomainVisionEntryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDomainVisionEntryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DomainVisionEntry model
+   */
+  readonly fields: DomainVisionEntryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DomainVisionEntry.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DomainVisionEntryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    assessment<T extends AssessmentPartFourDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentPartFourDefaultArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DomainVisionEntry model
+   */
+  interface DomainVisionEntryFieldRefs {
+    readonly id: FieldRef<"DomainVisionEntry", 'String'>
+    readonly domain: FieldRef<"DomainVisionEntry", 'String'>
+    readonly vision: FieldRef<"DomainVisionEntry", 'String'>
+    readonly assessmentId: FieldRef<"DomainVisionEntry", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DomainVisionEntry findUnique
+   */
+  export type DomainVisionEntryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DomainVisionEntry
+     */
+    select?: DomainVisionEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DomainVisionEntry
+     */
+    omit?: DomainVisionEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DomainVisionEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which DomainVisionEntry to fetch.
+     */
+    where: DomainVisionEntryWhereUniqueInput
+  }
+
+  /**
+   * DomainVisionEntry findUniqueOrThrow
+   */
+  export type DomainVisionEntryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DomainVisionEntry
+     */
+    select?: DomainVisionEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DomainVisionEntry
+     */
+    omit?: DomainVisionEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DomainVisionEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which DomainVisionEntry to fetch.
+     */
+    where: DomainVisionEntryWhereUniqueInput
+  }
+
+  /**
+   * DomainVisionEntry findFirst
+   */
+  export type DomainVisionEntryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DomainVisionEntry
+     */
+    select?: DomainVisionEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DomainVisionEntry
+     */
+    omit?: DomainVisionEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DomainVisionEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which DomainVisionEntry to fetch.
+     */
+    where?: DomainVisionEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DomainVisionEntries to fetch.
+     */
+    orderBy?: DomainVisionEntryOrderByWithRelationInput | DomainVisionEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DomainVisionEntries.
+     */
+    cursor?: DomainVisionEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DomainVisionEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DomainVisionEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DomainVisionEntries.
+     */
+    distinct?: DomainVisionEntryScalarFieldEnum | DomainVisionEntryScalarFieldEnum[]
+  }
+
+  /**
+   * DomainVisionEntry findFirstOrThrow
+   */
+  export type DomainVisionEntryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DomainVisionEntry
+     */
+    select?: DomainVisionEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DomainVisionEntry
+     */
+    omit?: DomainVisionEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DomainVisionEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which DomainVisionEntry to fetch.
+     */
+    where?: DomainVisionEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DomainVisionEntries to fetch.
+     */
+    orderBy?: DomainVisionEntryOrderByWithRelationInput | DomainVisionEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DomainVisionEntries.
+     */
+    cursor?: DomainVisionEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DomainVisionEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DomainVisionEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DomainVisionEntries.
+     */
+    distinct?: DomainVisionEntryScalarFieldEnum | DomainVisionEntryScalarFieldEnum[]
+  }
+
+  /**
+   * DomainVisionEntry findMany
+   */
+  export type DomainVisionEntryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DomainVisionEntry
+     */
+    select?: DomainVisionEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DomainVisionEntry
+     */
+    omit?: DomainVisionEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DomainVisionEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which DomainVisionEntries to fetch.
+     */
+    where?: DomainVisionEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DomainVisionEntries to fetch.
+     */
+    orderBy?: DomainVisionEntryOrderByWithRelationInput | DomainVisionEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DomainVisionEntries.
+     */
+    cursor?: DomainVisionEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DomainVisionEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DomainVisionEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DomainVisionEntries.
+     */
+    distinct?: DomainVisionEntryScalarFieldEnum | DomainVisionEntryScalarFieldEnum[]
+  }
+
+  /**
+   * DomainVisionEntry create
+   */
+  export type DomainVisionEntryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DomainVisionEntry
+     */
+    select?: DomainVisionEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DomainVisionEntry
+     */
+    omit?: DomainVisionEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DomainVisionEntryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DomainVisionEntry.
+     */
+    data: XOR<DomainVisionEntryCreateInput, DomainVisionEntryUncheckedCreateInput>
+  }
+
+  /**
+   * DomainVisionEntry createMany
+   */
+  export type DomainVisionEntryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DomainVisionEntries.
+     */
+    data: DomainVisionEntryCreateManyInput | DomainVisionEntryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DomainVisionEntry createManyAndReturn
+   */
+  export type DomainVisionEntryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DomainVisionEntry
+     */
+    select?: DomainVisionEntrySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DomainVisionEntry
+     */
+    omit?: DomainVisionEntryOmit<ExtArgs> | null
+    /**
+     * The data used to create many DomainVisionEntries.
+     */
+    data: DomainVisionEntryCreateManyInput | DomainVisionEntryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DomainVisionEntryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DomainVisionEntry update
+   */
+  export type DomainVisionEntryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DomainVisionEntry
+     */
+    select?: DomainVisionEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DomainVisionEntry
+     */
+    omit?: DomainVisionEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DomainVisionEntryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DomainVisionEntry.
+     */
+    data: XOR<DomainVisionEntryUpdateInput, DomainVisionEntryUncheckedUpdateInput>
+    /**
+     * Choose, which DomainVisionEntry to update.
+     */
+    where: DomainVisionEntryWhereUniqueInput
+  }
+
+  /**
+   * DomainVisionEntry updateMany
+   */
+  export type DomainVisionEntryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DomainVisionEntries.
+     */
+    data: XOR<DomainVisionEntryUpdateManyMutationInput, DomainVisionEntryUncheckedUpdateManyInput>
+    /**
+     * Filter which DomainVisionEntries to update
+     */
+    where?: DomainVisionEntryWhereInput
+    /**
+     * Limit how many DomainVisionEntries to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DomainVisionEntry updateManyAndReturn
+   */
+  export type DomainVisionEntryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DomainVisionEntry
+     */
+    select?: DomainVisionEntrySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DomainVisionEntry
+     */
+    omit?: DomainVisionEntryOmit<ExtArgs> | null
+    /**
+     * The data used to update DomainVisionEntries.
+     */
+    data: XOR<DomainVisionEntryUpdateManyMutationInput, DomainVisionEntryUncheckedUpdateManyInput>
+    /**
+     * Filter which DomainVisionEntries to update
+     */
+    where?: DomainVisionEntryWhereInput
+    /**
+     * Limit how many DomainVisionEntries to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DomainVisionEntryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DomainVisionEntry upsert
+   */
+  export type DomainVisionEntryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DomainVisionEntry
+     */
+    select?: DomainVisionEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DomainVisionEntry
+     */
+    omit?: DomainVisionEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DomainVisionEntryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DomainVisionEntry to update in case it exists.
+     */
+    where: DomainVisionEntryWhereUniqueInput
+    /**
+     * In case the DomainVisionEntry found by the `where` argument doesn't exist, create a new DomainVisionEntry with this data.
+     */
+    create: XOR<DomainVisionEntryCreateInput, DomainVisionEntryUncheckedCreateInput>
+    /**
+     * In case the DomainVisionEntry was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DomainVisionEntryUpdateInput, DomainVisionEntryUncheckedUpdateInput>
+  }
+
+  /**
+   * DomainVisionEntry delete
+   */
+  export type DomainVisionEntryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DomainVisionEntry
+     */
+    select?: DomainVisionEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DomainVisionEntry
+     */
+    omit?: DomainVisionEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DomainVisionEntryInclude<ExtArgs> | null
+    /**
+     * Filter which DomainVisionEntry to delete.
+     */
+    where: DomainVisionEntryWhereUniqueInput
+  }
+
+  /**
+   * DomainVisionEntry deleteMany
+   */
+  export type DomainVisionEntryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DomainVisionEntries to delete
+     */
+    where?: DomainVisionEntryWhereInput
+    /**
+     * Limit how many DomainVisionEntries to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DomainVisionEntry without action
+   */
+  export type DomainVisionEntryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DomainVisionEntry
+     */
+    select?: DomainVisionEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DomainVisionEntry
+     */
+    omit?: DomainVisionEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DomainVisionEntryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model IdentityRecord
+   */
+
+  export type AggregateIdentityRecord = {
+    _count: IdentityRecordCountAggregateOutputType | null
+    _min: IdentityRecordMinAggregateOutputType | null
+    _max: IdentityRecordMaxAggregateOutputType | null
+  }
+
+  export type IdentityRecordMinAggregateOutputType = {
+    id: string | null
+    identity: string | null
+    assessmentId: string | null
+  }
+
+  export type IdentityRecordMaxAggregateOutputType = {
+    id: string | null
+    identity: string | null
+    assessmentId: string | null
+  }
+
+  export type IdentityRecordCountAggregateOutputType = {
+    id: number
+    identity: number
+    habits: number
+    assessmentId: number
+    _all: number
+  }
+
+
+  export type IdentityRecordMinAggregateInputType = {
+    id?: true
+    identity?: true
+    assessmentId?: true
+  }
+
+  export type IdentityRecordMaxAggregateInputType = {
+    id?: true
+    identity?: true
+    assessmentId?: true
+  }
+
+  export type IdentityRecordCountAggregateInputType = {
+    id?: true
+    identity?: true
+    habits?: true
+    assessmentId?: true
+    _all?: true
+  }
+
+  export type IdentityRecordAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IdentityRecord to aggregate.
+     */
+    where?: IdentityRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IdentityRecords to fetch.
+     */
+    orderBy?: IdentityRecordOrderByWithRelationInput | IdentityRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: IdentityRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IdentityRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IdentityRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned IdentityRecords
+    **/
+    _count?: true | IdentityRecordCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: IdentityRecordMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: IdentityRecordMaxAggregateInputType
+  }
+
+  export type GetIdentityRecordAggregateType<T extends IdentityRecordAggregateArgs> = {
+        [P in keyof T & keyof AggregateIdentityRecord]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIdentityRecord[P]>
+      : GetScalarType<T[P], AggregateIdentityRecord[P]>
+  }
+
+
+
+
+  export type IdentityRecordGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdentityRecordWhereInput
+    orderBy?: IdentityRecordOrderByWithAggregationInput | IdentityRecordOrderByWithAggregationInput[]
+    by: IdentityRecordScalarFieldEnum[] | IdentityRecordScalarFieldEnum
+    having?: IdentityRecordScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: IdentityRecordCountAggregateInputType | true
+    _min?: IdentityRecordMinAggregateInputType
+    _max?: IdentityRecordMaxAggregateInputType
+  }
+
+  export type IdentityRecordGroupByOutputType = {
+    id: string
+    identity: string
+    habits: string[]
+    assessmentId: string
+    _count: IdentityRecordCountAggregateOutputType | null
+    _min: IdentityRecordMinAggregateOutputType | null
+    _max: IdentityRecordMaxAggregateOutputType | null
+  }
+
+  type GetIdentityRecordGroupByPayload<T extends IdentityRecordGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<IdentityRecordGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof IdentityRecordGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], IdentityRecordGroupByOutputType[P]>
+            : GetScalarType<T[P], IdentityRecordGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type IdentityRecordSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    identity?: boolean
+    habits?: boolean
+    assessmentId?: boolean
+    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["identityRecord"]>
+
+  export type IdentityRecordSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    identity?: boolean
+    habits?: boolean
+    assessmentId?: boolean
+    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["identityRecord"]>
+
+  export type IdentityRecordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    identity?: boolean
+    habits?: boolean
+    assessmentId?: boolean
+    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["identityRecord"]>
+
+  export type IdentityRecordSelectScalar = {
+    id?: boolean
+    identity?: boolean
+    habits?: boolean
+    assessmentId?: boolean
+  }
+
+  export type IdentityRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "identity" | "habits" | "assessmentId", ExtArgs["result"]["identityRecord"]>
+  export type IdentityRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  }
+  export type IdentityRecordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  }
+  export type IdentityRecordIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  }
+
+  export type $IdentityRecordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "IdentityRecord"
+    objects: {
+      assessment: Prisma.$AssessmentPartFourPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      identity: string
+      habits: string[]
+      assessmentId: string
+    }, ExtArgs["result"]["identityRecord"]>
+    composites: {}
+  }
+
+  type IdentityRecordGetPayload<S extends boolean | null | undefined | IdentityRecordDefaultArgs> = $Result.GetResult<Prisma.$IdentityRecordPayload, S>
+
+  type IdentityRecordCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IdentityRecordFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IdentityRecordCountAggregateInputType | true
+    }
+
+  export interface IdentityRecordDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['IdentityRecord'], meta: { name: 'IdentityRecord' } }
+    /**
+     * Find zero or one IdentityRecord that matches the filter.
+     * @param {IdentityRecordFindUniqueArgs} args - Arguments to find a IdentityRecord
+     * @example
+     * // Get one IdentityRecord
+     * const identityRecord = await prisma.identityRecord.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends IdentityRecordFindUniqueArgs>(args: SelectSubset<T, IdentityRecordFindUniqueArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one IdentityRecord that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {IdentityRecordFindUniqueOrThrowArgs} args - Arguments to find a IdentityRecord
+     * @example
+     * // Get one IdentityRecord
+     * const identityRecord = await prisma.identityRecord.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends IdentityRecordFindUniqueOrThrowArgs>(args: SelectSubset<T, IdentityRecordFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IdentityRecord that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityRecordFindFirstArgs} args - Arguments to find a IdentityRecord
+     * @example
+     * // Get one IdentityRecord
+     * const identityRecord = await prisma.identityRecord.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends IdentityRecordFindFirstArgs>(args?: SelectSubset<T, IdentityRecordFindFirstArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IdentityRecord that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityRecordFindFirstOrThrowArgs} args - Arguments to find a IdentityRecord
+     * @example
+     * // Get one IdentityRecord
+     * const identityRecord = await prisma.identityRecord.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends IdentityRecordFindFirstOrThrowArgs>(args?: SelectSubset<T, IdentityRecordFindFirstOrThrowArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more IdentityRecords that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityRecordFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all IdentityRecords
+     * const identityRecords = await prisma.identityRecord.findMany()
+     * 
+     * // Get first 10 IdentityRecords
+     * const identityRecords = await prisma.identityRecord.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const identityRecordWithIdOnly = await prisma.identityRecord.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends IdentityRecordFindManyArgs>(args?: SelectSubset<T, IdentityRecordFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a IdentityRecord.
+     * @param {IdentityRecordCreateArgs} args - Arguments to create a IdentityRecord.
+     * @example
+     * // Create one IdentityRecord
+     * const IdentityRecord = await prisma.identityRecord.create({
+     *   data: {
+     *     // ... data to create a IdentityRecord
+     *   }
+     * })
+     * 
+     */
+    create<T extends IdentityRecordCreateArgs>(args: SelectSubset<T, IdentityRecordCreateArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many IdentityRecords.
+     * @param {IdentityRecordCreateManyArgs} args - Arguments to create many IdentityRecords.
+     * @example
+     * // Create many IdentityRecords
+     * const identityRecord = await prisma.identityRecord.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends IdentityRecordCreateManyArgs>(args?: SelectSubset<T, IdentityRecordCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many IdentityRecords and returns the data saved in the database.
+     * @param {IdentityRecordCreateManyAndReturnArgs} args - Arguments to create many IdentityRecords.
+     * @example
+     * // Create many IdentityRecords
+     * const identityRecord = await prisma.identityRecord.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many IdentityRecords and only return the `id`
+     * const identityRecordWithIdOnly = await prisma.identityRecord.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends IdentityRecordCreateManyAndReturnArgs>(args?: SelectSubset<T, IdentityRecordCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a IdentityRecord.
+     * @param {IdentityRecordDeleteArgs} args - Arguments to delete one IdentityRecord.
+     * @example
+     * // Delete one IdentityRecord
+     * const IdentityRecord = await prisma.identityRecord.delete({
+     *   where: {
+     *     // ... filter to delete one IdentityRecord
+     *   }
+     * })
+     * 
+     */
+    delete<T extends IdentityRecordDeleteArgs>(args: SelectSubset<T, IdentityRecordDeleteArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one IdentityRecord.
+     * @param {IdentityRecordUpdateArgs} args - Arguments to update one IdentityRecord.
+     * @example
+     * // Update one IdentityRecord
+     * const identityRecord = await prisma.identityRecord.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends IdentityRecordUpdateArgs>(args: SelectSubset<T, IdentityRecordUpdateArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more IdentityRecords.
+     * @param {IdentityRecordDeleteManyArgs} args - Arguments to filter IdentityRecords to delete.
+     * @example
+     * // Delete a few IdentityRecords
+     * const { count } = await prisma.identityRecord.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends IdentityRecordDeleteManyArgs>(args?: SelectSubset<T, IdentityRecordDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IdentityRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityRecordUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many IdentityRecords
+     * const identityRecord = await prisma.identityRecord.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends IdentityRecordUpdateManyArgs>(args: SelectSubset<T, IdentityRecordUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IdentityRecords and returns the data updated in the database.
+     * @param {IdentityRecordUpdateManyAndReturnArgs} args - Arguments to update many IdentityRecords.
+     * @example
+     * // Update many IdentityRecords
+     * const identityRecord = await prisma.identityRecord.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more IdentityRecords and only return the `id`
+     * const identityRecordWithIdOnly = await prisma.identityRecord.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends IdentityRecordUpdateManyAndReturnArgs>(args: SelectSubset<T, IdentityRecordUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one IdentityRecord.
+     * @param {IdentityRecordUpsertArgs} args - Arguments to update or create a IdentityRecord.
+     * @example
+     * // Update or create a IdentityRecord
+     * const identityRecord = await prisma.identityRecord.upsert({
+     *   create: {
+     *     // ... data to create a IdentityRecord
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the IdentityRecord we want to update
+     *   }
+     * })
+     */
+    upsert<T extends IdentityRecordUpsertArgs>(args: SelectSubset<T, IdentityRecordUpsertArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of IdentityRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityRecordCountArgs} args - Arguments to filter IdentityRecords to count.
+     * @example
+     * // Count the number of IdentityRecords
+     * const count = await prisma.identityRecord.count({
+     *   where: {
+     *     // ... the filter for the IdentityRecords we want to count
+     *   }
+     * })
+    **/
+    count<T extends IdentityRecordCountArgs>(
+      args?: Subset<T, IdentityRecordCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], IdentityRecordCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a IdentityRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityRecordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends IdentityRecordAggregateArgs>(args: Subset<T, IdentityRecordAggregateArgs>): Prisma.PrismaPromise<GetIdentityRecordAggregateType<T>>
+
+    /**
+     * Group by IdentityRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityRecordGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends IdentityRecordGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: IdentityRecordGroupByArgs['orderBy'] }
+        : { orderBy?: IdentityRecordGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, IdentityRecordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIdentityRecordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the IdentityRecord model
+   */
+  readonly fields: IdentityRecordFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for IdentityRecord.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__IdentityRecordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    assessment<T extends AssessmentPartFourDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentPartFourDefaultArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the IdentityRecord model
+   */
+  interface IdentityRecordFieldRefs {
+    readonly id: FieldRef<"IdentityRecord", 'String'>
+    readonly identity: FieldRef<"IdentityRecord", 'String'>
+    readonly habits: FieldRef<"IdentityRecord", 'String[]'>
+    readonly assessmentId: FieldRef<"IdentityRecord", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * IdentityRecord findUnique
+   */
+  export type IdentityRecordFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordInclude<ExtArgs> | null
+    /**
+     * Filter, which IdentityRecord to fetch.
+     */
+    where: IdentityRecordWhereUniqueInput
+  }
+
+  /**
+   * IdentityRecord findUniqueOrThrow
+   */
+  export type IdentityRecordFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordInclude<ExtArgs> | null
+    /**
+     * Filter, which IdentityRecord to fetch.
+     */
+    where: IdentityRecordWhereUniqueInput
+  }
+
+  /**
+   * IdentityRecord findFirst
+   */
+  export type IdentityRecordFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordInclude<ExtArgs> | null
+    /**
+     * Filter, which IdentityRecord to fetch.
+     */
+    where?: IdentityRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IdentityRecords to fetch.
+     */
+    orderBy?: IdentityRecordOrderByWithRelationInput | IdentityRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IdentityRecords.
+     */
+    cursor?: IdentityRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IdentityRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IdentityRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IdentityRecords.
+     */
+    distinct?: IdentityRecordScalarFieldEnum | IdentityRecordScalarFieldEnum[]
+  }
+
+  /**
+   * IdentityRecord findFirstOrThrow
+   */
+  export type IdentityRecordFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordInclude<ExtArgs> | null
+    /**
+     * Filter, which IdentityRecord to fetch.
+     */
+    where?: IdentityRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IdentityRecords to fetch.
+     */
+    orderBy?: IdentityRecordOrderByWithRelationInput | IdentityRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IdentityRecords.
+     */
+    cursor?: IdentityRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IdentityRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IdentityRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IdentityRecords.
+     */
+    distinct?: IdentityRecordScalarFieldEnum | IdentityRecordScalarFieldEnum[]
+  }
+
+  /**
+   * IdentityRecord findMany
+   */
+  export type IdentityRecordFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordInclude<ExtArgs> | null
+    /**
+     * Filter, which IdentityRecords to fetch.
+     */
+    where?: IdentityRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IdentityRecords to fetch.
+     */
+    orderBy?: IdentityRecordOrderByWithRelationInput | IdentityRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing IdentityRecords.
+     */
+    cursor?: IdentityRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IdentityRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IdentityRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IdentityRecords.
+     */
+    distinct?: IdentityRecordScalarFieldEnum | IdentityRecordScalarFieldEnum[]
+  }
+
+  /**
+   * IdentityRecord create
+   */
+  export type IdentityRecordCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordInclude<ExtArgs> | null
+    /**
+     * The data needed to create a IdentityRecord.
+     */
+    data: XOR<IdentityRecordCreateInput, IdentityRecordUncheckedCreateInput>
+  }
+
+  /**
+   * IdentityRecord createMany
+   */
+  export type IdentityRecordCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many IdentityRecords.
+     */
+    data: IdentityRecordCreateManyInput | IdentityRecordCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * IdentityRecord createManyAndReturn
+   */
+  export type IdentityRecordCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * The data used to create many IdentityRecords.
+     */
+    data: IdentityRecordCreateManyInput | IdentityRecordCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * IdentityRecord update
+   */
+  export type IdentityRecordUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordInclude<ExtArgs> | null
+    /**
+     * The data needed to update a IdentityRecord.
+     */
+    data: XOR<IdentityRecordUpdateInput, IdentityRecordUncheckedUpdateInput>
+    /**
+     * Choose, which IdentityRecord to update.
+     */
+    where: IdentityRecordWhereUniqueInput
+  }
+
+  /**
+   * IdentityRecord updateMany
+   */
+  export type IdentityRecordUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update IdentityRecords.
+     */
+    data: XOR<IdentityRecordUpdateManyMutationInput, IdentityRecordUncheckedUpdateManyInput>
+    /**
+     * Filter which IdentityRecords to update
+     */
+    where?: IdentityRecordWhereInput
+    /**
+     * Limit how many IdentityRecords to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * IdentityRecord updateManyAndReturn
+   */
+  export type IdentityRecordUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * The data used to update IdentityRecords.
+     */
+    data: XOR<IdentityRecordUpdateManyMutationInput, IdentityRecordUncheckedUpdateManyInput>
+    /**
+     * Filter which IdentityRecords to update
+     */
+    where?: IdentityRecordWhereInput
+    /**
+     * Limit how many IdentityRecords to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * IdentityRecord upsert
+   */
+  export type IdentityRecordUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordInclude<ExtArgs> | null
+    /**
+     * The filter to search for the IdentityRecord to update in case it exists.
+     */
+    where: IdentityRecordWhereUniqueInput
+    /**
+     * In case the IdentityRecord found by the `where` argument doesn't exist, create a new IdentityRecord with this data.
+     */
+    create: XOR<IdentityRecordCreateInput, IdentityRecordUncheckedCreateInput>
+    /**
+     * In case the IdentityRecord was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<IdentityRecordUpdateInput, IdentityRecordUncheckedUpdateInput>
+  }
+
+  /**
+   * IdentityRecord delete
+   */
+  export type IdentityRecordDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordInclude<ExtArgs> | null
+    /**
+     * Filter which IdentityRecord to delete.
+     */
+    where: IdentityRecordWhereUniqueInput
+  }
+
+  /**
+   * IdentityRecord deleteMany
+   */
+  export type IdentityRecordDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IdentityRecords to delete
+     */
+    where?: IdentityRecordWhereInput
+    /**
+     * Limit how many IdentityRecords to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * IdentityRecord without action
+   */
+  export type IdentityRecordDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -19581,6 +23305,52 @@ export namespace Prisma {
   export type HabitScorecardEntryScalarFieldEnum = (typeof HabitScorecardEntryScalarFieldEnum)[keyof typeof HabitScorecardEntryScalarFieldEnum]
 
 
+  export const AssessmentPartFourScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    existingCommitments: 'existingCommitments',
+    desiredCommitments: 'desiredCommitments',
+    unwantedCommitments: 'unwantedCommitments',
+    idealMorning: 'idealMorning',
+    idealAfternoon: 'idealAfternoon',
+    idealEvening: 'idealEvening',
+    cleanSlateReflection: 'cleanSlateReflection',
+    majorGoals: 'majorGoals',
+    vision6Months: 'vision6Months',
+    vision2Years: 'vision2Years',
+    vision5Years: 'vision5Years',
+    majorChanges: 'majorChanges',
+    successDefinition: 'successDefinition',
+    futureReflection: 'futureReflection',
+    reflectionGoals: 'reflectionGoals',
+    completedAt: 'completedAt',
+    userId: 'userId'
+  };
+
+  export type AssessmentPartFourScalarFieldEnum = (typeof AssessmentPartFourScalarFieldEnum)[keyof typeof AssessmentPartFourScalarFieldEnum]
+
+
+  export const DomainVisionEntryScalarFieldEnum: {
+    id: 'id',
+    domain: 'domain',
+    vision: 'vision',
+    assessmentId: 'assessmentId'
+  };
+
+  export type DomainVisionEntryScalarFieldEnum = (typeof DomainVisionEntryScalarFieldEnum)[keyof typeof DomainVisionEntryScalarFieldEnum]
+
+
+  export const IdentityRecordScalarFieldEnum: {
+    id: 'id',
+    identity: 'identity',
+    habits: 'habits',
+    assessmentId: 'assessmentId'
+  };
+
+  export type IdentityRecordScalarFieldEnum = (typeof IdentityRecordScalarFieldEnum)[keyof typeof IdentityRecordScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -19693,6 +23463,7 @@ export namespace Prisma {
     assessmentPartOne?: XOR<AssessmentPartOneNullableScalarRelationFilter, AssessmentPartOneWhereInput> | null
     assessmentPartTwo?: XOR<AssessmentPartTwoNullableScalarRelationFilter, AssessmentPartTwoWhereInput> | null
     assessmentPartThree?: XOR<AssessmentPartThreeNullableScalarRelationFilter, AssessmentPartThreeWhereInput> | null
+    assessmentPartFour?: XOR<AssessmentPartFourNullableScalarRelationFilter, AssessmentPartFourWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -19709,6 +23480,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneOrderByWithRelationInput
     assessmentPartTwo?: AssessmentPartTwoOrderByWithRelationInput
     assessmentPartThree?: AssessmentPartThreeOrderByWithRelationInput
+    assessmentPartFour?: AssessmentPartFourOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -19728,6 +23500,7 @@ export namespace Prisma {
     assessmentPartOne?: XOR<AssessmentPartOneNullableScalarRelationFilter, AssessmentPartOneWhereInput> | null
     assessmentPartTwo?: XOR<AssessmentPartTwoNullableScalarRelationFilter, AssessmentPartTwoWhereInput> | null
     assessmentPartThree?: XOR<AssessmentPartThreeNullableScalarRelationFilter, AssessmentPartThreeWhereInput> | null
+    assessmentPartFour?: XOR<AssessmentPartFourNullableScalarRelationFilter, AssessmentPartFourWhereInput> | null
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -20755,6 +24528,242 @@ export namespace Prisma {
     scorecardId?: StringWithAggregatesFilter<"HabitScorecardEntry"> | string
   }
 
+  export type AssessmentPartFourWhereInput = {
+    AND?: AssessmentPartFourWhereInput | AssessmentPartFourWhereInput[]
+    OR?: AssessmentPartFourWhereInput[]
+    NOT?: AssessmentPartFourWhereInput | AssessmentPartFourWhereInput[]
+    id?: StringFilter<"AssessmentPartFour"> | string
+    createdAt?: DateTimeFilter<"AssessmentPartFour"> | Date | string
+    updatedAt?: DateTimeFilter<"AssessmentPartFour"> | Date | string
+    existingCommitments?: StringNullableListFilter<"AssessmentPartFour">
+    desiredCommitments?: StringNullableListFilter<"AssessmentPartFour">
+    unwantedCommitments?: StringNullableListFilter<"AssessmentPartFour">
+    idealMorning?: StringFilter<"AssessmentPartFour"> | string
+    idealAfternoon?: StringFilter<"AssessmentPartFour"> | string
+    idealEvening?: StringFilter<"AssessmentPartFour"> | string
+    cleanSlateReflection?: StringFilter<"AssessmentPartFour"> | string
+    majorGoals?: StringNullableListFilter<"AssessmentPartFour">
+    vision6Months?: StringFilter<"AssessmentPartFour"> | string
+    vision2Years?: StringFilter<"AssessmentPartFour"> | string
+    vision5Years?: StringFilter<"AssessmentPartFour"> | string
+    majorChanges?: StringNullableListFilter<"AssessmentPartFour">
+    successDefinition?: StringFilter<"AssessmentPartFour"> | string
+    futureReflection?: StringFilter<"AssessmentPartFour"> | string
+    reflectionGoals?: StringNullableListFilter<"AssessmentPartFour">
+    completedAt?: DateTimeNullableFilter<"AssessmentPartFour"> | Date | string | null
+    userId?: StringFilter<"AssessmentPartFour"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    domainVisions?: DomainVisionEntryListRelationFilter
+    identities?: IdentityRecordListRelationFilter
+  }
+
+  export type AssessmentPartFourOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    existingCommitments?: SortOrder
+    desiredCommitments?: SortOrder
+    unwantedCommitments?: SortOrder
+    idealMorning?: SortOrder
+    idealAfternoon?: SortOrder
+    idealEvening?: SortOrder
+    cleanSlateReflection?: SortOrder
+    majorGoals?: SortOrder
+    vision6Months?: SortOrder
+    vision2Years?: SortOrder
+    vision5Years?: SortOrder
+    majorChanges?: SortOrder
+    successDefinition?: SortOrder
+    futureReflection?: SortOrder
+    reflectionGoals?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+    domainVisions?: DomainVisionEntryOrderByRelationAggregateInput
+    identities?: IdentityRecordOrderByRelationAggregateInput
+  }
+
+  export type AssessmentPartFourWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: AssessmentPartFourWhereInput | AssessmentPartFourWhereInput[]
+    OR?: AssessmentPartFourWhereInput[]
+    NOT?: AssessmentPartFourWhereInput | AssessmentPartFourWhereInput[]
+    createdAt?: DateTimeFilter<"AssessmentPartFour"> | Date | string
+    updatedAt?: DateTimeFilter<"AssessmentPartFour"> | Date | string
+    existingCommitments?: StringNullableListFilter<"AssessmentPartFour">
+    desiredCommitments?: StringNullableListFilter<"AssessmentPartFour">
+    unwantedCommitments?: StringNullableListFilter<"AssessmentPartFour">
+    idealMorning?: StringFilter<"AssessmentPartFour"> | string
+    idealAfternoon?: StringFilter<"AssessmentPartFour"> | string
+    idealEvening?: StringFilter<"AssessmentPartFour"> | string
+    cleanSlateReflection?: StringFilter<"AssessmentPartFour"> | string
+    majorGoals?: StringNullableListFilter<"AssessmentPartFour">
+    vision6Months?: StringFilter<"AssessmentPartFour"> | string
+    vision2Years?: StringFilter<"AssessmentPartFour"> | string
+    vision5Years?: StringFilter<"AssessmentPartFour"> | string
+    majorChanges?: StringNullableListFilter<"AssessmentPartFour">
+    successDefinition?: StringFilter<"AssessmentPartFour"> | string
+    futureReflection?: StringFilter<"AssessmentPartFour"> | string
+    reflectionGoals?: StringNullableListFilter<"AssessmentPartFour">
+    completedAt?: DateTimeNullableFilter<"AssessmentPartFour"> | Date | string | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    domainVisions?: DomainVisionEntryListRelationFilter
+    identities?: IdentityRecordListRelationFilter
+  }, "id" | "userId">
+
+  export type AssessmentPartFourOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    existingCommitments?: SortOrder
+    desiredCommitments?: SortOrder
+    unwantedCommitments?: SortOrder
+    idealMorning?: SortOrder
+    idealAfternoon?: SortOrder
+    idealEvening?: SortOrder
+    cleanSlateReflection?: SortOrder
+    majorGoals?: SortOrder
+    vision6Months?: SortOrder
+    vision2Years?: SortOrder
+    vision5Years?: SortOrder
+    majorChanges?: SortOrder
+    successDefinition?: SortOrder
+    futureReflection?: SortOrder
+    reflectionGoals?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    _count?: AssessmentPartFourCountOrderByAggregateInput
+    _max?: AssessmentPartFourMaxOrderByAggregateInput
+    _min?: AssessmentPartFourMinOrderByAggregateInput
+  }
+
+  export type AssessmentPartFourScalarWhereWithAggregatesInput = {
+    AND?: AssessmentPartFourScalarWhereWithAggregatesInput | AssessmentPartFourScalarWhereWithAggregatesInput[]
+    OR?: AssessmentPartFourScalarWhereWithAggregatesInput[]
+    NOT?: AssessmentPartFourScalarWhereWithAggregatesInput | AssessmentPartFourScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AssessmentPartFour"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"AssessmentPartFour"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AssessmentPartFour"> | Date | string
+    existingCommitments?: StringNullableListFilter<"AssessmentPartFour">
+    desiredCommitments?: StringNullableListFilter<"AssessmentPartFour">
+    unwantedCommitments?: StringNullableListFilter<"AssessmentPartFour">
+    idealMorning?: StringWithAggregatesFilter<"AssessmentPartFour"> | string
+    idealAfternoon?: StringWithAggregatesFilter<"AssessmentPartFour"> | string
+    idealEvening?: StringWithAggregatesFilter<"AssessmentPartFour"> | string
+    cleanSlateReflection?: StringWithAggregatesFilter<"AssessmentPartFour"> | string
+    majorGoals?: StringNullableListFilter<"AssessmentPartFour">
+    vision6Months?: StringWithAggregatesFilter<"AssessmentPartFour"> | string
+    vision2Years?: StringWithAggregatesFilter<"AssessmentPartFour"> | string
+    vision5Years?: StringWithAggregatesFilter<"AssessmentPartFour"> | string
+    majorChanges?: StringNullableListFilter<"AssessmentPartFour">
+    successDefinition?: StringWithAggregatesFilter<"AssessmentPartFour"> | string
+    futureReflection?: StringWithAggregatesFilter<"AssessmentPartFour"> | string
+    reflectionGoals?: StringNullableListFilter<"AssessmentPartFour">
+    completedAt?: DateTimeNullableWithAggregatesFilter<"AssessmentPartFour"> | Date | string | null
+    userId?: StringWithAggregatesFilter<"AssessmentPartFour"> | string
+  }
+
+  export type DomainVisionEntryWhereInput = {
+    AND?: DomainVisionEntryWhereInput | DomainVisionEntryWhereInput[]
+    OR?: DomainVisionEntryWhereInput[]
+    NOT?: DomainVisionEntryWhereInput | DomainVisionEntryWhereInput[]
+    id?: StringFilter<"DomainVisionEntry"> | string
+    domain?: StringFilter<"DomainVisionEntry"> | string
+    vision?: StringFilter<"DomainVisionEntry"> | string
+    assessmentId?: StringFilter<"DomainVisionEntry"> | string
+    assessment?: XOR<AssessmentPartFourScalarRelationFilter, AssessmentPartFourWhereInput>
+  }
+
+  export type DomainVisionEntryOrderByWithRelationInput = {
+    id?: SortOrder
+    domain?: SortOrder
+    vision?: SortOrder
+    assessmentId?: SortOrder
+    assessment?: AssessmentPartFourOrderByWithRelationInput
+  }
+
+  export type DomainVisionEntryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DomainVisionEntryWhereInput | DomainVisionEntryWhereInput[]
+    OR?: DomainVisionEntryWhereInput[]
+    NOT?: DomainVisionEntryWhereInput | DomainVisionEntryWhereInput[]
+    domain?: StringFilter<"DomainVisionEntry"> | string
+    vision?: StringFilter<"DomainVisionEntry"> | string
+    assessmentId?: StringFilter<"DomainVisionEntry"> | string
+    assessment?: XOR<AssessmentPartFourScalarRelationFilter, AssessmentPartFourWhereInput>
+  }, "id">
+
+  export type DomainVisionEntryOrderByWithAggregationInput = {
+    id?: SortOrder
+    domain?: SortOrder
+    vision?: SortOrder
+    assessmentId?: SortOrder
+    _count?: DomainVisionEntryCountOrderByAggregateInput
+    _max?: DomainVisionEntryMaxOrderByAggregateInput
+    _min?: DomainVisionEntryMinOrderByAggregateInput
+  }
+
+  export type DomainVisionEntryScalarWhereWithAggregatesInput = {
+    AND?: DomainVisionEntryScalarWhereWithAggregatesInput | DomainVisionEntryScalarWhereWithAggregatesInput[]
+    OR?: DomainVisionEntryScalarWhereWithAggregatesInput[]
+    NOT?: DomainVisionEntryScalarWhereWithAggregatesInput | DomainVisionEntryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DomainVisionEntry"> | string
+    domain?: StringWithAggregatesFilter<"DomainVisionEntry"> | string
+    vision?: StringWithAggregatesFilter<"DomainVisionEntry"> | string
+    assessmentId?: StringWithAggregatesFilter<"DomainVisionEntry"> | string
+  }
+
+  export type IdentityRecordWhereInput = {
+    AND?: IdentityRecordWhereInput | IdentityRecordWhereInput[]
+    OR?: IdentityRecordWhereInput[]
+    NOT?: IdentityRecordWhereInput | IdentityRecordWhereInput[]
+    id?: StringFilter<"IdentityRecord"> | string
+    identity?: StringFilter<"IdentityRecord"> | string
+    habits?: StringNullableListFilter<"IdentityRecord">
+    assessmentId?: StringFilter<"IdentityRecord"> | string
+    assessment?: XOR<AssessmentPartFourScalarRelationFilter, AssessmentPartFourWhereInput>
+  }
+
+  export type IdentityRecordOrderByWithRelationInput = {
+    id?: SortOrder
+    identity?: SortOrder
+    habits?: SortOrder
+    assessmentId?: SortOrder
+    assessment?: AssessmentPartFourOrderByWithRelationInput
+  }
+
+  export type IdentityRecordWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: IdentityRecordWhereInput | IdentityRecordWhereInput[]
+    OR?: IdentityRecordWhereInput[]
+    NOT?: IdentityRecordWhereInput | IdentityRecordWhereInput[]
+    identity?: StringFilter<"IdentityRecord"> | string
+    habits?: StringNullableListFilter<"IdentityRecord">
+    assessmentId?: StringFilter<"IdentityRecord"> | string
+    assessment?: XOR<AssessmentPartFourScalarRelationFilter, AssessmentPartFourWhereInput>
+  }, "id">
+
+  export type IdentityRecordOrderByWithAggregationInput = {
+    id?: SortOrder
+    identity?: SortOrder
+    habits?: SortOrder
+    assessmentId?: SortOrder
+    _count?: IdentityRecordCountOrderByAggregateInput
+    _max?: IdentityRecordMaxOrderByAggregateInput
+    _min?: IdentityRecordMinOrderByAggregateInput
+  }
+
+  export type IdentityRecordScalarWhereWithAggregatesInput = {
+    AND?: IdentityRecordScalarWhereWithAggregatesInput | IdentityRecordScalarWhereWithAggregatesInput[]
+    OR?: IdentityRecordScalarWhereWithAggregatesInput[]
+    NOT?: IdentityRecordScalarWhereWithAggregatesInput | IdentityRecordScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"IdentityRecord"> | string
+    identity?: StringWithAggregatesFilter<"IdentityRecord"> | string
+    habits?: StringNullableListFilter<"IdentityRecord">
+    assessmentId?: StringWithAggregatesFilter<"IdentityRecord"> | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -20769,6 +24778,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -20785,6 +24795,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -20801,6 +24812,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -20817,6 +24829,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -21916,6 +25929,270 @@ export namespace Prisma {
     scorecardId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type AssessmentPartFourCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    existingCommitments?: AssessmentPartFourCreateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourCreatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourCreateunwantedCommitmentsInput | string[]
+    idealMorning?: string
+    idealAfternoon?: string
+    idealEvening?: string
+    cleanSlateReflection?: string
+    majorGoals?: AssessmentPartFourCreatemajorGoalsInput | string[]
+    vision6Months?: string
+    vision2Years?: string
+    vision5Years?: string
+    majorChanges?: AssessmentPartFourCreatemajorChangesInput | string[]
+    successDefinition?: string
+    futureReflection?: string
+    reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
+    completedAt?: Date | string | null
+    user: UserCreateNestedOneWithoutAssessmentPartFourInput
+    domainVisions?: DomainVisionEntryCreateNestedManyWithoutAssessmentInput
+    identities?: IdentityRecordCreateNestedManyWithoutAssessmentInput
+  }
+
+  export type AssessmentPartFourUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    existingCommitments?: AssessmentPartFourCreateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourCreatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourCreateunwantedCommitmentsInput | string[]
+    idealMorning?: string
+    idealAfternoon?: string
+    idealEvening?: string
+    cleanSlateReflection?: string
+    majorGoals?: AssessmentPartFourCreatemajorGoalsInput | string[]
+    vision6Months?: string
+    vision2Years?: string
+    vision5Years?: string
+    majorChanges?: AssessmentPartFourCreatemajorChangesInput | string[]
+    successDefinition?: string
+    futureReflection?: string
+    reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
+    completedAt?: Date | string | null
+    userId: string
+    domainVisions?: DomainVisionEntryUncheckedCreateNestedManyWithoutAssessmentInput
+    identities?: IdentityRecordUncheckedCreateNestedManyWithoutAssessmentInput
+  }
+
+  export type AssessmentPartFourUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    existingCommitments?: AssessmentPartFourUpdateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourUpdatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourUpdateunwantedCommitmentsInput | string[]
+    idealMorning?: StringFieldUpdateOperationsInput | string
+    idealAfternoon?: StringFieldUpdateOperationsInput | string
+    idealEvening?: StringFieldUpdateOperationsInput | string
+    cleanSlateReflection?: StringFieldUpdateOperationsInput | string
+    majorGoals?: AssessmentPartFourUpdatemajorGoalsInput | string[]
+    vision6Months?: StringFieldUpdateOperationsInput | string
+    vision2Years?: StringFieldUpdateOperationsInput | string
+    vision5Years?: StringFieldUpdateOperationsInput | string
+    majorChanges?: AssessmentPartFourUpdatemajorChangesInput | string[]
+    successDefinition?: StringFieldUpdateOperationsInput | string
+    futureReflection?: StringFieldUpdateOperationsInput | string
+    reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutAssessmentPartFourNestedInput
+    domainVisions?: DomainVisionEntryUpdateManyWithoutAssessmentNestedInput
+    identities?: IdentityRecordUpdateManyWithoutAssessmentNestedInput
+  }
+
+  export type AssessmentPartFourUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    existingCommitments?: AssessmentPartFourUpdateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourUpdatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourUpdateunwantedCommitmentsInput | string[]
+    idealMorning?: StringFieldUpdateOperationsInput | string
+    idealAfternoon?: StringFieldUpdateOperationsInput | string
+    idealEvening?: StringFieldUpdateOperationsInput | string
+    cleanSlateReflection?: StringFieldUpdateOperationsInput | string
+    majorGoals?: AssessmentPartFourUpdatemajorGoalsInput | string[]
+    vision6Months?: StringFieldUpdateOperationsInput | string
+    vision2Years?: StringFieldUpdateOperationsInput | string
+    vision5Years?: StringFieldUpdateOperationsInput | string
+    majorChanges?: AssessmentPartFourUpdatemajorChangesInput | string[]
+    successDefinition?: StringFieldUpdateOperationsInput | string
+    futureReflection?: StringFieldUpdateOperationsInput | string
+    reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    domainVisions?: DomainVisionEntryUncheckedUpdateManyWithoutAssessmentNestedInput
+    identities?: IdentityRecordUncheckedUpdateManyWithoutAssessmentNestedInput
+  }
+
+  export type AssessmentPartFourCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    existingCommitments?: AssessmentPartFourCreateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourCreatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourCreateunwantedCommitmentsInput | string[]
+    idealMorning?: string
+    idealAfternoon?: string
+    idealEvening?: string
+    cleanSlateReflection?: string
+    majorGoals?: AssessmentPartFourCreatemajorGoalsInput | string[]
+    vision6Months?: string
+    vision2Years?: string
+    vision5Years?: string
+    majorChanges?: AssessmentPartFourCreatemajorChangesInput | string[]
+    successDefinition?: string
+    futureReflection?: string
+    reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
+    completedAt?: Date | string | null
+    userId: string
+  }
+
+  export type AssessmentPartFourUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    existingCommitments?: AssessmentPartFourUpdateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourUpdatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourUpdateunwantedCommitmentsInput | string[]
+    idealMorning?: StringFieldUpdateOperationsInput | string
+    idealAfternoon?: StringFieldUpdateOperationsInput | string
+    idealEvening?: StringFieldUpdateOperationsInput | string
+    cleanSlateReflection?: StringFieldUpdateOperationsInput | string
+    majorGoals?: AssessmentPartFourUpdatemajorGoalsInput | string[]
+    vision6Months?: StringFieldUpdateOperationsInput | string
+    vision2Years?: StringFieldUpdateOperationsInput | string
+    vision5Years?: StringFieldUpdateOperationsInput | string
+    majorChanges?: AssessmentPartFourUpdatemajorChangesInput | string[]
+    successDefinition?: StringFieldUpdateOperationsInput | string
+    futureReflection?: StringFieldUpdateOperationsInput | string
+    reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AssessmentPartFourUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    existingCommitments?: AssessmentPartFourUpdateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourUpdatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourUpdateunwantedCommitmentsInput | string[]
+    idealMorning?: StringFieldUpdateOperationsInput | string
+    idealAfternoon?: StringFieldUpdateOperationsInput | string
+    idealEvening?: StringFieldUpdateOperationsInput | string
+    cleanSlateReflection?: StringFieldUpdateOperationsInput | string
+    majorGoals?: AssessmentPartFourUpdatemajorGoalsInput | string[]
+    vision6Months?: StringFieldUpdateOperationsInput | string
+    vision2Years?: StringFieldUpdateOperationsInput | string
+    vision5Years?: StringFieldUpdateOperationsInput | string
+    majorChanges?: AssessmentPartFourUpdatemajorChangesInput | string[]
+    successDefinition?: StringFieldUpdateOperationsInput | string
+    futureReflection?: StringFieldUpdateOperationsInput | string
+    reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DomainVisionEntryCreateInput = {
+    id?: string
+    domain: string
+    vision?: string
+    assessment: AssessmentPartFourCreateNestedOneWithoutDomainVisionsInput
+  }
+
+  export type DomainVisionEntryUncheckedCreateInput = {
+    id?: string
+    domain: string
+    vision?: string
+    assessmentId: string
+  }
+
+  export type DomainVisionEntryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+    assessment?: AssessmentPartFourUpdateOneRequiredWithoutDomainVisionsNestedInput
+  }
+
+  export type DomainVisionEntryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+    assessmentId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DomainVisionEntryCreateManyInput = {
+    id?: string
+    domain: string
+    vision?: string
+    assessmentId: string
+  }
+
+  export type DomainVisionEntryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DomainVisionEntryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+    assessmentId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type IdentityRecordCreateInput = {
+    id?: string
+    identity: string
+    habits?: IdentityRecordCreatehabitsInput | string[]
+    assessment: AssessmentPartFourCreateNestedOneWithoutIdentitiesInput
+  }
+
+  export type IdentityRecordUncheckedCreateInput = {
+    id?: string
+    identity: string
+    habits?: IdentityRecordCreatehabitsInput | string[]
+    assessmentId: string
+  }
+
+  export type IdentityRecordUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identity?: StringFieldUpdateOperationsInput | string
+    habits?: IdentityRecordUpdatehabitsInput | string[]
+    assessment?: AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput
+  }
+
+  export type IdentityRecordUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identity?: StringFieldUpdateOperationsInput | string
+    habits?: IdentityRecordUpdatehabitsInput | string[]
+    assessmentId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type IdentityRecordCreateManyInput = {
+    id?: string
+    identity: string
+    habits?: IdentityRecordCreatehabitsInput | string[]
+    assessmentId: string
+  }
+
+  export type IdentityRecordUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identity?: StringFieldUpdateOperationsInput | string
+    habits?: IdentityRecordUpdatehabitsInput | string[]
+  }
+
+  export type IdentityRecordUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identity?: StringFieldUpdateOperationsInput | string
+    habits?: IdentityRecordUpdatehabitsInput | string[]
+    assessmentId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -21999,6 +26276,11 @@ export namespace Prisma {
   export type AssessmentPartThreeNullableScalarRelationFilter = {
     is?: AssessmentPartThreeWhereInput | null
     isNot?: AssessmentPartThreeWhereInput | null
+  }
+
+  export type AssessmentPartFourNullableScalarRelationFilter = {
+    is?: AssessmentPartFourWhereInput | null
+    isNot?: AssessmentPartFourWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -22714,6 +26996,128 @@ export namespace Prisma {
     scorecardId?: SortOrder
   }
 
+  export type DomainVisionEntryListRelationFilter = {
+    every?: DomainVisionEntryWhereInput
+    some?: DomainVisionEntryWhereInput
+    none?: DomainVisionEntryWhereInput
+  }
+
+  export type IdentityRecordListRelationFilter = {
+    every?: IdentityRecordWhereInput
+    some?: IdentityRecordWhereInput
+    none?: IdentityRecordWhereInput
+  }
+
+  export type DomainVisionEntryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type IdentityRecordOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AssessmentPartFourCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    existingCommitments?: SortOrder
+    desiredCommitments?: SortOrder
+    unwantedCommitments?: SortOrder
+    idealMorning?: SortOrder
+    idealAfternoon?: SortOrder
+    idealEvening?: SortOrder
+    cleanSlateReflection?: SortOrder
+    majorGoals?: SortOrder
+    vision6Months?: SortOrder
+    vision2Years?: SortOrder
+    vision5Years?: SortOrder
+    majorChanges?: SortOrder
+    successDefinition?: SortOrder
+    futureReflection?: SortOrder
+    reflectionGoals?: SortOrder
+    completedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type AssessmentPartFourMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    idealMorning?: SortOrder
+    idealAfternoon?: SortOrder
+    idealEvening?: SortOrder
+    cleanSlateReflection?: SortOrder
+    vision6Months?: SortOrder
+    vision2Years?: SortOrder
+    vision5Years?: SortOrder
+    successDefinition?: SortOrder
+    futureReflection?: SortOrder
+    completedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type AssessmentPartFourMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    idealMorning?: SortOrder
+    idealAfternoon?: SortOrder
+    idealEvening?: SortOrder
+    cleanSlateReflection?: SortOrder
+    vision6Months?: SortOrder
+    vision2Years?: SortOrder
+    vision5Years?: SortOrder
+    successDefinition?: SortOrder
+    futureReflection?: SortOrder
+    completedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type AssessmentPartFourScalarRelationFilter = {
+    is?: AssessmentPartFourWhereInput
+    isNot?: AssessmentPartFourWhereInput
+  }
+
+  export type DomainVisionEntryCountOrderByAggregateInput = {
+    id?: SortOrder
+    domain?: SortOrder
+    vision?: SortOrder
+    assessmentId?: SortOrder
+  }
+
+  export type DomainVisionEntryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    domain?: SortOrder
+    vision?: SortOrder
+    assessmentId?: SortOrder
+  }
+
+  export type DomainVisionEntryMinOrderByAggregateInput = {
+    id?: SortOrder
+    domain?: SortOrder
+    vision?: SortOrder
+    assessmentId?: SortOrder
+  }
+
+  export type IdentityRecordCountOrderByAggregateInput = {
+    id?: SortOrder
+    identity?: SortOrder
+    habits?: SortOrder
+    assessmentId?: SortOrder
+  }
+
+  export type IdentityRecordMaxOrderByAggregateInput = {
+    id?: SortOrder
+    identity?: SortOrder
+    assessmentId?: SortOrder
+  }
+
+  export type IdentityRecordMinOrderByAggregateInput = {
+    id?: SortOrder
+    identity?: SortOrder
+    assessmentId?: SortOrder
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -22753,6 +27157,12 @@ export namespace Prisma {
     connect?: AssessmentPartThreeWhereUniqueInput
   }
 
+  export type AssessmentPartFourCreateNestedOneWithoutUserInput = {
+    create?: XOR<AssessmentPartFourCreateWithoutUserInput, AssessmentPartFourUncheckedCreateWithoutUserInput>
+    connectOrCreate?: AssessmentPartFourCreateOrConnectWithoutUserInput
+    connect?: AssessmentPartFourWhereUniqueInput
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -22790,6 +27200,12 @@ export namespace Prisma {
     create?: XOR<AssessmentPartThreeCreateWithoutUserInput, AssessmentPartThreeUncheckedCreateWithoutUserInput>
     connectOrCreate?: AssessmentPartThreeCreateOrConnectWithoutUserInput
     connect?: AssessmentPartThreeWhereUniqueInput
+  }
+
+  export type AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<AssessmentPartFourCreateWithoutUserInput, AssessmentPartFourUncheckedCreateWithoutUserInput>
+    connectOrCreate?: AssessmentPartFourCreateOrConnectWithoutUserInput
+    connect?: AssessmentPartFourWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -22880,6 +27296,16 @@ export namespace Prisma {
     update?: XOR<XOR<AssessmentPartThreeUpdateToOneWithWhereWithoutUserInput, AssessmentPartThreeUpdateWithoutUserInput>, AssessmentPartThreeUncheckedUpdateWithoutUserInput>
   }
 
+  export type AssessmentPartFourUpdateOneWithoutUserNestedInput = {
+    create?: XOR<AssessmentPartFourCreateWithoutUserInput, AssessmentPartFourUncheckedCreateWithoutUserInput>
+    connectOrCreate?: AssessmentPartFourCreateOrConnectWithoutUserInput
+    upsert?: AssessmentPartFourUpsertWithoutUserInput
+    disconnect?: AssessmentPartFourWhereInput | boolean
+    delete?: AssessmentPartFourWhereInput | boolean
+    connect?: AssessmentPartFourWhereUniqueInput
+    update?: XOR<XOR<AssessmentPartFourUpdateToOneWithWhereWithoutUserInput, AssessmentPartFourUpdateWithoutUserInput>, AssessmentPartFourUncheckedUpdateWithoutUserInput>
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -22950,6 +27376,16 @@ export namespace Prisma {
     delete?: AssessmentPartThreeWhereInput | boolean
     connect?: AssessmentPartThreeWhereUniqueInput
     update?: XOR<XOR<AssessmentPartThreeUpdateToOneWithWhereWithoutUserInput, AssessmentPartThreeUpdateWithoutUserInput>, AssessmentPartThreeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<AssessmentPartFourCreateWithoutUserInput, AssessmentPartFourUncheckedCreateWithoutUserInput>
+    connectOrCreate?: AssessmentPartFourCreateOrConnectWithoutUserInput
+    upsert?: AssessmentPartFourUpsertWithoutUserInput
+    disconnect?: AssessmentPartFourWhereInput | boolean
+    delete?: AssessmentPartFourWhereInput | boolean
+    connect?: AssessmentPartFourWhereUniqueInput
+    update?: XOR<XOR<AssessmentPartFourUpdateToOneWithWhereWithoutUserInput, AssessmentPartFourUpdateWithoutUserInput>, AssessmentPartFourUncheckedUpdateWithoutUserInput>
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -23696,6 +28132,195 @@ export namespace Prisma {
     update?: XOR<XOR<HabitScorecardUpdateToOneWithWhereWithoutEntriesInput, HabitScorecardUpdateWithoutEntriesInput>, HabitScorecardUncheckedUpdateWithoutEntriesInput>
   }
 
+  export type AssessmentPartFourCreateexistingCommitmentsInput = {
+    set: string[]
+  }
+
+  export type AssessmentPartFourCreatedesiredCommitmentsInput = {
+    set: string[]
+  }
+
+  export type AssessmentPartFourCreateunwantedCommitmentsInput = {
+    set: string[]
+  }
+
+  export type AssessmentPartFourCreatemajorGoalsInput = {
+    set: string[]
+  }
+
+  export type AssessmentPartFourCreatemajorChangesInput = {
+    set: string[]
+  }
+
+  export type AssessmentPartFourCreatereflectionGoalsInput = {
+    set: string[]
+  }
+
+  export type UserCreateNestedOneWithoutAssessmentPartFourInput = {
+    create?: XOR<UserCreateWithoutAssessmentPartFourInput, UserUncheckedCreateWithoutAssessmentPartFourInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssessmentPartFourInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type DomainVisionEntryCreateNestedManyWithoutAssessmentInput = {
+    create?: XOR<DomainVisionEntryCreateWithoutAssessmentInput, DomainVisionEntryUncheckedCreateWithoutAssessmentInput> | DomainVisionEntryCreateWithoutAssessmentInput[] | DomainVisionEntryUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: DomainVisionEntryCreateOrConnectWithoutAssessmentInput | DomainVisionEntryCreateOrConnectWithoutAssessmentInput[]
+    createMany?: DomainVisionEntryCreateManyAssessmentInputEnvelope
+    connect?: DomainVisionEntryWhereUniqueInput | DomainVisionEntryWhereUniqueInput[]
+  }
+
+  export type IdentityRecordCreateNestedManyWithoutAssessmentInput = {
+    create?: XOR<IdentityRecordCreateWithoutAssessmentInput, IdentityRecordUncheckedCreateWithoutAssessmentInput> | IdentityRecordCreateWithoutAssessmentInput[] | IdentityRecordUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: IdentityRecordCreateOrConnectWithoutAssessmentInput | IdentityRecordCreateOrConnectWithoutAssessmentInput[]
+    createMany?: IdentityRecordCreateManyAssessmentInputEnvelope
+    connect?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
+  }
+
+  export type DomainVisionEntryUncheckedCreateNestedManyWithoutAssessmentInput = {
+    create?: XOR<DomainVisionEntryCreateWithoutAssessmentInput, DomainVisionEntryUncheckedCreateWithoutAssessmentInput> | DomainVisionEntryCreateWithoutAssessmentInput[] | DomainVisionEntryUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: DomainVisionEntryCreateOrConnectWithoutAssessmentInput | DomainVisionEntryCreateOrConnectWithoutAssessmentInput[]
+    createMany?: DomainVisionEntryCreateManyAssessmentInputEnvelope
+    connect?: DomainVisionEntryWhereUniqueInput | DomainVisionEntryWhereUniqueInput[]
+  }
+
+  export type IdentityRecordUncheckedCreateNestedManyWithoutAssessmentInput = {
+    create?: XOR<IdentityRecordCreateWithoutAssessmentInput, IdentityRecordUncheckedCreateWithoutAssessmentInput> | IdentityRecordCreateWithoutAssessmentInput[] | IdentityRecordUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: IdentityRecordCreateOrConnectWithoutAssessmentInput | IdentityRecordCreateOrConnectWithoutAssessmentInput[]
+    createMany?: IdentityRecordCreateManyAssessmentInputEnvelope
+    connect?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
+  }
+
+  export type AssessmentPartFourUpdateexistingCommitmentsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type AssessmentPartFourUpdatedesiredCommitmentsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type AssessmentPartFourUpdateunwantedCommitmentsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type AssessmentPartFourUpdatemajorGoalsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type AssessmentPartFourUpdatemajorChangesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type AssessmentPartFourUpdatereflectionGoalsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserUpdateOneRequiredWithoutAssessmentPartFourNestedInput = {
+    create?: XOR<UserCreateWithoutAssessmentPartFourInput, UserUncheckedCreateWithoutAssessmentPartFourInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssessmentPartFourInput
+    upsert?: UserUpsertWithoutAssessmentPartFourInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssessmentPartFourInput, UserUpdateWithoutAssessmentPartFourInput>, UserUncheckedUpdateWithoutAssessmentPartFourInput>
+  }
+
+  export type DomainVisionEntryUpdateManyWithoutAssessmentNestedInput = {
+    create?: XOR<DomainVisionEntryCreateWithoutAssessmentInput, DomainVisionEntryUncheckedCreateWithoutAssessmentInput> | DomainVisionEntryCreateWithoutAssessmentInput[] | DomainVisionEntryUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: DomainVisionEntryCreateOrConnectWithoutAssessmentInput | DomainVisionEntryCreateOrConnectWithoutAssessmentInput[]
+    upsert?: DomainVisionEntryUpsertWithWhereUniqueWithoutAssessmentInput | DomainVisionEntryUpsertWithWhereUniqueWithoutAssessmentInput[]
+    createMany?: DomainVisionEntryCreateManyAssessmentInputEnvelope
+    set?: DomainVisionEntryWhereUniqueInput | DomainVisionEntryWhereUniqueInput[]
+    disconnect?: DomainVisionEntryWhereUniqueInput | DomainVisionEntryWhereUniqueInput[]
+    delete?: DomainVisionEntryWhereUniqueInput | DomainVisionEntryWhereUniqueInput[]
+    connect?: DomainVisionEntryWhereUniqueInput | DomainVisionEntryWhereUniqueInput[]
+    update?: DomainVisionEntryUpdateWithWhereUniqueWithoutAssessmentInput | DomainVisionEntryUpdateWithWhereUniqueWithoutAssessmentInput[]
+    updateMany?: DomainVisionEntryUpdateManyWithWhereWithoutAssessmentInput | DomainVisionEntryUpdateManyWithWhereWithoutAssessmentInput[]
+    deleteMany?: DomainVisionEntryScalarWhereInput | DomainVisionEntryScalarWhereInput[]
+  }
+
+  export type IdentityRecordUpdateManyWithoutAssessmentNestedInput = {
+    create?: XOR<IdentityRecordCreateWithoutAssessmentInput, IdentityRecordUncheckedCreateWithoutAssessmentInput> | IdentityRecordCreateWithoutAssessmentInput[] | IdentityRecordUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: IdentityRecordCreateOrConnectWithoutAssessmentInput | IdentityRecordCreateOrConnectWithoutAssessmentInput[]
+    upsert?: IdentityRecordUpsertWithWhereUniqueWithoutAssessmentInput | IdentityRecordUpsertWithWhereUniqueWithoutAssessmentInput[]
+    createMany?: IdentityRecordCreateManyAssessmentInputEnvelope
+    set?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
+    disconnect?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
+    delete?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
+    connect?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
+    update?: IdentityRecordUpdateWithWhereUniqueWithoutAssessmentInput | IdentityRecordUpdateWithWhereUniqueWithoutAssessmentInput[]
+    updateMany?: IdentityRecordUpdateManyWithWhereWithoutAssessmentInput | IdentityRecordUpdateManyWithWhereWithoutAssessmentInput[]
+    deleteMany?: IdentityRecordScalarWhereInput | IdentityRecordScalarWhereInput[]
+  }
+
+  export type DomainVisionEntryUncheckedUpdateManyWithoutAssessmentNestedInput = {
+    create?: XOR<DomainVisionEntryCreateWithoutAssessmentInput, DomainVisionEntryUncheckedCreateWithoutAssessmentInput> | DomainVisionEntryCreateWithoutAssessmentInput[] | DomainVisionEntryUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: DomainVisionEntryCreateOrConnectWithoutAssessmentInput | DomainVisionEntryCreateOrConnectWithoutAssessmentInput[]
+    upsert?: DomainVisionEntryUpsertWithWhereUniqueWithoutAssessmentInput | DomainVisionEntryUpsertWithWhereUniqueWithoutAssessmentInput[]
+    createMany?: DomainVisionEntryCreateManyAssessmentInputEnvelope
+    set?: DomainVisionEntryWhereUniqueInput | DomainVisionEntryWhereUniqueInput[]
+    disconnect?: DomainVisionEntryWhereUniqueInput | DomainVisionEntryWhereUniqueInput[]
+    delete?: DomainVisionEntryWhereUniqueInput | DomainVisionEntryWhereUniqueInput[]
+    connect?: DomainVisionEntryWhereUniqueInput | DomainVisionEntryWhereUniqueInput[]
+    update?: DomainVisionEntryUpdateWithWhereUniqueWithoutAssessmentInput | DomainVisionEntryUpdateWithWhereUniqueWithoutAssessmentInput[]
+    updateMany?: DomainVisionEntryUpdateManyWithWhereWithoutAssessmentInput | DomainVisionEntryUpdateManyWithWhereWithoutAssessmentInput[]
+    deleteMany?: DomainVisionEntryScalarWhereInput | DomainVisionEntryScalarWhereInput[]
+  }
+
+  export type IdentityRecordUncheckedUpdateManyWithoutAssessmentNestedInput = {
+    create?: XOR<IdentityRecordCreateWithoutAssessmentInput, IdentityRecordUncheckedCreateWithoutAssessmentInput> | IdentityRecordCreateWithoutAssessmentInput[] | IdentityRecordUncheckedCreateWithoutAssessmentInput[]
+    connectOrCreate?: IdentityRecordCreateOrConnectWithoutAssessmentInput | IdentityRecordCreateOrConnectWithoutAssessmentInput[]
+    upsert?: IdentityRecordUpsertWithWhereUniqueWithoutAssessmentInput | IdentityRecordUpsertWithWhereUniqueWithoutAssessmentInput[]
+    createMany?: IdentityRecordCreateManyAssessmentInputEnvelope
+    set?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
+    disconnect?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
+    delete?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
+    connect?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
+    update?: IdentityRecordUpdateWithWhereUniqueWithoutAssessmentInput | IdentityRecordUpdateWithWhereUniqueWithoutAssessmentInput[]
+    updateMany?: IdentityRecordUpdateManyWithWhereWithoutAssessmentInput | IdentityRecordUpdateManyWithWhereWithoutAssessmentInput[]
+    deleteMany?: IdentityRecordScalarWhereInput | IdentityRecordScalarWhereInput[]
+  }
+
+  export type AssessmentPartFourCreateNestedOneWithoutDomainVisionsInput = {
+    create?: XOR<AssessmentPartFourCreateWithoutDomainVisionsInput, AssessmentPartFourUncheckedCreateWithoutDomainVisionsInput>
+    connectOrCreate?: AssessmentPartFourCreateOrConnectWithoutDomainVisionsInput
+    connect?: AssessmentPartFourWhereUniqueInput
+  }
+
+  export type AssessmentPartFourUpdateOneRequiredWithoutDomainVisionsNestedInput = {
+    create?: XOR<AssessmentPartFourCreateWithoutDomainVisionsInput, AssessmentPartFourUncheckedCreateWithoutDomainVisionsInput>
+    connectOrCreate?: AssessmentPartFourCreateOrConnectWithoutDomainVisionsInput
+    upsert?: AssessmentPartFourUpsertWithoutDomainVisionsInput
+    connect?: AssessmentPartFourWhereUniqueInput
+    update?: XOR<XOR<AssessmentPartFourUpdateToOneWithWhereWithoutDomainVisionsInput, AssessmentPartFourUpdateWithoutDomainVisionsInput>, AssessmentPartFourUncheckedUpdateWithoutDomainVisionsInput>
+  }
+
+  export type IdentityRecordCreatehabitsInput = {
+    set: string[]
+  }
+
+  export type AssessmentPartFourCreateNestedOneWithoutIdentitiesInput = {
+    create?: XOR<AssessmentPartFourCreateWithoutIdentitiesInput, AssessmentPartFourUncheckedCreateWithoutIdentitiesInput>
+    connectOrCreate?: AssessmentPartFourCreateOrConnectWithoutIdentitiesInput
+    connect?: AssessmentPartFourWhereUniqueInput
+  }
+
+  export type IdentityRecordUpdatehabitsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput = {
+    create?: XOR<AssessmentPartFourCreateWithoutIdentitiesInput, AssessmentPartFourUncheckedCreateWithoutIdentitiesInput>
+    connectOrCreate?: AssessmentPartFourCreateOrConnectWithoutIdentitiesInput
+    upsert?: AssessmentPartFourUpsertWithoutIdentitiesInput
+    connect?: AssessmentPartFourWhereUniqueInput
+    update?: XOR<XOR<AssessmentPartFourUpdateToOneWithWhereWithoutIdentitiesInput, AssessmentPartFourUpdateWithoutIdentitiesInput>, AssessmentPartFourUncheckedUpdateWithoutIdentitiesInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -24091,6 +28716,59 @@ export namespace Prisma {
     create: XOR<AssessmentPartThreeCreateWithoutUserInput, AssessmentPartThreeUncheckedCreateWithoutUserInput>
   }
 
+  export type AssessmentPartFourCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    existingCommitments?: AssessmentPartFourCreateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourCreatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourCreateunwantedCommitmentsInput | string[]
+    idealMorning?: string
+    idealAfternoon?: string
+    idealEvening?: string
+    cleanSlateReflection?: string
+    majorGoals?: AssessmentPartFourCreatemajorGoalsInput | string[]
+    vision6Months?: string
+    vision2Years?: string
+    vision5Years?: string
+    majorChanges?: AssessmentPartFourCreatemajorChangesInput | string[]
+    successDefinition?: string
+    futureReflection?: string
+    reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
+    completedAt?: Date | string | null
+    domainVisions?: DomainVisionEntryCreateNestedManyWithoutAssessmentInput
+    identities?: IdentityRecordCreateNestedManyWithoutAssessmentInput
+  }
+
+  export type AssessmentPartFourUncheckedCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    existingCommitments?: AssessmentPartFourCreateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourCreatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourCreateunwantedCommitmentsInput | string[]
+    idealMorning?: string
+    idealAfternoon?: string
+    idealEvening?: string
+    cleanSlateReflection?: string
+    majorGoals?: AssessmentPartFourCreatemajorGoalsInput | string[]
+    vision6Months?: string
+    vision2Years?: string
+    vision5Years?: string
+    majorChanges?: AssessmentPartFourCreatemajorChangesInput | string[]
+    successDefinition?: string
+    futureReflection?: string
+    reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
+    completedAt?: Date | string | null
+    domainVisions?: DomainVisionEntryUncheckedCreateNestedManyWithoutAssessmentInput
+    identities?: IdentityRecordUncheckedCreateNestedManyWithoutAssessmentInput
+  }
+
+  export type AssessmentPartFourCreateOrConnectWithoutUserInput = {
+    where: AssessmentPartFourWhereUniqueInput
+    create: XOR<AssessmentPartFourCreateWithoutUserInput, AssessmentPartFourUncheckedCreateWithoutUserInput>
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -24329,6 +29007,65 @@ export namespace Prisma {
     eveningScorecard?: HabitScorecardUncheckedUpdateOneWithoutEveningForNestedInput
   }
 
+  export type AssessmentPartFourUpsertWithoutUserInput = {
+    update: XOR<AssessmentPartFourUpdateWithoutUserInput, AssessmentPartFourUncheckedUpdateWithoutUserInput>
+    create: XOR<AssessmentPartFourCreateWithoutUserInput, AssessmentPartFourUncheckedCreateWithoutUserInput>
+    where?: AssessmentPartFourWhereInput
+  }
+
+  export type AssessmentPartFourUpdateToOneWithWhereWithoutUserInput = {
+    where?: AssessmentPartFourWhereInput
+    data: XOR<AssessmentPartFourUpdateWithoutUserInput, AssessmentPartFourUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AssessmentPartFourUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    existingCommitments?: AssessmentPartFourUpdateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourUpdatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourUpdateunwantedCommitmentsInput | string[]
+    idealMorning?: StringFieldUpdateOperationsInput | string
+    idealAfternoon?: StringFieldUpdateOperationsInput | string
+    idealEvening?: StringFieldUpdateOperationsInput | string
+    cleanSlateReflection?: StringFieldUpdateOperationsInput | string
+    majorGoals?: AssessmentPartFourUpdatemajorGoalsInput | string[]
+    vision6Months?: StringFieldUpdateOperationsInput | string
+    vision2Years?: StringFieldUpdateOperationsInput | string
+    vision5Years?: StringFieldUpdateOperationsInput | string
+    majorChanges?: AssessmentPartFourUpdatemajorChangesInput | string[]
+    successDefinition?: StringFieldUpdateOperationsInput | string
+    futureReflection?: StringFieldUpdateOperationsInput | string
+    reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    domainVisions?: DomainVisionEntryUpdateManyWithoutAssessmentNestedInput
+    identities?: IdentityRecordUpdateManyWithoutAssessmentNestedInput
+  }
+
+  export type AssessmentPartFourUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    existingCommitments?: AssessmentPartFourUpdateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourUpdatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourUpdateunwantedCommitmentsInput | string[]
+    idealMorning?: StringFieldUpdateOperationsInput | string
+    idealAfternoon?: StringFieldUpdateOperationsInput | string
+    idealEvening?: StringFieldUpdateOperationsInput | string
+    cleanSlateReflection?: StringFieldUpdateOperationsInput | string
+    majorGoals?: AssessmentPartFourUpdatemajorGoalsInput | string[]
+    vision6Months?: StringFieldUpdateOperationsInput | string
+    vision2Years?: StringFieldUpdateOperationsInput | string
+    vision5Years?: StringFieldUpdateOperationsInput | string
+    majorChanges?: AssessmentPartFourUpdatemajorChangesInput | string[]
+    successDefinition?: StringFieldUpdateOperationsInput | string
+    futureReflection?: StringFieldUpdateOperationsInput | string
+    reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    domainVisions?: DomainVisionEntryUncheckedUpdateManyWithoutAssessmentNestedInput
+    identities?: IdentityRecordUncheckedUpdateManyWithoutAssessmentNestedInput
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     email: string
@@ -24342,6 +29079,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -24357,6 +29095,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -24388,6 +29127,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -24403,6 +29143,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -24418,6 +29159,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -24433,6 +29175,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -24464,6 +29207,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -24479,6 +29223,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotesInput = {
@@ -24494,6 +29239,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotesInput = {
@@ -24509,6 +29255,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotesInput = {
@@ -24540,6 +29287,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotesInput = {
@@ -24555,6 +29303,7 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAssessmentPartOneInput = {
@@ -24570,6 +29319,7 @@ export namespace Prisma {
     notes?: NoteCreateNestedManyWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartOneInput = {
@@ -24585,6 +29335,7 @@ export namespace Prisma {
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartOneInput = {
@@ -24638,6 +29389,7 @@ export namespace Prisma {
     notes?: NoteUpdateManyWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartOneInput = {
@@ -24653,6 +29405,7 @@ export namespace Prisma {
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type ProjectUpsertWithWhereUniqueWithoutAssessmentInput = {
@@ -24802,6 +29555,7 @@ export namespace Prisma {
     notes?: NoteCreateNestedManyWithoutUserInput
     assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartTwoInput = {
@@ -24817,6 +29571,7 @@ export namespace Prisma {
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
     assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartTwoInput = {
@@ -24870,6 +29625,7 @@ export namespace Prisma {
     notes?: NoteUpdateManyWithoutUserNestedInput
     assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartTwoInput = {
@@ -24885,6 +29641,7 @@ export namespace Prisma {
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
     assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type DayLogUpsertWithWhereUniqueWithoutAssessmentInput = {
@@ -25064,6 +29821,7 @@ export namespace Prisma {
     notes?: NoteCreateNestedManyWithoutUserInput
     assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartThreeInput = {
@@ -25079,6 +29837,7 @@ export namespace Prisma {
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
     assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartThreeInput = {
@@ -25265,6 +30024,7 @@ export namespace Prisma {
     notes?: NoteUpdateManyWithoutUserNestedInput
     assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartThreeInput = {
@@ -25280,6 +30040,7 @@ export namespace Prisma {
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
     assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type HabitRecordUpsertWithWhereUniqueWithoutBeneficialForInput = {
@@ -26283,6 +31044,406 @@ export namespace Prisma {
     eveningForId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type UserCreateWithoutAssessmentPartFourInput = {
+    id?: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    emailVerified?: Date | string | null
+    image?: string | null
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notes?: NoteCreateNestedManyWithoutUserInput
+    assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
+    assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
+    assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAssessmentPartFourInput = {
+    id?: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    emailVerified?: Date | string | null
+    image?: string | null
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAssessmentPartFourInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAssessmentPartFourInput, UserUncheckedCreateWithoutAssessmentPartFourInput>
+  }
+
+  export type DomainVisionEntryCreateWithoutAssessmentInput = {
+    id?: string
+    domain: string
+    vision?: string
+  }
+
+  export type DomainVisionEntryUncheckedCreateWithoutAssessmentInput = {
+    id?: string
+    domain: string
+    vision?: string
+  }
+
+  export type DomainVisionEntryCreateOrConnectWithoutAssessmentInput = {
+    where: DomainVisionEntryWhereUniqueInput
+    create: XOR<DomainVisionEntryCreateWithoutAssessmentInput, DomainVisionEntryUncheckedCreateWithoutAssessmentInput>
+  }
+
+  export type DomainVisionEntryCreateManyAssessmentInputEnvelope = {
+    data: DomainVisionEntryCreateManyAssessmentInput | DomainVisionEntryCreateManyAssessmentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type IdentityRecordCreateWithoutAssessmentInput = {
+    id?: string
+    identity: string
+    habits?: IdentityRecordCreatehabitsInput | string[]
+  }
+
+  export type IdentityRecordUncheckedCreateWithoutAssessmentInput = {
+    id?: string
+    identity: string
+    habits?: IdentityRecordCreatehabitsInput | string[]
+  }
+
+  export type IdentityRecordCreateOrConnectWithoutAssessmentInput = {
+    where: IdentityRecordWhereUniqueInput
+    create: XOR<IdentityRecordCreateWithoutAssessmentInput, IdentityRecordUncheckedCreateWithoutAssessmentInput>
+  }
+
+  export type IdentityRecordCreateManyAssessmentInputEnvelope = {
+    data: IdentityRecordCreateManyAssessmentInput | IdentityRecordCreateManyAssessmentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutAssessmentPartFourInput = {
+    update: XOR<UserUpdateWithoutAssessmentPartFourInput, UserUncheckedUpdateWithoutAssessmentPartFourInput>
+    create: XOR<UserCreateWithoutAssessmentPartFourInput, UserUncheckedCreateWithoutAssessmentPartFourInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAssessmentPartFourInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAssessmentPartFourInput, UserUncheckedUpdateWithoutAssessmentPartFourInput>
+  }
+
+  export type UserUpdateWithoutAssessmentPartFourInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notes?: NoteUpdateManyWithoutUserNestedInput
+    assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
+    assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
+    assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAssessmentPartFourInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type DomainVisionEntryUpsertWithWhereUniqueWithoutAssessmentInput = {
+    where: DomainVisionEntryWhereUniqueInput
+    update: XOR<DomainVisionEntryUpdateWithoutAssessmentInput, DomainVisionEntryUncheckedUpdateWithoutAssessmentInput>
+    create: XOR<DomainVisionEntryCreateWithoutAssessmentInput, DomainVisionEntryUncheckedCreateWithoutAssessmentInput>
+  }
+
+  export type DomainVisionEntryUpdateWithWhereUniqueWithoutAssessmentInput = {
+    where: DomainVisionEntryWhereUniqueInput
+    data: XOR<DomainVisionEntryUpdateWithoutAssessmentInput, DomainVisionEntryUncheckedUpdateWithoutAssessmentInput>
+  }
+
+  export type DomainVisionEntryUpdateManyWithWhereWithoutAssessmentInput = {
+    where: DomainVisionEntryScalarWhereInput
+    data: XOR<DomainVisionEntryUpdateManyMutationInput, DomainVisionEntryUncheckedUpdateManyWithoutAssessmentInput>
+  }
+
+  export type DomainVisionEntryScalarWhereInput = {
+    AND?: DomainVisionEntryScalarWhereInput | DomainVisionEntryScalarWhereInput[]
+    OR?: DomainVisionEntryScalarWhereInput[]
+    NOT?: DomainVisionEntryScalarWhereInput | DomainVisionEntryScalarWhereInput[]
+    id?: StringFilter<"DomainVisionEntry"> | string
+    domain?: StringFilter<"DomainVisionEntry"> | string
+    vision?: StringFilter<"DomainVisionEntry"> | string
+    assessmentId?: StringFilter<"DomainVisionEntry"> | string
+  }
+
+  export type IdentityRecordUpsertWithWhereUniqueWithoutAssessmentInput = {
+    where: IdentityRecordWhereUniqueInput
+    update: XOR<IdentityRecordUpdateWithoutAssessmentInput, IdentityRecordUncheckedUpdateWithoutAssessmentInput>
+    create: XOR<IdentityRecordCreateWithoutAssessmentInput, IdentityRecordUncheckedCreateWithoutAssessmentInput>
+  }
+
+  export type IdentityRecordUpdateWithWhereUniqueWithoutAssessmentInput = {
+    where: IdentityRecordWhereUniqueInput
+    data: XOR<IdentityRecordUpdateWithoutAssessmentInput, IdentityRecordUncheckedUpdateWithoutAssessmentInput>
+  }
+
+  export type IdentityRecordUpdateManyWithWhereWithoutAssessmentInput = {
+    where: IdentityRecordScalarWhereInput
+    data: XOR<IdentityRecordUpdateManyMutationInput, IdentityRecordUncheckedUpdateManyWithoutAssessmentInput>
+  }
+
+  export type IdentityRecordScalarWhereInput = {
+    AND?: IdentityRecordScalarWhereInput | IdentityRecordScalarWhereInput[]
+    OR?: IdentityRecordScalarWhereInput[]
+    NOT?: IdentityRecordScalarWhereInput | IdentityRecordScalarWhereInput[]
+    id?: StringFilter<"IdentityRecord"> | string
+    identity?: StringFilter<"IdentityRecord"> | string
+    habits?: StringNullableListFilter<"IdentityRecord">
+    assessmentId?: StringFilter<"IdentityRecord"> | string
+  }
+
+  export type AssessmentPartFourCreateWithoutDomainVisionsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    existingCommitments?: AssessmentPartFourCreateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourCreatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourCreateunwantedCommitmentsInput | string[]
+    idealMorning?: string
+    idealAfternoon?: string
+    idealEvening?: string
+    cleanSlateReflection?: string
+    majorGoals?: AssessmentPartFourCreatemajorGoalsInput | string[]
+    vision6Months?: string
+    vision2Years?: string
+    vision5Years?: string
+    majorChanges?: AssessmentPartFourCreatemajorChangesInput | string[]
+    successDefinition?: string
+    futureReflection?: string
+    reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
+    completedAt?: Date | string | null
+    user: UserCreateNestedOneWithoutAssessmentPartFourInput
+    identities?: IdentityRecordCreateNestedManyWithoutAssessmentInput
+  }
+
+  export type AssessmentPartFourUncheckedCreateWithoutDomainVisionsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    existingCommitments?: AssessmentPartFourCreateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourCreatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourCreateunwantedCommitmentsInput | string[]
+    idealMorning?: string
+    idealAfternoon?: string
+    idealEvening?: string
+    cleanSlateReflection?: string
+    majorGoals?: AssessmentPartFourCreatemajorGoalsInput | string[]
+    vision6Months?: string
+    vision2Years?: string
+    vision5Years?: string
+    majorChanges?: AssessmentPartFourCreatemajorChangesInput | string[]
+    successDefinition?: string
+    futureReflection?: string
+    reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
+    completedAt?: Date | string | null
+    userId: string
+    identities?: IdentityRecordUncheckedCreateNestedManyWithoutAssessmentInput
+  }
+
+  export type AssessmentPartFourCreateOrConnectWithoutDomainVisionsInput = {
+    where: AssessmentPartFourWhereUniqueInput
+    create: XOR<AssessmentPartFourCreateWithoutDomainVisionsInput, AssessmentPartFourUncheckedCreateWithoutDomainVisionsInput>
+  }
+
+  export type AssessmentPartFourUpsertWithoutDomainVisionsInput = {
+    update: XOR<AssessmentPartFourUpdateWithoutDomainVisionsInput, AssessmentPartFourUncheckedUpdateWithoutDomainVisionsInput>
+    create: XOR<AssessmentPartFourCreateWithoutDomainVisionsInput, AssessmentPartFourUncheckedCreateWithoutDomainVisionsInput>
+    where?: AssessmentPartFourWhereInput
+  }
+
+  export type AssessmentPartFourUpdateToOneWithWhereWithoutDomainVisionsInput = {
+    where?: AssessmentPartFourWhereInput
+    data: XOR<AssessmentPartFourUpdateWithoutDomainVisionsInput, AssessmentPartFourUncheckedUpdateWithoutDomainVisionsInput>
+  }
+
+  export type AssessmentPartFourUpdateWithoutDomainVisionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    existingCommitments?: AssessmentPartFourUpdateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourUpdatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourUpdateunwantedCommitmentsInput | string[]
+    idealMorning?: StringFieldUpdateOperationsInput | string
+    idealAfternoon?: StringFieldUpdateOperationsInput | string
+    idealEvening?: StringFieldUpdateOperationsInput | string
+    cleanSlateReflection?: StringFieldUpdateOperationsInput | string
+    majorGoals?: AssessmentPartFourUpdatemajorGoalsInput | string[]
+    vision6Months?: StringFieldUpdateOperationsInput | string
+    vision2Years?: StringFieldUpdateOperationsInput | string
+    vision5Years?: StringFieldUpdateOperationsInput | string
+    majorChanges?: AssessmentPartFourUpdatemajorChangesInput | string[]
+    successDefinition?: StringFieldUpdateOperationsInput | string
+    futureReflection?: StringFieldUpdateOperationsInput | string
+    reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutAssessmentPartFourNestedInput
+    identities?: IdentityRecordUpdateManyWithoutAssessmentNestedInput
+  }
+
+  export type AssessmentPartFourUncheckedUpdateWithoutDomainVisionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    existingCommitments?: AssessmentPartFourUpdateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourUpdatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourUpdateunwantedCommitmentsInput | string[]
+    idealMorning?: StringFieldUpdateOperationsInput | string
+    idealAfternoon?: StringFieldUpdateOperationsInput | string
+    idealEvening?: StringFieldUpdateOperationsInput | string
+    cleanSlateReflection?: StringFieldUpdateOperationsInput | string
+    majorGoals?: AssessmentPartFourUpdatemajorGoalsInput | string[]
+    vision6Months?: StringFieldUpdateOperationsInput | string
+    vision2Years?: StringFieldUpdateOperationsInput | string
+    vision5Years?: StringFieldUpdateOperationsInput | string
+    majorChanges?: AssessmentPartFourUpdatemajorChangesInput | string[]
+    successDefinition?: StringFieldUpdateOperationsInput | string
+    futureReflection?: StringFieldUpdateOperationsInput | string
+    reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    identities?: IdentityRecordUncheckedUpdateManyWithoutAssessmentNestedInput
+  }
+
+  export type AssessmentPartFourCreateWithoutIdentitiesInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    existingCommitments?: AssessmentPartFourCreateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourCreatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourCreateunwantedCommitmentsInput | string[]
+    idealMorning?: string
+    idealAfternoon?: string
+    idealEvening?: string
+    cleanSlateReflection?: string
+    majorGoals?: AssessmentPartFourCreatemajorGoalsInput | string[]
+    vision6Months?: string
+    vision2Years?: string
+    vision5Years?: string
+    majorChanges?: AssessmentPartFourCreatemajorChangesInput | string[]
+    successDefinition?: string
+    futureReflection?: string
+    reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
+    completedAt?: Date | string | null
+    user: UserCreateNestedOneWithoutAssessmentPartFourInput
+    domainVisions?: DomainVisionEntryCreateNestedManyWithoutAssessmentInput
+  }
+
+  export type AssessmentPartFourUncheckedCreateWithoutIdentitiesInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    existingCommitments?: AssessmentPartFourCreateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourCreatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourCreateunwantedCommitmentsInput | string[]
+    idealMorning?: string
+    idealAfternoon?: string
+    idealEvening?: string
+    cleanSlateReflection?: string
+    majorGoals?: AssessmentPartFourCreatemajorGoalsInput | string[]
+    vision6Months?: string
+    vision2Years?: string
+    vision5Years?: string
+    majorChanges?: AssessmentPartFourCreatemajorChangesInput | string[]
+    successDefinition?: string
+    futureReflection?: string
+    reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
+    completedAt?: Date | string | null
+    userId: string
+    domainVisions?: DomainVisionEntryUncheckedCreateNestedManyWithoutAssessmentInput
+  }
+
+  export type AssessmentPartFourCreateOrConnectWithoutIdentitiesInput = {
+    where: AssessmentPartFourWhereUniqueInput
+    create: XOR<AssessmentPartFourCreateWithoutIdentitiesInput, AssessmentPartFourUncheckedCreateWithoutIdentitiesInput>
+  }
+
+  export type AssessmentPartFourUpsertWithoutIdentitiesInput = {
+    update: XOR<AssessmentPartFourUpdateWithoutIdentitiesInput, AssessmentPartFourUncheckedUpdateWithoutIdentitiesInput>
+    create: XOR<AssessmentPartFourCreateWithoutIdentitiesInput, AssessmentPartFourUncheckedCreateWithoutIdentitiesInput>
+    where?: AssessmentPartFourWhereInput
+  }
+
+  export type AssessmentPartFourUpdateToOneWithWhereWithoutIdentitiesInput = {
+    where?: AssessmentPartFourWhereInput
+    data: XOR<AssessmentPartFourUpdateWithoutIdentitiesInput, AssessmentPartFourUncheckedUpdateWithoutIdentitiesInput>
+  }
+
+  export type AssessmentPartFourUpdateWithoutIdentitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    existingCommitments?: AssessmentPartFourUpdateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourUpdatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourUpdateunwantedCommitmentsInput | string[]
+    idealMorning?: StringFieldUpdateOperationsInput | string
+    idealAfternoon?: StringFieldUpdateOperationsInput | string
+    idealEvening?: StringFieldUpdateOperationsInput | string
+    cleanSlateReflection?: StringFieldUpdateOperationsInput | string
+    majorGoals?: AssessmentPartFourUpdatemajorGoalsInput | string[]
+    vision6Months?: StringFieldUpdateOperationsInput | string
+    vision2Years?: StringFieldUpdateOperationsInput | string
+    vision5Years?: StringFieldUpdateOperationsInput | string
+    majorChanges?: AssessmentPartFourUpdatemajorChangesInput | string[]
+    successDefinition?: StringFieldUpdateOperationsInput | string
+    futureReflection?: StringFieldUpdateOperationsInput | string
+    reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutAssessmentPartFourNestedInput
+    domainVisions?: DomainVisionEntryUpdateManyWithoutAssessmentNestedInput
+  }
+
+  export type AssessmentPartFourUncheckedUpdateWithoutIdentitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    existingCommitments?: AssessmentPartFourUpdateexistingCommitmentsInput | string[]
+    desiredCommitments?: AssessmentPartFourUpdatedesiredCommitmentsInput | string[]
+    unwantedCommitments?: AssessmentPartFourUpdateunwantedCommitmentsInput | string[]
+    idealMorning?: StringFieldUpdateOperationsInput | string
+    idealAfternoon?: StringFieldUpdateOperationsInput | string
+    idealEvening?: StringFieldUpdateOperationsInput | string
+    cleanSlateReflection?: StringFieldUpdateOperationsInput | string
+    majorGoals?: AssessmentPartFourUpdatemajorGoalsInput | string[]
+    vision6Months?: StringFieldUpdateOperationsInput | string
+    vision2Years?: StringFieldUpdateOperationsInput | string
+    vision5Years?: StringFieldUpdateOperationsInput | string
+    majorChanges?: AssessmentPartFourUpdatemajorChangesInput | string[]
+    successDefinition?: StringFieldUpdateOperationsInput | string
+    futureReflection?: StringFieldUpdateOperationsInput | string
+    reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    domainVisions?: DomainVisionEntryUncheckedUpdateManyWithoutAssessmentNestedInput
+  }
+
   export type AccountCreateManyUserInput = {
     id?: string
     type: string
@@ -26595,6 +31756,54 @@ export namespace Prisma {
     habit?: StringFieldUpdateOperationsInput | string
     score?: StringFieldUpdateOperationsInput | string
     reasoning?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DomainVisionEntryCreateManyAssessmentInput = {
+    id?: string
+    domain: string
+    vision?: string
+  }
+
+  export type IdentityRecordCreateManyAssessmentInput = {
+    id?: string
+    identity: string
+    habits?: IdentityRecordCreatehabitsInput | string[]
+  }
+
+  export type DomainVisionEntryUpdateWithoutAssessmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DomainVisionEntryUncheckedUpdateWithoutAssessmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DomainVisionEntryUncheckedUpdateManyWithoutAssessmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type IdentityRecordUpdateWithoutAssessmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identity?: StringFieldUpdateOperationsInput | string
+    habits?: IdentityRecordUpdatehabitsInput | string[]
+  }
+
+  export type IdentityRecordUncheckedUpdateWithoutAssessmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identity?: StringFieldUpdateOperationsInput | string
+    habits?: IdentityRecordUpdatehabitsInput | string[]
+  }
+
+  export type IdentityRecordUncheckedUpdateManyWithoutAssessmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identity?: StringFieldUpdateOperationsInput | string
+    habits?: IdentityRecordUpdatehabitsInput | string[]
   }
 
 

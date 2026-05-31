@@ -333,6 +333,36 @@ export interface PrismaClient<
     * ```
     */
   get habitScorecardEntry(): Prisma.HabitScorecardEntryDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.assessmentPartFour`: Exposes CRUD operations for the **AssessmentPartFour** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AssessmentPartFours
+    * const assessmentPartFours = await prisma.assessmentPartFour.findMany()
+    * ```
+    */
+  get assessmentPartFour(): Prisma.AssessmentPartFourDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.domainVisionEntry`: Exposes CRUD operations for the **DomainVisionEntry** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DomainVisionEntries
+    * const domainVisionEntries = await prisma.domainVisionEntry.findMany()
+    * ```
+    */
+  get domainVisionEntry(): Prisma.DomainVisionEntryDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.identityRecord`: Exposes CRUD operations for the **IdentityRecord** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more IdentityRecords
+    * const identityRecords = await prisma.identityRecord.findMany()
+    * ```
+    */
+  get identityRecord(): Prisma.IdentityRecordDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {

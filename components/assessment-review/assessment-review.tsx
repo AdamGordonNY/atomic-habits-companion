@@ -6,8 +6,10 @@ import {
   fetchPartOneForReview,
   fetchPartTwoForReview,
   fetchPartThreeForReview,
+  fetchPartFourForReview,
 } from "@/lib/assessment-reads";
 import type {
+  HabitAssessmentPartFour,
   HabitAssessmentPartThree,
   HabitAssessmentPartTwo,
   HabitInventoryScorecard,
@@ -1122,12 +1124,158 @@ function HabitAttemptList({ items }: { items: HabitAttempt[] }) {
   );
 }
 
+// ─── Part Four view ───────────────────────────────────────────────────────────
+
+function PartFourView({
+  data,
+  assessmentId,
+}: {
+  data: HabitAssessmentPartFour | null;
+  assessmentId: string;
+}) {
+  const editBase = `/habit-assessment/${assessmentId}/part-four`;
+
+  if (!data) {
+    return (
+      <div className="flex flex-col items-center gap-4 py-16 text-center">
+        <p className="text-sm text-slate-400">No Part 4 data found.</p>
+        <Link
+          href={editBase}
+          className="inline-flex h-9 items-center rounded-full bg-slate-950 px-5 text-xs font-semibold text-white hover:bg-slate-800"
+        >
+          Start Part 4 →
+        </Link>
+      </div>
+    );
+  }
+
+  const d = data;
+
+  return (
+    <div className="flex flex-col gap-6">
+      {/* Q1 — Clean Slate */}
+      <ReviewSection id="p4-commitments" label="Clean Slate — Commitments">
+        <QCard question="Commitments you already have" editHref={editBase}>
+          <Tags items={d.existingCommitments} />
+        </QCard>
+        <QCard question="Commitments you'd like to have" editHref={editBase}>
+          <Tags items={d.desiredCommitments} />
+        </QCard>
+        <QCard question="Commitments you don't want" editHref={editBase}>
+          <Tags items={d.unwantedCommitments} />
+        </QCard>
+      </ReviewSection>
+
+      <ReviewSection id="p4-ideal-day" label="Ideal Day">
+        <TwoColCard
+          question="What would your ideal day look like?"
+          editHref={editBase}
+          pairs={[
+            { label: "Morning", value: <Prose text={d.idealMorning} /> },
+            { label: "Afternoon", value: <Prose text={d.idealAfternoon} /> },
+            { label: "Evening", value: <Prose text={d.idealEvening} /> },
+          ]}
+        />
+        <QCard question="Clean slate reflection" editHref={editBase}>
+          <Prose text={d.cleanSlateReflection} />
+        </QCard>
+      </ReviewSection>
+
+      {/* Q2 — Ideal Future */}
+      <ReviewSection id="p4-goals" label="Goals & Vision">
+        <QCard question="Major goals coming into this process" editHref={editBase}>
+          <Tags items={d.majorGoals} />
+        </QCard>
+        <TwoColCard
+          question="Your ideal future"
+          editHref={editBase}
+          pairs={[
+            { label: "6 months from now", value: <Prose text={d.vision6Months} /> },
+            { label: "2 years from now", value: <Prose text={d.vision2Years} /> },
+            { label: "5 years from now", value: <Prose text={d.vision5Years} /> },
+          ]}
+        />
+        <QCard question="Major changes you want to see" editHref={editBase}>
+          <Tags items={d.majorChanges} />
+        </QCard>
+        <QCard question="What success means to you" editHref={editBase}>
+          <Prose text={d.successDefinition} />
+        </QCard>
+      </ReviewSection>
+
+      {/* Q2.5 — Domain visions */}
+      {d.domainVisions.some((dv) => dv.vision.trim()) && (
+        <ReviewSection id="p4-domains" label="Life Domain Visions">
+          <div className="flex flex-col gap-3">
+            {d.domainVisions
+              .filter((dv) => dv.vision.trim())
+              .map((dv) => (
+                <div
+                  key={dv.domain}
+                  className="rounded-2xl border border-slate-100 bg-white px-5 py-4 shadow-sm"
+                >
+                  <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                    {dv.domain}
+                  </p>
+                  <p className="text-sm leading-relaxed text-slate-800">{dv.vision}</p>
+                </div>
+              ))}
+          </div>
+        </ReviewSection>
+      )}
+
+      {/* Q2.6 — Identities */}
+      {d.identities.some((i) => i.identity.trim()) && (
+        <ReviewSection id="p4-identities" label="Identities & Habits">
+          <div className="flex flex-col gap-4">
+            {d.identities
+              .filter((i) => i.identity.trim())
+              .map((i, idx) => (
+                <div
+                  key={idx}
+                  className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm"
+                >
+                  <div className="border-b border-slate-50 bg-slate-950 px-5 py-3">
+                    <p className="text-sm font-semibold text-white">{i.identity}</p>
+                  </div>
+                  {i.habits.length > 0 && (
+                    <div className="flex flex-wrap gap-2 px-5 py-3">
+                      {i.habits.map((h, hi) => (
+                        <span
+                          key={hi}
+                          className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
+                        >
+                          {h}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+          </div>
+        </ReviewSection>
+      )}
+
+      {/* Q2.7 — Reflection + goals */}
+      <ReviewSection id="p4-reflection" label="Reflection & Goals">
+        <QCard question="What you've discovered about what you want" editHref={editBase}>
+          <Prose text={d.futureReflection} />
+        </QCard>
+        <QCard question="Goals based on your reflection" editHref={editBase}>
+          <Tags items={d.reflectionGoals} />
+        </QCard>
+      </ReviewSection>
+    </div>
+  );
+}
+
 // ─── root component ───────────────────────────────────────────────────────────
 
 const PART_TABS = [
   { key: "p1", label: "Part 1", sublabel: "Baseline" },
   { key: "p2", label: "Part 2", sublabel: "Energy Log" },
   { key: "p3", label: "Part 3", sublabel: "Deep-Dive" },
+  { key: "p4", label: "Part 4", sublabel: "Ideal Life" },
 ] as const;
 
 type PartKey = (typeof PART_TABS)[number]["key"];
@@ -1136,6 +1284,7 @@ export function AssessmentReview({ assessmentId }: { assessmentId: string }) {
   const [partOne, setPartOne] = useState<StoredPartOne | null>(null);
   const [partTwo, setPartTwo] = useState<StoredPartTwo | null>(null);
   const [partThree, setPartThree] = useState<StoredPartThree | null>(null);
+  const [partFour, setPartFour] = useState<HabitAssessmentPartFour | null>(null);
   const [activeTab, setActiveTab] = useState<PartKey>("p1");
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -1144,15 +1293,17 @@ export function AssessmentReview({ assessmentId }: { assessmentId: string }) {
   useEffect(() => {
     let cancelled = false;
     async function load() {
-      const [p1, p2, p3] = await Promise.all([
+      const [p1, p2, p3, p4] = await Promise.all([
         fetchPartOneForReview(),
         fetchPartTwoForReview(),
         fetchPartThreeForReview(),
+        fetchPartFourForReview(),
       ]);
       if (cancelled) return;
       setPartOne(p1 as StoredPartOne | null);
       setPartTwo(p2 as StoredPartTwo | null);
       setPartThree(p3 as StoredPartThree | null);
+      setPartFour(p4 as HabitAssessmentPartFour | null);
       setMounted(true);
       requestAnimationFrame(() => setVisible(true));
     }
@@ -1203,7 +1354,9 @@ export function AssessmentReview({ assessmentId }: { assessmentId: string }) {
                 ? partOne?.completedAt
                 : tab.key === "p2"
                   ? partTwo?.completedAt
-                  : partThree?.completedAt;
+                  : tab.key === "p3"
+                    ? partThree?.completedAt
+                    : partFour?.completedAt;
             const isActive = activeTab === tab.key;
 
             return (
@@ -1252,6 +1405,12 @@ export function AssessmentReview({ assessmentId }: { assessmentId: string }) {
               {activeTab === "p3" && (
                 <PartThreeView
                   data={partThree ?? {}}
+                  assessmentId={assessmentId}
+                />
+              )}
+              {activeTab === "p4" && (
+                <PartFourView
+                  data={partFour}
                   assessmentId={assessmentId}
                 />
               )}
