@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { Note } from "@/types/habit";
 import {
-  createNote,
-  deleteNote,
-  getNotes,
-  togglePin,
-  updateNote,
-} from "@/lib/notes-store";
+  actionGetNotes,
+  actionCreateNote,
+  actionUpdateNote,
+  actionDeleteNote,
+  actionTogglePin,
+} from "@/lib/notes-actions";
 import { RichEditor } from "./rich-editor";
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
@@ -155,11 +155,20 @@ export function NotesClient() {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    const loaded = getNotes();
-    setNotes(loaded);
-    setMounted(true);
-    const f = requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(f);
+    let cancelled = false;
+    let rafId: number;
+    async function load() {
+      const loaded = await actionGetNotes();
+      if (cancelled) return;
+      setNotes(loaded);
+      setMounted(true);
+      rafId = requestAnimationFrame(() => setVisible(true));
+    }
+    load();
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(rafId);
+    };
   }, []);
 
   // load selected note into editor state
@@ -178,20 +187,21 @@ export function NotesClient() {
     setShowSidebar(false);
   }, [selected?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  function refreshList() {
-    setNotes(getNotes());
+  async function refreshList() {
+    const updated = await actionGetNotes();
+    setNotes(updated);
   }
 
-  function handleNew() {
-    const note = createNote({
+  async function handleNew() {
+    const note = await actionCreateNote({
       title: "",
       content: "",
       contentText: "",
       tags: [],
       pinned: false,
     });
-    refreshList();
-    openInEditModeRef.current = true; // new note → open directly in editor
+    setNotes((prev) => [note, ...prev]);
+    openInEditModeRef.current = true;
     setSelected(note);
   }
 
@@ -200,15 +210,20 @@ export function NotesClient() {
     setIsEditing(false); // existing notes open in view mode
   }
 
-  function handleDoneEditing() {
+  async function handleDoneEditing() {
     if (autosaveTimer.current) clearTimeout(autosaveTimer.current);
-    if (selected) save(selected, editTitle, editContent, editContentText, editTags);
+    if (selected) await save(selected, editTitle, editContent, editContentText, editTags);
     setIsEditing(false);
   }
 
-  function save(note: Note, title: string, content: string, contentText: string, tags: string[]) {
-    updateNote(note.id, { title, content, contentText, tags });
-    refreshList();
+  async function save(note: Note, title: string, content: string, contentText: string, tags: string[]) {
+    try {
+      const updated = await actionUpdateNote(note.id, { title, content, contentText, tags });
+      setNotes((prev) => prev.map((n) => (n.id === updated.id ? updated : n)));
+      setSelected((prev) => (prev?.id === updated.id ? updated : prev));
+    } catch (err) {
+      console.error("[NotesClient] save failed:", err);
+    }
     setDirty(false);
   }
 
@@ -252,23 +267,27 @@ export function NotesClient() {
     if (selected) save(selected, editTitle, editContent, editContentText, next);
   }
 
-  function handleDelete() {
+  async function handleDelete() {
     if (!selected) return;
-    deleteNote(selected.id);
+    await actionDeleteNote(selected.id);
+    setNotes((prev) => prev.filter((n) => n.id !== selected.id));
     setSelected(null);
     setShowDelete(false);
     setShowSidebar(true);
-    refreshList();
   }
 
-  function handlePin() {
+  async function handlePin() {
     if (!selected) return;
-    togglePin(selected.id);
-    refreshList();
-    // keep selected in sync
-    setSelected((prev) =>
-      prev ? { ...prev, pinned: !prev.pinned } : null,
+    const updated = await actionTogglePin(selected.id);
+    setNotes((prev) =>
+      prev
+        .map((n) => (n.id === updated.id ? updated : n))
+        .sort((a, b) => {
+          if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+          return b.updatedAt.localeCompare(a.updatedAt);
+        }),
     );
+    setSelected(updated);
   }
 
   const filtered = notes.filter((n) => {
