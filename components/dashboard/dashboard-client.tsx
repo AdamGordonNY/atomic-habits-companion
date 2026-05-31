@@ -246,7 +246,7 @@ export function DashboardClient() {
 
           {/* Welcome */}
           <section className="space-y-2">
-            <p className="text-sm font-medium text-slate-500">{greeting()}</p>
+            <p className="text-sm font-medium text-slate-500" suppressHydrationWarning>{greeting()}</p>
             <h1 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
               Welcome back.
             </h1>
