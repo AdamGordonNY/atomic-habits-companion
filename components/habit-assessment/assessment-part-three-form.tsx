@@ -97,6 +97,26 @@ const SECTION_LABELS: Record<number, string> = {
   16: "Part 1 Complete · Wrap-Up",
 };
 
+const STEP_QUESTIONS: Record<number, string> = {
+  0: "What are the major ways your time is currently being spent?",
+  1: "How many high-energy hours do you typically have per day, and what are they?",
+  2: "What activities are currently getting your high-energy hours?",
+  3: "Identify your low-energy hours.",
+  4: "How would you like to spend your high-energy and low-energy hours?",
+  5: "What feels like it consumes more time than it should?",
+  6: "What is the current source of most stress or energy drain in your life?",
+  7: "What significant changes do you anticipate navigating soon?",
+  8: "What beneficial habits do you currently have?",
+  9: "What have been your most successful habits, and why did they stick?",
+  10: "What patterns made habits sticky and positive?",
+  11: "Reflect on habits you've tried building or breaking.",
+  12: "Morning Habit Scorecard",
+  13: "Afternoon Habit Scorecard",
+  14: "Evening Habit Scorecard",
+  15: "Reflect on all of this data.",
+  16: "Looking back on everything — what do you now understand about yourself?",
+};
+
 // ─── reusable input primitives ────────────────────────────────────────────────
 
 function Textarea({
@@ -449,6 +469,203 @@ function EnergyAuditPanel({ analysis }: { analysis: EnergyAnalysis | null }) {
           {peakActivities.join(" · ")}
         </p>
       )}
+    </div>
+  );
+}
+
+// ─── PreviousAnswersPanel ────────────────────────────────────────────────────
+
+function TextAnswer({ text }: { text: string }) {
+  if (!text?.trim()) return <p className="text-xs italic text-slate-400">No answer yet</p>;
+  return <p className="whitespace-pre-wrap text-xs text-slate-700">{text}</p>;
+}
+
+function BulletAnswer({ items }: { items: string[] }) {
+  const filled = items.filter(Boolean);
+  if (!filled.length) return <p className="text-xs italic text-slate-400">No answer yet</p>;
+  return (
+    <ul className="flex flex-col gap-0.5 pl-3">
+      {filled.map((item, i) => (
+        <li key={i} className="list-disc text-xs text-slate-700">
+          {item}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function PairAnswer({ items }: { items: HabitRecord[] }) {
+  const filled = items.filter((i) => i.habit.trim());
+  if (!filled.length) return <p className="text-xs italic text-slate-400">No answer yet</p>;
+  return (
+    <div className="flex flex-col gap-2">
+      {filled.map((item, i) => (
+        <div key={i}>
+          <p className="text-xs font-medium text-slate-700">{item.habit}</p>
+          {item.explanation?.trim() && (
+            <p className="text-xs text-slate-500">{item.explanation}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ScorecardAnswer({ scorecard }: { scorecard: HabitInventoryScorecard }) {
+  const filled = scorecard.entries.filter((e) => e.habit.trim());
+  if (!filled.length) return <p className="text-xs italic text-slate-400">No habits logged</p>;
+  const pos = filled.filter((e) => e.score === "+").length;
+  const neg = filled.filter((e) => e.score === "-").length;
+  return (
+    <div className="flex flex-col gap-1">
+      <p className="text-xs text-slate-500">
+        {filled.length} habit{filled.length !== 1 ? "s" : ""}
+        {pos > 0 && <span className="ml-1 text-emerald-700">{pos}+</span>}
+        {neg > 0 && <span className="ml-1 text-rose-600">{neg}−</span>}
+      </p>
+      {filled.slice(0, 3).map((e, i) => (
+        <p key={i} className="text-xs text-slate-700">
+          {e.score === "+" ? "✓" : "✗"} {e.habit}
+        </p>
+      ))}
+      {filled.length > 3 && (
+        <p className="text-xs text-slate-400">+{filled.length - 3} more</p>
+      )}
+    </div>
+  );
+}
+
+function stepAnswer(idx: number, draft: HabitAssessmentPartThree): React.ReactNode {
+  switch (idx) {
+    case 0:
+      return <BulletAnswer items={draft.majorTimeSpends} />;
+    case 1:
+      return (
+        <div className="flex flex-col gap-1">
+          {draft.highEnergyHoursPerDay != null && (
+            <p className="text-xs text-slate-700">
+              {draft.highEnergyHoursPerDay} high-energy hour{draft.highEnergyHoursPerDay !== 1 ? "s" : ""} per day
+            </p>
+          )}
+          <BulletAnswer items={draft.highEnergyHoursList} />
+        </div>
+      );
+    case 2:
+      return <TextAnswer text={draft.highEnergyActivities} />;
+    case 3:
+      return <BulletAnswer items={draft.lowEnergyHours} />;
+    case 4:
+      return (
+        <div className="flex flex-col gap-3">
+          <div>
+            <p className="mb-1 text-[11px] font-medium text-emerald-700">High-energy</p>
+            <BulletAnswer items={draft.wantHighEnergySpend} />
+          </div>
+          <div>
+            <p className="mb-1 text-[11px] font-medium text-slate-500">Low-energy</p>
+            <BulletAnswer items={draft.wantLowEnergySpend} />
+          </div>
+        </div>
+      );
+    case 5:
+      return <TextAnswer text={draft.timeSinksReflection} />;
+    case 6:
+      return <TextAnswer text={draft.stressSource} />;
+    case 7:
+      return <TextAnswer text={draft.anticipatedChanges} />;
+    case 8:
+      return <PairAnswer items={draft.beneficialHabits} />;
+    case 9:
+      return <PairAnswer items={draft.successfulHabits} />;
+    case 10:
+      return <TextAnswer text={draft.stickinessPatterns} />;
+    case 11:
+      return (
+        <div className="flex flex-col gap-1">
+          {draft.habitAttempts.filter((h) => h.habit.trim()).map((h, i) => (
+            <p key={i} className="text-xs text-slate-700">
+              <span className={h.mode === "building" ? "font-medium text-emerald-700" : "font-medium text-rose-600"}>
+                {h.mode}
+              </span>
+              : {h.habit}
+            </p>
+          ))}
+          {!draft.habitAttempts.some((h) => h.habit.trim()) && (
+            <p className="text-xs italic text-slate-400">No answer yet</p>
+          )}
+        </div>
+      );
+    case 12:
+      return <ScorecardAnswer scorecard={draft.morningScorecard} />;
+    case 13:
+      return <ScorecardAnswer scorecard={draft.afternoonScorecard} />;
+    case 14:
+      return <ScorecardAnswer scorecard={draft.eveningScorecard} />;
+    case 15:
+      return <TextAnswer text={draft.finalReflection} />;
+    case 16:
+      return <TextAnswer text={draft.part1WrapUpReflection} />;
+    default:
+      return null;
+  }
+}
+
+function PreviousAnswersPanel({
+  stepIndex,
+  draft,
+}: {
+  stepIndex: number;
+  draft: HabitAssessmentPartThree;
+}) {
+  const [openSteps, setOpenSteps] = useState<Set<number>>(new Set());
+
+  if (stepIndex === 0) return null;
+
+  function toggle(idx: number) {
+    setOpenSteps((prev) => {
+      const next = new Set(prev);
+      if (next.has(idx)) next.delete(idx);
+      else next.add(idx);
+      return next;
+    });
+  }
+
+  return (
+    <div className="mb-6">
+      <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+        Previous answers
+      </p>
+      <div className="flex flex-col gap-1.5">
+        {Array.from({ length: stepIndex }, (_, i) => i).map((idx) => {
+          const isOpen = openSteps.has(idx);
+          return (
+            <div key={idx} className="overflow-hidden rounded-xl border border-slate-100 bg-white">
+              <button
+                type="button"
+                onClick={() => toggle(idx)}
+                className="flex w-full items-center justify-between gap-2 px-4 py-2.5 text-left hover:bg-slate-50"
+              >
+                <span className="line-clamp-1 text-xs font-medium text-slate-600">
+                  {STEP_QUESTIONS[idx]}
+                </span>
+                <svg
+                  className={`h-3.5 w-3.5 flex-shrink-0 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {isOpen && (
+                <div className="border-t border-slate-100 px-4 py-3">
+                  {stepAnswer(idx, draft)}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -938,6 +1155,7 @@ export function AssessmentPartThreeForm({ assessmentId }: AssessmentPartThreeFor
             }`}
           >
             <EnergyAuditPanel analysis={energyAnalysis} />
+            <PreviousAnswersPanel stepIndex={stepIndex} draft={draft} />
             {hydrated ? renderStep() : <SkeletonCard />}
           </div>
 
