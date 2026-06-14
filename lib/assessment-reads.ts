@@ -238,13 +238,14 @@ export interface AssessmentStatus {
   } | null;
   partThree: { completedAt: string | null; exists: boolean } | null;
   partFour: { completedAt: string | null; exists: boolean } | null;
+  nextStep: { completedAt: string | null; exists: boolean } | null;
 }
 
 export async function fetchAssessmentStatus(): Promise<AssessmentStatus> {
   const userId = await getUserId();
-  if (!userId) return { partOne: null, partTwo: null, partThree: null, partFour: null };
+  if (!userId) return { partOne: null, partTwo: null, partThree: null, partFour: null, nextStep: null };
 
-  const [p1, p2, p3, p4] = await Promise.all([
+  const [p1, p2, p3, p4, ns] = await Promise.all([
     prisma.assessmentPartOne.findUnique({
       where: { userId },
       select: { completedAt: true },
@@ -263,6 +264,10 @@ export async function fetchAssessmentStatus(): Promise<AssessmentStatus> {
       select: { completedAt: true },
     }),
     prisma.assessmentPartFour.findUnique({
+      where: { userId },
+      select: { completedAt: true },
+    }),
+    prisma.assessmentNextStep.findUnique({
       where: { userId },
       select: { completedAt: true },
     }),
@@ -285,6 +290,9 @@ export async function fetchAssessmentStatus(): Promise<AssessmentStatus> {
       : null,
     partFour: p4
       ? { completedAt: p4.completedAt?.toISOString() ?? null, exists: true }
+      : null,
+    nextStep: ns
+      ? { completedAt: ns.completedAt?.toISOString() ?? null, exists: true }
       : null,
   };
 }

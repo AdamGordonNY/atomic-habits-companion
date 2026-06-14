@@ -32,11 +32,16 @@ interface PartFourSnapshot {
   completedAt: string | null;
 }
 
+interface NextStepSnapshot {
+  completedAt: string | null;
+}
+
 function statusToSnapshots(status: AssessmentStatus): {
   partOne: PartOneSnapshot | null;
   partTwo: PartTwoSnapshot | null;
   partThree: PartThreeSnapshot | null;
   partFour: PartFourSnapshot | null;
+  nextStep: NextStepSnapshot | null;
 } {
   return {
     partOne: status.partOne?.exists
@@ -54,6 +59,9 @@ function statusToSnapshots(status: AssessmentStatus): {
       : null,
     partFour: status.partFour?.exists
       ? { completedAt: status.partFour.completedAt }
+      : null,
+    nextStep: status.nextStep?.exists
+      ? { completedAt: status.nextStep.completedAt }
       : null,
   };
 }
@@ -82,6 +90,7 @@ export function DashboardClient() {
   const [partTwo, setPartTwo] = useState<PartTwoSnapshot | null>(null);
   const [partThree, setPartThree] = useState<PartThreeSnapshot | null>(null);
   const [partFour, setPartFour] = useState<PartFourSnapshot | null>(null);
+  const [nextStep, setNextStep] = useState<NextStepSnapshot | null>(null);
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const [syncing, setSyncing] = useState(false);
@@ -125,6 +134,7 @@ export function DashboardClient() {
       setPartTwo(snaps.partTwo);
       setPartThree(snaps.partThree);
       setPartFour(snaps.partFour);
+      setNextStep(snaps.nextStep);
       setMounted(true);
       requestAnimationFrame(() => setVisible(true));
     }
@@ -148,6 +158,9 @@ export function DashboardClient() {
 
   const hasPartFourProgress = mounted && partFour !== null;
   const partFourComplete = partFour?.completedAt != null;
+
+  const hasNextStepProgress = mounted && nextStep !== null;
+  const nextStepComplete = nextStep?.completedAt != null;
 
   // Determine the primary resume action
   let resumeHref = "/habit-assessment/onboarding";
@@ -182,9 +195,17 @@ export function DashboardClient() {
     resumeHref = "/habit-assessment/onboarding/part-four";
     resumeLabel = "Start Part Four — where do you want to end up?";
     resumeHint = "Define your ideal future and the identity you want to build";
-  } else if (partOneComplete && partTwoComplete && partThreeComplete && partFourComplete) {
+  } else if (partOneComplete && partTwoComplete && partThreeComplete && partFourComplete && hasNextStepProgress && !nextStepComplete) {
+    resumeHref = "/habit-assessment/onboarding/next-step";
+    resumeLabel = "Resume — The Next Step";
+    resumeHint = "Turn your goals into systems and component habits";
+  } else if (partOneComplete && partTwoComplete && partThreeComplete && partFourComplete && !hasNextStepProgress) {
+    resumeHref = "/habit-assessment/onboarding/next-step";
+    resumeLabel = "Start — The Next Step";
+    resumeHint = "Turn your goals into systems and component habits";
+  } else if (partOneComplete && partTwoComplete && partThreeComplete && partFourComplete && nextStepComplete) {
     resumeLabel = "Assessment complete";
-    resumeHint = "All four parts done — review your answers below";
+    resumeHint = "All sections done — review your answers below";
     resumeHref = "/habit-assessment/onboarding/review";
   }
 
@@ -308,7 +329,7 @@ export function DashboardClient() {
 
           {/* Progress cards */}
           {mounted ? (
-            <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
               <ProgressCard
                 label="Part One"
                 subtitle="Baseline"
@@ -373,9 +394,27 @@ export function DashboardClient() {
                     : "/habit-assessment/onboarding/part-three"
                 }
               />
+              <ProgressCard
+                label="The Next Step"
+                subtitle="Systems & habits"
+                done={nextStepComplete}
+                detail={
+                  hasNextStepProgress && !nextStepComplete
+                    ? "In progress"
+                    : nextStepComplete
+                      ? "Complete"
+                      : "Not started"
+                }
+                href={
+                  partFourComplete
+                    ? "/habit-assessment/onboarding/next-step"
+                    : "/habit-assessment/onboarding/part-four"
+                }
+              />
             </section>
           ) : (
-            <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+              <SkeletonCard />
               <SkeletonCard />
               <SkeletonCard />
               <SkeletonCard />
@@ -384,7 +423,7 @@ export function DashboardClient() {
           )}
 
           {/* Review CTA */}
-          {mounted && (hasPartOneProgress || hasPartTwoProgress || hasPartThreeProgress || hasPartFourProgress) && (
+          {mounted && (hasPartOneProgress || hasPartTwoProgress || hasPartThreeProgress || hasPartFourProgress || hasNextStepProgress) && (
             <section>
               <Link
                 href="/habit-assessment/onboarding/review"
