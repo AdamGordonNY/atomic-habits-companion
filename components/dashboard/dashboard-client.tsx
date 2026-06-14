@@ -196,12 +196,12 @@ export function DashboardClient() {
     resumeLabel = "Start Part Four — where do you want to end up?";
     resumeHint = "Define your ideal future and the identity you want to build";
   } else if (partOneComplete && partTwoComplete && partThreeComplete && partFourComplete && hasNextStepProgress && !nextStepComplete) {
-    resumeHref = "/habit-assessment/onboarding/next-step";
-    resumeLabel = "Resume — The Next Step";
+    resumeHref = "/habit-assessment/onboarding/part-five";
+    resumeLabel = "Resume Part Five — The Next Step";
     resumeHint = "Turn your goals into systems and component habits";
   } else if (partOneComplete && partTwoComplete && partThreeComplete && partFourComplete && !hasNextStepProgress) {
-    resumeHref = "/habit-assessment/onboarding/next-step";
-    resumeLabel = "Start — The Next Step";
+    resumeHref = "/habit-assessment/onboarding/part-five";
+    resumeLabel = "Start Part Five — The Next Step";
     resumeHint = "Turn your goals into systems and component habits";
   } else if (partOneComplete && partTwoComplete && partThreeComplete && partFourComplete && nextStepComplete) {
     resumeLabel = "Assessment complete";
@@ -407,7 +407,7 @@ export function DashboardClient() {
                 }
                 href={
                   partFourComplete
-                    ? "/habit-assessment/onboarding/next-step"
+                    ? "/habit-assessment/onboarding/part-five"
                     : "/habit-assessment/onboarding/part-four"
                 }
               />
