@@ -12,6 +12,7 @@ import {
 } from "@/lib/sync-actions";
 import { fetchAssessmentStatus, type AssessmentStatus } from "@/lib/assessment-reads";
 import { fetchNextStep } from "@/lib/actions/next-step-actions";
+import { actionGetTrackedHabits, type TrackedHabitData } from "@/lib/actions/habit-actions";
 
 interface PartOneSnapshot {
   stepIndex: number;
@@ -93,6 +94,7 @@ export function DashboardClient() {
   const [partFour, setPartFour] = useState<PartFourSnapshot | null>(null);
   const [nextStep, setNextStep] = useState<NextStepSnapshot | null>(null);
   const [habitNames, setHabitNames] = useState<string[]>([]);
+  const [trackedHabits, setTrackedHabits] = useState<TrackedHabitData[]>([]);
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const [syncing, setSyncing] = useState(false);
@@ -129,9 +131,10 @@ export function DashboardClient() {
   useEffect(() => {
     let cancelled = false;
     async function load() {
-      const [status, nextStepData] = await Promise.all([
+      const [status, nextStepData, tracked] = await Promise.all([
         fetchAssessmentStatus(),
         fetchNextStep(),
+        actionGetTrackedHabits(),
       ]);
       if (cancelled) return;
       const snaps = statusToSnapshots(status);
@@ -142,6 +145,7 @@ export function DashboardClient() {
       setNextStep(snaps.nextStep);
       const names = nextStepData?.goalEntries.flatMap((e) => e.componentHabits).filter(Boolean) ?? [];
       setHabitNames([...new Set(names)]);
+      setTrackedHabits(tracked);
       setMounted(true);
       requestAnimationFrame(() => setVisible(true));
     }
@@ -244,11 +248,15 @@ export function DashboardClient() {
             <NavDropdown
               label="Habits"
               emptyLabel="Complete Part 5 to see your habits here"
-              items={habitNames.map((name) => ({
-                type: "link" as const,
-                href: `/habits/${encodeURIComponent(name)}`,
-                label: name,
-              }))}
+              items={
+                trackedHabits.length > 0
+                  ? buildHabitItems(trackedHabits)
+                  : habitNames.map((name) => ({
+                      type: "link" as const,
+                      href: `/habits/${encodeURIComponent(name)}`,
+                      label: name,
+                    }))
+              }
             />
             <Link
               href="/notes"
@@ -597,7 +605,43 @@ export function DashboardClient() {
 
 type DropdownItem =
   | { type: "link"; href: string; label: string; description?: string }
+  | { type: "section"; href: string; label: string }
   | { type: "divider" };
+
+function buildHabitItems(habits: TrackedHabitData[]): DropdownItem[] {
+  const byCategory = new Map<string, TrackedHabitData[]>();
+  const uncategorized: TrackedHabitData[] = [];
+
+  for (const h of habits) {
+    if (h.category) {
+      if (!byCategory.has(h.category)) byCategory.set(h.category, []);
+      byCategory.get(h.category)!.push(h);
+    } else {
+      uncategorized.push(h);
+    }
+  }
+
+  const items: DropdownItem[] = [];
+
+  for (const [cat, catHabits] of byCategory) {
+    items.push({ type: "section", label: cat, href: `/habits/category/${encodeURIComponent(cat)}` });
+    for (const h of catHabits) {
+      items.push({ type: "link", label: h.name, href: `/habits/${encodeURIComponent(h.name)}` });
+    }
+    items.push({ type: "divider" });
+  }
+
+  if (uncategorized.length > 0) {
+    // Remove trailing divider before uncategorized block
+    if (items.length > 0 && items[items.length - 1].type === "divider") items.pop();
+    if (byCategory.size > 0) items.push({ type: "divider" });
+    for (const h of uncategorized) {
+      items.push({ type: "link", label: h.name, href: `/habits/${encodeURIComponent(h.name)}` });
+    }
+  }
+
+  return items;
+}
 
 function NavDropdown({
   label,
@@ -652,10 +696,28 @@ function NavDropdown({
               {emptyLabel ?? "Nothing here yet"}
             </p>
           ) : (
-            items.map((item, i) =>
-              item.type === "divider" ? (
-                <div key={i} className="my-1 border-t border-slate-100" />
-              ) : (
+            items.map((item, i) => {
+              if (item.type === "divider") {
+                return <div key={i} className="my-1 border-t border-slate-100" />;
+              }
+              if (item.type === "section") {
+                return (
+                  <Link
+                    key={`section-${item.label}`}
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className="flex items-center justify-between px-4 py-2 transition hover:bg-slate-50"
+                  >
+                    <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
+                      {item.label}
+                    </span>
+                    <svg className="h-3 w-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                );
+              }
+              return (
                 <Link
                   key={`${item.label}-${i}`}
                   href={item.href}
@@ -667,8 +729,8 @@ function NavDropdown({
                     <span className="text-[11px] text-slate-400">{item.description}</span>
                   )}
                 </Link>
-              )
-            )
+              );
+            })
           )}
         </div>
       )}
