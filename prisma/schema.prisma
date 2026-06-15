@@ -34,6 +34,7 @@ model User {
   assessmentPartThree AssessmentPartThree?
   assessmentPartFour  AssessmentPartFour?
   assessmentNextStep  AssessmentNextStep?
+  checklists          Checklist[]
 
   @@map("users")
 }
@@ -384,4 +385,23 @@ model NextStepGoalEntry {
 
   @@index([nextStepId])
   @@map("next_step_goal_entries")
+}
+
+// ─── Checklists ───────────────────────────────────────────────────────────────
+
+model Checklist {
+  id           String   @id @default(cuid())
+  title        String   @default("Habit Assessment Checklist")
+  templateType String   @default("habit-assessment")
+  /// JSON: ChecklistHabitEntry[] — stored as a serialised string
+  content      String   @default("[]")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("checklists")
 }
