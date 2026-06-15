@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Show, SignUpButton, UserButton } from "@clerk/nextjs";
 import {
   ensureDbUser,
@@ -11,6 +11,7 @@ import {
   syncPartThree,
 } from "@/lib/sync-actions";
 import { fetchAssessmentStatus, type AssessmentStatus } from "@/lib/assessment-reads";
+import { fetchNextStep } from "@/lib/actions/next-step-actions";
 
 interface PartOneSnapshot {
   stepIndex: number;
@@ -91,6 +92,7 @@ export function DashboardClient() {
   const [partThree, setPartThree] = useState<PartThreeSnapshot | null>(null);
   const [partFour, setPartFour] = useState<PartFourSnapshot | null>(null);
   const [nextStep, setNextStep] = useState<NextStepSnapshot | null>(null);
+  const [habitNames, setHabitNames] = useState<string[]>([]);
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const [syncing, setSyncing] = useState(false);
@@ -127,7 +129,10 @@ export function DashboardClient() {
   useEffect(() => {
     let cancelled = false;
     async function load() {
-      const status = await fetchAssessmentStatus();
+      const [status, nextStepData] = await Promise.all([
+        fetchAssessmentStatus(),
+        fetchNextStep(),
+      ]);
       if (cancelled) return;
       const snaps = statusToSnapshots(status);
       setPartOne(snaps.partOne);
@@ -135,6 +140,8 @@ export function DashboardClient() {
       setPartThree(snaps.partThree);
       setPartFour(snaps.partFour);
       setNextStep(snaps.nextStep);
+      const names = nextStepData?.goalEntries.flatMap((e) => e.componentHabits).filter(Boolean) ?? [];
+      setHabitNames([...new Set(names)]);
       setMounted(true);
       requestAnimationFrame(() => setVisible(true));
     }
@@ -216,41 +223,50 @@ export function DashboardClient() {
       }`}
     >
       {/* Top nav */}
-      <header className="sticky top-0 z-10 border-b border-slate-200/70 bg-white/80 px-5 py-4 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-2xl items-center justify-between">
-          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
+      <header className="sticky top-0 z-10 border-b border-slate-200/70 bg-white/80 px-5 py-3 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-2xl items-center justify-between gap-3">
+          <span className="flex-shrink-0 text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
             Atomic Habits
           </span>
-          <div className="flex items-center gap-2">
-            <Link
-              href="/checklists"
-              className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
-            >
-              Checklists
-            </Link>
+          <nav className="flex items-center gap-1.5 overflow-x-auto pb-0.5">
+            <NavDropdown
+              label="Assessment"
+              items={[
+                { type: "link", href: "/habit-assessment/onboarding", label: "Part 1", description: "Baseline questions" },
+                { type: "link", href: "/habit-assessment/onboarding/part-two", label: "Part 2", description: "7-day energy log" },
+                { type: "link", href: "/habit-assessment/onboarding/part-three", label: "Part 3", description: "Time & habit deep-dive" },
+                { type: "link", href: "/habit-assessment/onboarding/part-four", label: "Part 4", description: "Ideal future & identity" },
+                { type: "link", href: "/habit-assessment/onboarding/part-five", label: "Part 5 — The Next Step", description: "Systems & component habits" },
+                { type: "divider" },
+                { type: "link", href: "/habit-assessment/onboarding/review", label: "Review all answers" },
+              ]}
+            />
+            <NavDropdown
+              label="Habits"
+              emptyLabel="Complete Part 5 to see your habits here"
+              items={habitNames.map((name) => ({
+                type: "link" as const,
+                href: `/habits/${encodeURIComponent(name)}`,
+                label: name,
+              }))}
+            />
             <Link
               href="/notes"
-              className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+              className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
             >
               Notes
             </Link>
             <Link
-              href="/habit-assessment/onboarding/review"
-              className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+              href="/checklists"
+              className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
             >
-              Review
-            </Link>
-            <Link
-              href="/habit-assessment/onboarding"
-              className="rounded-full bg-slate-950 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-slate-800"
-            >
-              Assessment
+              Checklists
             </Link>
             <Show when="signed-out">
               <SignUpButton mode="modal">
                 <button
                   type="button"
-                  className="rounded-full border border-slate-950 bg-slate-950 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-slate-800"
+                  className="whitespace-nowrap rounded-full border border-slate-950 bg-slate-950 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-slate-800"
                 >
                   Make account
                 </button>
@@ -285,7 +301,7 @@ export function DashboardClient() {
                 </UserButton.MenuItems>
               </UserButton>
             </Show>
-          </div>
+          </nav>
         </div>
       </header>
 
@@ -576,6 +592,91 @@ export function DashboardClient() {
     </div>
   );
 }
+
+// ─── Dropdown nav ─────────────────────────────────────────────────────────────
+
+type DropdownItem =
+  | { type: "link"; href: string; label: string; description?: string }
+  | { type: "divider" };
+
+function NavDropdown({
+  label,
+  items,
+  emptyLabel,
+}: {
+  label: string;
+  items: DropdownItem[];
+  emptyLabel?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handlePointerDown(e: PointerEvent) {
+      if (!containerRef.current?.contains(e.target as Node)) setOpen(false);
+    }
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+      >
+        {label}
+        <svg
+          className={`h-3 w-3 transition-transform duration-150 ${open ? "rotate-180" : ""}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-full z-50 mt-2 min-w-[220px] overflow-hidden rounded-2xl border border-slate-200 bg-white py-1.5 shadow-xl shadow-slate-900/10">
+          {items.length === 0 ? (
+            <p className="px-4 py-3 text-xs text-slate-400">
+              {emptyLabel ?? "Nothing here yet"}
+            </p>
+          ) : (
+            items.map((item, i) =>
+              item.type === "divider" ? (
+                <div key={i} className="my-1 border-t border-slate-100" />
+              ) : (
+                <Link
+                  key={`${item.label}-${i}`}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="flex flex-col gap-0.5 px-4 py-2.5 transition hover:bg-slate-50"
+                >
+                  <span className="text-sm font-medium text-slate-800">{item.label}</span>
+                  {item.description && (
+                    <span className="text-[11px] text-slate-400">{item.description}</span>
+                  )}
+                </Link>
+              )
+            )
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Progress card ────────────────────────────────────────────────────────────
 
 function ProgressCard({
   label,
