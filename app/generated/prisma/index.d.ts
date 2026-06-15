@@ -103,6 +103,21 @@ export type DomainVisionEntry = $Result.DefaultSelection<Prisma.$DomainVisionEnt
  * 
  */
 export type IdentityRecord = $Result.DefaultSelection<Prisma.$IdentityRecordPayload>
+/**
+ * Model AssessmentNextStep
+ * 
+ */
+export type AssessmentNextStep = $Result.DefaultSelection<Prisma.$AssessmentNextStepPayload>
+/**
+ * Model NextStepGoalEntry
+ * 
+ */
+export type NextStepGoalEntry = $Result.DefaultSelection<Prisma.$NextStepGoalEntryPayload>
+/**
+ * Model Checklist
+ * 
+ */
+export type Checklist = $Result.DefaultSelection<Prisma.$ChecklistPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -404,6 +419,36 @@ export class PrismaClient<
     * ```
     */
   get identityRecord(): Prisma.IdentityRecordDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.assessmentNextStep`: Exposes CRUD operations for the **AssessmentNextStep** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AssessmentNextSteps
+    * const assessmentNextSteps = await prisma.assessmentNextStep.findMany()
+    * ```
+    */
+  get assessmentNextStep(): Prisma.AssessmentNextStepDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.nextStepGoalEntry`: Exposes CRUD operations for the **NextStepGoalEntry** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more NextStepGoalEntries
+    * const nextStepGoalEntries = await prisma.nextStepGoalEntry.findMany()
+    * ```
+    */
+  get nextStepGoalEntry(): Prisma.NextStepGoalEntryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.checklist`: Exposes CRUD operations for the **Checklist** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Checklists
+    * const checklists = await prisma.checklist.findMany()
+    * ```
+    */
+  get checklist(): Prisma.ChecklistDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -855,7 +900,10 @@ export namespace Prisma {
     HabitScorecardEntry: 'HabitScorecardEntry',
     AssessmentPartFour: 'AssessmentPartFour',
     DomainVisionEntry: 'DomainVisionEntry',
-    IdentityRecord: 'IdentityRecord'
+    IdentityRecord: 'IdentityRecord',
+    AssessmentNextStep: 'AssessmentNextStep',
+    NextStepGoalEntry: 'NextStepGoalEntry',
+    Checklist: 'Checklist'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -871,7 +919,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "note" | "assessmentPartOne" | "project" | "assessmentPartTwo" | "dayLog" | "hourlyEntry" | "assessmentPartThree" | "habitRecord" | "habitAttempt" | "habitScorecard" | "habitScorecardEntry" | "assessmentPartFour" | "domainVisionEntry" | "identityRecord"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "note" | "assessmentPartOne" | "project" | "assessmentPartTwo" | "dayLog" | "hourlyEntry" | "assessmentPartThree" | "habitRecord" | "habitAttempt" | "habitScorecard" | "habitScorecardEntry" | "assessmentPartFour" | "domainVisionEntry" | "identityRecord" | "assessmentNextStep" | "nextStepGoalEntry" | "checklist"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2207,6 +2255,228 @@ export namespace Prisma {
           }
         }
       }
+      AssessmentNextStep: {
+        payload: Prisma.$AssessmentNextStepPayload<ExtArgs>
+        fields: Prisma.AssessmentNextStepFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AssessmentNextStepFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AssessmentNextStepFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>
+          }
+          findFirst: {
+            args: Prisma.AssessmentNextStepFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AssessmentNextStepFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>
+          }
+          findMany: {
+            args: Prisma.AssessmentNextStepFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>[]
+          }
+          create: {
+            args: Prisma.AssessmentNextStepCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>
+          }
+          createMany: {
+            args: Prisma.AssessmentNextStepCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AssessmentNextStepCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>[]
+          }
+          delete: {
+            args: Prisma.AssessmentNextStepDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>
+          }
+          update: {
+            args: Prisma.AssessmentNextStepUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>
+          }
+          deleteMany: {
+            args: Prisma.AssessmentNextStepDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AssessmentNextStepUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AssessmentNextStepUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>[]
+          }
+          upsert: {
+            args: Prisma.AssessmentNextStepUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>
+          }
+          aggregate: {
+            args: Prisma.AssessmentNextStepAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAssessmentNextStep>
+          }
+          groupBy: {
+            args: Prisma.AssessmentNextStepGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AssessmentNextStepGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AssessmentNextStepCountArgs<ExtArgs>
+            result: $Utils.Optional<AssessmentNextStepCountAggregateOutputType> | number
+          }
+        }
+      }
+      NextStepGoalEntry: {
+        payload: Prisma.$NextStepGoalEntryPayload<ExtArgs>
+        fields: Prisma.NextStepGoalEntryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NextStepGoalEntryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NextStepGoalEntryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NextStepGoalEntryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NextStepGoalEntryPayload>
+          }
+          findFirst: {
+            args: Prisma.NextStepGoalEntryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NextStepGoalEntryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NextStepGoalEntryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NextStepGoalEntryPayload>
+          }
+          findMany: {
+            args: Prisma.NextStepGoalEntryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NextStepGoalEntryPayload>[]
+          }
+          create: {
+            args: Prisma.NextStepGoalEntryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NextStepGoalEntryPayload>
+          }
+          createMany: {
+            args: Prisma.NextStepGoalEntryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.NextStepGoalEntryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NextStepGoalEntryPayload>[]
+          }
+          delete: {
+            args: Prisma.NextStepGoalEntryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NextStepGoalEntryPayload>
+          }
+          update: {
+            args: Prisma.NextStepGoalEntryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NextStepGoalEntryPayload>
+          }
+          deleteMany: {
+            args: Prisma.NextStepGoalEntryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NextStepGoalEntryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.NextStepGoalEntryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NextStepGoalEntryPayload>[]
+          }
+          upsert: {
+            args: Prisma.NextStepGoalEntryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NextStepGoalEntryPayload>
+          }
+          aggregate: {
+            args: Prisma.NextStepGoalEntryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNextStepGoalEntry>
+          }
+          groupBy: {
+            args: Prisma.NextStepGoalEntryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NextStepGoalEntryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NextStepGoalEntryCountArgs<ExtArgs>
+            result: $Utils.Optional<NextStepGoalEntryCountAggregateOutputType> | number
+          }
+        }
+      }
+      Checklist: {
+        payload: Prisma.$ChecklistPayload<ExtArgs>
+        fields: Prisma.ChecklistFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChecklistFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChecklistFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistPayload>
+          }
+          findFirst: {
+            args: Prisma.ChecklistFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChecklistFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistPayload>
+          }
+          findMany: {
+            args: Prisma.ChecklistFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistPayload>[]
+          }
+          create: {
+            args: Prisma.ChecklistCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistPayload>
+          }
+          createMany: {
+            args: Prisma.ChecklistCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ChecklistCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistPayload>[]
+          }
+          delete: {
+            args: Prisma.ChecklistDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistPayload>
+          }
+          update: {
+            args: Prisma.ChecklistUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistPayload>
+          }
+          deleteMany: {
+            args: Prisma.ChecklistDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChecklistUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ChecklistUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistPayload>[]
+          }
+          upsert: {
+            args: Prisma.ChecklistUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistPayload>
+          }
+          aggregate: {
+            args: Prisma.ChecklistAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChecklist>
+          }
+          groupBy: {
+            args: Prisma.ChecklistGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ChecklistGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChecklistCountArgs<ExtArgs>
+            result: $Utils.Optional<ChecklistCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2333,6 +2603,9 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourOmit
     domainVisionEntry?: DomainVisionEntryOmit
     identityRecord?: IdentityRecordOmit
+    assessmentNextStep?: AssessmentNextStepOmit
+    nextStepGoalEntry?: NextStepGoalEntryOmit
+    checklist?: ChecklistOmit
   }
 
   /* Types for Logging */
@@ -2416,12 +2689,14 @@ export namespace Prisma {
     accounts: number
     sessions: number
     notes: number
+    checklists: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     notes?: boolean | UserCountOutputTypeCountNotesArgs
+    checklists?: boolean | UserCountOutputTypeCountChecklistsArgs
   }
 
   // Custom InputTypes
@@ -2454,6 +2729,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountNotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NoteWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountChecklistsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChecklistWhereInput
   }
 
 
@@ -2671,6 +2953,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type AssessmentNextStepCountOutputType
+   */
+
+  export type AssessmentNextStepCountOutputType = {
+    goalEntries: number
+  }
+
+  export type AssessmentNextStepCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    goalEntries?: boolean | AssessmentNextStepCountOutputTypeCountGoalEntriesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AssessmentNextStepCountOutputType without action
+   */
+  export type AssessmentNextStepCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStepCountOutputType
+     */
+    select?: AssessmentNextStepCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AssessmentNextStepCountOutputType without action
+   */
+  export type AssessmentNextStepCountOutputTypeCountGoalEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NextStepGoalEntryWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -2861,6 +3174,8 @@ export namespace Prisma {
     assessmentPartTwo?: boolean | User$assessmentPartTwoArgs<ExtArgs>
     assessmentPartThree?: boolean | User$assessmentPartThreeArgs<ExtArgs>
     assessmentPartFour?: boolean | User$assessmentPartFourArgs<ExtArgs>
+    assessmentNextStep?: boolean | User$assessmentNextStepArgs<ExtArgs>
+    checklists?: boolean | User$checklistsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2903,6 +3218,8 @@ export namespace Prisma {
     assessmentPartTwo?: boolean | User$assessmentPartTwoArgs<ExtArgs>
     assessmentPartThree?: boolean | User$assessmentPartThreeArgs<ExtArgs>
     assessmentPartFour?: boolean | User$assessmentPartFourArgs<ExtArgs>
+    assessmentNextStep?: boolean | User$assessmentNextStepArgs<ExtArgs>
+    checklists?: boolean | User$checklistsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2918,6 +3235,8 @@ export namespace Prisma {
       assessmentPartTwo: Prisma.$AssessmentPartTwoPayload<ExtArgs> | null
       assessmentPartThree: Prisma.$AssessmentPartThreePayload<ExtArgs> | null
       assessmentPartFour: Prisma.$AssessmentPartFourPayload<ExtArgs> | null
+      assessmentNextStep: Prisma.$AssessmentNextStepPayload<ExtArgs> | null
+      checklists: Prisma.$ChecklistPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3328,6 +3647,8 @@ export namespace Prisma {
     assessmentPartTwo<T extends User$assessmentPartTwoArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentPartTwoArgs<ExtArgs>>): Prisma__AssessmentPartTwoClient<$Result.GetResult<Prisma.$AssessmentPartTwoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     assessmentPartThree<T extends User$assessmentPartThreeArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentPartThreeArgs<ExtArgs>>): Prisma__AssessmentPartThreeClient<$Result.GetResult<Prisma.$AssessmentPartThreePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     assessmentPartFour<T extends User$assessmentPartFourArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentPartFourArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    assessmentNextStep<T extends User$assessmentNextStepArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentNextStepArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    checklists<T extends User$checklistsArgs<ExtArgs> = {}>(args?: Subset<T, User$checklistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3902,6 +4223,49 @@ export namespace Prisma {
      */
     include?: AssessmentPartFourInclude<ExtArgs> | null
     where?: AssessmentPartFourWhereInput
+  }
+
+  /**
+   * User.assessmentNextStep
+   */
+  export type User$assessmentNextStepArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStep
+     */
+    select?: AssessmentNextStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentNextStep
+     */
+    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentNextStepInclude<ExtArgs> | null
+    where?: AssessmentNextStepWhereInput
+  }
+
+  /**
+   * User.checklists
+   */
+  export type User$checklistsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistInclude<ExtArgs> | null
+    where?: ChecklistWhereInput
+    orderBy?: ChecklistOrderByWithRelationInput | ChecklistOrderByWithRelationInput[]
+    cursor?: ChecklistWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ChecklistScalarFieldEnum | ChecklistScalarFieldEnum[]
   }
 
   /**
@@ -23088,6 +23452,3341 @@ export namespace Prisma {
 
 
   /**
+   * Model AssessmentNextStep
+   */
+
+  export type AggregateAssessmentNextStep = {
+    _count: AssessmentNextStepCountAggregateOutputType | null
+    _min: AssessmentNextStepMinAggregateOutputType | null
+    _max: AssessmentNextStepMaxAggregateOutputType | null
+  }
+
+  export type AssessmentNextStepMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    completedAt: Date | null
+    userId: string | null
+  }
+
+  export type AssessmentNextStepMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    completedAt: Date | null
+    userId: string | null
+  }
+
+  export type AssessmentNextStepCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    completedAt: number
+    userId: number
+    _all: number
+  }
+
+
+  export type AssessmentNextStepMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    completedAt?: true
+    userId?: true
+  }
+
+  export type AssessmentNextStepMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    completedAt?: true
+    userId?: true
+  }
+
+  export type AssessmentNextStepCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    completedAt?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type AssessmentNextStepAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssessmentNextStep to aggregate.
+     */
+    where?: AssessmentNextStepWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssessmentNextSteps to fetch.
+     */
+    orderBy?: AssessmentNextStepOrderByWithRelationInput | AssessmentNextStepOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AssessmentNextStepWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssessmentNextSteps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssessmentNextSteps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AssessmentNextSteps
+    **/
+    _count?: true | AssessmentNextStepCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AssessmentNextStepMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AssessmentNextStepMaxAggregateInputType
+  }
+
+  export type GetAssessmentNextStepAggregateType<T extends AssessmentNextStepAggregateArgs> = {
+        [P in keyof T & keyof AggregateAssessmentNextStep]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAssessmentNextStep[P]>
+      : GetScalarType<T[P], AggregateAssessmentNextStep[P]>
+  }
+
+
+
+
+  export type AssessmentNextStepGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssessmentNextStepWhereInput
+    orderBy?: AssessmentNextStepOrderByWithAggregationInput | AssessmentNextStepOrderByWithAggregationInput[]
+    by: AssessmentNextStepScalarFieldEnum[] | AssessmentNextStepScalarFieldEnum
+    having?: AssessmentNextStepScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AssessmentNextStepCountAggregateInputType | true
+    _min?: AssessmentNextStepMinAggregateInputType
+    _max?: AssessmentNextStepMaxAggregateInputType
+  }
+
+  export type AssessmentNextStepGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    completedAt: Date | null
+    userId: string
+    _count: AssessmentNextStepCountAggregateOutputType | null
+    _min: AssessmentNextStepMinAggregateOutputType | null
+    _max: AssessmentNextStepMaxAggregateOutputType | null
+  }
+
+  type GetAssessmentNextStepGroupByPayload<T extends AssessmentNextStepGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AssessmentNextStepGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AssessmentNextStepGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AssessmentNextStepGroupByOutputType[P]>
+            : GetScalarType<T[P], AssessmentNextStepGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AssessmentNextStepSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    completedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    goalEntries?: boolean | AssessmentNextStep$goalEntriesArgs<ExtArgs>
+    _count?: boolean | AssessmentNextStepCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assessmentNextStep"]>
+
+  export type AssessmentNextStepSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    completedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assessmentNextStep"]>
+
+  export type AssessmentNextStepSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    completedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assessmentNextStep"]>
+
+  export type AssessmentNextStepSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    completedAt?: boolean
+    userId?: boolean
+  }
+
+  export type AssessmentNextStepOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "completedAt" | "userId", ExtArgs["result"]["assessmentNextStep"]>
+  export type AssessmentNextStepInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    goalEntries?: boolean | AssessmentNextStep$goalEntriesArgs<ExtArgs>
+    _count?: boolean | AssessmentNextStepCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AssessmentNextStepIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AssessmentNextStepIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $AssessmentNextStepPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AssessmentNextStep"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      goalEntries: Prisma.$NextStepGoalEntryPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      completedAt: Date | null
+      userId: string
+    }, ExtArgs["result"]["assessmentNextStep"]>
+    composites: {}
+  }
+
+  type AssessmentNextStepGetPayload<S extends boolean | null | undefined | AssessmentNextStepDefaultArgs> = $Result.GetResult<Prisma.$AssessmentNextStepPayload, S>
+
+  type AssessmentNextStepCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AssessmentNextStepFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AssessmentNextStepCountAggregateInputType | true
+    }
+
+  export interface AssessmentNextStepDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AssessmentNextStep'], meta: { name: 'AssessmentNextStep' } }
+    /**
+     * Find zero or one AssessmentNextStep that matches the filter.
+     * @param {AssessmentNextStepFindUniqueArgs} args - Arguments to find a AssessmentNextStep
+     * @example
+     * // Get one AssessmentNextStep
+     * const assessmentNextStep = await prisma.assessmentNextStep.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AssessmentNextStepFindUniqueArgs>(args: SelectSubset<T, AssessmentNextStepFindUniqueArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AssessmentNextStep that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AssessmentNextStepFindUniqueOrThrowArgs} args - Arguments to find a AssessmentNextStep
+     * @example
+     * // Get one AssessmentNextStep
+     * const assessmentNextStep = await prisma.assessmentNextStep.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AssessmentNextStepFindUniqueOrThrowArgs>(args: SelectSubset<T, AssessmentNextStepFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssessmentNextStep that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentNextStepFindFirstArgs} args - Arguments to find a AssessmentNextStep
+     * @example
+     * // Get one AssessmentNextStep
+     * const assessmentNextStep = await prisma.assessmentNextStep.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AssessmentNextStepFindFirstArgs>(args?: SelectSubset<T, AssessmentNextStepFindFirstArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssessmentNextStep that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentNextStepFindFirstOrThrowArgs} args - Arguments to find a AssessmentNextStep
+     * @example
+     * // Get one AssessmentNextStep
+     * const assessmentNextStep = await prisma.assessmentNextStep.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AssessmentNextStepFindFirstOrThrowArgs>(args?: SelectSubset<T, AssessmentNextStepFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AssessmentNextSteps that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentNextStepFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AssessmentNextSteps
+     * const assessmentNextSteps = await prisma.assessmentNextStep.findMany()
+     * 
+     * // Get first 10 AssessmentNextSteps
+     * const assessmentNextSteps = await prisma.assessmentNextStep.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const assessmentNextStepWithIdOnly = await prisma.assessmentNextStep.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AssessmentNextStepFindManyArgs>(args?: SelectSubset<T, AssessmentNextStepFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AssessmentNextStep.
+     * @param {AssessmentNextStepCreateArgs} args - Arguments to create a AssessmentNextStep.
+     * @example
+     * // Create one AssessmentNextStep
+     * const AssessmentNextStep = await prisma.assessmentNextStep.create({
+     *   data: {
+     *     // ... data to create a AssessmentNextStep
+     *   }
+     * })
+     * 
+     */
+    create<T extends AssessmentNextStepCreateArgs>(args: SelectSubset<T, AssessmentNextStepCreateArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AssessmentNextSteps.
+     * @param {AssessmentNextStepCreateManyArgs} args - Arguments to create many AssessmentNextSteps.
+     * @example
+     * // Create many AssessmentNextSteps
+     * const assessmentNextStep = await prisma.assessmentNextStep.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AssessmentNextStepCreateManyArgs>(args?: SelectSubset<T, AssessmentNextStepCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AssessmentNextSteps and returns the data saved in the database.
+     * @param {AssessmentNextStepCreateManyAndReturnArgs} args - Arguments to create many AssessmentNextSteps.
+     * @example
+     * // Create many AssessmentNextSteps
+     * const assessmentNextStep = await prisma.assessmentNextStep.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AssessmentNextSteps and only return the `id`
+     * const assessmentNextStepWithIdOnly = await prisma.assessmentNextStep.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AssessmentNextStepCreateManyAndReturnArgs>(args?: SelectSubset<T, AssessmentNextStepCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AssessmentNextStep.
+     * @param {AssessmentNextStepDeleteArgs} args - Arguments to delete one AssessmentNextStep.
+     * @example
+     * // Delete one AssessmentNextStep
+     * const AssessmentNextStep = await prisma.assessmentNextStep.delete({
+     *   where: {
+     *     // ... filter to delete one AssessmentNextStep
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AssessmentNextStepDeleteArgs>(args: SelectSubset<T, AssessmentNextStepDeleteArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AssessmentNextStep.
+     * @param {AssessmentNextStepUpdateArgs} args - Arguments to update one AssessmentNextStep.
+     * @example
+     * // Update one AssessmentNextStep
+     * const assessmentNextStep = await prisma.assessmentNextStep.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AssessmentNextStepUpdateArgs>(args: SelectSubset<T, AssessmentNextStepUpdateArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AssessmentNextSteps.
+     * @param {AssessmentNextStepDeleteManyArgs} args - Arguments to filter AssessmentNextSteps to delete.
+     * @example
+     * // Delete a few AssessmentNextSteps
+     * const { count } = await prisma.assessmentNextStep.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AssessmentNextStepDeleteManyArgs>(args?: SelectSubset<T, AssessmentNextStepDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssessmentNextSteps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentNextStepUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AssessmentNextSteps
+     * const assessmentNextStep = await prisma.assessmentNextStep.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AssessmentNextStepUpdateManyArgs>(args: SelectSubset<T, AssessmentNextStepUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssessmentNextSteps and returns the data updated in the database.
+     * @param {AssessmentNextStepUpdateManyAndReturnArgs} args - Arguments to update many AssessmentNextSteps.
+     * @example
+     * // Update many AssessmentNextSteps
+     * const assessmentNextStep = await prisma.assessmentNextStep.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AssessmentNextSteps and only return the `id`
+     * const assessmentNextStepWithIdOnly = await prisma.assessmentNextStep.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AssessmentNextStepUpdateManyAndReturnArgs>(args: SelectSubset<T, AssessmentNextStepUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AssessmentNextStep.
+     * @param {AssessmentNextStepUpsertArgs} args - Arguments to update or create a AssessmentNextStep.
+     * @example
+     * // Update or create a AssessmentNextStep
+     * const assessmentNextStep = await prisma.assessmentNextStep.upsert({
+     *   create: {
+     *     // ... data to create a AssessmentNextStep
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AssessmentNextStep we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AssessmentNextStepUpsertArgs>(args: SelectSubset<T, AssessmentNextStepUpsertArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AssessmentNextSteps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentNextStepCountArgs} args - Arguments to filter AssessmentNextSteps to count.
+     * @example
+     * // Count the number of AssessmentNextSteps
+     * const count = await prisma.assessmentNextStep.count({
+     *   where: {
+     *     // ... the filter for the AssessmentNextSteps we want to count
+     *   }
+     * })
+    **/
+    count<T extends AssessmentNextStepCountArgs>(
+      args?: Subset<T, AssessmentNextStepCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AssessmentNextStepCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AssessmentNextStep.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentNextStepAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AssessmentNextStepAggregateArgs>(args: Subset<T, AssessmentNextStepAggregateArgs>): Prisma.PrismaPromise<GetAssessmentNextStepAggregateType<T>>
+
+    /**
+     * Group by AssessmentNextStep.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssessmentNextStepGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AssessmentNextStepGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AssessmentNextStepGroupByArgs['orderBy'] }
+        : { orderBy?: AssessmentNextStepGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AssessmentNextStepGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssessmentNextStepGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AssessmentNextStep model
+   */
+  readonly fields: AssessmentNextStepFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AssessmentNextStep.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AssessmentNextStepClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    goalEntries<T extends AssessmentNextStep$goalEntriesArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentNextStep$goalEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AssessmentNextStep model
+   */
+  interface AssessmentNextStepFieldRefs {
+    readonly id: FieldRef<"AssessmentNextStep", 'String'>
+    readonly createdAt: FieldRef<"AssessmentNextStep", 'DateTime'>
+    readonly updatedAt: FieldRef<"AssessmentNextStep", 'DateTime'>
+    readonly completedAt: FieldRef<"AssessmentNextStep", 'DateTime'>
+    readonly userId: FieldRef<"AssessmentNextStep", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AssessmentNextStep findUnique
+   */
+  export type AssessmentNextStepFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStep
+     */
+    select?: AssessmentNextStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentNextStep
+     */
+    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentNextStepInclude<ExtArgs> | null
+    /**
+     * Filter, which AssessmentNextStep to fetch.
+     */
+    where: AssessmentNextStepWhereUniqueInput
+  }
+
+  /**
+   * AssessmentNextStep findUniqueOrThrow
+   */
+  export type AssessmentNextStepFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStep
+     */
+    select?: AssessmentNextStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentNextStep
+     */
+    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentNextStepInclude<ExtArgs> | null
+    /**
+     * Filter, which AssessmentNextStep to fetch.
+     */
+    where: AssessmentNextStepWhereUniqueInput
+  }
+
+  /**
+   * AssessmentNextStep findFirst
+   */
+  export type AssessmentNextStepFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStep
+     */
+    select?: AssessmentNextStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentNextStep
+     */
+    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentNextStepInclude<ExtArgs> | null
+    /**
+     * Filter, which AssessmentNextStep to fetch.
+     */
+    where?: AssessmentNextStepWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssessmentNextSteps to fetch.
+     */
+    orderBy?: AssessmentNextStepOrderByWithRelationInput | AssessmentNextStepOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssessmentNextSteps.
+     */
+    cursor?: AssessmentNextStepWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssessmentNextSteps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssessmentNextSteps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssessmentNextSteps.
+     */
+    distinct?: AssessmentNextStepScalarFieldEnum | AssessmentNextStepScalarFieldEnum[]
+  }
+
+  /**
+   * AssessmentNextStep findFirstOrThrow
+   */
+  export type AssessmentNextStepFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStep
+     */
+    select?: AssessmentNextStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentNextStep
+     */
+    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentNextStepInclude<ExtArgs> | null
+    /**
+     * Filter, which AssessmentNextStep to fetch.
+     */
+    where?: AssessmentNextStepWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssessmentNextSteps to fetch.
+     */
+    orderBy?: AssessmentNextStepOrderByWithRelationInput | AssessmentNextStepOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssessmentNextSteps.
+     */
+    cursor?: AssessmentNextStepWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssessmentNextSteps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssessmentNextSteps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssessmentNextSteps.
+     */
+    distinct?: AssessmentNextStepScalarFieldEnum | AssessmentNextStepScalarFieldEnum[]
+  }
+
+  /**
+   * AssessmentNextStep findMany
+   */
+  export type AssessmentNextStepFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStep
+     */
+    select?: AssessmentNextStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentNextStep
+     */
+    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentNextStepInclude<ExtArgs> | null
+    /**
+     * Filter, which AssessmentNextSteps to fetch.
+     */
+    where?: AssessmentNextStepWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssessmentNextSteps to fetch.
+     */
+    orderBy?: AssessmentNextStepOrderByWithRelationInput | AssessmentNextStepOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AssessmentNextSteps.
+     */
+    cursor?: AssessmentNextStepWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssessmentNextSteps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssessmentNextSteps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssessmentNextSteps.
+     */
+    distinct?: AssessmentNextStepScalarFieldEnum | AssessmentNextStepScalarFieldEnum[]
+  }
+
+  /**
+   * AssessmentNextStep create
+   */
+  export type AssessmentNextStepCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStep
+     */
+    select?: AssessmentNextStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentNextStep
+     */
+    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentNextStepInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AssessmentNextStep.
+     */
+    data: XOR<AssessmentNextStepCreateInput, AssessmentNextStepUncheckedCreateInput>
+  }
+
+  /**
+   * AssessmentNextStep createMany
+   */
+  export type AssessmentNextStepCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AssessmentNextSteps.
+     */
+    data: AssessmentNextStepCreateManyInput | AssessmentNextStepCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AssessmentNextStep createManyAndReturn
+   */
+  export type AssessmentNextStepCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStep
+     */
+    select?: AssessmentNextStepSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentNextStep
+     */
+    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    /**
+     * The data used to create many AssessmentNextSteps.
+     */
+    data: AssessmentNextStepCreateManyInput | AssessmentNextStepCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentNextStepIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssessmentNextStep update
+   */
+  export type AssessmentNextStepUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStep
+     */
+    select?: AssessmentNextStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentNextStep
+     */
+    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentNextStepInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AssessmentNextStep.
+     */
+    data: XOR<AssessmentNextStepUpdateInput, AssessmentNextStepUncheckedUpdateInput>
+    /**
+     * Choose, which AssessmentNextStep to update.
+     */
+    where: AssessmentNextStepWhereUniqueInput
+  }
+
+  /**
+   * AssessmentNextStep updateMany
+   */
+  export type AssessmentNextStepUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AssessmentNextSteps.
+     */
+    data: XOR<AssessmentNextStepUpdateManyMutationInput, AssessmentNextStepUncheckedUpdateManyInput>
+    /**
+     * Filter which AssessmentNextSteps to update
+     */
+    where?: AssessmentNextStepWhereInput
+    /**
+     * Limit how many AssessmentNextSteps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssessmentNextStep updateManyAndReturn
+   */
+  export type AssessmentNextStepUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStep
+     */
+    select?: AssessmentNextStepSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentNextStep
+     */
+    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    /**
+     * The data used to update AssessmentNextSteps.
+     */
+    data: XOR<AssessmentNextStepUpdateManyMutationInput, AssessmentNextStepUncheckedUpdateManyInput>
+    /**
+     * Filter which AssessmentNextSteps to update
+     */
+    where?: AssessmentNextStepWhereInput
+    /**
+     * Limit how many AssessmentNextSteps to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentNextStepIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssessmentNextStep upsert
+   */
+  export type AssessmentNextStepUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStep
+     */
+    select?: AssessmentNextStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentNextStep
+     */
+    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentNextStepInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AssessmentNextStep to update in case it exists.
+     */
+    where: AssessmentNextStepWhereUniqueInput
+    /**
+     * In case the AssessmentNextStep found by the `where` argument doesn't exist, create a new AssessmentNextStep with this data.
+     */
+    create: XOR<AssessmentNextStepCreateInput, AssessmentNextStepUncheckedCreateInput>
+    /**
+     * In case the AssessmentNextStep was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AssessmentNextStepUpdateInput, AssessmentNextStepUncheckedUpdateInput>
+  }
+
+  /**
+   * AssessmentNextStep delete
+   */
+  export type AssessmentNextStepDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStep
+     */
+    select?: AssessmentNextStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentNextStep
+     */
+    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentNextStepInclude<ExtArgs> | null
+    /**
+     * Filter which AssessmentNextStep to delete.
+     */
+    where: AssessmentNextStepWhereUniqueInput
+  }
+
+  /**
+   * AssessmentNextStep deleteMany
+   */
+  export type AssessmentNextStepDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssessmentNextSteps to delete
+     */
+    where?: AssessmentNextStepWhereInput
+    /**
+     * Limit how many AssessmentNextSteps to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssessmentNextStep.goalEntries
+   */
+  export type AssessmentNextStep$goalEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryInclude<ExtArgs> | null
+    where?: NextStepGoalEntryWhereInput
+    orderBy?: NextStepGoalEntryOrderByWithRelationInput | NextStepGoalEntryOrderByWithRelationInput[]
+    cursor?: NextStepGoalEntryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NextStepGoalEntryScalarFieldEnum | NextStepGoalEntryScalarFieldEnum[]
+  }
+
+  /**
+   * AssessmentNextStep without action
+   */
+  export type AssessmentNextStepDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssessmentNextStep
+     */
+    select?: AssessmentNextStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssessmentNextStep
+     */
+    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssessmentNextStepInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model NextStepGoalEntry
+   */
+
+  export type AggregateNextStepGoalEntry = {
+    _count: NextStepGoalEntryCountAggregateOutputType | null
+    _avg: NextStepGoalEntryAvgAggregateOutputType | null
+    _sum: NextStepGoalEntrySumAggregateOutputType | null
+    _min: NextStepGoalEntryMinAggregateOutputType | null
+    _max: NextStepGoalEntryMaxAggregateOutputType | null
+  }
+
+  export type NextStepGoalEntryAvgAggregateOutputType = {
+    systemRating: number | null
+  }
+
+  export type NextStepGoalEntrySumAggregateOutputType = {
+    systemRating: number | null
+  }
+
+  export type NextStepGoalEntryMinAggregateOutputType = {
+    id: string | null
+    goal: string | null
+    currentSystem: string | null
+    systemEval: string | null
+    systemRating: number | null
+    idealSystem: string | null
+    nextStepId: string | null
+  }
+
+  export type NextStepGoalEntryMaxAggregateOutputType = {
+    id: string | null
+    goal: string | null
+    currentSystem: string | null
+    systemEval: string | null
+    systemRating: number | null
+    idealSystem: string | null
+    nextStepId: string | null
+  }
+
+  export type NextStepGoalEntryCountAggregateOutputType = {
+    id: number
+    goal: number
+    currentSystem: number
+    systemEval: number
+    systemRating: number
+    idealSystem: number
+    componentHabits: number
+    nextStepId: number
+    _all: number
+  }
+
+
+  export type NextStepGoalEntryAvgAggregateInputType = {
+    systemRating?: true
+  }
+
+  export type NextStepGoalEntrySumAggregateInputType = {
+    systemRating?: true
+  }
+
+  export type NextStepGoalEntryMinAggregateInputType = {
+    id?: true
+    goal?: true
+    currentSystem?: true
+    systemEval?: true
+    systemRating?: true
+    idealSystem?: true
+    nextStepId?: true
+  }
+
+  export type NextStepGoalEntryMaxAggregateInputType = {
+    id?: true
+    goal?: true
+    currentSystem?: true
+    systemEval?: true
+    systemRating?: true
+    idealSystem?: true
+    nextStepId?: true
+  }
+
+  export type NextStepGoalEntryCountAggregateInputType = {
+    id?: true
+    goal?: true
+    currentSystem?: true
+    systemEval?: true
+    systemRating?: true
+    idealSystem?: true
+    componentHabits?: true
+    nextStepId?: true
+    _all?: true
+  }
+
+  export type NextStepGoalEntryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which NextStepGoalEntry to aggregate.
+     */
+    where?: NextStepGoalEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NextStepGoalEntries to fetch.
+     */
+    orderBy?: NextStepGoalEntryOrderByWithRelationInput | NextStepGoalEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: NextStepGoalEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NextStepGoalEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NextStepGoalEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned NextStepGoalEntries
+    **/
+    _count?: true | NextStepGoalEntryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: NextStepGoalEntryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: NextStepGoalEntrySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: NextStepGoalEntryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: NextStepGoalEntryMaxAggregateInputType
+  }
+
+  export type GetNextStepGoalEntryAggregateType<T extends NextStepGoalEntryAggregateArgs> = {
+        [P in keyof T & keyof AggregateNextStepGoalEntry]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNextStepGoalEntry[P]>
+      : GetScalarType<T[P], AggregateNextStepGoalEntry[P]>
+  }
+
+
+
+
+  export type NextStepGoalEntryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NextStepGoalEntryWhereInput
+    orderBy?: NextStepGoalEntryOrderByWithAggregationInput | NextStepGoalEntryOrderByWithAggregationInput[]
+    by: NextStepGoalEntryScalarFieldEnum[] | NextStepGoalEntryScalarFieldEnum
+    having?: NextStepGoalEntryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NextStepGoalEntryCountAggregateInputType | true
+    _avg?: NextStepGoalEntryAvgAggregateInputType
+    _sum?: NextStepGoalEntrySumAggregateInputType
+    _min?: NextStepGoalEntryMinAggregateInputType
+    _max?: NextStepGoalEntryMaxAggregateInputType
+  }
+
+  export type NextStepGoalEntryGroupByOutputType = {
+    id: string
+    goal: string
+    currentSystem: string
+    systemEval: string
+    systemRating: number
+    idealSystem: string
+    componentHabits: string[]
+    nextStepId: string
+    _count: NextStepGoalEntryCountAggregateOutputType | null
+    _avg: NextStepGoalEntryAvgAggregateOutputType | null
+    _sum: NextStepGoalEntrySumAggregateOutputType | null
+    _min: NextStepGoalEntryMinAggregateOutputType | null
+    _max: NextStepGoalEntryMaxAggregateOutputType | null
+  }
+
+  type GetNextStepGoalEntryGroupByPayload<T extends NextStepGoalEntryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NextStepGoalEntryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NextStepGoalEntryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NextStepGoalEntryGroupByOutputType[P]>
+            : GetScalarType<T[P], NextStepGoalEntryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NextStepGoalEntrySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    goal?: boolean
+    currentSystem?: boolean
+    systemEval?: boolean
+    systemRating?: boolean
+    idealSystem?: boolean
+    componentHabits?: boolean
+    nextStepId?: boolean
+    nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["nextStepGoalEntry"]>
+
+  export type NextStepGoalEntrySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    goal?: boolean
+    currentSystem?: boolean
+    systemEval?: boolean
+    systemRating?: boolean
+    idealSystem?: boolean
+    componentHabits?: boolean
+    nextStepId?: boolean
+    nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["nextStepGoalEntry"]>
+
+  export type NextStepGoalEntrySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    goal?: boolean
+    currentSystem?: boolean
+    systemEval?: boolean
+    systemRating?: boolean
+    idealSystem?: boolean
+    componentHabits?: boolean
+    nextStepId?: boolean
+    nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["nextStepGoalEntry"]>
+
+  export type NextStepGoalEntrySelectScalar = {
+    id?: boolean
+    goal?: boolean
+    currentSystem?: boolean
+    systemEval?: boolean
+    systemRating?: boolean
+    idealSystem?: boolean
+    componentHabits?: boolean
+    nextStepId?: boolean
+  }
+
+  export type NextStepGoalEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "goal" | "currentSystem" | "systemEval" | "systemRating" | "idealSystem" | "componentHabits" | "nextStepId", ExtArgs["result"]["nextStepGoalEntry"]>
+  export type NextStepGoalEntryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
+  }
+  export type NextStepGoalEntryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
+  }
+  export type NextStepGoalEntryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
+  }
+
+  export type $NextStepGoalEntryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "NextStepGoalEntry"
+    objects: {
+      nextStep: Prisma.$AssessmentNextStepPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      /**
+       * Goal text (copied from Part 4 reflectionGoals or entered by user)
+       */
+      goal: string
+      /**
+       * "none" or a description of the existing system
+       */
+      currentSystem: string
+      /**
+       * Evaluation of whether the current system is working
+       */
+      systemEval: string
+      /**
+       * 0 = unset, 1–5 rating
+       */
+      systemRating: number
+      /**
+       * Description of the ideal system for this goal
+       */
+      idealSystem: string
+      /**
+       * Component habits that make up the ideal system
+       */
+      componentHabits: string[]
+      nextStepId: string
+    }, ExtArgs["result"]["nextStepGoalEntry"]>
+    composites: {}
+  }
+
+  type NextStepGoalEntryGetPayload<S extends boolean | null | undefined | NextStepGoalEntryDefaultArgs> = $Result.GetResult<Prisma.$NextStepGoalEntryPayload, S>
+
+  type NextStepGoalEntryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<NextStepGoalEntryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: NextStepGoalEntryCountAggregateInputType | true
+    }
+
+  export interface NextStepGoalEntryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['NextStepGoalEntry'], meta: { name: 'NextStepGoalEntry' } }
+    /**
+     * Find zero or one NextStepGoalEntry that matches the filter.
+     * @param {NextStepGoalEntryFindUniqueArgs} args - Arguments to find a NextStepGoalEntry
+     * @example
+     * // Get one NextStepGoalEntry
+     * const nextStepGoalEntry = await prisma.nextStepGoalEntry.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NextStepGoalEntryFindUniqueArgs>(args: SelectSubset<T, NextStepGoalEntryFindUniqueArgs<ExtArgs>>): Prisma__NextStepGoalEntryClient<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one NextStepGoalEntry that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {NextStepGoalEntryFindUniqueOrThrowArgs} args - Arguments to find a NextStepGoalEntry
+     * @example
+     * // Get one NextStepGoalEntry
+     * const nextStepGoalEntry = await prisma.nextStepGoalEntry.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NextStepGoalEntryFindUniqueOrThrowArgs>(args: SelectSubset<T, NextStepGoalEntryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NextStepGoalEntryClient<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first NextStepGoalEntry that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NextStepGoalEntryFindFirstArgs} args - Arguments to find a NextStepGoalEntry
+     * @example
+     * // Get one NextStepGoalEntry
+     * const nextStepGoalEntry = await prisma.nextStepGoalEntry.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NextStepGoalEntryFindFirstArgs>(args?: SelectSubset<T, NextStepGoalEntryFindFirstArgs<ExtArgs>>): Prisma__NextStepGoalEntryClient<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first NextStepGoalEntry that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NextStepGoalEntryFindFirstOrThrowArgs} args - Arguments to find a NextStepGoalEntry
+     * @example
+     * // Get one NextStepGoalEntry
+     * const nextStepGoalEntry = await prisma.nextStepGoalEntry.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NextStepGoalEntryFindFirstOrThrowArgs>(args?: SelectSubset<T, NextStepGoalEntryFindFirstOrThrowArgs<ExtArgs>>): Prisma__NextStepGoalEntryClient<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more NextStepGoalEntries that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NextStepGoalEntryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all NextStepGoalEntries
+     * const nextStepGoalEntries = await prisma.nextStepGoalEntry.findMany()
+     * 
+     * // Get first 10 NextStepGoalEntries
+     * const nextStepGoalEntries = await prisma.nextStepGoalEntry.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const nextStepGoalEntryWithIdOnly = await prisma.nextStepGoalEntry.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends NextStepGoalEntryFindManyArgs>(args?: SelectSubset<T, NextStepGoalEntryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a NextStepGoalEntry.
+     * @param {NextStepGoalEntryCreateArgs} args - Arguments to create a NextStepGoalEntry.
+     * @example
+     * // Create one NextStepGoalEntry
+     * const NextStepGoalEntry = await prisma.nextStepGoalEntry.create({
+     *   data: {
+     *     // ... data to create a NextStepGoalEntry
+     *   }
+     * })
+     * 
+     */
+    create<T extends NextStepGoalEntryCreateArgs>(args: SelectSubset<T, NextStepGoalEntryCreateArgs<ExtArgs>>): Prisma__NextStepGoalEntryClient<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many NextStepGoalEntries.
+     * @param {NextStepGoalEntryCreateManyArgs} args - Arguments to create many NextStepGoalEntries.
+     * @example
+     * // Create many NextStepGoalEntries
+     * const nextStepGoalEntry = await prisma.nextStepGoalEntry.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends NextStepGoalEntryCreateManyArgs>(args?: SelectSubset<T, NextStepGoalEntryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many NextStepGoalEntries and returns the data saved in the database.
+     * @param {NextStepGoalEntryCreateManyAndReturnArgs} args - Arguments to create many NextStepGoalEntries.
+     * @example
+     * // Create many NextStepGoalEntries
+     * const nextStepGoalEntry = await prisma.nextStepGoalEntry.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many NextStepGoalEntries and only return the `id`
+     * const nextStepGoalEntryWithIdOnly = await prisma.nextStepGoalEntry.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends NextStepGoalEntryCreateManyAndReturnArgs>(args?: SelectSubset<T, NextStepGoalEntryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a NextStepGoalEntry.
+     * @param {NextStepGoalEntryDeleteArgs} args - Arguments to delete one NextStepGoalEntry.
+     * @example
+     * // Delete one NextStepGoalEntry
+     * const NextStepGoalEntry = await prisma.nextStepGoalEntry.delete({
+     *   where: {
+     *     // ... filter to delete one NextStepGoalEntry
+     *   }
+     * })
+     * 
+     */
+    delete<T extends NextStepGoalEntryDeleteArgs>(args: SelectSubset<T, NextStepGoalEntryDeleteArgs<ExtArgs>>): Prisma__NextStepGoalEntryClient<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one NextStepGoalEntry.
+     * @param {NextStepGoalEntryUpdateArgs} args - Arguments to update one NextStepGoalEntry.
+     * @example
+     * // Update one NextStepGoalEntry
+     * const nextStepGoalEntry = await prisma.nextStepGoalEntry.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends NextStepGoalEntryUpdateArgs>(args: SelectSubset<T, NextStepGoalEntryUpdateArgs<ExtArgs>>): Prisma__NextStepGoalEntryClient<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more NextStepGoalEntries.
+     * @param {NextStepGoalEntryDeleteManyArgs} args - Arguments to filter NextStepGoalEntries to delete.
+     * @example
+     * // Delete a few NextStepGoalEntries
+     * const { count } = await prisma.nextStepGoalEntry.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends NextStepGoalEntryDeleteManyArgs>(args?: SelectSubset<T, NextStepGoalEntryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more NextStepGoalEntries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NextStepGoalEntryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many NextStepGoalEntries
+     * const nextStepGoalEntry = await prisma.nextStepGoalEntry.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends NextStepGoalEntryUpdateManyArgs>(args: SelectSubset<T, NextStepGoalEntryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more NextStepGoalEntries and returns the data updated in the database.
+     * @param {NextStepGoalEntryUpdateManyAndReturnArgs} args - Arguments to update many NextStepGoalEntries.
+     * @example
+     * // Update many NextStepGoalEntries
+     * const nextStepGoalEntry = await prisma.nextStepGoalEntry.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more NextStepGoalEntries and only return the `id`
+     * const nextStepGoalEntryWithIdOnly = await prisma.nextStepGoalEntry.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends NextStepGoalEntryUpdateManyAndReturnArgs>(args: SelectSubset<T, NextStepGoalEntryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one NextStepGoalEntry.
+     * @param {NextStepGoalEntryUpsertArgs} args - Arguments to update or create a NextStepGoalEntry.
+     * @example
+     * // Update or create a NextStepGoalEntry
+     * const nextStepGoalEntry = await prisma.nextStepGoalEntry.upsert({
+     *   create: {
+     *     // ... data to create a NextStepGoalEntry
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the NextStepGoalEntry we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NextStepGoalEntryUpsertArgs>(args: SelectSubset<T, NextStepGoalEntryUpsertArgs<ExtArgs>>): Prisma__NextStepGoalEntryClient<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of NextStepGoalEntries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NextStepGoalEntryCountArgs} args - Arguments to filter NextStepGoalEntries to count.
+     * @example
+     * // Count the number of NextStepGoalEntries
+     * const count = await prisma.nextStepGoalEntry.count({
+     *   where: {
+     *     // ... the filter for the NextStepGoalEntries we want to count
+     *   }
+     * })
+    **/
+    count<T extends NextStepGoalEntryCountArgs>(
+      args?: Subset<T, NextStepGoalEntryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NextStepGoalEntryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a NextStepGoalEntry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NextStepGoalEntryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NextStepGoalEntryAggregateArgs>(args: Subset<T, NextStepGoalEntryAggregateArgs>): Prisma.PrismaPromise<GetNextStepGoalEntryAggregateType<T>>
+
+    /**
+     * Group by NextStepGoalEntry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NextStepGoalEntryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends NextStepGoalEntryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NextStepGoalEntryGroupByArgs['orderBy'] }
+        : { orderBy?: NextStepGoalEntryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NextStepGoalEntryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNextStepGoalEntryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the NextStepGoalEntry model
+   */
+  readonly fields: NextStepGoalEntryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for NextStepGoalEntry.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NextStepGoalEntryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    nextStep<T extends AssessmentNextStepDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentNextStepDefaultArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the NextStepGoalEntry model
+   */
+  interface NextStepGoalEntryFieldRefs {
+    readonly id: FieldRef<"NextStepGoalEntry", 'String'>
+    readonly goal: FieldRef<"NextStepGoalEntry", 'String'>
+    readonly currentSystem: FieldRef<"NextStepGoalEntry", 'String'>
+    readonly systemEval: FieldRef<"NextStepGoalEntry", 'String'>
+    readonly systemRating: FieldRef<"NextStepGoalEntry", 'Int'>
+    readonly idealSystem: FieldRef<"NextStepGoalEntry", 'String'>
+    readonly componentHabits: FieldRef<"NextStepGoalEntry", 'String[]'>
+    readonly nextStepId: FieldRef<"NextStepGoalEntry", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * NextStepGoalEntry findUnique
+   */
+  export type NextStepGoalEntryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which NextStepGoalEntry to fetch.
+     */
+    where: NextStepGoalEntryWhereUniqueInput
+  }
+
+  /**
+   * NextStepGoalEntry findUniqueOrThrow
+   */
+  export type NextStepGoalEntryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which NextStepGoalEntry to fetch.
+     */
+    where: NextStepGoalEntryWhereUniqueInput
+  }
+
+  /**
+   * NextStepGoalEntry findFirst
+   */
+  export type NextStepGoalEntryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which NextStepGoalEntry to fetch.
+     */
+    where?: NextStepGoalEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NextStepGoalEntries to fetch.
+     */
+    orderBy?: NextStepGoalEntryOrderByWithRelationInput | NextStepGoalEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for NextStepGoalEntries.
+     */
+    cursor?: NextStepGoalEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NextStepGoalEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NextStepGoalEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NextStepGoalEntries.
+     */
+    distinct?: NextStepGoalEntryScalarFieldEnum | NextStepGoalEntryScalarFieldEnum[]
+  }
+
+  /**
+   * NextStepGoalEntry findFirstOrThrow
+   */
+  export type NextStepGoalEntryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which NextStepGoalEntry to fetch.
+     */
+    where?: NextStepGoalEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NextStepGoalEntries to fetch.
+     */
+    orderBy?: NextStepGoalEntryOrderByWithRelationInput | NextStepGoalEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for NextStepGoalEntries.
+     */
+    cursor?: NextStepGoalEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NextStepGoalEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NextStepGoalEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NextStepGoalEntries.
+     */
+    distinct?: NextStepGoalEntryScalarFieldEnum | NextStepGoalEntryScalarFieldEnum[]
+  }
+
+  /**
+   * NextStepGoalEntry findMany
+   */
+  export type NextStepGoalEntryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which NextStepGoalEntries to fetch.
+     */
+    where?: NextStepGoalEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NextStepGoalEntries to fetch.
+     */
+    orderBy?: NextStepGoalEntryOrderByWithRelationInput | NextStepGoalEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing NextStepGoalEntries.
+     */
+    cursor?: NextStepGoalEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NextStepGoalEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NextStepGoalEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NextStepGoalEntries.
+     */
+    distinct?: NextStepGoalEntryScalarFieldEnum | NextStepGoalEntryScalarFieldEnum[]
+  }
+
+  /**
+   * NextStepGoalEntry create
+   */
+  export type NextStepGoalEntryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a NextStepGoalEntry.
+     */
+    data: XOR<NextStepGoalEntryCreateInput, NextStepGoalEntryUncheckedCreateInput>
+  }
+
+  /**
+   * NextStepGoalEntry createMany
+   */
+  export type NextStepGoalEntryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many NextStepGoalEntries.
+     */
+    data: NextStepGoalEntryCreateManyInput | NextStepGoalEntryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * NextStepGoalEntry createManyAndReturn
+   */
+  export type NextStepGoalEntryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * The data used to create many NextStepGoalEntries.
+     */
+    data: NextStepGoalEntryCreateManyInput | NextStepGoalEntryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * NextStepGoalEntry update
+   */
+  export type NextStepGoalEntryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a NextStepGoalEntry.
+     */
+    data: XOR<NextStepGoalEntryUpdateInput, NextStepGoalEntryUncheckedUpdateInput>
+    /**
+     * Choose, which NextStepGoalEntry to update.
+     */
+    where: NextStepGoalEntryWhereUniqueInput
+  }
+
+  /**
+   * NextStepGoalEntry updateMany
+   */
+  export type NextStepGoalEntryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update NextStepGoalEntries.
+     */
+    data: XOR<NextStepGoalEntryUpdateManyMutationInput, NextStepGoalEntryUncheckedUpdateManyInput>
+    /**
+     * Filter which NextStepGoalEntries to update
+     */
+    where?: NextStepGoalEntryWhereInput
+    /**
+     * Limit how many NextStepGoalEntries to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * NextStepGoalEntry updateManyAndReturn
+   */
+  export type NextStepGoalEntryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * The data used to update NextStepGoalEntries.
+     */
+    data: XOR<NextStepGoalEntryUpdateManyMutationInput, NextStepGoalEntryUncheckedUpdateManyInput>
+    /**
+     * Filter which NextStepGoalEntries to update
+     */
+    where?: NextStepGoalEntryWhereInput
+    /**
+     * Limit how many NextStepGoalEntries to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * NextStepGoalEntry upsert
+   */
+  export type NextStepGoalEntryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the NextStepGoalEntry to update in case it exists.
+     */
+    where: NextStepGoalEntryWhereUniqueInput
+    /**
+     * In case the NextStepGoalEntry found by the `where` argument doesn't exist, create a new NextStepGoalEntry with this data.
+     */
+    create: XOR<NextStepGoalEntryCreateInput, NextStepGoalEntryUncheckedCreateInput>
+    /**
+     * In case the NextStepGoalEntry was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NextStepGoalEntryUpdateInput, NextStepGoalEntryUncheckedUpdateInput>
+  }
+
+  /**
+   * NextStepGoalEntry delete
+   */
+  export type NextStepGoalEntryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryInclude<ExtArgs> | null
+    /**
+     * Filter which NextStepGoalEntry to delete.
+     */
+    where: NextStepGoalEntryWhereUniqueInput
+  }
+
+  /**
+   * NextStepGoalEntry deleteMany
+   */
+  export type NextStepGoalEntryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which NextStepGoalEntries to delete
+     */
+    where?: NextStepGoalEntryWhereInput
+    /**
+     * Limit how many NextStepGoalEntries to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * NextStepGoalEntry without action
+   */
+  export type NextStepGoalEntryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Checklist
+   */
+
+  export type AggregateChecklist = {
+    _count: ChecklistCountAggregateOutputType | null
+    _min: ChecklistMinAggregateOutputType | null
+    _max: ChecklistMaxAggregateOutputType | null
+  }
+
+  export type ChecklistMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    templateType: string | null
+    content: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+  }
+
+  export type ChecklistMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    templateType: string | null
+    content: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+  }
+
+  export type ChecklistCountAggregateOutputType = {
+    id: number
+    title: number
+    templateType: number
+    content: number
+    createdAt: number
+    updatedAt: number
+    userId: number
+    _all: number
+  }
+
+
+  export type ChecklistMinAggregateInputType = {
+    id?: true
+    title?: true
+    templateType?: true
+    content?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+  }
+
+  export type ChecklistMaxAggregateInputType = {
+    id?: true
+    title?: true
+    templateType?: true
+    content?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+  }
+
+  export type ChecklistCountAggregateInputType = {
+    id?: true
+    title?: true
+    templateType?: true
+    content?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type ChecklistAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Checklist to aggregate.
+     */
+    where?: ChecklistWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Checklists to fetch.
+     */
+    orderBy?: ChecklistOrderByWithRelationInput | ChecklistOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChecklistWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Checklists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Checklists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Checklists
+    **/
+    _count?: true | ChecklistCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChecklistMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChecklistMaxAggregateInputType
+  }
+
+  export type GetChecklistAggregateType<T extends ChecklistAggregateArgs> = {
+        [P in keyof T & keyof AggregateChecklist]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChecklist[P]>
+      : GetScalarType<T[P], AggregateChecklist[P]>
+  }
+
+
+
+
+  export type ChecklistGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChecklistWhereInput
+    orderBy?: ChecklistOrderByWithAggregationInput | ChecklistOrderByWithAggregationInput[]
+    by: ChecklistScalarFieldEnum[] | ChecklistScalarFieldEnum
+    having?: ChecklistScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChecklistCountAggregateInputType | true
+    _min?: ChecklistMinAggregateInputType
+    _max?: ChecklistMaxAggregateInputType
+  }
+
+  export type ChecklistGroupByOutputType = {
+    id: string
+    title: string
+    templateType: string
+    content: string
+    createdAt: Date
+    updatedAt: Date
+    userId: string
+    _count: ChecklistCountAggregateOutputType | null
+    _min: ChecklistMinAggregateOutputType | null
+    _max: ChecklistMaxAggregateOutputType | null
+  }
+
+  type GetChecklistGroupByPayload<T extends ChecklistGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChecklistGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChecklistGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChecklistGroupByOutputType[P]>
+            : GetScalarType<T[P], ChecklistGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChecklistSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    templateType?: boolean
+    content?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["checklist"]>
+
+  export type ChecklistSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    templateType?: boolean
+    content?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["checklist"]>
+
+  export type ChecklistSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    templateType?: boolean
+    content?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["checklist"]>
+
+  export type ChecklistSelectScalar = {
+    id?: boolean
+    title?: boolean
+    templateType?: boolean
+    content?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+  }
+
+  export type ChecklistOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "templateType" | "content" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["checklist"]>
+  export type ChecklistInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ChecklistIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ChecklistIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ChecklistPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Checklist"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      templateType: string
+      /**
+       * JSON: ChecklistHabitEntry[] — stored as a serialised string
+       */
+      content: string
+      createdAt: Date
+      updatedAt: Date
+      userId: string
+    }, ExtArgs["result"]["checklist"]>
+    composites: {}
+  }
+
+  type ChecklistGetPayload<S extends boolean | null | undefined | ChecklistDefaultArgs> = $Result.GetResult<Prisma.$ChecklistPayload, S>
+
+  type ChecklistCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ChecklistFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ChecklistCountAggregateInputType | true
+    }
+
+  export interface ChecklistDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Checklist'], meta: { name: 'Checklist' } }
+    /**
+     * Find zero or one Checklist that matches the filter.
+     * @param {ChecklistFindUniqueArgs} args - Arguments to find a Checklist
+     * @example
+     * // Get one Checklist
+     * const checklist = await prisma.checklist.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ChecklistFindUniqueArgs>(args: SelectSubset<T, ChecklistFindUniqueArgs<ExtArgs>>): Prisma__ChecklistClient<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Checklist that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ChecklistFindUniqueOrThrowArgs} args - Arguments to find a Checklist
+     * @example
+     * // Get one Checklist
+     * const checklist = await prisma.checklist.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ChecklistFindUniqueOrThrowArgs>(args: SelectSubset<T, ChecklistFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChecklistClient<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Checklist that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistFindFirstArgs} args - Arguments to find a Checklist
+     * @example
+     * // Get one Checklist
+     * const checklist = await prisma.checklist.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ChecklistFindFirstArgs>(args?: SelectSubset<T, ChecklistFindFirstArgs<ExtArgs>>): Prisma__ChecklistClient<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Checklist that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistFindFirstOrThrowArgs} args - Arguments to find a Checklist
+     * @example
+     * // Get one Checklist
+     * const checklist = await prisma.checklist.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ChecklistFindFirstOrThrowArgs>(args?: SelectSubset<T, ChecklistFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChecklistClient<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Checklists that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Checklists
+     * const checklists = await prisma.checklist.findMany()
+     * 
+     * // Get first 10 Checklists
+     * const checklists = await prisma.checklist.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const checklistWithIdOnly = await prisma.checklist.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ChecklistFindManyArgs>(args?: SelectSubset<T, ChecklistFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Checklist.
+     * @param {ChecklistCreateArgs} args - Arguments to create a Checklist.
+     * @example
+     * // Create one Checklist
+     * const Checklist = await prisma.checklist.create({
+     *   data: {
+     *     // ... data to create a Checklist
+     *   }
+     * })
+     * 
+     */
+    create<T extends ChecklistCreateArgs>(args: SelectSubset<T, ChecklistCreateArgs<ExtArgs>>): Prisma__ChecklistClient<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Checklists.
+     * @param {ChecklistCreateManyArgs} args - Arguments to create many Checklists.
+     * @example
+     * // Create many Checklists
+     * const checklist = await prisma.checklist.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ChecklistCreateManyArgs>(args?: SelectSubset<T, ChecklistCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Checklists and returns the data saved in the database.
+     * @param {ChecklistCreateManyAndReturnArgs} args - Arguments to create many Checklists.
+     * @example
+     * // Create many Checklists
+     * const checklist = await prisma.checklist.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Checklists and only return the `id`
+     * const checklistWithIdOnly = await prisma.checklist.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ChecklistCreateManyAndReturnArgs>(args?: SelectSubset<T, ChecklistCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Checklist.
+     * @param {ChecklistDeleteArgs} args - Arguments to delete one Checklist.
+     * @example
+     * // Delete one Checklist
+     * const Checklist = await prisma.checklist.delete({
+     *   where: {
+     *     // ... filter to delete one Checklist
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ChecklistDeleteArgs>(args: SelectSubset<T, ChecklistDeleteArgs<ExtArgs>>): Prisma__ChecklistClient<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Checklist.
+     * @param {ChecklistUpdateArgs} args - Arguments to update one Checklist.
+     * @example
+     * // Update one Checklist
+     * const checklist = await prisma.checklist.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ChecklistUpdateArgs>(args: SelectSubset<T, ChecklistUpdateArgs<ExtArgs>>): Prisma__ChecklistClient<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Checklists.
+     * @param {ChecklistDeleteManyArgs} args - Arguments to filter Checklists to delete.
+     * @example
+     * // Delete a few Checklists
+     * const { count } = await prisma.checklist.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ChecklistDeleteManyArgs>(args?: SelectSubset<T, ChecklistDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Checklists.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Checklists
+     * const checklist = await prisma.checklist.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ChecklistUpdateManyArgs>(args: SelectSubset<T, ChecklistUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Checklists and returns the data updated in the database.
+     * @param {ChecklistUpdateManyAndReturnArgs} args - Arguments to update many Checklists.
+     * @example
+     * // Update many Checklists
+     * const checklist = await prisma.checklist.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Checklists and only return the `id`
+     * const checklistWithIdOnly = await prisma.checklist.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ChecklistUpdateManyAndReturnArgs>(args: SelectSubset<T, ChecklistUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Checklist.
+     * @param {ChecklistUpsertArgs} args - Arguments to update or create a Checklist.
+     * @example
+     * // Update or create a Checklist
+     * const checklist = await prisma.checklist.upsert({
+     *   create: {
+     *     // ... data to create a Checklist
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Checklist we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ChecklistUpsertArgs>(args: SelectSubset<T, ChecklistUpsertArgs<ExtArgs>>): Prisma__ChecklistClient<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Checklists.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistCountArgs} args - Arguments to filter Checklists to count.
+     * @example
+     * // Count the number of Checklists
+     * const count = await prisma.checklist.count({
+     *   where: {
+     *     // ... the filter for the Checklists we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChecklistCountArgs>(
+      args?: Subset<T, ChecklistCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChecklistCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Checklist.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChecklistAggregateArgs>(args: Subset<T, ChecklistAggregateArgs>): Prisma.PrismaPromise<GetChecklistAggregateType<T>>
+
+    /**
+     * Group by Checklist.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChecklistGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChecklistGroupByArgs['orderBy'] }
+        : { orderBy?: ChecklistGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChecklistGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChecklistGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Checklist model
+   */
+  readonly fields: ChecklistFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Checklist.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChecklistClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Checklist model
+   */
+  interface ChecklistFieldRefs {
+    readonly id: FieldRef<"Checklist", 'String'>
+    readonly title: FieldRef<"Checklist", 'String'>
+    readonly templateType: FieldRef<"Checklist", 'String'>
+    readonly content: FieldRef<"Checklist", 'String'>
+    readonly createdAt: FieldRef<"Checklist", 'DateTime'>
+    readonly updatedAt: FieldRef<"Checklist", 'DateTime'>
+    readonly userId: FieldRef<"Checklist", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Checklist findUnique
+   */
+  export type ChecklistFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistInclude<ExtArgs> | null
+    /**
+     * Filter, which Checklist to fetch.
+     */
+    where: ChecklistWhereUniqueInput
+  }
+
+  /**
+   * Checklist findUniqueOrThrow
+   */
+  export type ChecklistFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistInclude<ExtArgs> | null
+    /**
+     * Filter, which Checklist to fetch.
+     */
+    where: ChecklistWhereUniqueInput
+  }
+
+  /**
+   * Checklist findFirst
+   */
+  export type ChecklistFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistInclude<ExtArgs> | null
+    /**
+     * Filter, which Checklist to fetch.
+     */
+    where?: ChecklistWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Checklists to fetch.
+     */
+    orderBy?: ChecklistOrderByWithRelationInput | ChecklistOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Checklists.
+     */
+    cursor?: ChecklistWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Checklists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Checklists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Checklists.
+     */
+    distinct?: ChecklistScalarFieldEnum | ChecklistScalarFieldEnum[]
+  }
+
+  /**
+   * Checklist findFirstOrThrow
+   */
+  export type ChecklistFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistInclude<ExtArgs> | null
+    /**
+     * Filter, which Checklist to fetch.
+     */
+    where?: ChecklistWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Checklists to fetch.
+     */
+    orderBy?: ChecklistOrderByWithRelationInput | ChecklistOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Checklists.
+     */
+    cursor?: ChecklistWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Checklists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Checklists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Checklists.
+     */
+    distinct?: ChecklistScalarFieldEnum | ChecklistScalarFieldEnum[]
+  }
+
+  /**
+   * Checklist findMany
+   */
+  export type ChecklistFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistInclude<ExtArgs> | null
+    /**
+     * Filter, which Checklists to fetch.
+     */
+    where?: ChecklistWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Checklists to fetch.
+     */
+    orderBy?: ChecklistOrderByWithRelationInput | ChecklistOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Checklists.
+     */
+    cursor?: ChecklistWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Checklists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Checklists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Checklists.
+     */
+    distinct?: ChecklistScalarFieldEnum | ChecklistScalarFieldEnum[]
+  }
+
+  /**
+   * Checklist create
+   */
+  export type ChecklistCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Checklist.
+     */
+    data: XOR<ChecklistCreateInput, ChecklistUncheckedCreateInput>
+  }
+
+  /**
+   * Checklist createMany
+   */
+  export type ChecklistCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Checklists.
+     */
+    data: ChecklistCreateManyInput | ChecklistCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Checklist createManyAndReturn
+   */
+  export type ChecklistCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * The data used to create many Checklists.
+     */
+    data: ChecklistCreateManyInput | ChecklistCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Checklist update
+   */
+  export type ChecklistUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Checklist.
+     */
+    data: XOR<ChecklistUpdateInput, ChecklistUncheckedUpdateInput>
+    /**
+     * Choose, which Checklist to update.
+     */
+    where: ChecklistWhereUniqueInput
+  }
+
+  /**
+   * Checklist updateMany
+   */
+  export type ChecklistUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Checklists.
+     */
+    data: XOR<ChecklistUpdateManyMutationInput, ChecklistUncheckedUpdateManyInput>
+    /**
+     * Filter which Checklists to update
+     */
+    where?: ChecklistWhereInput
+    /**
+     * Limit how many Checklists to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Checklist updateManyAndReturn
+   */
+  export type ChecklistUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * The data used to update Checklists.
+     */
+    data: XOR<ChecklistUpdateManyMutationInput, ChecklistUncheckedUpdateManyInput>
+    /**
+     * Filter which Checklists to update
+     */
+    where?: ChecklistWhereInput
+    /**
+     * Limit how many Checklists to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Checklist upsert
+   */
+  export type ChecklistUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Checklist to update in case it exists.
+     */
+    where: ChecklistWhereUniqueInput
+    /**
+     * In case the Checklist found by the `where` argument doesn't exist, create a new Checklist with this data.
+     */
+    create: XOR<ChecklistCreateInput, ChecklistUncheckedCreateInput>
+    /**
+     * In case the Checklist was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChecklistUpdateInput, ChecklistUncheckedUpdateInput>
+  }
+
+  /**
+   * Checklist delete
+   */
+  export type ChecklistDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistInclude<ExtArgs> | null
+    /**
+     * Filter which Checklist to delete.
+     */
+    where: ChecklistWhereUniqueInput
+  }
+
+  /**
+   * Checklist deleteMany
+   */
+  export type ChecklistDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Checklists to delete
+     */
+    where?: ChecklistWhereInput
+    /**
+     * Limit how many Checklists to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Checklist without action
+   */
+  export type ChecklistDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -23351,6 +27050,44 @@ export namespace Prisma {
   export type IdentityRecordScalarFieldEnum = (typeof IdentityRecordScalarFieldEnum)[keyof typeof IdentityRecordScalarFieldEnum]
 
 
+  export const AssessmentNextStepScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    completedAt: 'completedAt',
+    userId: 'userId'
+  };
+
+  export type AssessmentNextStepScalarFieldEnum = (typeof AssessmentNextStepScalarFieldEnum)[keyof typeof AssessmentNextStepScalarFieldEnum]
+
+
+  export const NextStepGoalEntryScalarFieldEnum: {
+    id: 'id',
+    goal: 'goal',
+    currentSystem: 'currentSystem',
+    systemEval: 'systemEval',
+    systemRating: 'systemRating',
+    idealSystem: 'idealSystem',
+    componentHabits: 'componentHabits',
+    nextStepId: 'nextStepId'
+  };
+
+  export type NextStepGoalEntryScalarFieldEnum = (typeof NextStepGoalEntryScalarFieldEnum)[keyof typeof NextStepGoalEntryScalarFieldEnum]
+
+
+  export const ChecklistScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    templateType: 'templateType',
+    content: 'content',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    userId: 'userId'
+  };
+
+  export type ChecklistScalarFieldEnum = (typeof ChecklistScalarFieldEnum)[keyof typeof ChecklistScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -23464,6 +27201,8 @@ export namespace Prisma {
     assessmentPartTwo?: XOR<AssessmentPartTwoNullableScalarRelationFilter, AssessmentPartTwoWhereInput> | null
     assessmentPartThree?: XOR<AssessmentPartThreeNullableScalarRelationFilter, AssessmentPartThreeWhereInput> | null
     assessmentPartFour?: XOR<AssessmentPartFourNullableScalarRelationFilter, AssessmentPartFourWhereInput> | null
+    assessmentNextStep?: XOR<AssessmentNextStepNullableScalarRelationFilter, AssessmentNextStepWhereInput> | null
+    checklists?: ChecklistListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -23481,6 +27220,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoOrderByWithRelationInput
     assessmentPartThree?: AssessmentPartThreeOrderByWithRelationInput
     assessmentPartFour?: AssessmentPartFourOrderByWithRelationInput
+    assessmentNextStep?: AssessmentNextStepOrderByWithRelationInput
+    checklists?: ChecklistOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -23501,6 +27242,8 @@ export namespace Prisma {
     assessmentPartTwo?: XOR<AssessmentPartTwoNullableScalarRelationFilter, AssessmentPartTwoWhereInput> | null
     assessmentPartThree?: XOR<AssessmentPartThreeNullableScalarRelationFilter, AssessmentPartThreeWhereInput> | null
     assessmentPartFour?: XOR<AssessmentPartFourNullableScalarRelationFilter, AssessmentPartFourWhereInput> | null
+    assessmentNextStep?: XOR<AssessmentNextStepNullableScalarRelationFilter, AssessmentNextStepWhereInput> | null
+    checklists?: ChecklistListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -24764,6 +28507,201 @@ export namespace Prisma {
     assessmentId?: StringWithAggregatesFilter<"IdentityRecord"> | string
   }
 
+  export type AssessmentNextStepWhereInput = {
+    AND?: AssessmentNextStepWhereInput | AssessmentNextStepWhereInput[]
+    OR?: AssessmentNextStepWhereInput[]
+    NOT?: AssessmentNextStepWhereInput | AssessmentNextStepWhereInput[]
+    id?: StringFilter<"AssessmentNextStep"> | string
+    createdAt?: DateTimeFilter<"AssessmentNextStep"> | Date | string
+    updatedAt?: DateTimeFilter<"AssessmentNextStep"> | Date | string
+    completedAt?: DateTimeNullableFilter<"AssessmentNextStep"> | Date | string | null
+    userId?: StringFilter<"AssessmentNextStep"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    goalEntries?: NextStepGoalEntryListRelationFilter
+  }
+
+  export type AssessmentNextStepOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+    goalEntries?: NextStepGoalEntryOrderByRelationAggregateInput
+  }
+
+  export type AssessmentNextStepWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: AssessmentNextStepWhereInput | AssessmentNextStepWhereInput[]
+    OR?: AssessmentNextStepWhereInput[]
+    NOT?: AssessmentNextStepWhereInput | AssessmentNextStepWhereInput[]
+    createdAt?: DateTimeFilter<"AssessmentNextStep"> | Date | string
+    updatedAt?: DateTimeFilter<"AssessmentNextStep"> | Date | string
+    completedAt?: DateTimeNullableFilter<"AssessmentNextStep"> | Date | string | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    goalEntries?: NextStepGoalEntryListRelationFilter
+  }, "id" | "userId">
+
+  export type AssessmentNextStepOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    _count?: AssessmentNextStepCountOrderByAggregateInput
+    _max?: AssessmentNextStepMaxOrderByAggregateInput
+    _min?: AssessmentNextStepMinOrderByAggregateInput
+  }
+
+  export type AssessmentNextStepScalarWhereWithAggregatesInput = {
+    AND?: AssessmentNextStepScalarWhereWithAggregatesInput | AssessmentNextStepScalarWhereWithAggregatesInput[]
+    OR?: AssessmentNextStepScalarWhereWithAggregatesInput[]
+    NOT?: AssessmentNextStepScalarWhereWithAggregatesInput | AssessmentNextStepScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AssessmentNextStep"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"AssessmentNextStep"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AssessmentNextStep"> | Date | string
+    completedAt?: DateTimeNullableWithAggregatesFilter<"AssessmentNextStep"> | Date | string | null
+    userId?: StringWithAggregatesFilter<"AssessmentNextStep"> | string
+  }
+
+  export type NextStepGoalEntryWhereInput = {
+    AND?: NextStepGoalEntryWhereInput | NextStepGoalEntryWhereInput[]
+    OR?: NextStepGoalEntryWhereInput[]
+    NOT?: NextStepGoalEntryWhereInput | NextStepGoalEntryWhereInput[]
+    id?: StringFilter<"NextStepGoalEntry"> | string
+    goal?: StringFilter<"NextStepGoalEntry"> | string
+    currentSystem?: StringFilter<"NextStepGoalEntry"> | string
+    systemEval?: StringFilter<"NextStepGoalEntry"> | string
+    systemRating?: IntFilter<"NextStepGoalEntry"> | number
+    idealSystem?: StringFilter<"NextStepGoalEntry"> | string
+    componentHabits?: StringNullableListFilter<"NextStepGoalEntry">
+    nextStepId?: StringFilter<"NextStepGoalEntry"> | string
+    nextStep?: XOR<AssessmentNextStepScalarRelationFilter, AssessmentNextStepWhereInput>
+  }
+
+  export type NextStepGoalEntryOrderByWithRelationInput = {
+    id?: SortOrder
+    goal?: SortOrder
+    currentSystem?: SortOrder
+    systemEval?: SortOrder
+    systemRating?: SortOrder
+    idealSystem?: SortOrder
+    componentHabits?: SortOrder
+    nextStepId?: SortOrder
+    nextStep?: AssessmentNextStepOrderByWithRelationInput
+  }
+
+  export type NextStepGoalEntryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: NextStepGoalEntryWhereInput | NextStepGoalEntryWhereInput[]
+    OR?: NextStepGoalEntryWhereInput[]
+    NOT?: NextStepGoalEntryWhereInput | NextStepGoalEntryWhereInput[]
+    goal?: StringFilter<"NextStepGoalEntry"> | string
+    currentSystem?: StringFilter<"NextStepGoalEntry"> | string
+    systemEval?: StringFilter<"NextStepGoalEntry"> | string
+    systemRating?: IntFilter<"NextStepGoalEntry"> | number
+    idealSystem?: StringFilter<"NextStepGoalEntry"> | string
+    componentHabits?: StringNullableListFilter<"NextStepGoalEntry">
+    nextStepId?: StringFilter<"NextStepGoalEntry"> | string
+    nextStep?: XOR<AssessmentNextStepScalarRelationFilter, AssessmentNextStepWhereInput>
+  }, "id">
+
+  export type NextStepGoalEntryOrderByWithAggregationInput = {
+    id?: SortOrder
+    goal?: SortOrder
+    currentSystem?: SortOrder
+    systemEval?: SortOrder
+    systemRating?: SortOrder
+    idealSystem?: SortOrder
+    componentHabits?: SortOrder
+    nextStepId?: SortOrder
+    _count?: NextStepGoalEntryCountOrderByAggregateInput
+    _avg?: NextStepGoalEntryAvgOrderByAggregateInput
+    _max?: NextStepGoalEntryMaxOrderByAggregateInput
+    _min?: NextStepGoalEntryMinOrderByAggregateInput
+    _sum?: NextStepGoalEntrySumOrderByAggregateInput
+  }
+
+  export type NextStepGoalEntryScalarWhereWithAggregatesInput = {
+    AND?: NextStepGoalEntryScalarWhereWithAggregatesInput | NextStepGoalEntryScalarWhereWithAggregatesInput[]
+    OR?: NextStepGoalEntryScalarWhereWithAggregatesInput[]
+    NOT?: NextStepGoalEntryScalarWhereWithAggregatesInput | NextStepGoalEntryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"NextStepGoalEntry"> | string
+    goal?: StringWithAggregatesFilter<"NextStepGoalEntry"> | string
+    currentSystem?: StringWithAggregatesFilter<"NextStepGoalEntry"> | string
+    systemEval?: StringWithAggregatesFilter<"NextStepGoalEntry"> | string
+    systemRating?: IntWithAggregatesFilter<"NextStepGoalEntry"> | number
+    idealSystem?: StringWithAggregatesFilter<"NextStepGoalEntry"> | string
+    componentHabits?: StringNullableListFilter<"NextStepGoalEntry">
+    nextStepId?: StringWithAggregatesFilter<"NextStepGoalEntry"> | string
+  }
+
+  export type ChecklistWhereInput = {
+    AND?: ChecklistWhereInput | ChecklistWhereInput[]
+    OR?: ChecklistWhereInput[]
+    NOT?: ChecklistWhereInput | ChecklistWhereInput[]
+    id?: StringFilter<"Checklist"> | string
+    title?: StringFilter<"Checklist"> | string
+    templateType?: StringFilter<"Checklist"> | string
+    content?: StringFilter<"Checklist"> | string
+    createdAt?: DateTimeFilter<"Checklist"> | Date | string
+    updatedAt?: DateTimeFilter<"Checklist"> | Date | string
+    userId?: StringFilter<"Checklist"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ChecklistOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    templateType?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ChecklistWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ChecklistWhereInput | ChecklistWhereInput[]
+    OR?: ChecklistWhereInput[]
+    NOT?: ChecklistWhereInput | ChecklistWhereInput[]
+    title?: StringFilter<"Checklist"> | string
+    templateType?: StringFilter<"Checklist"> | string
+    content?: StringFilter<"Checklist"> | string
+    createdAt?: DateTimeFilter<"Checklist"> | Date | string
+    updatedAt?: DateTimeFilter<"Checklist"> | Date | string
+    userId?: StringFilter<"Checklist"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ChecklistOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    templateType?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    _count?: ChecklistCountOrderByAggregateInput
+    _max?: ChecklistMaxOrderByAggregateInput
+    _min?: ChecklistMinOrderByAggregateInput
+  }
+
+  export type ChecklistScalarWhereWithAggregatesInput = {
+    AND?: ChecklistScalarWhereWithAggregatesInput | ChecklistScalarWhereWithAggregatesInput[]
+    OR?: ChecklistScalarWhereWithAggregatesInput[]
+    NOT?: ChecklistScalarWhereWithAggregatesInput | ChecklistScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Checklist"> | string
+    title?: StringWithAggregatesFilter<"Checklist"> | string
+    templateType?: StringWithAggregatesFilter<"Checklist"> | string
+    content?: StringWithAggregatesFilter<"Checklist"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Checklist"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Checklist"> | Date | string
+    userId?: StringWithAggregatesFilter<"Checklist"> | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -24779,6 +28717,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -24796,6 +28736,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -24813,6 +28755,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -24830,6 +28774,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -26193,6 +30139,210 @@ export namespace Prisma {
     assessmentId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type AssessmentNextStepCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    user: UserCreateNestedOneWithoutAssessmentNextStepInput
+    goalEntries?: NextStepGoalEntryCreateNestedManyWithoutNextStepInput
+  }
+
+  export type AssessmentNextStepUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    userId: string
+    goalEntries?: NextStepGoalEntryUncheckedCreateNestedManyWithoutNextStepInput
+  }
+
+  export type AssessmentNextStepUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutAssessmentNextStepNestedInput
+    goalEntries?: NextStepGoalEntryUpdateManyWithoutNextStepNestedInput
+  }
+
+  export type AssessmentNextStepUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    goalEntries?: NextStepGoalEntryUncheckedUpdateManyWithoutNextStepNestedInput
+  }
+
+  export type AssessmentNextStepCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    userId: string
+  }
+
+  export type AssessmentNextStepUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AssessmentNextStepUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NextStepGoalEntryCreateInput = {
+    id?: string
+    goal: string
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
+    nextStep: AssessmentNextStepCreateNestedOneWithoutGoalEntriesInput
+  }
+
+  export type NextStepGoalEntryUncheckedCreateInput = {
+    id?: string
+    goal: string
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
+    nextStepId: string
+  }
+
+  export type NextStepGoalEntryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    goal?: StringFieldUpdateOperationsInput | string
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
+    nextStep?: AssessmentNextStepUpdateOneRequiredWithoutGoalEntriesNestedInput
+  }
+
+  export type NextStepGoalEntryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    goal?: StringFieldUpdateOperationsInput | string
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
+    nextStepId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NextStepGoalEntryCreateManyInput = {
+    id?: string
+    goal: string
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
+    nextStepId: string
+  }
+
+  export type NextStepGoalEntryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    goal?: StringFieldUpdateOperationsInput | string
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
+  }
+
+  export type NextStepGoalEntryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    goal?: StringFieldUpdateOperationsInput | string
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
+    nextStepId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChecklistCreateInput = {
+    id?: string
+    title?: string
+    templateType?: string
+    content?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutChecklistsInput
+  }
+
+  export type ChecklistUncheckedCreateInput = {
+    id?: string
+    title?: string
+    templateType?: string
+    content?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type ChecklistUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    templateType?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutChecklistsNestedInput
+  }
+
+  export type ChecklistUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    templateType?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChecklistCreateManyInput = {
+    id?: string
+    title?: string
+    templateType?: string
+    content?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type ChecklistUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    templateType?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    templateType?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -26283,6 +30433,17 @@ export namespace Prisma {
     isNot?: AssessmentPartFourWhereInput | null
   }
 
+  export type AssessmentNextStepNullableScalarRelationFilter = {
+    is?: AssessmentNextStepWhereInput | null
+    isNot?: AssessmentNextStepWhereInput | null
+  }
+
+  export type ChecklistListRelationFilter = {
+    every?: ChecklistWhereInput
+    some?: ChecklistWhereInput
+    none?: ChecklistWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -26297,6 +30458,10 @@ export namespace Prisma {
   }
 
   export type NoteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ChecklistOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -27118,6 +31283,141 @@ export namespace Prisma {
     assessmentId?: SortOrder
   }
 
+  export type NextStepGoalEntryListRelationFilter = {
+    every?: NextStepGoalEntryWhereInput
+    some?: NextStepGoalEntryWhereInput
+    none?: NextStepGoalEntryWhereInput
+  }
+
+  export type NextStepGoalEntryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AssessmentNextStepCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    completedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type AssessmentNextStepMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    completedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type AssessmentNextStepMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    completedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type AssessmentNextStepScalarRelationFilter = {
+    is?: AssessmentNextStepWhereInput
+    isNot?: AssessmentNextStepWhereInput
+  }
+
+  export type NextStepGoalEntryCountOrderByAggregateInput = {
+    id?: SortOrder
+    goal?: SortOrder
+    currentSystem?: SortOrder
+    systemEval?: SortOrder
+    systemRating?: SortOrder
+    idealSystem?: SortOrder
+    componentHabits?: SortOrder
+    nextStepId?: SortOrder
+  }
+
+  export type NextStepGoalEntryAvgOrderByAggregateInput = {
+    systemRating?: SortOrder
+  }
+
+  export type NextStepGoalEntryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    goal?: SortOrder
+    currentSystem?: SortOrder
+    systemEval?: SortOrder
+    systemRating?: SortOrder
+    idealSystem?: SortOrder
+    nextStepId?: SortOrder
+  }
+
+  export type NextStepGoalEntryMinOrderByAggregateInput = {
+    id?: SortOrder
+    goal?: SortOrder
+    currentSystem?: SortOrder
+    systemEval?: SortOrder
+    systemRating?: SortOrder
+    idealSystem?: SortOrder
+    nextStepId?: SortOrder
+  }
+
+  export type NextStepGoalEntrySumOrderByAggregateInput = {
+    systemRating?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type ChecklistCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    templateType?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ChecklistMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    templateType?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ChecklistMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    templateType?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -27163,6 +31463,19 @@ export namespace Prisma {
     connect?: AssessmentPartFourWhereUniqueInput
   }
 
+  export type AssessmentNextStepCreateNestedOneWithoutUserInput = {
+    create?: XOR<AssessmentNextStepCreateWithoutUserInput, AssessmentNextStepUncheckedCreateWithoutUserInput>
+    connectOrCreate?: AssessmentNextStepCreateOrConnectWithoutUserInput
+    connect?: AssessmentNextStepWhereUniqueInput
+  }
+
+  export type ChecklistCreateNestedManyWithoutUserInput = {
+    create?: XOR<ChecklistCreateWithoutUserInput, ChecklistUncheckedCreateWithoutUserInput> | ChecklistCreateWithoutUserInput[] | ChecklistUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ChecklistCreateOrConnectWithoutUserInput | ChecklistCreateOrConnectWithoutUserInput[]
+    createMany?: ChecklistCreateManyUserInputEnvelope
+    connect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -27206,6 +31519,19 @@ export namespace Prisma {
     create?: XOR<AssessmentPartFourCreateWithoutUserInput, AssessmentPartFourUncheckedCreateWithoutUserInput>
     connectOrCreate?: AssessmentPartFourCreateOrConnectWithoutUserInput
     connect?: AssessmentPartFourWhereUniqueInput
+  }
+
+  export type AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<AssessmentNextStepCreateWithoutUserInput, AssessmentNextStepUncheckedCreateWithoutUserInput>
+    connectOrCreate?: AssessmentNextStepCreateOrConnectWithoutUserInput
+    connect?: AssessmentNextStepWhereUniqueInput
+  }
+
+  export type ChecklistUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ChecklistCreateWithoutUserInput, ChecklistUncheckedCreateWithoutUserInput> | ChecklistCreateWithoutUserInput[] | ChecklistUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ChecklistCreateOrConnectWithoutUserInput | ChecklistCreateOrConnectWithoutUserInput[]
+    createMany?: ChecklistCreateManyUserInputEnvelope
+    connect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -27306,6 +31632,30 @@ export namespace Prisma {
     update?: XOR<XOR<AssessmentPartFourUpdateToOneWithWhereWithoutUserInput, AssessmentPartFourUpdateWithoutUserInput>, AssessmentPartFourUncheckedUpdateWithoutUserInput>
   }
 
+  export type AssessmentNextStepUpdateOneWithoutUserNestedInput = {
+    create?: XOR<AssessmentNextStepCreateWithoutUserInput, AssessmentNextStepUncheckedCreateWithoutUserInput>
+    connectOrCreate?: AssessmentNextStepCreateOrConnectWithoutUserInput
+    upsert?: AssessmentNextStepUpsertWithoutUserInput
+    disconnect?: AssessmentNextStepWhereInput | boolean
+    delete?: AssessmentNextStepWhereInput | boolean
+    connect?: AssessmentNextStepWhereUniqueInput
+    update?: XOR<XOR<AssessmentNextStepUpdateToOneWithWhereWithoutUserInput, AssessmentNextStepUpdateWithoutUserInput>, AssessmentNextStepUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ChecklistUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ChecklistCreateWithoutUserInput, ChecklistUncheckedCreateWithoutUserInput> | ChecklistCreateWithoutUserInput[] | ChecklistUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ChecklistCreateOrConnectWithoutUserInput | ChecklistCreateOrConnectWithoutUserInput[]
+    upsert?: ChecklistUpsertWithWhereUniqueWithoutUserInput | ChecklistUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ChecklistCreateManyUserInputEnvelope
+    set?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    disconnect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    delete?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    connect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    update?: ChecklistUpdateWithWhereUniqueWithoutUserInput | ChecklistUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ChecklistUpdateManyWithWhereWithoutUserInput | ChecklistUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ChecklistScalarWhereInput | ChecklistScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -27386,6 +31736,30 @@ export namespace Prisma {
     delete?: AssessmentPartFourWhereInput | boolean
     connect?: AssessmentPartFourWhereUniqueInput
     update?: XOR<XOR<AssessmentPartFourUpdateToOneWithWhereWithoutUserInput, AssessmentPartFourUpdateWithoutUserInput>, AssessmentPartFourUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<AssessmentNextStepCreateWithoutUserInput, AssessmentNextStepUncheckedCreateWithoutUserInput>
+    connectOrCreate?: AssessmentNextStepCreateOrConnectWithoutUserInput
+    upsert?: AssessmentNextStepUpsertWithoutUserInput
+    disconnect?: AssessmentNextStepWhereInput | boolean
+    delete?: AssessmentNextStepWhereInput | boolean
+    connect?: AssessmentNextStepWhereUniqueInput
+    update?: XOR<XOR<AssessmentNextStepUpdateToOneWithWhereWithoutUserInput, AssessmentNextStepUpdateWithoutUserInput>, AssessmentNextStepUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ChecklistUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ChecklistCreateWithoutUserInput, ChecklistUncheckedCreateWithoutUserInput> | ChecklistCreateWithoutUserInput[] | ChecklistUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ChecklistCreateOrConnectWithoutUserInput | ChecklistCreateOrConnectWithoutUserInput[]
+    upsert?: ChecklistUpsertWithWhereUniqueWithoutUserInput | ChecklistUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ChecklistCreateManyUserInputEnvelope
+    set?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    disconnect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    delete?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    connect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    update?: ChecklistUpdateWithWhereUniqueWithoutUserInput | ChecklistUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ChecklistUpdateManyWithWhereWithoutUserInput | ChecklistUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ChecklistScalarWhereInput | ChecklistScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -28321,6 +32695,107 @@ export namespace Prisma {
     update?: XOR<XOR<AssessmentPartFourUpdateToOneWithWhereWithoutIdentitiesInput, AssessmentPartFourUpdateWithoutIdentitiesInput>, AssessmentPartFourUncheckedUpdateWithoutIdentitiesInput>
   }
 
+  export type UserCreateNestedOneWithoutAssessmentNextStepInput = {
+    create?: XOR<UserCreateWithoutAssessmentNextStepInput, UserUncheckedCreateWithoutAssessmentNextStepInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssessmentNextStepInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type NextStepGoalEntryCreateNestedManyWithoutNextStepInput = {
+    create?: XOR<NextStepGoalEntryCreateWithoutNextStepInput, NextStepGoalEntryUncheckedCreateWithoutNextStepInput> | NextStepGoalEntryCreateWithoutNextStepInput[] | NextStepGoalEntryUncheckedCreateWithoutNextStepInput[]
+    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutNextStepInput | NextStepGoalEntryCreateOrConnectWithoutNextStepInput[]
+    createMany?: NextStepGoalEntryCreateManyNextStepInputEnvelope
+    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+  }
+
+  export type NextStepGoalEntryUncheckedCreateNestedManyWithoutNextStepInput = {
+    create?: XOR<NextStepGoalEntryCreateWithoutNextStepInput, NextStepGoalEntryUncheckedCreateWithoutNextStepInput> | NextStepGoalEntryCreateWithoutNextStepInput[] | NextStepGoalEntryUncheckedCreateWithoutNextStepInput[]
+    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutNextStepInput | NextStepGoalEntryCreateOrConnectWithoutNextStepInput[]
+    createMany?: NextStepGoalEntryCreateManyNextStepInputEnvelope
+    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutAssessmentNextStepNestedInput = {
+    create?: XOR<UserCreateWithoutAssessmentNextStepInput, UserUncheckedCreateWithoutAssessmentNextStepInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssessmentNextStepInput
+    upsert?: UserUpsertWithoutAssessmentNextStepInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssessmentNextStepInput, UserUpdateWithoutAssessmentNextStepInput>, UserUncheckedUpdateWithoutAssessmentNextStepInput>
+  }
+
+  export type NextStepGoalEntryUpdateManyWithoutNextStepNestedInput = {
+    create?: XOR<NextStepGoalEntryCreateWithoutNextStepInput, NextStepGoalEntryUncheckedCreateWithoutNextStepInput> | NextStepGoalEntryCreateWithoutNextStepInput[] | NextStepGoalEntryUncheckedCreateWithoutNextStepInput[]
+    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutNextStepInput | NextStepGoalEntryCreateOrConnectWithoutNextStepInput[]
+    upsert?: NextStepGoalEntryUpsertWithWhereUniqueWithoutNextStepInput | NextStepGoalEntryUpsertWithWhereUniqueWithoutNextStepInput[]
+    createMany?: NextStepGoalEntryCreateManyNextStepInputEnvelope
+    set?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    disconnect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    delete?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    update?: NextStepGoalEntryUpdateWithWhereUniqueWithoutNextStepInput | NextStepGoalEntryUpdateWithWhereUniqueWithoutNextStepInput[]
+    updateMany?: NextStepGoalEntryUpdateManyWithWhereWithoutNextStepInput | NextStepGoalEntryUpdateManyWithWhereWithoutNextStepInput[]
+    deleteMany?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
+  }
+
+  export type NextStepGoalEntryUncheckedUpdateManyWithoutNextStepNestedInput = {
+    create?: XOR<NextStepGoalEntryCreateWithoutNextStepInput, NextStepGoalEntryUncheckedCreateWithoutNextStepInput> | NextStepGoalEntryCreateWithoutNextStepInput[] | NextStepGoalEntryUncheckedCreateWithoutNextStepInput[]
+    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutNextStepInput | NextStepGoalEntryCreateOrConnectWithoutNextStepInput[]
+    upsert?: NextStepGoalEntryUpsertWithWhereUniqueWithoutNextStepInput | NextStepGoalEntryUpsertWithWhereUniqueWithoutNextStepInput[]
+    createMany?: NextStepGoalEntryCreateManyNextStepInputEnvelope
+    set?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    disconnect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    delete?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    update?: NextStepGoalEntryUpdateWithWhereUniqueWithoutNextStepInput | NextStepGoalEntryUpdateWithWhereUniqueWithoutNextStepInput[]
+    updateMany?: NextStepGoalEntryUpdateManyWithWhereWithoutNextStepInput | NextStepGoalEntryUpdateManyWithWhereWithoutNextStepInput[]
+    deleteMany?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
+  }
+
+  export type NextStepGoalEntryCreatecomponentHabitsInput = {
+    set: string[]
+  }
+
+  export type AssessmentNextStepCreateNestedOneWithoutGoalEntriesInput = {
+    create?: XOR<AssessmentNextStepCreateWithoutGoalEntriesInput, AssessmentNextStepUncheckedCreateWithoutGoalEntriesInput>
+    connectOrCreate?: AssessmentNextStepCreateOrConnectWithoutGoalEntriesInput
+    connect?: AssessmentNextStepWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NextStepGoalEntryUpdatecomponentHabitsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type AssessmentNextStepUpdateOneRequiredWithoutGoalEntriesNestedInput = {
+    create?: XOR<AssessmentNextStepCreateWithoutGoalEntriesInput, AssessmentNextStepUncheckedCreateWithoutGoalEntriesInput>
+    connectOrCreate?: AssessmentNextStepCreateOrConnectWithoutGoalEntriesInput
+    upsert?: AssessmentNextStepUpsertWithoutGoalEntriesInput
+    connect?: AssessmentNextStepWhereUniqueInput
+    update?: XOR<XOR<AssessmentNextStepUpdateToOneWithWhereWithoutGoalEntriesInput, AssessmentNextStepUpdateWithoutGoalEntriesInput>, AssessmentNextStepUncheckedUpdateWithoutGoalEntriesInput>
+  }
+
+  export type UserCreateNestedOneWithoutChecklistsInput = {
+    create?: XOR<UserCreateWithoutChecklistsInput, UserUncheckedCreateWithoutChecklistsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChecklistsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutChecklistsNestedInput = {
+    create?: XOR<UserCreateWithoutChecklistsInput, UserUncheckedCreateWithoutChecklistsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChecklistsInput
+    upsert?: UserUpsertWithoutChecklistsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutChecklistsInput, UserUpdateWithoutChecklistsInput>, UserUncheckedUpdateWithoutChecklistsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -28493,6 +32968,33 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -28767,6 +33269,55 @@ export namespace Prisma {
   export type AssessmentPartFourCreateOrConnectWithoutUserInput = {
     where: AssessmentPartFourWhereUniqueInput
     create: XOR<AssessmentPartFourCreateWithoutUserInput, AssessmentPartFourUncheckedCreateWithoutUserInput>
+  }
+
+  export type AssessmentNextStepCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    goalEntries?: NextStepGoalEntryCreateNestedManyWithoutNextStepInput
+  }
+
+  export type AssessmentNextStepUncheckedCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    goalEntries?: NextStepGoalEntryUncheckedCreateNestedManyWithoutNextStepInput
+  }
+
+  export type AssessmentNextStepCreateOrConnectWithoutUserInput = {
+    where: AssessmentNextStepWhereUniqueInput
+    create: XOR<AssessmentNextStepCreateWithoutUserInput, AssessmentNextStepUncheckedCreateWithoutUserInput>
+  }
+
+  export type ChecklistCreateWithoutUserInput = {
+    id?: string
+    title?: string
+    templateType?: string
+    content?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChecklistUncheckedCreateWithoutUserInput = {
+    id?: string
+    title?: string
+    templateType?: string
+    content?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChecklistCreateOrConnectWithoutUserInput = {
+    where: ChecklistWhereUniqueInput
+    create: XOR<ChecklistCreateWithoutUserInput, ChecklistUncheckedCreateWithoutUserInput>
+  }
+
+  export type ChecklistCreateManyUserInputEnvelope = {
+    data: ChecklistCreateManyUserInput | ChecklistCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
@@ -29066,6 +33617,62 @@ export namespace Prisma {
     identities?: IdentityRecordUncheckedUpdateManyWithoutAssessmentNestedInput
   }
 
+  export type AssessmentNextStepUpsertWithoutUserInput = {
+    update: XOR<AssessmentNextStepUpdateWithoutUserInput, AssessmentNextStepUncheckedUpdateWithoutUserInput>
+    create: XOR<AssessmentNextStepCreateWithoutUserInput, AssessmentNextStepUncheckedCreateWithoutUserInput>
+    where?: AssessmentNextStepWhereInput
+  }
+
+  export type AssessmentNextStepUpdateToOneWithWhereWithoutUserInput = {
+    where?: AssessmentNextStepWhereInput
+    data: XOR<AssessmentNextStepUpdateWithoutUserInput, AssessmentNextStepUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AssessmentNextStepUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    goalEntries?: NextStepGoalEntryUpdateManyWithoutNextStepNestedInput
+  }
+
+  export type AssessmentNextStepUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    goalEntries?: NextStepGoalEntryUncheckedUpdateManyWithoutNextStepNestedInput
+  }
+
+  export type ChecklistUpsertWithWhereUniqueWithoutUserInput = {
+    where: ChecklistWhereUniqueInput
+    update: XOR<ChecklistUpdateWithoutUserInput, ChecklistUncheckedUpdateWithoutUserInput>
+    create: XOR<ChecklistCreateWithoutUserInput, ChecklistUncheckedCreateWithoutUserInput>
+  }
+
+  export type ChecklistUpdateWithWhereUniqueWithoutUserInput = {
+    where: ChecklistWhereUniqueInput
+    data: XOR<ChecklistUpdateWithoutUserInput, ChecklistUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ChecklistUpdateManyWithWhereWithoutUserInput = {
+    where: ChecklistScalarWhereInput
+    data: XOR<ChecklistUpdateManyMutationInput, ChecklistUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ChecklistScalarWhereInput = {
+    AND?: ChecklistScalarWhereInput | ChecklistScalarWhereInput[]
+    OR?: ChecklistScalarWhereInput[]
+    NOT?: ChecklistScalarWhereInput | ChecklistScalarWhereInput[]
+    id?: StringFilter<"Checklist"> | string
+    title?: StringFilter<"Checklist"> | string
+    templateType?: StringFilter<"Checklist"> | string
+    content?: StringFilter<"Checklist"> | string
+    createdAt?: DateTimeFilter<"Checklist"> | Date | string
+    updatedAt?: DateTimeFilter<"Checklist"> | Date | string
+    userId?: StringFilter<"Checklist"> | string
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     email: string
@@ -29080,6 +33687,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -29096,6 +33705,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -29128,6 +33739,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -29144,6 +33757,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -29160,6 +33775,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -29176,6 +33793,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -29208,6 +33827,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -29224,6 +33845,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotesInput = {
@@ -29240,6 +33863,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotesInput = {
@@ -29256,6 +33881,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotesInput = {
@@ -29288,6 +33915,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotesInput = {
@@ -29304,6 +33933,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAssessmentPartOneInput = {
@@ -29320,6 +33951,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartOneInput = {
@@ -29336,6 +33969,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartOneInput = {
@@ -29390,6 +34025,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartOneInput = {
@@ -29406,6 +34043,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProjectUpsertWithWhereUniqueWithoutAssessmentInput = {
@@ -29556,6 +34195,8 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartTwoInput = {
@@ -29572,6 +34213,8 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartTwoInput = {
@@ -29626,6 +34269,8 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartTwoInput = {
@@ -29642,6 +34287,8 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DayLogUpsertWithWhereUniqueWithoutAssessmentInput = {
@@ -29822,6 +34469,8 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartThreeInput = {
@@ -29838,6 +34487,8 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartThreeInput = {
@@ -30025,6 +34676,8 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartThreeInput = {
@@ -30041,6 +34694,8 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type HabitRecordUpsertWithWhereUniqueWithoutBeneficialForInput = {
@@ -31058,6 +35713,8 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartFourInput = {
@@ -31074,6 +35731,8 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartFourInput = {
@@ -31150,6 +35809,8 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartFourInput = {
@@ -31166,6 +35827,8 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DomainVisionEntryUpsertWithWhereUniqueWithoutAssessmentInput = {
@@ -31444,6 +36107,290 @@ export namespace Prisma {
     domainVisions?: DomainVisionEntryUncheckedUpdateManyWithoutAssessmentNestedInput
   }
 
+  export type UserCreateWithoutAssessmentNextStepInput = {
+    id?: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    emailVerified?: Date | string | null
+    image?: string | null
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notes?: NoteCreateNestedManyWithoutUserInput
+    assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
+    assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
+    assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAssessmentNextStepInput = {
+    id?: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    emailVerified?: Date | string | null
+    image?: string | null
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAssessmentNextStepInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAssessmentNextStepInput, UserUncheckedCreateWithoutAssessmentNextStepInput>
+  }
+
+  export type NextStepGoalEntryCreateWithoutNextStepInput = {
+    id?: string
+    goal: string
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
+  }
+
+  export type NextStepGoalEntryUncheckedCreateWithoutNextStepInput = {
+    id?: string
+    goal: string
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
+  }
+
+  export type NextStepGoalEntryCreateOrConnectWithoutNextStepInput = {
+    where: NextStepGoalEntryWhereUniqueInput
+    create: XOR<NextStepGoalEntryCreateWithoutNextStepInput, NextStepGoalEntryUncheckedCreateWithoutNextStepInput>
+  }
+
+  export type NextStepGoalEntryCreateManyNextStepInputEnvelope = {
+    data: NextStepGoalEntryCreateManyNextStepInput | NextStepGoalEntryCreateManyNextStepInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutAssessmentNextStepInput = {
+    update: XOR<UserUpdateWithoutAssessmentNextStepInput, UserUncheckedUpdateWithoutAssessmentNextStepInput>
+    create: XOR<UserCreateWithoutAssessmentNextStepInput, UserUncheckedCreateWithoutAssessmentNextStepInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAssessmentNextStepInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAssessmentNextStepInput, UserUncheckedUpdateWithoutAssessmentNextStepInput>
+  }
+
+  export type UserUpdateWithoutAssessmentNextStepInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notes?: NoteUpdateManyWithoutUserNestedInput
+    assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
+    assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
+    assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAssessmentNextStepInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type NextStepGoalEntryUpsertWithWhereUniqueWithoutNextStepInput = {
+    where: NextStepGoalEntryWhereUniqueInput
+    update: XOR<NextStepGoalEntryUpdateWithoutNextStepInput, NextStepGoalEntryUncheckedUpdateWithoutNextStepInput>
+    create: XOR<NextStepGoalEntryCreateWithoutNextStepInput, NextStepGoalEntryUncheckedCreateWithoutNextStepInput>
+  }
+
+  export type NextStepGoalEntryUpdateWithWhereUniqueWithoutNextStepInput = {
+    where: NextStepGoalEntryWhereUniqueInput
+    data: XOR<NextStepGoalEntryUpdateWithoutNextStepInput, NextStepGoalEntryUncheckedUpdateWithoutNextStepInput>
+  }
+
+  export type NextStepGoalEntryUpdateManyWithWhereWithoutNextStepInput = {
+    where: NextStepGoalEntryScalarWhereInput
+    data: XOR<NextStepGoalEntryUpdateManyMutationInput, NextStepGoalEntryUncheckedUpdateManyWithoutNextStepInput>
+  }
+
+  export type NextStepGoalEntryScalarWhereInput = {
+    AND?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
+    OR?: NextStepGoalEntryScalarWhereInput[]
+    NOT?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
+    id?: StringFilter<"NextStepGoalEntry"> | string
+    goal?: StringFilter<"NextStepGoalEntry"> | string
+    currentSystem?: StringFilter<"NextStepGoalEntry"> | string
+    systemEval?: StringFilter<"NextStepGoalEntry"> | string
+    systemRating?: IntFilter<"NextStepGoalEntry"> | number
+    idealSystem?: StringFilter<"NextStepGoalEntry"> | string
+    componentHabits?: StringNullableListFilter<"NextStepGoalEntry">
+    nextStepId?: StringFilter<"NextStepGoalEntry"> | string
+  }
+
+  export type AssessmentNextStepCreateWithoutGoalEntriesInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    user: UserCreateNestedOneWithoutAssessmentNextStepInput
+  }
+
+  export type AssessmentNextStepUncheckedCreateWithoutGoalEntriesInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    userId: string
+  }
+
+  export type AssessmentNextStepCreateOrConnectWithoutGoalEntriesInput = {
+    where: AssessmentNextStepWhereUniqueInput
+    create: XOR<AssessmentNextStepCreateWithoutGoalEntriesInput, AssessmentNextStepUncheckedCreateWithoutGoalEntriesInput>
+  }
+
+  export type AssessmentNextStepUpsertWithoutGoalEntriesInput = {
+    update: XOR<AssessmentNextStepUpdateWithoutGoalEntriesInput, AssessmentNextStepUncheckedUpdateWithoutGoalEntriesInput>
+    create: XOR<AssessmentNextStepCreateWithoutGoalEntriesInput, AssessmentNextStepUncheckedCreateWithoutGoalEntriesInput>
+    where?: AssessmentNextStepWhereInput
+  }
+
+  export type AssessmentNextStepUpdateToOneWithWhereWithoutGoalEntriesInput = {
+    where?: AssessmentNextStepWhereInput
+    data: XOR<AssessmentNextStepUpdateWithoutGoalEntriesInput, AssessmentNextStepUncheckedUpdateWithoutGoalEntriesInput>
+  }
+
+  export type AssessmentNextStepUpdateWithoutGoalEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutAssessmentNextStepNestedInput
+  }
+
+  export type AssessmentNextStepUncheckedUpdateWithoutGoalEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserCreateWithoutChecklistsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    emailVerified?: Date | string | null
+    image?: string | null
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notes?: NoteCreateNestedManyWithoutUserInput
+    assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
+    assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
+    assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutChecklistsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    emailVerified?: Date | string | null
+    image?: string | null
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutChecklistsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutChecklistsInput, UserUncheckedCreateWithoutChecklistsInput>
+  }
+
+  export type UserUpsertWithoutChecklistsInput = {
+    update: XOR<UserUpdateWithoutChecklistsInput, UserUncheckedUpdateWithoutChecklistsInput>
+    create: XOR<UserCreateWithoutChecklistsInput, UserUncheckedCreateWithoutChecklistsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutChecklistsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutChecklistsInput, UserUncheckedUpdateWithoutChecklistsInput>
+  }
+
+  export type UserUpdateWithoutChecklistsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notes?: NoteUpdateManyWithoutUserNestedInput
+    assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
+    assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
+    assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutChecklistsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
+  }
+
   export type AccountCreateManyUserInput = {
     id?: string
     type: string
@@ -31471,6 +36418,15 @@ export namespace Prisma {
     contentText?: string
     tags?: NoteCreatetagsInput | string[]
     pinned?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChecklistCreateManyUserInput = {
+    id?: string
+    title?: string
+    templateType?: string
+    content?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -31564,6 +36520,33 @@ export namespace Prisma {
     contentText?: StringFieldUpdateOperationsInput | string
     tags?: NoteUpdatetagsInput | string[]
     pinned?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    templateType?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    templateType?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    templateType?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -31804,6 +36787,46 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+  }
+
+  export type NextStepGoalEntryCreateManyNextStepInput = {
+    id?: string
+    goal: string
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
+  }
+
+  export type NextStepGoalEntryUpdateWithoutNextStepInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    goal?: StringFieldUpdateOperationsInput | string
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
+  }
+
+  export type NextStepGoalEntryUncheckedUpdateWithoutNextStepInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    goal?: StringFieldUpdateOperationsInput | string
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
+  }
+
+  export type NextStepGoalEntryUncheckedUpdateManyWithoutNextStepInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    goal?: StringFieldUpdateOperationsInput | string
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
   }
 
 

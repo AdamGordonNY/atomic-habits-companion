@@ -316,6 +316,35 @@ exports.Prisma.IdentityRecordScalarFieldEnum = {
   assessmentId: 'assessmentId'
 };
 
+exports.Prisma.AssessmentNextStepScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  completedAt: 'completedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.NextStepGoalEntryScalarFieldEnum = {
+  id: 'id',
+  goal: 'goal',
+  currentSystem: 'currentSystem',
+  systemEval: 'systemEval',
+  systemRating: 'systemRating',
+  idealSystem: 'idealSystem',
+  componentHabits: 'componentHabits',
+  nextStepId: 'nextStepId'
+};
+
+exports.Prisma.ChecklistScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  templateType: 'templateType',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -350,7 +379,10 @@ exports.Prisma.ModelName = {
   HabitScorecardEntry: 'HabitScorecardEntry',
   AssessmentPartFour: 'AssessmentPartFour',
   DomainVisionEntry: 'DomainVisionEntry',
-  IdentityRecord: 'IdentityRecord'
+  IdentityRecord: 'IdentityRecord',
+  AssessmentNextStep: 'AssessmentNextStep',
+  NextStepGoalEntry: 'NextStepGoalEntry',
+  Checklist: 'Checklist'
 };
 
 /**

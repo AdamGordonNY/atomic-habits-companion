@@ -33,6 +33,8 @@ model User {
   assessmentPartTwo   AssessmentPartTwo?
   assessmentPartThree AssessmentPartThree?
   assessmentPartFour  AssessmentPartFour?
+  assessmentNextStep  AssessmentNextStep?
+  checklists          Checklist[]
 
   @@map("users")
 }
@@ -350,4 +352,61 @@ model IdentityRecord {
 
   @@index([assessmentId])
   @@map("identity_records")
+}
+
+// ─── Next Step — System Design ────────────────────────────────────────────────
+
+model AssessmentNextStep {
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  completedAt DateTime?
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  goalEntries NextStepGoalEntry[]
+
+  @@map("assessment_next_step")
+}
+
+model NextStepGoalEntry {
+  id              String   @id @default(cuid())
+  /// Goal text (copied from Part 4 reflectionGoals or entered by user)
+  goal            String
+  /// "none" or a description of the existing system
+  currentSystem   String   @default("")
+  /// Evaluation of whether the current system is working
+  systemEval      String   @default("")
+  /// 0 = unset, 1–5 rating
+  systemRating    Int      @default(0)
+  /// Description of the ideal system for this goal
+  idealSystem     String   @default("")
+  /// Component habits that make up the ideal system
+  componentHabits String[] @default([])
+
+  nextStepId String
+  nextStep   AssessmentNextStep @relation(fields: [nextStepId], references: [id], onDelete: Cascade)
+
+  @@index([nextStepId])
+  @@map("next_step_goal_entries")
+}
+
+// ─── Checklists ───────────────────────────────────────────────────────────────
+
+model Checklist {
+  id           String   @id @default(cuid())
+  title        String   @default("Habit Assessment Checklist")
+  templateType String   @default("habit-assessment")
+  /// JSON: ChecklistHabitEntry[] — stored as a serialised string
+  content      String   @default("[]")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("checklists")
 }
