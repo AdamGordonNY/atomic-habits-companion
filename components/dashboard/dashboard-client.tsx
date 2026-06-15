@@ -422,6 +422,39 @@ export function DashboardClient() {
             </section>
           )}
 
+          {/* The Next Step CTA */}
+          {mounted && partFourComplete && (
+            <section>
+              <Link
+                href="/habit-assessment/onboarding/part-five"
+                className="group flex w-full items-center justify-between gap-4 rounded-[1.5rem] border border-slate-100 bg-slate-50 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-200 hover:bg-white hover:shadow-sm active:translate-y-0"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white text-base">
+                    🎯
+                  </div>
+                  <div className="text-left">
+                    <p className="text-sm font-semibold text-slate-950">
+                      {nextStepComplete ? "Revisit The Next Step" : "The Next Step"}
+                    </p>
+                    <p className="mt-0.5 text-xs text-slate-500">
+                      Turn your goals into systems and component habits
+                    </p>
+                  </div>
+                </div>
+                <svg
+                  className="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform duration-200 group-hover:translate-x-0.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </section>
+          )}
+
           {/* Review CTA */}
           {mounted && (hasPartOneProgress || hasPartTwoProgress || hasPartThreeProgress || hasPartFourProgress || hasNextStepProgress) && (
             <section>
