@@ -10,9 +10,8 @@ import {
   syncPartTwo,
   syncPartThree,
 } from "@/lib/sync-actions";
-import { fetchAssessmentStatus, type AssessmentStatus } from "@/lib/assessment-reads";
-import { fetchNextStep } from "@/lib/actions/next-step-actions";
-import { actionGetTrackedHabits, type TrackedHabitData } from "@/lib/actions/habit-actions";
+import { fetchDashboardData, type DashboardStatus } from "@/lib/actions/dashboard-actions";
+import type { TrackedHabitData } from "@/lib/actions/habit-actions";
 
 interface PartOneSnapshot {
   stepIndex: number;
@@ -38,7 +37,7 @@ interface NextStepSnapshot {
   completedAt: string | null;
 }
 
-function statusToSnapshots(status: AssessmentStatus): {
+function statusToSnapshots(status: DashboardStatus): {
   partOne: PartOneSnapshot | null;
   partTwo: PartTwoSnapshot | null;
   partThree: PartThreeSnapshot | null;
@@ -131,21 +130,16 @@ export function DashboardClient() {
   useEffect(() => {
     let cancelled = false;
     async function load() {
-      const [status, nextStepData, tracked] = await Promise.all([
-        fetchAssessmentStatus(),
-        fetchNextStep(),
-        actionGetTrackedHabits(),
-      ]);
+      const data = await fetchDashboardData();
       if (cancelled) return;
-      const snaps = statusToSnapshots(status);
+      const snaps = statusToSnapshots(data.status);
       setPartOne(snaps.partOne);
       setPartTwo(snaps.partTwo);
       setPartThree(snaps.partThree);
       setPartFour(snaps.partFour);
       setNextStep(snaps.nextStep);
-      const names = nextStepData?.goalEntries.flatMap((e) => e.componentHabits).filter(Boolean) ?? [];
-      setHabitNames([...new Set(names)]);
-      setTrackedHabits(tracked);
+      setHabitNames(data.habitNames);
+      setTrackedHabits(data.trackedHabits);
       setMounted(true);
       requestAnimationFrame(() => setVisible(true));
     }

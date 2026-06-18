@@ -1,0 +1,120 @@
+"use server";
+
+import { auth } from "@clerk/nextjs/server";
+import { prisma } from "@/lib/prisma";
+import type { TrackedHabitData } from "@/lib/actions/habit-actions";
+
+export interface DashboardStatus {
+  partOne: { completedAt: string | null; exists: boolean } | null;
+  partTwo: {
+    completedAt: string | null;
+    dayIndex: number;
+    startDate: string | null;
+    exists: boolean;
+  } | null;
+  partThree: { completedAt: string | null; exists: boolean } | null;
+  partFour: { completedAt: string | null; exists: boolean } | null;
+  nextStep: { completedAt: string | null; exists: boolean } | null;
+}
+
+export interface DashboardData {
+  status: DashboardStatus;
+  habitNames: string[];
+  trackedHabits: TrackedHabitData[];
+}
+
+function isoDate(d: Date): string {
+  return d.toISOString().split("T")[0];
+}
+
+export async function fetchDashboardData(): Promise<DashboardData> {
+  const { userId } = await auth();
+  if (!userId) {
+    return {
+      status: {
+        partOne: null,
+        partTwo: null,
+        partThree: null,
+        partFour: null,
+        nextStep: null,
+      },
+      habitNames: [],
+      trackedHabits: [],
+    };
+  }
+
+  const [p1, p2, p3, p4, nextStep, tracked] = await prisma.$transaction([
+    prisma.assessmentPartOne.findUnique({
+      where: { userId },
+      select: { completedAt: true },
+    }),
+    prisma.assessmentPartTwo.findUnique({
+      where: { userId },
+      include: {
+        days: {
+          select: { date: true },
+          orderBy: { date: "asc" },
+        },
+      },
+    }),
+    prisma.assessmentPartThree.findUnique({
+      where: { userId },
+      select: { completedAt: true },
+    }),
+    prisma.assessmentPartFour.findUnique({
+      where: { userId },
+      select: { completedAt: true },
+    }),
+    prisma.assessmentNextStep.findUnique({
+      where: { userId },
+      select: {
+        completedAt: true,
+        goalEntries: {
+          select: { componentHabits: true },
+        },
+      },
+    }),
+    prisma.trackedHabit.findMany({
+      where: { userId },
+      orderBy: [{ category: "asc" }, { name: "asc" }],
+    }),
+  ]);
+
+  const habitNames = [
+    ...new Set(
+      (nextStep?.goalEntries ?? []).flatMap((e) => e.componentHabits).filter(Boolean),
+    ),
+  ];
+
+  return {
+    status: {
+      partOne: p1
+        ? { completedAt: p1.completedAt?.toISOString() ?? null, exists: true }
+        : null,
+      partTwo: p2
+        ? {
+            completedAt: p2.completedAt?.toISOString() ?? null,
+            dayIndex: p2.days.length > 0 ? p2.days.length - 1 : 0,
+            startDate: p2.days[0]?.date ? isoDate(p2.days[0].date) : null,
+            exists: true,
+          }
+        : null,
+      partThree: p3
+        ? { completedAt: p3.completedAt?.toISOString() ?? null, exists: true }
+        : null,
+      partFour: p4
+        ? { completedAt: p4.completedAt?.toISOString() ?? null, exists: true }
+        : null,
+      nextStep: nextStep
+        ? { completedAt: nextStep.completedAt?.toISOString() ?? null, exists: true }
+        : null,
+    },
+    habitNames,
+    trackedHabits: tracked.map((r) => ({
+      id: r.id,
+      name: r.name,
+      category: r.category,
+      createdAt: r.createdAt.toISOString(),
+    })),
+  };
+}
