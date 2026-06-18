@@ -118,6 +118,11 @@ export type NextStepGoalEntry = $Result.DefaultSelection<Prisma.$NextStepGoalEnt
  * 
  */
 export type Checklist = $Result.DefaultSelection<Prisma.$ChecklistPayload>
+/**
+ * Model TrackedHabit
+ * 
+ */
+export type TrackedHabit = $Result.DefaultSelection<Prisma.$TrackedHabitPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -449,6 +454,16 @@ export class PrismaClient<
     * ```
     */
   get checklist(): Prisma.ChecklistDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.trackedHabit`: Exposes CRUD operations for the **TrackedHabit** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TrackedHabits
+    * const trackedHabits = await prisma.trackedHabit.findMany()
+    * ```
+    */
+  get trackedHabit(): Prisma.TrackedHabitDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -903,7 +918,8 @@ export namespace Prisma {
     IdentityRecord: 'IdentityRecord',
     AssessmentNextStep: 'AssessmentNextStep',
     NextStepGoalEntry: 'NextStepGoalEntry',
-    Checklist: 'Checklist'
+    Checklist: 'Checklist',
+    TrackedHabit: 'TrackedHabit'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -919,7 +935,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "note" | "assessmentPartOne" | "project" | "assessmentPartTwo" | "dayLog" | "hourlyEntry" | "assessmentPartThree" | "habitRecord" | "habitAttempt" | "habitScorecard" | "habitScorecardEntry" | "assessmentPartFour" | "domainVisionEntry" | "identityRecord" | "assessmentNextStep" | "nextStepGoalEntry" | "checklist"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "note" | "assessmentPartOne" | "project" | "assessmentPartTwo" | "dayLog" | "hourlyEntry" | "assessmentPartThree" | "habitRecord" | "habitAttempt" | "habitScorecard" | "habitScorecardEntry" | "assessmentPartFour" | "domainVisionEntry" | "identityRecord" | "assessmentNextStep" | "nextStepGoalEntry" | "checklist" | "trackedHabit"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2477,6 +2493,80 @@ export namespace Prisma {
           }
         }
       }
+      TrackedHabit: {
+        payload: Prisma.$TrackedHabitPayload<ExtArgs>
+        fields: Prisma.TrackedHabitFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TrackedHabitFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TrackedHabitFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>
+          }
+          findFirst: {
+            args: Prisma.TrackedHabitFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TrackedHabitFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>
+          }
+          findMany: {
+            args: Prisma.TrackedHabitFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>[]
+          }
+          create: {
+            args: Prisma.TrackedHabitCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>
+          }
+          createMany: {
+            args: Prisma.TrackedHabitCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TrackedHabitCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>[]
+          }
+          delete: {
+            args: Prisma.TrackedHabitDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>
+          }
+          update: {
+            args: Prisma.TrackedHabitUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>
+          }
+          deleteMany: {
+            args: Prisma.TrackedHabitDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TrackedHabitUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TrackedHabitUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>[]
+          }
+          upsert: {
+            args: Prisma.TrackedHabitUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>
+          }
+          aggregate: {
+            args: Prisma.TrackedHabitAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTrackedHabit>
+          }
+          groupBy: {
+            args: Prisma.TrackedHabitGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TrackedHabitGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TrackedHabitCountArgs<ExtArgs>
+            result: $Utils.Optional<TrackedHabitCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2606,6 +2696,7 @@ export namespace Prisma {
     assessmentNextStep?: AssessmentNextStepOmit
     nextStepGoalEntry?: NextStepGoalEntryOmit
     checklist?: ChecklistOmit
+    trackedHabit?: TrackedHabitOmit
   }
 
   /* Types for Logging */
@@ -2690,6 +2781,7 @@ export namespace Prisma {
     sessions: number
     notes: number
     checklists: number
+    trackedHabits: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2697,6 +2789,7 @@ export namespace Prisma {
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     notes?: boolean | UserCountOutputTypeCountNotesArgs
     checklists?: boolean | UserCountOutputTypeCountChecklistsArgs
+    trackedHabits?: boolean | UserCountOutputTypeCountTrackedHabitsArgs
   }
 
   // Custom InputTypes
@@ -2736,6 +2829,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountChecklistsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ChecklistWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTrackedHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TrackedHabitWhereInput
   }
 
 
@@ -3176,6 +3276,7 @@ export namespace Prisma {
     assessmentPartFour?: boolean | User$assessmentPartFourArgs<ExtArgs>
     assessmentNextStep?: boolean | User$assessmentNextStepArgs<ExtArgs>
     checklists?: boolean | User$checklistsArgs<ExtArgs>
+    trackedHabits?: boolean | User$trackedHabitsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -3220,6 +3321,7 @@ export namespace Prisma {
     assessmentPartFour?: boolean | User$assessmentPartFourArgs<ExtArgs>
     assessmentNextStep?: boolean | User$assessmentNextStepArgs<ExtArgs>
     checklists?: boolean | User$checklistsArgs<ExtArgs>
+    trackedHabits?: boolean | User$trackedHabitsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3237,6 +3339,7 @@ export namespace Prisma {
       assessmentPartFour: Prisma.$AssessmentPartFourPayload<ExtArgs> | null
       assessmentNextStep: Prisma.$AssessmentNextStepPayload<ExtArgs> | null
       checklists: Prisma.$ChecklistPayload<ExtArgs>[]
+      trackedHabits: Prisma.$TrackedHabitPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3649,6 +3752,7 @@ export namespace Prisma {
     assessmentPartFour<T extends User$assessmentPartFourArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentPartFourArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     assessmentNextStep<T extends User$assessmentNextStepArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentNextStepArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     checklists<T extends User$checklistsArgs<ExtArgs> = {}>(args?: Subset<T, User$checklistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    trackedHabits<T extends User$trackedHabitsArgs<ExtArgs> = {}>(args?: Subset<T, User$trackedHabitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4266,6 +4370,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ChecklistScalarFieldEnum | ChecklistScalarFieldEnum[]
+  }
+
+  /**
+   * User.trackedHabits
+   */
+  export type User$trackedHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitInclude<ExtArgs> | null
+    where?: TrackedHabitWhereInput
+    orderBy?: TrackedHabitOrderByWithRelationInput | TrackedHabitOrderByWithRelationInput[]
+    cursor?: TrackedHabitWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TrackedHabitScalarFieldEnum | TrackedHabitScalarFieldEnum[]
   }
 
   /**
@@ -26787,6 +26915,1082 @@ export namespace Prisma {
 
 
   /**
+   * Model TrackedHabit
+   */
+
+  export type AggregateTrackedHabit = {
+    _count: TrackedHabitCountAggregateOutputType | null
+    _min: TrackedHabitMinAggregateOutputType | null
+    _max: TrackedHabitMaxAggregateOutputType | null
+  }
+
+  export type TrackedHabitMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    category: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+  }
+
+  export type TrackedHabitMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    category: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+  }
+
+  export type TrackedHabitCountAggregateOutputType = {
+    id: number
+    name: number
+    category: number
+    createdAt: number
+    updatedAt: number
+    userId: number
+    _all: number
+  }
+
+
+  export type TrackedHabitMinAggregateInputType = {
+    id?: true
+    name?: true
+    category?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+  }
+
+  export type TrackedHabitMaxAggregateInputType = {
+    id?: true
+    name?: true
+    category?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+  }
+
+  export type TrackedHabitCountAggregateInputType = {
+    id?: true
+    name?: true
+    category?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type TrackedHabitAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TrackedHabit to aggregate.
+     */
+    where?: TrackedHabitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TrackedHabits to fetch.
+     */
+    orderBy?: TrackedHabitOrderByWithRelationInput | TrackedHabitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TrackedHabitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TrackedHabits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TrackedHabits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TrackedHabits
+    **/
+    _count?: true | TrackedHabitCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TrackedHabitMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TrackedHabitMaxAggregateInputType
+  }
+
+  export type GetTrackedHabitAggregateType<T extends TrackedHabitAggregateArgs> = {
+        [P in keyof T & keyof AggregateTrackedHabit]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTrackedHabit[P]>
+      : GetScalarType<T[P], AggregateTrackedHabit[P]>
+  }
+
+
+
+
+  export type TrackedHabitGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TrackedHabitWhereInput
+    orderBy?: TrackedHabitOrderByWithAggregationInput | TrackedHabitOrderByWithAggregationInput[]
+    by: TrackedHabitScalarFieldEnum[] | TrackedHabitScalarFieldEnum
+    having?: TrackedHabitScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TrackedHabitCountAggregateInputType | true
+    _min?: TrackedHabitMinAggregateInputType
+    _max?: TrackedHabitMaxAggregateInputType
+  }
+
+  export type TrackedHabitGroupByOutputType = {
+    id: string
+    name: string
+    category: string | null
+    createdAt: Date
+    updatedAt: Date
+    userId: string
+    _count: TrackedHabitCountAggregateOutputType | null
+    _min: TrackedHabitMinAggregateOutputType | null
+    _max: TrackedHabitMaxAggregateOutputType | null
+  }
+
+  type GetTrackedHabitGroupByPayload<T extends TrackedHabitGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TrackedHabitGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TrackedHabitGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TrackedHabitGroupByOutputType[P]>
+            : GetScalarType<T[P], TrackedHabitGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TrackedHabitSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["trackedHabit"]>
+
+  export type TrackedHabitSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["trackedHabit"]>
+
+  export type TrackedHabitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["trackedHabit"]>
+
+  export type TrackedHabitSelectScalar = {
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+  }
+
+  export type TrackedHabitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "category" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["trackedHabit"]>
+  export type TrackedHabitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type TrackedHabitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type TrackedHabitIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $TrackedHabitPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TrackedHabit"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      category: string | null
+      createdAt: Date
+      updatedAt: Date
+      userId: string
+    }, ExtArgs["result"]["trackedHabit"]>
+    composites: {}
+  }
+
+  type TrackedHabitGetPayload<S extends boolean | null | undefined | TrackedHabitDefaultArgs> = $Result.GetResult<Prisma.$TrackedHabitPayload, S>
+
+  type TrackedHabitCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TrackedHabitFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TrackedHabitCountAggregateInputType | true
+    }
+
+  export interface TrackedHabitDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TrackedHabit'], meta: { name: 'TrackedHabit' } }
+    /**
+     * Find zero or one TrackedHabit that matches the filter.
+     * @param {TrackedHabitFindUniqueArgs} args - Arguments to find a TrackedHabit
+     * @example
+     * // Get one TrackedHabit
+     * const trackedHabit = await prisma.trackedHabit.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TrackedHabitFindUniqueArgs>(args: SelectSubset<T, TrackedHabitFindUniqueArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TrackedHabit that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TrackedHabitFindUniqueOrThrowArgs} args - Arguments to find a TrackedHabit
+     * @example
+     * // Get one TrackedHabit
+     * const trackedHabit = await prisma.trackedHabit.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TrackedHabitFindUniqueOrThrowArgs>(args: SelectSubset<T, TrackedHabitFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TrackedHabit that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackedHabitFindFirstArgs} args - Arguments to find a TrackedHabit
+     * @example
+     * // Get one TrackedHabit
+     * const trackedHabit = await prisma.trackedHabit.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TrackedHabitFindFirstArgs>(args?: SelectSubset<T, TrackedHabitFindFirstArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TrackedHabit that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackedHabitFindFirstOrThrowArgs} args - Arguments to find a TrackedHabit
+     * @example
+     * // Get one TrackedHabit
+     * const trackedHabit = await prisma.trackedHabit.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TrackedHabitFindFirstOrThrowArgs>(args?: SelectSubset<T, TrackedHabitFindFirstOrThrowArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TrackedHabits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackedHabitFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TrackedHabits
+     * const trackedHabits = await prisma.trackedHabit.findMany()
+     * 
+     * // Get first 10 TrackedHabits
+     * const trackedHabits = await prisma.trackedHabit.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const trackedHabitWithIdOnly = await prisma.trackedHabit.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TrackedHabitFindManyArgs>(args?: SelectSubset<T, TrackedHabitFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TrackedHabit.
+     * @param {TrackedHabitCreateArgs} args - Arguments to create a TrackedHabit.
+     * @example
+     * // Create one TrackedHabit
+     * const TrackedHabit = await prisma.trackedHabit.create({
+     *   data: {
+     *     // ... data to create a TrackedHabit
+     *   }
+     * })
+     * 
+     */
+    create<T extends TrackedHabitCreateArgs>(args: SelectSubset<T, TrackedHabitCreateArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TrackedHabits.
+     * @param {TrackedHabitCreateManyArgs} args - Arguments to create many TrackedHabits.
+     * @example
+     * // Create many TrackedHabits
+     * const trackedHabit = await prisma.trackedHabit.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TrackedHabitCreateManyArgs>(args?: SelectSubset<T, TrackedHabitCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TrackedHabits and returns the data saved in the database.
+     * @param {TrackedHabitCreateManyAndReturnArgs} args - Arguments to create many TrackedHabits.
+     * @example
+     * // Create many TrackedHabits
+     * const trackedHabit = await prisma.trackedHabit.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TrackedHabits and only return the `id`
+     * const trackedHabitWithIdOnly = await prisma.trackedHabit.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TrackedHabitCreateManyAndReturnArgs>(args?: SelectSubset<T, TrackedHabitCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TrackedHabit.
+     * @param {TrackedHabitDeleteArgs} args - Arguments to delete one TrackedHabit.
+     * @example
+     * // Delete one TrackedHabit
+     * const TrackedHabit = await prisma.trackedHabit.delete({
+     *   where: {
+     *     // ... filter to delete one TrackedHabit
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TrackedHabitDeleteArgs>(args: SelectSubset<T, TrackedHabitDeleteArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TrackedHabit.
+     * @param {TrackedHabitUpdateArgs} args - Arguments to update one TrackedHabit.
+     * @example
+     * // Update one TrackedHabit
+     * const trackedHabit = await prisma.trackedHabit.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TrackedHabitUpdateArgs>(args: SelectSubset<T, TrackedHabitUpdateArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TrackedHabits.
+     * @param {TrackedHabitDeleteManyArgs} args - Arguments to filter TrackedHabits to delete.
+     * @example
+     * // Delete a few TrackedHabits
+     * const { count } = await prisma.trackedHabit.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TrackedHabitDeleteManyArgs>(args?: SelectSubset<T, TrackedHabitDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TrackedHabits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackedHabitUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TrackedHabits
+     * const trackedHabit = await prisma.trackedHabit.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TrackedHabitUpdateManyArgs>(args: SelectSubset<T, TrackedHabitUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TrackedHabits and returns the data updated in the database.
+     * @param {TrackedHabitUpdateManyAndReturnArgs} args - Arguments to update many TrackedHabits.
+     * @example
+     * // Update many TrackedHabits
+     * const trackedHabit = await prisma.trackedHabit.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TrackedHabits and only return the `id`
+     * const trackedHabitWithIdOnly = await prisma.trackedHabit.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TrackedHabitUpdateManyAndReturnArgs>(args: SelectSubset<T, TrackedHabitUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TrackedHabit.
+     * @param {TrackedHabitUpsertArgs} args - Arguments to update or create a TrackedHabit.
+     * @example
+     * // Update or create a TrackedHabit
+     * const trackedHabit = await prisma.trackedHabit.upsert({
+     *   create: {
+     *     // ... data to create a TrackedHabit
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TrackedHabit we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TrackedHabitUpsertArgs>(args: SelectSubset<T, TrackedHabitUpsertArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TrackedHabits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackedHabitCountArgs} args - Arguments to filter TrackedHabits to count.
+     * @example
+     * // Count the number of TrackedHabits
+     * const count = await prisma.trackedHabit.count({
+     *   where: {
+     *     // ... the filter for the TrackedHabits we want to count
+     *   }
+     * })
+    **/
+    count<T extends TrackedHabitCountArgs>(
+      args?: Subset<T, TrackedHabitCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TrackedHabitCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TrackedHabit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackedHabitAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TrackedHabitAggregateArgs>(args: Subset<T, TrackedHabitAggregateArgs>): Prisma.PrismaPromise<GetTrackedHabitAggregateType<T>>
+
+    /**
+     * Group by TrackedHabit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackedHabitGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TrackedHabitGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TrackedHabitGroupByArgs['orderBy'] }
+        : { orderBy?: TrackedHabitGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TrackedHabitGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTrackedHabitGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TrackedHabit model
+   */
+  readonly fields: TrackedHabitFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TrackedHabit.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TrackedHabitClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TrackedHabit model
+   */
+  interface TrackedHabitFieldRefs {
+    readonly id: FieldRef<"TrackedHabit", 'String'>
+    readonly name: FieldRef<"TrackedHabit", 'String'>
+    readonly category: FieldRef<"TrackedHabit", 'String'>
+    readonly createdAt: FieldRef<"TrackedHabit", 'DateTime'>
+    readonly updatedAt: FieldRef<"TrackedHabit", 'DateTime'>
+    readonly userId: FieldRef<"TrackedHabit", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TrackedHabit findUnique
+   */
+  export type TrackedHabitFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitInclude<ExtArgs> | null
+    /**
+     * Filter, which TrackedHabit to fetch.
+     */
+    where: TrackedHabitWhereUniqueInput
+  }
+
+  /**
+   * TrackedHabit findUniqueOrThrow
+   */
+  export type TrackedHabitFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitInclude<ExtArgs> | null
+    /**
+     * Filter, which TrackedHabit to fetch.
+     */
+    where: TrackedHabitWhereUniqueInput
+  }
+
+  /**
+   * TrackedHabit findFirst
+   */
+  export type TrackedHabitFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitInclude<ExtArgs> | null
+    /**
+     * Filter, which TrackedHabit to fetch.
+     */
+    where?: TrackedHabitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TrackedHabits to fetch.
+     */
+    orderBy?: TrackedHabitOrderByWithRelationInput | TrackedHabitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TrackedHabits.
+     */
+    cursor?: TrackedHabitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TrackedHabits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TrackedHabits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TrackedHabits.
+     */
+    distinct?: TrackedHabitScalarFieldEnum | TrackedHabitScalarFieldEnum[]
+  }
+
+  /**
+   * TrackedHabit findFirstOrThrow
+   */
+  export type TrackedHabitFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitInclude<ExtArgs> | null
+    /**
+     * Filter, which TrackedHabit to fetch.
+     */
+    where?: TrackedHabitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TrackedHabits to fetch.
+     */
+    orderBy?: TrackedHabitOrderByWithRelationInput | TrackedHabitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TrackedHabits.
+     */
+    cursor?: TrackedHabitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TrackedHabits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TrackedHabits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TrackedHabits.
+     */
+    distinct?: TrackedHabitScalarFieldEnum | TrackedHabitScalarFieldEnum[]
+  }
+
+  /**
+   * TrackedHabit findMany
+   */
+  export type TrackedHabitFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitInclude<ExtArgs> | null
+    /**
+     * Filter, which TrackedHabits to fetch.
+     */
+    where?: TrackedHabitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TrackedHabits to fetch.
+     */
+    orderBy?: TrackedHabitOrderByWithRelationInput | TrackedHabitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TrackedHabits.
+     */
+    cursor?: TrackedHabitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TrackedHabits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TrackedHabits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TrackedHabits.
+     */
+    distinct?: TrackedHabitScalarFieldEnum | TrackedHabitScalarFieldEnum[]
+  }
+
+  /**
+   * TrackedHabit create
+   */
+  export type TrackedHabitCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TrackedHabit.
+     */
+    data: XOR<TrackedHabitCreateInput, TrackedHabitUncheckedCreateInput>
+  }
+
+  /**
+   * TrackedHabit createMany
+   */
+  export type TrackedHabitCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TrackedHabits.
+     */
+    data: TrackedHabitCreateManyInput | TrackedHabitCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TrackedHabit createManyAndReturn
+   */
+  export type TrackedHabitCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * The data used to create many TrackedHabits.
+     */
+    data: TrackedHabitCreateManyInput | TrackedHabitCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TrackedHabit update
+   */
+  export type TrackedHabitUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TrackedHabit.
+     */
+    data: XOR<TrackedHabitUpdateInput, TrackedHabitUncheckedUpdateInput>
+    /**
+     * Choose, which TrackedHabit to update.
+     */
+    where: TrackedHabitWhereUniqueInput
+  }
+
+  /**
+   * TrackedHabit updateMany
+   */
+  export type TrackedHabitUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TrackedHabits.
+     */
+    data: XOR<TrackedHabitUpdateManyMutationInput, TrackedHabitUncheckedUpdateManyInput>
+    /**
+     * Filter which TrackedHabits to update
+     */
+    where?: TrackedHabitWhereInput
+    /**
+     * Limit how many TrackedHabits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TrackedHabit updateManyAndReturn
+   */
+  export type TrackedHabitUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * The data used to update TrackedHabits.
+     */
+    data: XOR<TrackedHabitUpdateManyMutationInput, TrackedHabitUncheckedUpdateManyInput>
+    /**
+     * Filter which TrackedHabits to update
+     */
+    where?: TrackedHabitWhereInput
+    /**
+     * Limit how many TrackedHabits to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TrackedHabit upsert
+   */
+  export type TrackedHabitUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TrackedHabit to update in case it exists.
+     */
+    where: TrackedHabitWhereUniqueInput
+    /**
+     * In case the TrackedHabit found by the `where` argument doesn't exist, create a new TrackedHabit with this data.
+     */
+    create: XOR<TrackedHabitCreateInput, TrackedHabitUncheckedCreateInput>
+    /**
+     * In case the TrackedHabit was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TrackedHabitUpdateInput, TrackedHabitUncheckedUpdateInput>
+  }
+
+  /**
+   * TrackedHabit delete
+   */
+  export type TrackedHabitDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitInclude<ExtArgs> | null
+    /**
+     * Filter which TrackedHabit to delete.
+     */
+    where: TrackedHabitWhereUniqueInput
+  }
+
+  /**
+   * TrackedHabit deleteMany
+   */
+  export type TrackedHabitDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TrackedHabits to delete
+     */
+    where?: TrackedHabitWhereInput
+    /**
+     * Limit how many TrackedHabits to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TrackedHabit without action
+   */
+  export type TrackedHabitDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -27088,6 +28292,18 @@ export namespace Prisma {
   export type ChecklistScalarFieldEnum = (typeof ChecklistScalarFieldEnum)[keyof typeof ChecklistScalarFieldEnum]
 
 
+  export const TrackedHabitScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    category: 'category',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    userId: 'userId'
+  };
+
+  export type TrackedHabitScalarFieldEnum = (typeof TrackedHabitScalarFieldEnum)[keyof typeof TrackedHabitScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -27203,6 +28419,7 @@ export namespace Prisma {
     assessmentPartFour?: XOR<AssessmentPartFourNullableScalarRelationFilter, AssessmentPartFourWhereInput> | null
     assessmentNextStep?: XOR<AssessmentNextStepNullableScalarRelationFilter, AssessmentNextStepWhereInput> | null
     checklists?: ChecklistListRelationFilter
+    trackedHabits?: TrackedHabitListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -27222,6 +28439,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourOrderByWithRelationInput
     assessmentNextStep?: AssessmentNextStepOrderByWithRelationInput
     checklists?: ChecklistOrderByRelationAggregateInput
+    trackedHabits?: TrackedHabitOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -27244,6 +28462,7 @@ export namespace Prisma {
     assessmentPartFour?: XOR<AssessmentPartFourNullableScalarRelationFilter, AssessmentPartFourWhereInput> | null
     assessmentNextStep?: XOR<AssessmentNextStepNullableScalarRelationFilter, AssessmentNextStepWhereInput> | null
     checklists?: ChecklistListRelationFilter
+    trackedHabits?: TrackedHabitListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -28702,6 +29921,67 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Checklist"> | string
   }
 
+  export type TrackedHabitWhereInput = {
+    AND?: TrackedHabitWhereInput | TrackedHabitWhereInput[]
+    OR?: TrackedHabitWhereInput[]
+    NOT?: TrackedHabitWhereInput | TrackedHabitWhereInput[]
+    id?: StringFilter<"TrackedHabit"> | string
+    name?: StringFilter<"TrackedHabit"> | string
+    category?: StringNullableFilter<"TrackedHabit"> | string | null
+    createdAt?: DateTimeFilter<"TrackedHabit"> | Date | string
+    updatedAt?: DateTimeFilter<"TrackedHabit"> | Date | string
+    userId?: StringFilter<"TrackedHabit"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type TrackedHabitOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type TrackedHabitWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_name?: TrackedHabitUserIdNameCompoundUniqueInput
+    AND?: TrackedHabitWhereInput | TrackedHabitWhereInput[]
+    OR?: TrackedHabitWhereInput[]
+    NOT?: TrackedHabitWhereInput | TrackedHabitWhereInput[]
+    name?: StringFilter<"TrackedHabit"> | string
+    category?: StringNullableFilter<"TrackedHabit"> | string | null
+    createdAt?: DateTimeFilter<"TrackedHabit"> | Date | string
+    updatedAt?: DateTimeFilter<"TrackedHabit"> | Date | string
+    userId?: StringFilter<"TrackedHabit"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_name">
+
+  export type TrackedHabitOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    _count?: TrackedHabitCountOrderByAggregateInput
+    _max?: TrackedHabitMaxOrderByAggregateInput
+    _min?: TrackedHabitMinOrderByAggregateInput
+  }
+
+  export type TrackedHabitScalarWhereWithAggregatesInput = {
+    AND?: TrackedHabitScalarWhereWithAggregatesInput | TrackedHabitScalarWhereWithAggregatesInput[]
+    OR?: TrackedHabitScalarWhereWithAggregatesInput[]
+    NOT?: TrackedHabitScalarWhereWithAggregatesInput | TrackedHabitScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TrackedHabit"> | string
+    name?: StringWithAggregatesFilter<"TrackedHabit"> | string
+    category?: StringNullableWithAggregatesFilter<"TrackedHabit"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"TrackedHabit"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"TrackedHabit"> | Date | string
+    userId?: StringWithAggregatesFilter<"TrackedHabit"> | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -28719,6 +29999,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -28738,6 +30019,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -28757,6 +30039,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -28776,6 +30059,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -30343,6 +31627,68 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type TrackedHabitCreateInput = {
+    id?: string
+    name: string
+    category?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutTrackedHabitsInput
+  }
+
+  export type TrackedHabitUncheckedCreateInput = {
+    id?: string
+    name: string
+    category?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type TrackedHabitUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTrackedHabitsNestedInput
+  }
+
+  export type TrackedHabitUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TrackedHabitCreateManyInput = {
+    id?: string
+    name: string
+    category?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type TrackedHabitUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TrackedHabitUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -30444,6 +31790,12 @@ export namespace Prisma {
     none?: ChecklistWhereInput
   }
 
+  export type TrackedHabitListRelationFilter = {
+    every?: TrackedHabitWhereInput
+    some?: TrackedHabitWhereInput
+    none?: TrackedHabitWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -30462,6 +31814,10 @@ export namespace Prisma {
   }
 
   export type ChecklistOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TrackedHabitOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -31418,6 +32774,38 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
+  export type TrackedHabitUserIdNameCompoundUniqueInput = {
+    userId: string
+    name: string
+  }
+
+  export type TrackedHabitCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type TrackedHabitMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type TrackedHabitMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -31476,6 +32864,13 @@ export namespace Prisma {
     connect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
   }
 
+  export type TrackedHabitCreateNestedManyWithoutUserInput = {
+    create?: XOR<TrackedHabitCreateWithoutUserInput, TrackedHabitUncheckedCreateWithoutUserInput> | TrackedHabitCreateWithoutUserInput[] | TrackedHabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TrackedHabitCreateOrConnectWithoutUserInput | TrackedHabitCreateOrConnectWithoutUserInput[]
+    createMany?: TrackedHabitCreateManyUserInputEnvelope
+    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -31532,6 +32927,13 @@ export namespace Prisma {
     connectOrCreate?: ChecklistCreateOrConnectWithoutUserInput | ChecklistCreateOrConnectWithoutUserInput[]
     createMany?: ChecklistCreateManyUserInputEnvelope
     connect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+  }
+
+  export type TrackedHabitUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<TrackedHabitCreateWithoutUserInput, TrackedHabitUncheckedCreateWithoutUserInput> | TrackedHabitCreateWithoutUserInput[] | TrackedHabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TrackedHabitCreateOrConnectWithoutUserInput | TrackedHabitCreateOrConnectWithoutUserInput[]
+    createMany?: TrackedHabitCreateManyUserInputEnvelope
+    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -31656,6 +33058,20 @@ export namespace Prisma {
     deleteMany?: ChecklistScalarWhereInput | ChecklistScalarWhereInput[]
   }
 
+  export type TrackedHabitUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TrackedHabitCreateWithoutUserInput, TrackedHabitUncheckedCreateWithoutUserInput> | TrackedHabitCreateWithoutUserInput[] | TrackedHabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TrackedHabitCreateOrConnectWithoutUserInput | TrackedHabitCreateOrConnectWithoutUserInput[]
+    upsert?: TrackedHabitUpsertWithWhereUniqueWithoutUserInput | TrackedHabitUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TrackedHabitCreateManyUserInputEnvelope
+    set?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    disconnect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    delete?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    update?: TrackedHabitUpdateWithWhereUniqueWithoutUserInput | TrackedHabitUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TrackedHabitUpdateManyWithWhereWithoutUserInput | TrackedHabitUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -31760,6 +33176,20 @@ export namespace Prisma {
     update?: ChecklistUpdateWithWhereUniqueWithoutUserInput | ChecklistUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ChecklistUpdateManyWithWhereWithoutUserInput | ChecklistUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ChecklistScalarWhereInput | ChecklistScalarWhereInput[]
+  }
+
+  export type TrackedHabitUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TrackedHabitCreateWithoutUserInput, TrackedHabitUncheckedCreateWithoutUserInput> | TrackedHabitCreateWithoutUserInput[] | TrackedHabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TrackedHabitCreateOrConnectWithoutUserInput | TrackedHabitCreateOrConnectWithoutUserInput[]
+    upsert?: TrackedHabitUpsertWithWhereUniqueWithoutUserInput | TrackedHabitUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TrackedHabitCreateManyUserInputEnvelope
+    set?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    disconnect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    delete?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    update?: TrackedHabitUpdateWithWhereUniqueWithoutUserInput | TrackedHabitUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TrackedHabitUpdateManyWithWhereWithoutUserInput | TrackedHabitUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -32796,6 +34226,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutChecklistsInput, UserUpdateWithoutChecklistsInput>, UserUncheckedUpdateWithoutChecklistsInput>
   }
 
+  export type UserCreateNestedOneWithoutTrackedHabitsInput = {
+    create?: XOR<UserCreateWithoutTrackedHabitsInput, UserUncheckedCreateWithoutTrackedHabitsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTrackedHabitsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutTrackedHabitsNestedInput = {
+    create?: XOR<UserCreateWithoutTrackedHabitsInput, UserUncheckedCreateWithoutTrackedHabitsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTrackedHabitsInput
+    upsert?: UserUpsertWithoutTrackedHabitsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTrackedHabitsInput, UserUpdateWithoutTrackedHabitsInput>, UserUncheckedUpdateWithoutTrackedHabitsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -33320,6 +34764,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TrackedHabitCreateWithoutUserInput = {
+    id?: string
+    name: string
+    category?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TrackedHabitUncheckedCreateWithoutUserInput = {
+    id?: string
+    name: string
+    category?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TrackedHabitCreateOrConnectWithoutUserInput = {
+    where: TrackedHabitWhereUniqueInput
+    create: XOR<TrackedHabitCreateWithoutUserInput, TrackedHabitUncheckedCreateWithoutUserInput>
+  }
+
+  export type TrackedHabitCreateManyUserInputEnvelope = {
+    data: TrackedHabitCreateManyUserInput | TrackedHabitCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -33673,6 +35143,34 @@ export namespace Prisma {
     userId?: StringFilter<"Checklist"> | string
   }
 
+  export type TrackedHabitUpsertWithWhereUniqueWithoutUserInput = {
+    where: TrackedHabitWhereUniqueInput
+    update: XOR<TrackedHabitUpdateWithoutUserInput, TrackedHabitUncheckedUpdateWithoutUserInput>
+    create: XOR<TrackedHabitCreateWithoutUserInput, TrackedHabitUncheckedCreateWithoutUserInput>
+  }
+
+  export type TrackedHabitUpdateWithWhereUniqueWithoutUserInput = {
+    where: TrackedHabitWhereUniqueInput
+    data: XOR<TrackedHabitUpdateWithoutUserInput, TrackedHabitUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TrackedHabitUpdateManyWithWhereWithoutUserInput = {
+    where: TrackedHabitScalarWhereInput
+    data: XOR<TrackedHabitUpdateManyMutationInput, TrackedHabitUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type TrackedHabitScalarWhereInput = {
+    AND?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
+    OR?: TrackedHabitScalarWhereInput[]
+    NOT?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
+    id?: StringFilter<"TrackedHabit"> | string
+    name?: StringFilter<"TrackedHabit"> | string
+    category?: StringNullableFilter<"TrackedHabit"> | string | null
+    createdAt?: DateTimeFilter<"TrackedHabit"> | Date | string
+    updatedAt?: DateTimeFilter<"TrackedHabit"> | Date | string
+    userId?: StringFilter<"TrackedHabit"> | string
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     email: string
@@ -33689,6 +35187,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -33707,6 +35206,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -33741,6 +35241,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -33759,6 +35260,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -33777,6 +35279,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -33795,6 +35298,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -33829,6 +35333,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -33847,6 +35352,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotesInput = {
@@ -33865,6 +35371,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotesInput = {
@@ -33883,6 +35390,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotesInput = {
@@ -33917,6 +35425,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotesInput = {
@@ -33935,6 +35444,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAssessmentPartOneInput = {
@@ -33953,6 +35463,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartOneInput = {
@@ -33971,6 +35482,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartOneInput = {
@@ -34027,6 +35539,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartOneInput = {
@@ -34045,6 +35558,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProjectUpsertWithWhereUniqueWithoutAssessmentInput = {
@@ -34197,6 +35711,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartTwoInput = {
@@ -34215,6 +35730,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartTwoInput = {
@@ -34271,6 +35787,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartTwoInput = {
@@ -34289,6 +35806,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DayLogUpsertWithWhereUniqueWithoutAssessmentInput = {
@@ -34471,6 +35989,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartThreeInput = {
@@ -34489,6 +36008,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartThreeInput = {
@@ -34678,6 +36198,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartThreeInput = {
@@ -34696,6 +36217,7 @@ export namespace Prisma {
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type HabitRecordUpsertWithWhereUniqueWithoutBeneficialForInput = {
@@ -35715,6 +37237,7 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartFourInput = {
@@ -35733,6 +37256,7 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartFourInput = {
@@ -35811,6 +37335,7 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartFourInput = {
@@ -35829,6 +37354,7 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DomainVisionEntryUpsertWithWhereUniqueWithoutAssessmentInput = {
@@ -36123,6 +37649,7 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentNextStepInput = {
@@ -36141,6 +37668,7 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentNextStepInput = {
@@ -36205,6 +37733,7 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentNextStepInput = {
@@ -36223,6 +37752,7 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type NextStepGoalEntryUpsertWithWhereUniqueWithoutNextStepInput = {
@@ -36319,6 +37849,7 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChecklistsInput = {
@@ -36337,6 +37868,7 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
     assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChecklistsInput = {
@@ -36371,6 +37903,7 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChecklistsInput = {
@@ -36389,6 +37922,99 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
     assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutTrackedHabitsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    emailVerified?: Date | string | null
+    image?: string | null
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notes?: NoteCreateNestedManyWithoutUserInput
+    assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
+    assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
+    assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTrackedHabitsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    emailVerified?: Date | string | null
+    image?: string | null
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
+    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTrackedHabitsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTrackedHabitsInput, UserUncheckedCreateWithoutTrackedHabitsInput>
+  }
+
+  export type UserUpsertWithoutTrackedHabitsInput = {
+    update: XOR<UserUpdateWithoutTrackedHabitsInput, UserUncheckedUpdateWithoutTrackedHabitsInput>
+    create: XOR<UserCreateWithoutTrackedHabitsInput, UserUncheckedCreateWithoutTrackedHabitsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTrackedHabitsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTrackedHabitsInput, UserUncheckedUpdateWithoutTrackedHabitsInput>
+  }
+
+  export type UserUpdateWithoutTrackedHabitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notes?: NoteUpdateManyWithoutUserNestedInput
+    assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
+    assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
+    assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTrackedHabitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
+    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -36427,6 +38053,14 @@ export namespace Prisma {
     title?: string
     templateType?: string
     content?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TrackedHabitCreateManyUserInput = {
+    id?: string
+    name: string
+    category?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -36547,6 +38181,30 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     templateType?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TrackedHabitUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TrackedHabitUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TrackedHabitUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

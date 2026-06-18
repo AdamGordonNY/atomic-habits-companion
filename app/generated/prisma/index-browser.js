@@ -345,6 +345,15 @@ exports.Prisma.ChecklistScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.TrackedHabitScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  category: 'category',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -382,7 +391,8 @@ exports.Prisma.ModelName = {
   IdentityRecord: 'IdentityRecord',
   AssessmentNextStep: 'AssessmentNextStep',
   NextStepGoalEntry: 'NextStepGoalEntry',
-  Checklist: 'Checklist'
+  Checklist: 'Checklist',
+  TrackedHabit: 'TrackedHabit'
 };
 
 /**
