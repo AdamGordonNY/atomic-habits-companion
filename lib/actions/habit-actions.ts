@@ -42,6 +42,16 @@ export async function actionGetTrackedHabit(name: string): Promise<TrackedHabitD
     : null;
 }
 
+export async function actionGetTrackedHabitById(id: string): Promise<TrackedHabitData | null> {
+  const userId = await requireUserId();
+  const row = await prisma.trackedHabit.findUnique({
+    where: { id, userId },
+  });
+  return row
+    ? { id: row.id, name: row.name, category: row.category, createdAt: row.createdAt.toISOString() }
+    : null;
+}
+
 // ─── writes ───────────────────────────────────────────────────────────────────
 
 /** Ensures the habit exists; updates category only if provided. */

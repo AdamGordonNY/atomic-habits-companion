@@ -92,7 +92,6 @@ export function DashboardClient() {
   const [partThree, setPartThree] = useState<PartThreeSnapshot | null>(null);
   const [partFour, setPartFour] = useState<PartFourSnapshot | null>(null);
   const [nextStep, setNextStep] = useState<NextStepSnapshot | null>(null);
-  const [habitNames, setHabitNames] = useState<string[]>([]);
   const [trackedHabits, setTrackedHabits] = useState<TrackedHabitData[]>([]);
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -138,7 +137,6 @@ export function DashboardClient() {
       setPartThree(snaps.partThree);
       setPartFour(snaps.partFour);
       setNextStep(snaps.nextStep);
-      setHabitNames(data.habitNames);
       setTrackedHabits(data.trackedHabits);
       setMounted(true);
       requestAnimationFrame(() => setVisible(true));
@@ -242,15 +240,7 @@ export function DashboardClient() {
             <NavDropdown
               label="Habits"
               emptyLabel="Complete Part 5 to see your habits here"
-              items={
-                trackedHabits.length > 0
-                  ? buildHabitItems(trackedHabits)
-                  : habitNames.map((name) => ({
-                      type: "link" as const,
-                      href: `/habits/${encodeURIComponent(name)}`,
-                      label: name,
-                    }))
-              }
+              items={buildHabitItems(trackedHabits)}
             />
             <Link
               href="/notes"
@@ -620,7 +610,7 @@ function buildHabitItems(habits: TrackedHabitData[]): DropdownItem[] {
   for (const [cat, catHabits] of byCategory) {
     items.push({ type: "section", label: cat, href: `/habits/category/${encodeURIComponent(cat)}` });
     for (const h of catHabits) {
-      items.push({ type: "link", label: h.name, href: `/habits/${encodeURIComponent(h.name)}` });
+      items.push({ type: "link", label: h.name, href: `/habits/${h.id}` });
     }
     items.push({ type: "divider" });
   }
@@ -630,7 +620,7 @@ function buildHabitItems(habits: TrackedHabitData[]): DropdownItem[] {
     if (items.length > 0 && items[items.length - 1].type === "divider") items.pop();
     if (byCategory.size > 0) items.push({ type: "divider" });
     for (const h of uncategorized) {
-      items.push({ type: "link", label: h.name, href: `/habits/${encodeURIComponent(h.name)}` });
+      items.push({ type: "link", label: h.name, href: `/habits/${h.id}` });
     }
   }
 

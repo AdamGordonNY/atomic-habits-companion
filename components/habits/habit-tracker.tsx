@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetchNextStep } from "@/lib/actions/next-step-actions";
-import { actionGetChecklists, actionCreateChecklist } from "@/lib/checklists-actions";
+import { actionCreateHabitChecklist, actionGetHabitChecklists } from "@/lib/checklists-actions";
 import {
-  actionUpsertTrackedHabit,
+  actionGetTrackedHabitById,
   actionUpdateHabitCategory,
 } from "@/lib/actions/habit-actions";
 import type { ChecklistRecord } from "@/types/checklist";
@@ -17,9 +17,9 @@ interface GoalContext {
   idealSystem: string;
 }
 
-export function HabitTracker({ habitName }: { habitName: string }) {
+export function HabitTracker({ habitId }: { habitId: string }) {
   const router = useRouter();
-  const [habitId, setHabitId] = useState<string | null>(null);
+  const [habitName, setHabitName] = useState("");
   const [category, setCategory] = useState<string>("");
   const [editingCategory, setEditingCategory] = useState(false);
   const [categoryInput, setCategoryInput] = useState("");
@@ -32,18 +32,22 @@ export function HabitTracker({ habitName }: { habitName: string }) {
 
   useEffect(() => {
     async function load() {
-      const [tracked, nextStepData, allChecklists] = await Promise.all([
-        // Auto-save this habit to the TrackedHabit table
-        actionUpsertTrackedHabit(habitName),
+      const tracked = await actionGetTrackedHabitById(habitId);
+      if (!tracked) {
+        setLoading(false);
+        return;
+      }
+
+      const [nextStepData, habitChecklists] = await Promise.all([
         fetchNextStep(),
-        actionGetChecklists(),
+        actionGetHabitChecklists(tracked.id, tracked.name),
       ]);
 
-      setHabitId(tracked.id);
+      setHabitName(tracked.name);
       setCategory(tracked.category ?? "");
 
       const entry = nextStepData?.goalEntries.find((e) =>
-        e.componentHabits.includes(habitName)
+        e.componentHabits.includes(tracked.name)
       );
       if (entry) {
         setGoalContext({
@@ -53,19 +57,12 @@ export function HabitTracker({ habitName }: { habitName: string }) {
         });
       }
 
-      const lower = habitName.toLowerCase();
-      setChecklists(
-        allChecklists.filter(
-          (c) =>
-            c.title.toLowerCase() === lower ||
-            c.title.toLowerCase().includes(lower)
-        )
-      );
+      setChecklists(habitChecklists);
 
       setLoading(false);
     }
     load();
-  }, [habitName]);
+  }, [habitId]);
 
   // Focus the category input when editing starts
   useEffect(() => {
@@ -88,9 +85,10 @@ export function HabitTracker({ habitName }: { habitName: string }) {
   }
 
   async function startChecklist() {
+    if (!habitId || !habitName) return;
     setCreating(true);
     try {
-      const cl = await actionCreateChecklist(habitName, "habit-tracking");
+      const cl = await actionCreateHabitChecklist(habitId, habitName);
       router.push(`/checklists/${cl.id}`);
     } catch (err) {
       console.error(err);
@@ -130,7 +128,7 @@ export function HabitTracker({ habitName }: { habitName: string }) {
                 <span className="hidden text-slate-300 sm:block">/</span>
               </>
             )}
-            <h1 className="truncate text-sm font-semibold text-slate-900">{habitName}</h1>
+            <h1 className="truncate text-sm font-semibold text-slate-900">{habitName || "Habit"}</h1>
           </div>
           <button
             type="button"
@@ -148,7 +146,7 @@ export function HabitTracker({ habitName }: { habitName: string }) {
 
           {/* Habit title + category */}
           <section>
-            <h2 className="text-2xl font-semibold tracking-tight text-slate-950">{habitName}</h2>
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-950">{habitName || "Habit"}</h2>
 
             {/* Category badge / editor */}
             <div className="mt-2 flex items-center gap-2">
@@ -241,11 +239,11 @@ export function HabitTracker({ habitName }: { habitName: string }) {
             </section>
           )}
 
-          {/* Checklists section */}
+          {/* Past habit check-ins */}
           <section>
             <div className="mb-3 flex items-center justify-between">
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
-                Checklists
+                Past habit check-ins
               </p>
               <button
                 type="button"
@@ -264,20 +262,19 @@ export function HabitTracker({ habitName }: { habitName: string }) {
                 disabled={creating}
                 className="flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-slate-300 bg-transparent py-10 text-sm font-medium text-slate-500 transition hover:border-slate-400 hover:text-slate-700 disabled:opacity-50"
               >
-                {creating ? "Creating…" : "Start your first checklist for this habit"}
+                {creating ? "Creating…" : "Start your first check-in for this habit"}
               </button>
             ) : (
-              <div className="flex flex-col gap-3">
+              <div className="-mx-1 flex gap-3 overflow-x-auto px-1 pb-2">
                 {checklists.map((cl) => (
                   <Link
                     key={cl.id}
                     href={`/checklists/${cl.id}`}
-                    className="group flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md active:translate-y-0"
+                    className="group flex min-w-[250px] flex-shrink-0 flex-col justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md active:translate-y-0"
                   >
                     <div>
-                      <p className="text-sm font-semibold text-slate-900">{cl.title}</p>
-                      <p className="mt-0.5 text-xs text-slate-500">
-                        {cl.content.length} habit{cl.content.length !== 1 ? "s" : ""} ·{" "}
+                      <p className="text-sm font-semibold text-slate-900 line-clamp-1">{cl.title}</p>
+                      <p className="mt-1 text-xs text-slate-500">
                         Updated{" "}
                         {new Date(cl.updatedAt).toLocaleDateString(undefined, {
                           month: "short",
@@ -286,15 +283,18 @@ export function HabitTracker({ habitName }: { habitName: string }) {
                         })}
                       </p>
                     </div>
-                    <svg
-                      className="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform duration-200 group-hover:translate-x-0.5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
+                    <div className="inline-flex items-center gap-1 text-xs font-medium text-slate-600">
+                      Open check-in
+                      <svg
+                        className="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform duration-200 group-hover:translate-x-0.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
                   </Link>
                 ))}
               </div>

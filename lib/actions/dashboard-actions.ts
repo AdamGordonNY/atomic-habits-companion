@@ -43,7 +43,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
     };
   }
 
-  const [p1, p2, p3, p4, nextStep, tracked] = await prisma.$transaction([
+  const [p1, p2, p3, p4, nextStep] = await prisma.$transaction([
     prisma.assessmentPartOne.findUnique({
       where: { userId },
       select: { completedAt: true },
@@ -74,10 +74,6 @@ export async function fetchDashboardData(): Promise<DashboardData> {
         },
       },
     }),
-    prisma.trackedHabit.findMany({
-      where: { userId },
-      orderBy: [{ category: "asc" }, { name: "asc" }],
-    }),
   ]);
 
   const habitNames = [
@@ -85,6 +81,18 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       (nextStep?.goalEntries ?? []).flatMap((e) => e.componentHabits).filter(Boolean),
     ),
   ];
+
+  if (habitNames.length > 0) {
+    await prisma.trackedHabit.createMany({
+      data: habitNames.map((name) => ({ userId, name })),
+      skipDuplicates: true,
+    });
+  }
+
+  const tracked = await prisma.trackedHabit.findMany({
+    where: { userId },
+    orderBy: [{ category: "asc" }, { name: "asc" }],
+  });
 
   return {
     status: {

@@ -71,7 +71,7 @@ export function HabitCategoryPage({ category }: { category: string }) {
                 {habits.map((h) => (
                   <Link
                     key={h.id}
-                    href={`/habits/${encodeURIComponent(h.name)}`}
+                    href={`/habits/${h.id}`}
                     className="group flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md active:translate-y-0"
                   >
                     <div>
