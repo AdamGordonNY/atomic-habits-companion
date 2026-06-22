@@ -232,41 +232,14 @@ export function DashboardClient() {
           </span>
           <nav className="flex items-center gap-1.5 overflow-x-auto pb-0.5">
             <NavDropdown
-              label="Law 0"
+              label="Laws"
               items={[
-                { type: "link", href: "/dashboard", label: "Law 0: Assessment", description: "Dashboard overview" },
+                { type: "link", href: "/dashboard", label: "Assessment", description: "Law 0" },
                 { type: "divider" },
-                { type: "link", href: "/habit-assessment/onboarding", label: "Part 1", description: "Baseline questions" },
-                { type: "link", href: "/habit-assessment/onboarding/part-two", label: "Part 2", description: "7-day energy log" },
-                { type: "link", href: "/habit-assessment/onboarding/part-three", label: "Part 3", description: "Time & habit deep-dive" },
-                { type: "link", href: "/habit-assessment/onboarding/part-four", label: "Part 4", description: "Ideal future & identity" },
-                { type: "link", href: "/habit-assessment/onboarding/part-five", label: "Part 5", description: "The Next Step" },
-                { type: "divider" },
-                { type: "link", href: "/habit-assessment/onboarding/review", label: "Review all answers" },
-              ]}
-            />
-            <NavDropdown
-              label="Law 1"
-              items={[
-                { type: "link", href: "/laws/1", label: "Law 1: Make it Obvious/Invisible" },
-              ]}
-            />
-            <NavDropdown
-              label="Law 2"
-              items={[
-                { type: "link", href: "/laws/2", label: "Law 2: Make it Attractive/Unattractive" },
-              ]}
-            />
-            <NavDropdown
-              label="Law 3"
-              items={[
-                { type: "link", href: "/laws/3", label: "Law 3: Make it Easy/Difficult" },
-              ]}
-            />
-            <NavDropdown
-              label="Law 4"
-              items={[
-                { type: "link", href: "/laws/4", label: "Law 4: Make it Satisfying/Unsatisfying" },
+                { type: "link", href: "/laws/1", label: "Cue", description: "Law 1" },
+                { type: "link", href: "/laws/2", label: "Craving", description: "Law 2" },
+                { type: "link", href: "/laws/3", label: "Response", description: "Law 3" },
+                { type: "link", href: "/laws/4", label: "Reward", description: "Law 4" },
               ]}
             />
             <NavDropdown
