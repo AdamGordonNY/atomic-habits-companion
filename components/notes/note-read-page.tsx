@@ -35,7 +35,7 @@ export function NoteReadPage({ noteId }: { noteId: string }) {
     <div className="flex min-h-screen flex-col bg-slate-50 px-5 py-8">
       <div className="mx-auto w-full max-w-2xl space-y-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <Link href="/notes" className="text-xs font-medium text-slate-500 hover:text-slate-800">
-          <- Back to notes
+          &lt; Back to notes
         </Link>
         <h1 className="text-2xl font-semibold tracking-tight text-slate-950">
           {note.title || "Untitled note"}

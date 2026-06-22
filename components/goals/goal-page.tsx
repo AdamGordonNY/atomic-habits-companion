@@ -66,7 +66,7 @@ export function GoalPage({ goalId }: { goalId: string }) {
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
             <Link href="/dashboard" className="text-xs font-medium text-slate-500 hover:text-slate-800">
-              <- Dashboard
+              &lt; Dashboard
             </Link>
             <span className="text-slate-300">/</span>
             <h1 className="truncate text-sm font-semibold text-slate-900">Goal</h1>
@@ -130,7 +130,7 @@ export function GoalPage({ goalId }: { goalId: string }) {
                         Updated {new Date(cl.updatedAt).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
                       </p>
                     </div>
-                    <span className="text-xs font-medium text-slate-600">Open check-in -></span>
+                    <span className="text-xs font-medium text-slate-600">Open check-in -&gt;</span>
                   </Link>
                 ))}
               </div>
