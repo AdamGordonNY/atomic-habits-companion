@@ -90,6 +90,24 @@ function NavDropdown({
 }) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function clearCloseTimer() {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  }
+
+  function openMenu() {
+    clearCloseTimer();
+    setOpen(true);
+  }
+
+  function closeMenu() {
+    clearCloseTimer();
+    closeTimerRef.current = setTimeout(() => setOpen(false), 120);
+  }
 
   useEffect(() => {
     function handlePointerDown(e: PointerEvent) {
@@ -101,16 +119,31 @@ function NavDropdown({
     document.addEventListener("pointerdown", handlePointerDown);
     document.addEventListener("keydown", handleKey);
     return () => {
+      clearCloseTimer();
       document.removeEventListener("pointerdown", handlePointerDown);
       document.removeEventListener("keydown", handleKey);
     };
   }, []);
 
   return (
-    <div ref={containerRef} className="relative">
+    <div
+      ref={containerRef}
+      className="relative"
+      onMouseEnter={openMenu}
+      onMouseLeave={closeMenu}
+      onFocusCapture={openMenu}
+      onBlurCapture={(e) => {
+        if (!containerRef.current?.contains(e.relatedTarget as Node | null)) {
+          setOpen(false);
+        }
+      }}
+    >
       <button
         type="button"
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => {
+          clearCloseTimer();
+          setOpen((o) => !o);
+        }}
         aria-expanded={open}
         className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
       >
@@ -228,12 +261,12 @@ export function LawShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-50">
-      <header className="sticky top-0 z-10 border-b border-slate-200/70 bg-white/80 px-5 py-3 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 px-5 py-3 backdrop-blur-xl">
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-3">
           <span className="flex-shrink-0 text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
             Atomic Habits
           </span>
-          <nav className="flex items-center gap-1.5 overflow-x-auto pb-0.5">
+          <nav className="flex flex-wrap items-center gap-1.5 pb-0.5">
             <NavDropdown
               label="Law 0"
               items={[
