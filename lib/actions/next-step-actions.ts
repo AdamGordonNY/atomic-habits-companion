@@ -27,6 +27,10 @@ export interface NextStepData {
   goalEntries: NextStepGoalData[];
 }
 
+export interface GoalEntryData extends NextStepGoalData {
+  id: string;
+}
+
 // ─── read ─────────────────────────────────────────────────────────────────────
 
 export async function fetchNextStep(): Promise<NextStepData | null> {
@@ -49,6 +53,29 @@ export async function fetchNextStep(): Promise<NextStepData | null> {
       idealSystem: e.idealSystem,
       componentHabits: e.componentHabits,
     })),
+  };
+}
+
+export async function fetchGoalEntryById(goalId: string): Promise<GoalEntryData | null> {
+  const userId = await requireUserId();
+
+  const row = await prisma.nextStepGoalEntry.findFirst({
+    where: {
+      id: goalId,
+      nextStep: { userId },
+    },
+  });
+
+  if (!row) return null;
+
+  return {
+    id: row.id,
+    goal: row.goal,
+    currentSystem: row.currentSystem,
+    systemEval: row.systemEval,
+    systemRating: row.systemRating,
+    idealSystem: row.idealSystem,
+    componentHabits: row.componentHabits,
   };
 }
 

@@ -93,6 +93,9 @@ export function DashboardClient() {
   const [partFour, setPartFour] = useState<PartFourSnapshot | null>(null);
   const [nextStep, setNextStep] = useState<NextStepSnapshot | null>(null);
   const [trackedHabits, setTrackedHabits] = useState<TrackedHabitData[]>([]);
+  const [goals, setGoals] = useState<{ id: string; label: string }[]>([]);
+  const [recentNotes, setRecentNotes] = useState<{ id: string; title: string; updatedAt: string }[]>([]);
+  const [recentChecklists, setRecentChecklists] = useState<{ id: string; title: string; updatedAt: string }[]>([]);
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const [syncing, setSyncing] = useState(false);
@@ -138,6 +141,9 @@ export function DashboardClient() {
       setPartFour(snaps.partFour);
       setNextStep(snaps.nextStep);
       setTrackedHabits(data.trackedHabits);
+      setGoals(data.goals);
+      setRecentNotes(data.recentNotes);
+      setRecentChecklists(data.recentChecklists);
       setMounted(true);
       requestAnimationFrame(() => setVisible(true));
     }
@@ -226,34 +232,75 @@ export function DashboardClient() {
           </span>
           <nav className="flex items-center gap-1.5 overflow-x-auto pb-0.5">
             <NavDropdown
-              label="Assessment"
+              label="Law 0"
               items={[
+                { type: "link", href: "/dashboard", label: "Law 0: Assessment", description: "Dashboard overview" },
+                { type: "divider" },
                 { type: "link", href: "/habit-assessment/onboarding", label: "Part 1", description: "Baseline questions" },
                 { type: "link", href: "/habit-assessment/onboarding/part-two", label: "Part 2", description: "7-day energy log" },
                 { type: "link", href: "/habit-assessment/onboarding/part-three", label: "Part 3", description: "Time & habit deep-dive" },
                 { type: "link", href: "/habit-assessment/onboarding/part-four", label: "Part 4", description: "Ideal future & identity" },
-                { type: "link", href: "/habit-assessment/onboarding/part-five", label: "Part 5 — The Next Step", description: "Systems & component habits" },
+                { type: "link", href: "/habit-assessment/onboarding/part-five", label: "Part 5", description: "The Next Step" },
                 { type: "divider" },
                 { type: "link", href: "/habit-assessment/onboarding/review", label: "Review all answers" },
               ]}
+            />
+            <NavDropdown
+              label="Law 1"
+              items={[
+                { type: "link", href: "/laws/1", label: "Law 1: Make it Obvious/Invisible" },
+              ]}
+            />
+            <NavDropdown
+              label="Law 2"
+              items={[
+                { type: "link", href: "/laws/2", label: "Law 2: Make it Attractive/Unattractive" },
+              ]}
+            />
+            <NavDropdown
+              label="Law 3"
+              items={[
+                { type: "link", href: "/laws/3", label: "Law 3: Make it Easy/Difficult" },
+              ]}
+            />
+            <NavDropdown
+              label="Law 4"
+              items={[
+                { type: "link", href: "/laws/4", label: "Law 4: Make it Satisfying/Unsatisfying" },
+              ]}
+            />
+            <NavDropdown
+              label="Goals"
+              emptyLabel="Complete Part 5 to add goals"
+              items={goals.length > 0 ? goals.map((g) => ({ type: "link" as const, href: `/goals/${g.id}`, label: g.label })) : []}
             />
             <NavDropdown
               label="Habits"
               emptyLabel="Complete Part 5 to see your habits here"
               items={buildHabitItems(trackedHabits)}
             />
-            <Link
-              href="/notes"
-              className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
-            >
-              Notes
-            </Link>
-            <Link
-              href="/checklists"
-              className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
-            >
-              Checklists
-            </Link>
+            <NavDropdown
+              label="Notes"
+              items={buildRecentItems(
+                recentNotes.map((n) => ({
+                  href: `/notes/${n.id}`,
+                  label: n.title,
+                  description: formatDate(n.updatedAt),
+                })),
+                { href: "/notes", label: "View all notes" },
+              )}
+            />
+            <NavDropdown
+              label="Checklists"
+              items={buildRecentItems(
+                recentChecklists.map((c) => ({
+                  href: `/checklists/${c.id}`,
+                  label: c.title,
+                  description: formatDate(c.updatedAt),
+                })),
+                { href: "/checklists", label: "View all checklists" },
+              )}
+            />
             <Show when="signed-out">
               <SignUpButton mode="modal">
                 <button
@@ -341,100 +388,36 @@ export function DashboardClient() {
             </Link>
           </section>
 
-          {/* Progress cards */}
-          {mounted ? (
-            <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-              <ProgressCard
-                label="Part One"
-                subtitle="Baseline"
-                done={partOneComplete}
-                detail={
-                  hasPartOneProgress && !partOneComplete
-                    ? `Q${Math.min(partOneStep + 1, partOneTotalSteps)} of ${partOneTotalSteps}`
-                    : partOneComplete
-                      ? "Complete"
-                      : "Not started"
-                }
-                href="/habit-assessment/onboarding"
-              />
-              <ProgressCard
-                label="Part Two"
-                subtitle="7-day log"
-                done={partTwoComplete}
-                detail={
-                  hasPartTwoProgress && !partTwoComplete
-                    ? `Day ${partTwoDay} / 7`
-                    : partTwoComplete
-                      ? "Complete"
-                      : "Not started"
-                }
-                href={
-                  partOneComplete
-                    ? `/habit-assessment/onboarding/part-two${hasPartTwoProgress ? `?day=${partTwo?.dayIndex ?? 0}` : ""}`
-                    : "/habit-assessment/onboarding"
-                }
-              />
-              <ProgressCard
-                label="Part Three"
-                subtitle="Deep-dive"
-                done={partThreeComplete}
-                detail={
-                  hasPartThreeProgress && !partThreeComplete
-                    ? `Q${Math.min(partThreeStep + 1, partThreeTotalSteps)} of ${partThreeTotalSteps}`
-                    : partThreeComplete
-                      ? "Complete"
-                      : "Not started"
-                }
-                href={
-                  partTwoComplete
-                    ? "/habit-assessment/onboarding/part-three"
-                    : "/habit-assessment/onboarding/part-two"
-                }
-              />
-              <ProgressCard
-                label="Part Four"
-                subtitle="Ideal future"
-                done={partFourComplete}
-                detail={
-                  hasPartFourProgress && !partFourComplete
-                    ? "In progress"
-                    : partFourComplete
-                      ? "Complete"
-                      : "Not started"
-                }
-                href={
-                  partThreeComplete
-                    ? "/habit-assessment/onboarding/part-four"
-                    : "/habit-assessment/onboarding/part-three"
-                }
-              />
-              <ProgressCard
-                label="The Next Step"
-                subtitle="Systems & habits"
-                done={nextStepComplete}
-                detail={
-                  hasNextStepProgress && !nextStepComplete
-                    ? "In progress"
-                    : nextStepComplete
-                      ? "Complete"
-                      : "Not started"
-                }
-                href={
-                  partFourComplete
-                    ? "/habit-assessment/onboarding/part-five"
-                    : "/habit-assessment/onboarding/part-four"
-                }
-              />
-            </section>
-          ) : (
-            <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-            </section>
-          )}
+          {/* Law 0 overview card */}
+          <section>
+            <Link
+              href="/dashboard"
+              className="group flex w-full items-center justify-between gap-4 rounded-[1.5rem] border border-slate-200 bg-white/90 p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md active:translate-y-0"
+            >
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-slate-950 text-base font-semibold text-white">
+                  L0
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-semibold text-slate-950">Law 0 - Assessment</p>
+                  <p className="mt-0.5 text-xs text-slate-500">
+                    {mounted
+                      ? `Part 1 ${partOneComplete ? "done" : "pending"} · Part 2 ${partTwoComplete ? "done" : "pending"} · Part 3 ${partThreeComplete ? "done" : "pending"} · Part 4 ${partFourComplete ? "done" : "pending"} · Part 5 ${nextStepComplete ? "done" : "pending"}`
+                      : "Loading assessment status..."}
+                  </p>
+                </div>
+              </div>
+              <svg
+                className="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform duration-200 group-hover:translate-x-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </section>
 
           {/* The Next Step CTA */}
           {mounted && partFourComplete && (
@@ -592,6 +575,21 @@ type DropdownItem =
   | { type: "section"; href: string; label: string }
   | { type: "divider" };
 
+function buildRecentItems(
+  entries: Array<{ href: string; label: string; description?: string }>,
+  viewAll: { href: string; label: string },
+): DropdownItem[] {
+  const items: DropdownItem[] = entries.map((entry) => ({
+    type: "link",
+    href: entry.href,
+    label: entry.label,
+    description: entry.description,
+  }));
+  items.push({ type: "divider" });
+  items.push({ type: "link", href: viewAll.href, label: viewAll.label });
+  return items;
+}
+
 function buildHabitItems(habits: TrackedHabitData[]): DropdownItem[] {
   const byCategory = new Map<string, TrackedHabitData[]>();
   const uncategorized: TrackedHabitData[] = [];
@@ -722,44 +720,3 @@ function NavDropdown({
   );
 }
 
-// ─── Progress card ────────────────────────────────────────────────────────────
-
-function ProgressCard({
-  label,
-  subtitle,
-  done,
-  detail,
-  href,
-}: {
-  label: string;
-  subtitle: string;
-  done: boolean;
-  detail: string;
-  href: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className="flex flex-col gap-2 rounded-[1.5rem] border border-slate-200 bg-white/90 p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm active:translate-y-0"
-    >
-      <div className="flex items-center gap-2">
-        <span
-          className={`h-2 w-2 rounded-full ${done ? "bg-emerald-500" : "bg-slate-300"}`}
-        />
-        <span className="text-xs font-semibold text-slate-700">{label}</span>
-      </div>
-      <p className="text-[11px] text-slate-500">{subtitle}</p>
-      <p className="mt-auto text-xs font-medium text-slate-900">{detail}</p>
-    </Link>
-  );
-}
-
-function SkeletonCard() {
-  return (
-    <div className="flex flex-col gap-2 rounded-[1.5rem] border border-slate-200 bg-white/90 p-4">
-      <div className="h-2.5 w-16 animate-pulse rounded-full bg-slate-200" />
-      <div className="h-2 w-20 animate-pulse rounded-full bg-slate-100" />
-      <div className="mt-2 h-2.5 w-12 animate-pulse rounded-full bg-slate-200" />
-    </div>
-  );
-}

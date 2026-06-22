@@ -96,6 +96,36 @@ export async function actionGetHabitChecklists(
   return rows.map(rowToRecord);
 }
 
+export async function actionCreateGoalChecklist(
+  goalId: string,
+  title: string,
+): Promise<ChecklistRecord> {
+  const userId = await requireUserId();
+  const row = await prisma.checklist.create({
+    data: {
+      userId,
+      title,
+      templateType: `goal-tracking:${goalId}`,
+      content: "[]",
+    },
+  });
+  return rowToRecord(row);
+}
+
+export async function actionGetGoalChecklists(
+  goalId: string,
+): Promise<ChecklistRecord[]> {
+  const userId = await requireUserId();
+  const rows = await prisma.checklist.findMany({
+    where: {
+      userId,
+      templateType: `goal-tracking:${goalId}`,
+    },
+    orderBy: { updatedAt: "desc" },
+  });
+  return rows.map(rowToRecord);
+}
+
 export async function actionUpdateChecklist(
   id: string,
   data: { title?: string; content?: ChecklistRecord["content"] },

@@ -21,6 +21,9 @@ export interface DashboardData {
   status: DashboardStatus;
   habitNames: string[];
   trackedHabits: TrackedHabitData[];
+  goals: { id: string; label: string }[];
+  recentNotes: { id: string; title: string; updatedAt: string }[];
+  recentChecklists: { id: string; title: string; updatedAt: string }[];
 }
 
 function isoDate(d: Date): string {
@@ -40,6 +43,9 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       },
       habitNames: [],
       trackedHabits: [],
+      goals: [],
+      recentNotes: [],
+      recentChecklists: [],
     };
   }
 
@@ -70,7 +76,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       select: {
         completedAt: true,
         goalEntries: {
-          select: { componentHabits: true },
+          select: { id: true, goal: true, componentHabits: true },
         },
       },
     }),
@@ -93,6 +99,21 @@ export async function fetchDashboardData(): Promise<DashboardData> {
     where: { userId },
     orderBy: [{ category: "asc" }, { name: "asc" }],
   });
+
+  const [notes, checklists] = await Promise.all([
+    prisma.note.findMany({
+      where: { userId },
+      orderBy: [{ pinned: "desc" }, { updatedAt: "desc" }],
+      take: 10,
+      select: { id: true, title: true, updatedAt: true },
+    }),
+    prisma.checklist.findMany({
+      where: { userId },
+      orderBy: { updatedAt: "desc" },
+      take: 10,
+      select: { id: true, title: true, updatedAt: true },
+    }),
+  ]);
 
   return {
     status: {
@@ -123,6 +144,20 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       name: r.name,
       category: r.category,
       createdAt: r.createdAt.toISOString(),
+    })),
+    goals: (nextStep?.goalEntries ?? []).map((g) => ({
+      id: g.id,
+      label: g.goal,
+    })),
+    recentNotes: notes.map((n) => ({
+      id: n.id,
+      title: n.title || "Untitled note",
+      updatedAt: n.updatedAt.toISOString(),
+    })),
+    recentChecklists: checklists.map((c) => ({
+      id: c.id,
+      title: c.title || "Untitled checklist",
+      updatedAt: c.updatedAt.toISOString(),
     })),
   };
 }
