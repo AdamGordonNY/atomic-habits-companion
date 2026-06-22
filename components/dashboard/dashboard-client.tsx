@@ -225,12 +225,12 @@ export function DashboardClient() {
       }`}
     >
       {/* Top nav */}
-      <header className="sticky top-0 z-10 border-b border-slate-200/70 bg-white/80 px-5 py-3 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 px-5 py-3 backdrop-blur-xl">
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-3">
           <span className="flex-shrink-0 text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
             Atomic Habits
           </span>
-          <nav className="flex items-center gap-1.5 overflow-x-auto pb-0.5">
+          <nav className="flex items-center gap-1.5 overflow-x-auto overflow-y-visible pb-0.5">
             <NavDropdown
               label="Laws"
               items={[
@@ -645,7 +645,7 @@ function NavDropdown({
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 min-w-[220px] overflow-hidden rounded-2xl border border-slate-200 bg-white py-1.5 shadow-xl shadow-slate-900/10">
+        <div className="absolute right-0 top-full z-[120] mt-2 min-w-[220px] overflow-hidden rounded-2xl border border-slate-200 bg-white py-1.5 shadow-xl shadow-slate-900/10">
           {items.length === 0 ? (
             <p className="px-4 py-3 text-xs text-slate-400">
               {emptyLabel ?? "Nothing here yet"}
