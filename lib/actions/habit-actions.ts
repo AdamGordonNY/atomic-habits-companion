@@ -13,7 +13,20 @@ export interface TrackedHabitData {
   id: string;
   name: string;
   category: string | null;
+  goalEntryId?: string | null;
   createdAt: string;
+}
+
+export interface HabitCueData {
+  id: string;
+  habitId: string;
+  behavior: string;
+  time: string;
+  location: string;
+  isBreaking: boolean;
+  reflection: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 // ─── reads ────────────────────────────────────────────────────────────────────
@@ -28,6 +41,7 @@ export async function actionGetTrackedHabits(): Promise<TrackedHabitData[]> {
     id: r.id,
     name: r.name,
     category: r.category,
+    goalEntryId: r.goalEntryId,
     createdAt: r.createdAt.toISOString(),
   }));
 }
@@ -38,7 +52,7 @@ export async function actionGetTrackedHabit(name: string): Promise<TrackedHabitD
     where: { userId_name: { userId, name } },
   });
   return row
-    ? { id: row.id, name: row.name, category: row.category, createdAt: row.createdAt.toISOString() }
+    ? { id: row.id, name: row.name, category: row.category, goalEntryId: row.goalEntryId, createdAt: row.createdAt.toISOString() }
     : null;
 }
 
@@ -48,8 +62,112 @@ export async function actionGetTrackedHabitById(id: string): Promise<TrackedHabi
     where: { id, userId },
   });
   return row
-    ? { id: row.id, name: row.name, category: row.category, createdAt: row.createdAt.toISOString() }
+    ? { id: row.id, name: row.name, category: row.category, goalEntryId: row.goalEntryId, createdAt: row.createdAt.toISOString() }
     : null;
+}
+
+export async function actionGetOrCreateHabitsForGoal(goalId: string): Promise<TrackedHabitData[]> {
+  const userId = await requireUserId();
+
+  const goal = await prisma.nextStepGoalEntry.findFirst({
+    where: { id: goalId, nextStep: { userId } },
+    select: { id: true, componentHabits: true },
+  });
+
+  if (!goal) return [];
+
+  const names = [...new Set(goal.componentHabits.map((h) => h.trim()).filter(Boolean))];
+  if (names.length > 0) {
+    await prisma.trackedHabit.createMany({
+      data: names.map((name) => ({ userId, name, goalEntryId: goal.id })),
+      skipDuplicates: true,
+    });
+  }
+
+  if (names.length > 0) {
+    await prisma.trackedHabit.updateMany({
+      where: { userId, name: { in: names } },
+      data: { goalEntryId: goal.id },
+    });
+  }
+
+  const rows = await prisma.trackedHabit.findMany({
+    where: { userId, goalEntryId: goal.id },
+    orderBy: { name: "asc" },
+  });
+
+  return rows.map((r) => ({
+    id: r.id,
+    name: r.name,
+    category: r.category,
+    goalEntryId: r.goalEntryId,
+    createdAt: r.createdAt.toISOString(),
+  }));
+}
+
+export async function actionGetHabitCues(habitId: string): Promise<HabitCueData[]> {
+  const userId = await requireUserId();
+  const rows = await prisma.habitCue.findMany({
+    where: { habitId, habit: { userId } },
+    orderBy: { createdAt: "desc" },
+  });
+  return rows.map((r) => ({
+    id: r.id,
+    habitId: r.habitId,
+    behavior: r.behavior,
+    time: r.time,
+    location: r.location,
+    isBreaking: r.isBreaking,
+    reflection: r.reflection,
+    createdAt: r.createdAt.toISOString(),
+    updatedAt: r.updatedAt.toISOString(),
+  }));
+}
+
+export async function actionCreateHabitCue(data: {
+  habitId: string;
+  behavior: string;
+  time: string;
+  location: string;
+  isBreaking: boolean;
+}): Promise<HabitCueData> {
+  const userId = await requireUserId();
+
+  const habit = await prisma.trackedHabit.findFirst({
+    where: { id: data.habitId, userId },
+    select: { id: true },
+  });
+  if (!habit) throw new Error("Habit not found");
+
+  const row = await prisma.habitCue.create({
+    data: {
+      habitId: data.habitId,
+      behavior: data.behavior,
+      time: data.time,
+      location: data.location,
+      isBreaking: data.isBreaking,
+    },
+  });
+
+  return {
+    id: row.id,
+    habitId: row.habitId,
+    behavior: row.behavior,
+    time: row.time,
+    location: row.location,
+    isBreaking: row.isBreaking,
+    reflection: row.reflection,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
+}
+
+export async function actionUpdateHabitCueReflection(cueId: string, reflection: string): Promise<void> {
+  const userId = await requireUserId();
+  await prisma.habitCue.updateMany({
+    where: { id: cueId, habit: { userId } },
+    data: { reflection },
+  });
 }
 
 // ─── writes ───────────────────────────────────────────────────────────────────
@@ -69,6 +187,7 @@ export async function actionUpsertTrackedHabit(
     id: row.id,
     name: row.name,
     category: row.category,
+    goalEntryId: row.goalEntryId,
     createdAt: row.createdAt.toISOString(),
   };
 }

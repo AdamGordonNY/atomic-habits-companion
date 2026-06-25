@@ -383,6 +383,7 @@ model NextStepGoalEntry {
 
   nextStepId String
   nextStep   AssessmentNextStep @relation(fields: [nextStepId], references: [id], onDelete: Cascade)
+  trackedHabits TrackedHabit[]
 
   @@index([nextStepId])
   @@map("next_step_goal_entries")
@@ -419,7 +420,30 @@ model TrackedHabit {
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  goalEntryId String?
+  goalEntry   NextStepGoalEntry? @relation(fields: [goalEntryId], references: [id], onDelete: SetNull)
+  cues        HabitCue[]
+
   @@unique([userId, name])
   @@index([userId])
+  @@index([goalEntryId])
   @@map("tracked_habits")
+}
+
+model HabitCue {
+  id         String   @id @default(cuid())
+  behavior   String
+  time       String
+  location   String
+  isBreaking Boolean  @default(false)
+  reflection String   @default("")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  habitId String
+  habit   TrackedHabit @relation(fields: [habitId], references: [id], onDelete: Cascade)
+
+  @@index([habitId])
+  @@index([createdAt])
+  @@map("habit_cues")
 }

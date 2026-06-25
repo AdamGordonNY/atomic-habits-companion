@@ -351,7 +351,20 @@ exports.Prisma.TrackedHabitScalarFieldEnum = {
   category: 'category',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  userId: 'userId'
+  userId: 'userId',
+  goalEntryId: 'goalEntryId'
+};
+
+exports.Prisma.HabitCueScalarFieldEnum = {
+  id: 'id',
+  behavior: 'behavior',
+  time: 'time',
+  location: 'location',
+  isBreaking: 'isBreaking',
+  reflection: 'reflection',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  habitId: 'habitId'
 };
 
 exports.Prisma.SortOrder = {
@@ -392,7 +405,8 @@ exports.Prisma.ModelName = {
   AssessmentNextStep: 'AssessmentNextStep',
   NextStepGoalEntry: 'NextStepGoalEntry',
   Checklist: 'Checklist',
-  TrackedHabit: 'TrackedHabit'
+  TrackedHabit: 'TrackedHabit',
+  HabitCue: 'HabitCue'
 };
 
 /**
