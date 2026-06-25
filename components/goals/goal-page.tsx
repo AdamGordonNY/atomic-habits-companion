@@ -6,9 +6,11 @@ import { useRouter } from "next/navigation";
 import { fetchGoalEntryById, type GoalEntryData } from "@/lib/actions/next-step-actions";
 import { actionCreateHabitChecklist, actionGetHabitChecklists } from "@/lib/checklists-actions";
 import {
+  actionAddHabitToGoal,
   actionCreateHabitCue,
   actionGetHabitCues,
   actionGetOrCreateHabitsForGoal,
+  actionUpdateGoalHabit,
   actionUpdateHabitCueReflection,
   type HabitCueData,
   type TrackedHabitData,
@@ -29,6 +31,14 @@ export function GoalPage({ goalId }: { goalId: string }) {
   const [savingCue, setSavingCue] = useState(false);
   const [reflectingCueId, setReflectingCueId] = useState<string | null>(null);
   const [reflectionDraft, setReflectionDraft] = useState("");
+  const [editingHabitId, setEditingHabitId] = useState<string | null>(null);
+  const [editHabitName, setEditHabitName] = useState("");
+  const [editHabitCategory, setEditHabitCategory] = useState("");
+  const [showAddHabit, setShowAddHabit] = useState(false);
+  const [newHabitName, setNewHabitName] = useState("");
+  const [newHabitCategory, setNewHabitCategory] = useState("");
+  const [savingHabit, setSavingHabit] = useState(false);
+  const [habitActionError, setHabitActionError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [creatingForHabitId, setCreatingForHabitId] = useState<string | null>(null);
 
@@ -58,6 +68,15 @@ export function GoalPage({ goalId }: { goalId: string }) {
       cancelled = true;
     };
   }, [goalId]);
+
+  useEffect(() => {
+    if (habits.length === 0) {
+      setSelectedHabitId("");
+      return;
+    }
+    const exists = habits.some((h) => h.id === selectedHabitId);
+    if (!exists) setSelectedHabitId(habits[0].id);
+  }, [habits, selectedHabitId]);
 
   async function handleNewCheckIn(habit: TrackedHabitData) {
     setCreatingForHabitId(habit.id);
@@ -108,6 +127,57 @@ export function GoalPage({ goalId }: { goalId: string }) {
     setReflectionDraft("");
   }
 
+  async function handleAddHabit() {
+    if (!newHabitName.trim()) return;
+    setHabitActionError(null);
+    setSavingHabit(true);
+    try {
+      const created = await actionAddHabitToGoal(
+        goalId,
+        newHabitName.trim(),
+        newHabitCategory.trim() ? newHabitCategory.trim() : null,
+      );
+      setHabits((prev) => [...prev, created].sort((a, b) => a.name.localeCompare(b.name)));
+      setChecklistsByHabit((prev) => ({ ...prev, [created.id]: [] }));
+      setCuesByHabit((prev) => ({ ...prev, [created.id]: [] }));
+      setSelectedHabitId(created.id);
+      setNewHabitName("");
+      setNewHabitCategory("");
+      setShowAddHabit(false);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unable to add habit";
+      setHabitActionError(message);
+    } finally {
+      setSavingHabit(false);
+    }
+  }
+
+  function startEditHabit(habit: TrackedHabitData) {
+    setHabitActionError(null);
+    setEditingHabitId(habit.id);
+    setEditHabitName(habit.name);
+    setEditHabitCategory(habit.category ?? "");
+  }
+
+  async function handleSaveHabitEdit(habitId: string) {
+    if (!editHabitName.trim()) return;
+    setHabitActionError(null);
+    setSavingHabit(true);
+    try {
+      const updated = await actionUpdateGoalHabit(habitId, {
+        name: editHabitName.trim(),
+        category: editHabitCategory.trim() ? editHabitCategory.trim() : null,
+      });
+      setHabits((prev) => prev.map((h) => (h.id === habitId ? updated : h)).sort((a, b) => a.name.localeCompare(b.name)));
+      setEditingHabitId(null);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unable to update habit";
+      setHabitActionError(message);
+    } finally {
+      setSavingHabit(false);
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -145,6 +215,126 @@ export function GoalPage({ goalId }: { goalId: string }) {
             <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">{goal.goal}</h2>
             {goal.idealSystem && (
               <p className="mt-3 text-sm text-slate-600">Ideal system: {goal.idealSystem}</p>
+            )}
+          </section>
+
+          <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+                Habits Linked To This Goal
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowAddHabit((prev) => !prev);
+                  setHabitActionError(null);
+                }}
+                className="inline-flex h-7 items-center rounded-full border border-slate-300 px-3 text-xs font-semibold text-slate-700 hover:border-slate-400 hover:text-slate-900"
+              >
+                {showAddHabit ? "Close" : "+ Add habit"}
+              </button>
+            </div>
+
+            {showAddHabit && (
+              <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50 p-3">
+                <div className="grid gap-2 sm:grid-cols-2">
+                  <input
+                    value={newHabitName}
+                    onChange={(e) => setNewHabitName(e.target.value)}
+                    placeholder="Habit name"
+                    className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none"
+                  />
+                  <input
+                    value={newHabitCategory}
+                    onChange={(e) => setNewHabitCategory(e.target.value)}
+                    placeholder="Category (optional)"
+                    className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handleAddHabit}
+                  disabled={savingHabit || !newHabitName.trim()}
+                  className="mt-2 inline-flex h-7 items-center rounded-full bg-slate-900 px-3 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-50"
+                >
+                  {savingHabit ? "Adding..." : "Add to goal"}
+                </button>
+              </div>
+            )}
+
+            {habitActionError && <p className="mb-3 text-xs text-rose-600">{habitActionError}</p>}
+
+            {habits.length === 0 ? (
+              <div className="rounded-xl border border-dashed border-slate-300 px-4 py-6 text-center text-sm text-slate-500">
+                No habits associated with this goal yet.
+              </div>
+            ) : (
+              <div className="grid gap-3 sm:grid-cols-2">
+                {habits.map((habit) => {
+                  const isEditing = editingHabitId === habit.id;
+                  return (
+                    <article
+                      key={habit.id}
+                      className="relative overflow-hidden rounded-2xl border border-slate-800/40 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 p-4 text-slate-100 shadow-sm"
+                    >
+                      <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
+                      {isEditing ? (
+                        <div className="space-y-2">
+                          <input
+                            value={editHabitName}
+                            onChange={(e) => setEditHabitName(e.target.value)}
+                            placeholder="Habit name"
+                            className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-slate-300/80 focus:border-white/40 focus:outline-none"
+                          />
+                          <input
+                            value={editHabitCategory}
+                            onChange={(e) => setEditHabitCategory(e.target.value)}
+                            placeholder="Category (optional)"
+                            className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-slate-300/80 focus:border-white/40 focus:outline-none"
+                          />
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => handleSaveHabitEdit(habit.id)}
+                              disabled={savingHabit || !editHabitName.trim()}
+                              className="inline-flex h-7 items-center rounded-full bg-white px-3 text-xs font-semibold text-slate-900 hover:bg-slate-100 disabled:opacity-50"
+                            >
+                              {savingHabit ? "Saving..." : "Save"}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setEditingHabitId(null)}
+                              className="text-xs text-slate-300 hover:text-white"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <p className="text-[10px] uppercase tracking-[0.2em] text-slate-300/80">Habit</p>
+                          <p className="mt-2 text-lg font-semibold leading-tight text-white">{habit.name}</p>
+                          <p className="mt-1 text-xs text-slate-300">
+                            {habit.category ? `Category: ${habit.category}` : "No category"}
+                          </p>
+                          <div className="mt-3 flex items-center gap-3">
+                            <Link href={`/habits/${habit.id}`} className="text-xs font-medium text-white/90 hover:text-white">
+                              Open habit
+                            </Link>
+                            <button
+                              type="button"
+                              onClick={() => startEditHabit(habit)}
+                              className="text-xs font-medium text-slate-200 hover:text-white"
+                            >
+                              Edit
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </article>
+                  );
+                })}
+              </div>
             )}
           </section>
 
