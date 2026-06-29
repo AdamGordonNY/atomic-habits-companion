@@ -12,6 +12,7 @@ import {
 import type { ChecklistRecord } from "@/types/checklist";
 
 interface GoalContext {
+  id: string;
   goal: string;
   systemEval: string;
   idealSystem: string;
@@ -24,7 +25,7 @@ export function HabitTracker({ habitId }: { habitId: string }) {
   const [editingCategory, setEditingCategory] = useState(false);
   const [categoryInput, setCategoryInput] = useState("");
   const [savingCategory, setSavingCategory] = useState(false);
-  const [goalContext, setGoalContext] = useState<GoalContext | null>(null);
+  const [goalContexts, setGoalContexts] = useState<GoalContext[]>([]);
   const [checklists, setChecklists] = useState<ChecklistRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
@@ -46,16 +47,19 @@ export function HabitTracker({ habitId }: { habitId: string }) {
       setHabitName(tracked.name);
       setCategory(tracked.category ?? "");
 
-      const entry = nextStepData?.goalEntries.find((e) =>
-        e.componentHabits.includes(tracked.name)
+      const entries = (nextStepData?.goalEntries ?? []).filter(
+        (e) => e.componentHabits.includes(tracked.name) || e.id === tracked.goalEntryId,
       );
-      if (entry) {
-        setGoalContext({
+
+      const uniqueEntries = [...new Map(entries.map((e) => [e.id ?? e.goal, e])).values()];
+      setGoalContexts(
+        uniqueEntries.map((entry, idx) => ({
+          id: entry.id ?? `goal-${idx}`,
           goal: entry.goal,
           systemEval: entry.systemEval,
           idealSystem: entry.idealSystem,
-        });
-      }
+        })),
+      );
 
       setChecklists(habitChecklists);
 
@@ -211,31 +215,40 @@ export function HabitTracker({ habitId }: { habitId: string }) {
             </div>
           </section>
 
-          {/* Goal context card */}
-          {goalContext && (
-            <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
-                Goal context
+          {/* Goal context cards */}
+          {goalContexts.length > 0 && (
+            <section className="space-y-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+                Associated goals
               </p>
-              <p className="text-sm font-semibold text-slate-900">{goalContext.goal}</p>
-
-              {goalContext.idealSystem && (
-                <div className="mt-4">
-                  <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400">
-                    Ideal system
+              {goalContexts.map((goalContext) => (
+                <article key={goalContext.id} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+                    Goal context
                   </p>
-                  <p className="text-sm leading-relaxed text-slate-600">{goalContext.idealSystem}</p>
-                </div>
-              )}
+                  <Link href={`/goals/${goalContext.id}`} className="text-sm font-semibold text-slate-900 hover:text-slate-700">
+                    {goalContext.goal}
+                  </Link>
 
-              {goalContext.systemEval && (
-                <div className="mt-4">
-                  <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400">
-                    Current evaluation
-                  </p>
-                  <p className="text-sm leading-relaxed text-slate-600">{goalContext.systemEval}</p>
-                </div>
-              )}
+                  {goalContext.idealSystem && (
+                    <div className="mt-4">
+                      <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400">
+                        Ideal system
+                      </p>
+                      <p className="text-sm leading-relaxed text-slate-600">{goalContext.idealSystem}</p>
+                    </div>
+                  )}
+
+                  {goalContext.systemEval && (
+                    <div className="mt-4">
+                      <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400">
+                        Current evaluation
+                      </p>
+                      <p className="text-sm leading-relaxed text-slate-600">{goalContext.systemEval}</p>
+                    </div>
+                  )}
+                </article>
+              ))}
             </section>
           )}
 

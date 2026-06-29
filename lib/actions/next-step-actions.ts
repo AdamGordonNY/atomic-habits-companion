@@ -14,6 +14,7 @@ async function requireUserId(): Promise<string> {
 // ─── types ────────────────────────────────────────────────────────────────────
 
 export interface NextStepGoalData {
+  id?: string;
   goal: string;
   currentSystem: string;
   systemEval: string;
@@ -46,6 +47,7 @@ export async function fetchNextStep(): Promise<NextStepData | null> {
   return {
     completedAt: row.completedAt?.toISOString() ?? null,
     goalEntries: row.goalEntries.map((e) => ({
+      id: e.id,
       goal: e.goal,
       currentSystem: e.currentSystem,
       systemEval: e.systemEval,
