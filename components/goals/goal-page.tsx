@@ -199,8 +199,8 @@ export function GoalPage({ goalId }: { goalId: string }) {
       <header className="sticky top-0 z-10 border-b border-slate-200/70 bg-white/90 px-5 py-4 backdrop-blur-xl">
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
-            <Link href="/dashboard" className="text-xs font-medium text-slate-500 hover:text-slate-800">
-              &lt; Dashboard
+            <Link href="/goals" className="text-xs font-medium text-slate-500 hover:text-slate-800">
+              &lt; Goals
             </Link>
             <span className="text-slate-300">/</span>
             <h1 className="truncate text-sm font-semibold text-slate-900">Goal</h1>
