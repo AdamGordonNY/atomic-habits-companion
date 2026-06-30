@@ -193,7 +193,7 @@ export function DashboardClient() {
                   <UserButton.Link
                     label="Identity"
                     labelIcon={<MenuIcon glyph=">" />}
-                    href="/habit-assessment/onboarding/part-four"
+                    href="/identity"
                   />
                   <UserButton.Link
                     label="Goals"
