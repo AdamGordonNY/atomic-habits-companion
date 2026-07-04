@@ -17,12 +17,13 @@ import {
   dbCreateNote,
   dbDeleteNote,
   dbGetNoteById,
+  dbGetNotesForProfileEntity,
   dbGetNotes,
   dbTogglePin,
   dbUpdateNote,
   syncNotesToDb,
 } from "@/lib/notes-db";
-import type { Note } from "@/types/habit";
+import type { Note, ProfileEntityType } from "@/types/habit";
 
 // ─── auth guard ───────────────────────────────────────────────────────────────
 
@@ -44,8 +45,16 @@ export async function actionGetNoteById(noteId: string): Promise<Note | null> {
   return dbGetNoteById(userId, noteId);
 }
 
+export async function actionGetNotesForProfileEntity(
+  profileEntityType: ProfileEntityType,
+  profileEntityId?: string | null,
+): Promise<Note[]> {
+  const userId = await requireUserId();
+  return dbGetNotesForProfileEntity(userId, profileEntityType, profileEntityId);
+}
+
 export async function actionCreateNote(
-  data: Pick<Note, "title" | "content" | "contentText" | "tags" | "pinned">,
+  data: Pick<Note, "title" | "content" | "contentText" | "tags" | "pinned" | "profileEntityType" | "profileEntityId">,
 ): Promise<Note> {
   const userId = await requireUserId();
   return dbCreateNote(userId, data);
@@ -53,7 +62,7 @@ export async function actionCreateNote(
 
 export async function actionUpdateNote(
   noteId: string,
-  data: Partial<Pick<Note, "title" | "content" | "contentText" | "tags" | "pinned">>,
+  data: Partial<Pick<Note, "title" | "content" | "contentText" | "tags" | "pinned" | "profileEntityType" | "profileEntityId">>,
 ): Promise<Note> {
   const userId = await requireUserId();
   return dbUpdateNote(userId, noteId, data);

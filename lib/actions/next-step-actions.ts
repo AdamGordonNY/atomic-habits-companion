@@ -24,6 +24,7 @@ export interface NextStepGoalData {
 }
 
 export interface NextStepData {
+  id: string;
   updatedAt: string;
   completedAt: string | null;
   goalEntries: NextStepGoalData[];
@@ -46,6 +47,7 @@ export async function fetchNextStep(): Promise<NextStepData | null> {
   if (!row) return null;
 
   return {
+    id: row.id,
     updatedAt: row.updatedAt.toISOString(),
     completedAt: row.completedAt?.toISOString() ?? null,
     goalEntries: row.goalEntries.map((e) => ({

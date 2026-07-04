@@ -13,6 +13,7 @@ export interface ProfileSnapshot {
 }
 
 export interface CommitmentsData {
+  id: string;
   updatedAt: string;
   completedAt: string | null;
   existingCommitments: string[];
@@ -21,6 +22,7 @@ export interface CommitmentsData {
 }
 
 export interface IdealsData {
+  id: string;
   updatedAt: string;
   completedAt: string | null;
   idealMorning: string;
@@ -30,6 +32,7 @@ export interface IdealsData {
 }
 
 export interface VisionData {
+  id: string;
   updatedAt: string;
   completedAt: string | null;
   majorGoals: string[];
@@ -44,12 +47,14 @@ export interface VisionData {
 }
 
 export interface IdentitiesData {
+  id: string;
   updatedAt: string;
   completedAt: string | null;
   identities: HabitAssessmentPartFour["identities"];
 }
 
 export interface GoalsData {
+  id: string;
   updatedAt: string;
   completedAt: string | null;
   entries: NextStepData["goalEntries"];
@@ -86,6 +91,7 @@ export async function fetchProfileSnapshot(): Promise<ProfileSnapshot> {
 export function getCommitmentsData(snapshot: ProfileSnapshot): CommitmentsData | null {
   if (!snapshot.partFour) return null;
   return {
+    id: snapshot.partFour.id,
     updatedAt: snapshot.partFour.updatedAt,
     completedAt: snapshot.partFour.completedAt,
     existingCommitments: snapshot.partFour.existingCommitments,
@@ -97,6 +103,7 @@ export function getCommitmentsData(snapshot: ProfileSnapshot): CommitmentsData |
 export function getIdealsData(snapshot: ProfileSnapshot): IdealsData | null {
   if (!snapshot.partFour) return null;
   return {
+    id: snapshot.partFour.id,
     updatedAt: snapshot.partFour.updatedAt,
     completedAt: snapshot.partFour.completedAt,
     idealMorning: snapshot.partFour.idealMorning,
@@ -109,6 +116,7 @@ export function getIdealsData(snapshot: ProfileSnapshot): IdealsData | null {
 export function getVisionData(snapshot: ProfileSnapshot): VisionData | null {
   if (!snapshot.partFour) return null;
   return {
+    id: snapshot.partFour.id,
     updatedAt: snapshot.partFour.updatedAt,
     completedAt: snapshot.partFour.completedAt,
     majorGoals: snapshot.partFour.majorGoals,
@@ -126,6 +134,7 @@ export function getVisionData(snapshot: ProfileSnapshot): VisionData | null {
 export function getIdentitiesData(snapshot: ProfileSnapshot): IdentitiesData | null {
   if (!snapshot.partFour) return null;
   return {
+    id: snapshot.partFour.id,
     updatedAt: snapshot.partFour.updatedAt,
     completedAt: snapshot.partFour.completedAt,
     identities: snapshot.partFour.identities,
@@ -135,6 +144,7 @@ export function getIdentitiesData(snapshot: ProfileSnapshot): IdentitiesData | n
 export function getGoalsData(snapshot: ProfileSnapshot): GoalsData | null {
   if (!snapshot.nextStep) return null;
   return {
+    id: snapshot.nextStep.id,
     updatedAt: snapshot.nextStep.updatedAt,
     completedAt: snapshot.nextStep.completedAt,
     entries: snapshot.nextStep.goalEntries,

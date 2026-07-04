@@ -153,6 +153,14 @@ export interface EnergyAnalysis {
 
 // ─── Notes ────────────────────────────────────────────────────────────────────
 
+export type ProfileEntityType =
+  | "commitments"
+  | "ideals"
+  | "vision"
+  | "identities"
+  | "goals"
+  | "habits";
+
 export interface Note {
   id: string;
   title: string;
@@ -162,6 +170,8 @@ export interface Note {
   updatedAt: string;     // ISO 8601
   tags: string[];
   pinned: boolean;
+  profileEntityType: ProfileEntityType | null;
+  profileEntityId: string | null;
 }
 
 // ─── Part Three ───────────────────────────────────────────────────────────────

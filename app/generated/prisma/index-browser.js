@@ -165,6 +165,8 @@ exports.Prisma.NoteScalarFieldEnum = {
   contentText: 'contentText',
   tags: 'tags',
   pinned: 'pinned',
+  profileEntityType: 'profileEntityType',
+  profileEntityId: 'profileEntityId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId'

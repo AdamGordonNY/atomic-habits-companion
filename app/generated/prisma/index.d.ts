@@ -7796,6 +7796,8 @@ export namespace Prisma {
     content: string | null
     contentText: string | null
     pinned: boolean | null
+    profileEntityType: string | null
+    profileEntityId: string | null
     createdAt: Date | null
     updatedAt: Date | null
     userId: string | null
@@ -7807,6 +7809,8 @@ export namespace Prisma {
     content: string | null
     contentText: string | null
     pinned: boolean | null
+    profileEntityType: string | null
+    profileEntityId: string | null
     createdAt: Date | null
     updatedAt: Date | null
     userId: string | null
@@ -7819,6 +7823,8 @@ export namespace Prisma {
     contentText: number
     tags: number
     pinned: number
+    profileEntityType: number
+    profileEntityId: number
     createdAt: number
     updatedAt: number
     userId: number
@@ -7832,6 +7838,8 @@ export namespace Prisma {
     content?: true
     contentText?: true
     pinned?: true
+    profileEntityType?: true
+    profileEntityId?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
@@ -7843,6 +7851,8 @@ export namespace Prisma {
     content?: true
     contentText?: true
     pinned?: true
+    profileEntityType?: true
+    profileEntityId?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
@@ -7855,6 +7865,8 @@ export namespace Prisma {
     contentText?: true
     tags?: true
     pinned?: true
+    profileEntityType?: true
+    profileEntityId?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
@@ -7940,6 +7952,8 @@ export namespace Prisma {
     contentText: string
     tags: string[]
     pinned: boolean
+    profileEntityType: string | null
+    profileEntityId: string | null
     createdAt: Date
     updatedAt: Date
     userId: string
@@ -7969,6 +7983,8 @@ export namespace Prisma {
     contentText?: boolean
     tags?: boolean
     pinned?: boolean
+    profileEntityType?: boolean
+    profileEntityId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -7982,6 +7998,8 @@ export namespace Prisma {
     contentText?: boolean
     tags?: boolean
     pinned?: boolean
+    profileEntityType?: boolean
+    profileEntityId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -7995,6 +8013,8 @@ export namespace Prisma {
     contentText?: boolean
     tags?: boolean
     pinned?: boolean
+    profileEntityType?: boolean
+    profileEntityId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -8008,12 +8028,14 @@ export namespace Prisma {
     contentText?: boolean
     tags?: boolean
     pinned?: boolean
+    profileEntityType?: boolean
+    profileEntityId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
   }
 
-  export type NoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "contentText" | "tags" | "pinned" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["note"]>
+  export type NoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "contentText" | "tags" | "pinned" | "profileEntityType" | "profileEntityId" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["note"]>
   export type NoteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -8042,6 +8064,8 @@ export namespace Prisma {
       contentText: string
       tags: string[]
       pinned: boolean
+      profileEntityType: string | null
+      profileEntityId: string | null
       createdAt: Date
       updatedAt: Date
       userId: string
@@ -8475,6 +8499,8 @@ export namespace Prisma {
     readonly contentText: FieldRef<"Note", 'String'>
     readonly tags: FieldRef<"Note", 'String[]'>
     readonly pinned: FieldRef<"Note", 'Boolean'>
+    readonly profileEntityType: FieldRef<"Note", 'String'>
+    readonly profileEntityId: FieldRef<"Note", 'String'>
     readonly createdAt: FieldRef<"Note", 'DateTime'>
     readonly updatedAt: FieldRef<"Note", 'DateTime'>
     readonly userId: FieldRef<"Note", 'String'>
@@ -29429,6 +29455,8 @@ export namespace Prisma {
     contentText: 'contentText',
     tags: 'tags',
     pinned: 'pinned',
+    profileEntityType: 'profileEntityType',
+    profileEntityId: 'profileEntityId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     userId: 'userId'
@@ -30071,6 +30099,8 @@ export namespace Prisma {
     contentText?: StringFilter<"Note"> | string
     tags?: StringNullableListFilter<"Note">
     pinned?: BoolFilter<"Note"> | boolean
+    profileEntityType?: StringNullableFilter<"Note"> | string | null
+    profileEntityId?: StringNullableFilter<"Note"> | string | null
     createdAt?: DateTimeFilter<"Note"> | Date | string
     updatedAt?: DateTimeFilter<"Note"> | Date | string
     userId?: StringFilter<"Note"> | string
@@ -30084,6 +30114,8 @@ export namespace Prisma {
     contentText?: SortOrder
     tags?: SortOrder
     pinned?: SortOrder
+    profileEntityType?: SortOrderInput | SortOrder
+    profileEntityId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -30100,6 +30132,8 @@ export namespace Prisma {
     contentText?: StringFilter<"Note"> | string
     tags?: StringNullableListFilter<"Note">
     pinned?: BoolFilter<"Note"> | boolean
+    profileEntityType?: StringNullableFilter<"Note"> | string | null
+    profileEntityId?: StringNullableFilter<"Note"> | string | null
     createdAt?: DateTimeFilter<"Note"> | Date | string
     updatedAt?: DateTimeFilter<"Note"> | Date | string
     userId?: StringFilter<"Note"> | string
@@ -30113,6 +30147,8 @@ export namespace Prisma {
     contentText?: SortOrder
     tags?: SortOrder
     pinned?: SortOrder
+    profileEntityType?: SortOrderInput | SortOrder
+    profileEntityId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -30131,6 +30167,8 @@ export namespace Prisma {
     contentText?: StringWithAggregatesFilter<"Note"> | string
     tags?: StringNullableListFilter<"Note">
     pinned?: BoolWithAggregatesFilter<"Note"> | boolean
+    profileEntityType?: StringNullableWithAggregatesFilter<"Note"> | string | null
+    profileEntityId?: StringNullableWithAggregatesFilter<"Note"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Note"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Note"> | Date | string
     userId?: StringWithAggregatesFilter<"Note"> | string
@@ -31766,6 +31804,8 @@ export namespace Prisma {
     contentText?: string
     tags?: NoteCreatetagsInput | string[]
     pinned?: boolean
+    profileEntityType?: string | null
+    profileEntityId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutNotesInput
@@ -31778,6 +31818,8 @@ export namespace Prisma {
     contentText?: string
     tags?: NoteCreatetagsInput | string[]
     pinned?: boolean
+    profileEntityType?: string | null
+    profileEntityId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
@@ -31790,6 +31832,8 @@ export namespace Prisma {
     contentText?: StringFieldUpdateOperationsInput | string
     tags?: NoteUpdatetagsInput | string[]
     pinned?: BoolFieldUpdateOperationsInput | boolean
+    profileEntityType?: NullableStringFieldUpdateOperationsInput | string | null
+    profileEntityId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutNotesNestedInput
@@ -31802,6 +31846,8 @@ export namespace Prisma {
     contentText?: StringFieldUpdateOperationsInput | string
     tags?: NoteUpdatetagsInput | string[]
     pinned?: BoolFieldUpdateOperationsInput | boolean
+    profileEntityType?: NullableStringFieldUpdateOperationsInput | string | null
+    profileEntityId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -31814,6 +31860,8 @@ export namespace Prisma {
     contentText?: string
     tags?: NoteCreatetagsInput | string[]
     pinned?: boolean
+    profileEntityType?: string | null
+    profileEntityId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
@@ -31826,6 +31874,8 @@ export namespace Prisma {
     contentText?: StringFieldUpdateOperationsInput | string
     tags?: NoteUpdatetagsInput | string[]
     pinned?: BoolFieldUpdateOperationsInput | boolean
+    profileEntityType?: NullableStringFieldUpdateOperationsInput | string | null
+    profileEntityId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -31837,6 +31887,8 @@ export namespace Prisma {
     contentText?: StringFieldUpdateOperationsInput | string
     tags?: NoteUpdatetagsInput | string[]
     pinned?: BoolFieldUpdateOperationsInput | boolean
+    profileEntityType?: NullableStringFieldUpdateOperationsInput | string | null
+    profileEntityId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -33639,6 +33691,8 @@ export namespace Prisma {
     contentText?: SortOrder
     tags?: SortOrder
     pinned?: SortOrder
+    profileEntityType?: SortOrder
+    profileEntityId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -33650,6 +33704,8 @@ export namespace Prisma {
     content?: SortOrder
     contentText?: SortOrder
     pinned?: SortOrder
+    profileEntityType?: SortOrder
+    profileEntityId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -33661,6 +33717,8 @@ export namespace Prisma {
     content?: SortOrder
     contentText?: SortOrder
     pinned?: SortOrder
+    profileEntityType?: SortOrder
+    profileEntityId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -36251,6 +36309,8 @@ export namespace Prisma {
     contentText?: string
     tags?: NoteCreatetagsInput | string[]
     pinned?: boolean
+    profileEntityType?: string | null
+    profileEntityId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -36262,6 +36322,8 @@ export namespace Prisma {
     contentText?: string
     tags?: NoteCreatetagsInput | string[]
     pinned?: boolean
+    profileEntityType?: string | null
+    profileEntityId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -36623,6 +36685,8 @@ export namespace Prisma {
     contentText?: StringFilter<"Note"> | string
     tags?: StringNullableListFilter<"Note">
     pinned?: BoolFilter<"Note"> | boolean
+    profileEntityType?: StringNullableFilter<"Note"> | string | null
+    profileEntityId?: StringNullableFilter<"Note"> | string | null
     createdAt?: DateTimeFilter<"Note"> | Date | string
     updatedAt?: DateTimeFilter<"Note"> | Date | string
     userId?: StringFilter<"Note"> | string
@@ -40019,6 +40083,8 @@ export namespace Prisma {
     contentText?: string
     tags?: NoteCreatetagsInput | string[]
     pinned?: boolean
+    profileEntityType?: string | null
+    profileEntityId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -40108,6 +40174,8 @@ export namespace Prisma {
     contentText?: StringFieldUpdateOperationsInput | string
     tags?: NoteUpdatetagsInput | string[]
     pinned?: BoolFieldUpdateOperationsInput | boolean
+    profileEntityType?: NullableStringFieldUpdateOperationsInput | string | null
+    profileEntityId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40119,6 +40187,8 @@ export namespace Prisma {
     contentText?: StringFieldUpdateOperationsInput | string
     tags?: NoteUpdatetagsInput | string[]
     pinned?: BoolFieldUpdateOperationsInput | boolean
+    profileEntityType?: NullableStringFieldUpdateOperationsInput | string | null
+    profileEntityId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40130,6 +40200,8 @@ export namespace Prisma {
     contentText?: StringFieldUpdateOperationsInput | string
     tags?: NoteUpdatetagsInput | string[]
     pinned?: BoolFieldUpdateOperationsInput | boolean
+    profileEntityType?: NullableStringFieldUpdateOperationsInput | string | null
+    profileEntityId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

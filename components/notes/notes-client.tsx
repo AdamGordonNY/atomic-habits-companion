@@ -171,25 +171,17 @@ export function NotesClient() {
     };
   }, []);
 
-  // load selected note into editor state
-  useEffect(() => {
-    if (!selected) return;
-    setEditTitle(selected.title);
-    setEditContent(selected.content);
-    setEditContentText(selected.contentText);
-    setEditTags(selected.tags);
+  function openNote(note: Note, editMode: boolean) {
+    setSelected(note);
+    setEditTitle(note.title);
+    setEditContent(note.content);
+    setEditContentText(note.contentText);
+    setEditTags(note.tags);
     setEditorKey((k) => k + 1);
     setDirty(false);
     setShowDelete(false);
-    setIsEditing(openInEditModeRef.current); // true only for brand-new notes
-    openInEditModeRef.current = false;       // reset for next selection
-    // on mobile, switch to editor pane
+    setIsEditing(editMode);
     setShowSidebar(false);
-  }, [selected?.id]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  async function refreshList() {
-    const updated = await actionGetNotes();
-    setNotes(updated);
   }
 
   async function handleNew() {
@@ -199,15 +191,17 @@ export function NotesClient() {
       contentText: "",
       tags: [],
       pinned: false,
+      profileEntityType: null,
+      profileEntityId: null,
     });
     setNotes((prev) => [note, ...prev]);
-    openInEditModeRef.current = true;
-    setSelected(note);
+    openInEditModeRef.current = false;
+    openNote(note, true);
   }
 
   function selectNote(note: Note) {
-    setSelected(note);
-    setIsEditing(false); // existing notes open in view mode
+    openInEditModeRef.current = false;
+    openNote(note, false);
   }
 
   async function handleDoneEditing() {

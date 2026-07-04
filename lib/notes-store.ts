@@ -26,7 +26,11 @@ function readAll(): Note[] {
     if (!raw) return [];
     const parsed = JSON.parse(raw) as StoredNotes;
     if (parsed.version !== STORAGE_VERSION) return [];
-    return parsed.notes ?? [];
+    return (parsed.notes ?? []).map((note) => ({
+      ...note,
+      profileEntityType: note.profileEntityType ?? null,
+      profileEntityId: note.profileEntityId ?? null,
+    }));
   } catch {
     return [];
   }

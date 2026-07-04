@@ -17,9 +17,25 @@
 
 import "server-only";
 import { prisma } from "@/lib/prisma";
-import type { Note } from "@/types/habit";
+import type { Note, ProfileEntityType } from "@/types/habit";
 
 // ─── type helpers ─────────────────────────────────────────────────────────────
+
+const PROFILE_ENTITY_TYPES: ProfileEntityType[] = [
+  "commitments",
+  "ideals",
+  "vision",
+  "identities",
+  "goals",
+  "habits",
+];
+
+function toProfileEntityType(value: string | null): ProfileEntityType | null {
+  if (!value) return null;
+  return PROFILE_ENTITY_TYPES.includes(value as ProfileEntityType)
+    ? (value as ProfileEntityType)
+    : null;
+}
 
 /** Shape returned by Prisma — convert to the app's Note type */
 function toNote(row: {
@@ -29,6 +45,8 @@ function toNote(row: {
   contentText: string;
   tags: string[];
   pinned: boolean;
+  profileEntityType: string | null;
+  profileEntityId: string | null;
   createdAt: Date;
   updatedAt: Date;
 }): Note {
@@ -39,6 +57,8 @@ function toNote(row: {
     contentText: row.contentText,
     tags: row.tags,
     pinned: row.pinned,
+    profileEntityType: toProfileEntityType(row.profileEntityType),
+    profileEntityId: row.profileEntityId,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
   };
@@ -50,6 +70,22 @@ function toNote(row: {
 export async function dbGetNotes(userId: string): Promise<Note[]> {
   const rows = await prisma.note.findMany({
     where: { userId },
+    orderBy: [{ pinned: "desc" }, { updatedAt: "desc" }],
+  });
+  return rows.map(toNote);
+}
+
+export async function dbGetNotesForProfileEntity(
+  userId: string,
+  profileEntityType: Note["profileEntityType"],
+  profileEntityId?: string | null,
+): Promise<Note[]> {
+  const rows = await prisma.note.findMany({
+    where: {
+      userId,
+      profileEntityType,
+      profileEntityId: profileEntityId ?? null,
+    },
     orderBy: [{ pinned: "desc" }, { updatedAt: "desc" }],
   });
   return rows.map(toNote);
@@ -70,7 +106,7 @@ export async function dbGetNoteById(
 
 export async function dbCreateNote(
   userId: string,
-  data: Pick<Note, "title" | "content" | "contentText" | "tags" | "pinned">,
+  data: Pick<Note, "title" | "content" | "contentText" | "tags" | "pinned" | "profileEntityType" | "profileEntityId">,
 ): Promise<Note> {
   const row = await prisma.note.create({
     data: { userId, ...data },
@@ -81,7 +117,7 @@ export async function dbCreateNote(
 export async function dbUpdateNote(
   userId: string,
   noteId: string,
-  data: Partial<Pick<Note, "title" | "content" | "contentText" | "tags" | "pinned">>,
+  data: Partial<Pick<Note, "title" | "content" | "contentText" | "tags" | "pinned" | "profileEntityType" | "profileEntityId">>,
 ): Promise<Note> {
   // The where clause ensures users can only update their own notes
   const row = await prisma.note.update({
@@ -137,6 +173,8 @@ export async function syncNotesToDb(
           contentText: n.contentText,
           tags: n.tags,
           pinned: n.pinned,
+          profileEntityType: n.profileEntityType ?? null,
+          profileEntityId: n.profileEntityId ?? null,
           createdAt: new Date(n.createdAt),
           // updatedAt is managed by Prisma @updatedAt
         },
@@ -147,6 +185,8 @@ export async function syncNotesToDb(
           contentText: n.contentText,
           tags: n.tags,
           pinned: n.pinned,
+          profileEntityType: n.profileEntityType ?? null,
+          profileEntityId: n.profileEntityId ?? null,
         },
       }),
     ),
