@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { type ReactNode } from "react";
 import { Show, SignUpButton, UserButton } from "@clerk/nextjs";
 
@@ -31,9 +30,14 @@ export function LawShell({ children }: { children: ReactNode }) {
               <UserButton>
                 <UserButton.MenuItems>
                   <UserButton.Link
-                    label="Identity"
+                    label="Profile"
                     labelIcon={<MenuIcon glyph=">" />}
-                    href="/identity"
+                    href="/profile"
+                  />
+                  <UserButton.Link
+                    label="Settings"
+                    labelIcon={<MenuIcon glyph=">" />}
+                    href="/settings"
                   />
                   <UserButton.Link
                     label="Goals"

@@ -15,6 +15,7 @@ export interface TrackedHabitData {
   category: string | null;
   goalEntryId?: string | null;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface HabitCueData {
@@ -43,6 +44,7 @@ export async function actionGetTrackedHabits(): Promise<TrackedHabitData[]> {
     category: r.category,
     goalEntryId: r.goalEntryId,
     createdAt: r.createdAt.toISOString(),
+    updatedAt: r.updatedAt.toISOString(),
   }));
 }
 
@@ -52,7 +54,7 @@ export async function actionGetTrackedHabit(name: string): Promise<TrackedHabitD
     where: { userId_name: { userId, name } },
   });
   return row
-    ? { id: row.id, name: row.name, category: row.category, goalEntryId: row.goalEntryId, createdAt: row.createdAt.toISOString() }
+    ? { id: row.id, name: row.name, category: row.category, goalEntryId: row.goalEntryId, createdAt: row.createdAt.toISOString(), updatedAt: row.updatedAt.toISOString() }
     : null;
 }
 
@@ -62,7 +64,7 @@ export async function actionGetTrackedHabitById(id: string): Promise<TrackedHabi
     where: { id, userId },
   });
   return row
-    ? { id: row.id, name: row.name, category: row.category, goalEntryId: row.goalEntryId, createdAt: row.createdAt.toISOString() }
+    ? { id: row.id, name: row.name, category: row.category, goalEntryId: row.goalEntryId, createdAt: row.createdAt.toISOString(), updatedAt: row.updatedAt.toISOString() }
     : null;
 }
 
@@ -102,6 +104,7 @@ export async function actionGetOrCreateHabitsForGoal(goalId: string): Promise<Tr
     category: r.category,
     goalEntryId: r.goalEntryId,
     createdAt: r.createdAt.toISOString(),
+    updatedAt: r.updatedAt.toISOString(),
   }));
 }
 
@@ -148,6 +151,7 @@ export async function actionAddHabitToGoal(
     category: row.category,
     goalEntryId: row.goalEntryId,
     createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
   };
 }
 
@@ -190,6 +194,7 @@ export async function actionUpdateGoalHabit(
     category: row.category,
     goalEntryId: row.goalEntryId,
     createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
   };
 }
 
@@ -277,6 +282,7 @@ export async function actionUpsertTrackedHabit(
     category: row.category,
     goalEntryId: row.goalEntryId,
     createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
   };
 }
 

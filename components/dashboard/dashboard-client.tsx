@@ -191,9 +191,14 @@ export function DashboardClient() {
               <UserButton>
                 <UserButton.MenuItems>
                   <UserButton.Link
-                    label="Identity"
+                    label="Profile"
                     labelIcon={<MenuIcon glyph=">" />}
-                    href="/identity"
+                    href="/profile"
+                  />
+                  <UserButton.Link
+                    label="Settings"
+                    labelIcon={<MenuIcon glyph=">" />}
+                    href="/settings"
                   />
                   <UserButton.Link
                     label="Goals"
@@ -329,7 +334,7 @@ export function DashboardClient() {
                   <div className="text-left">
                     <p className="text-sm font-semibold text-slate-950">Review your answers</p>
                     <p className="mt-0.5 text-xs text-slate-500">
-                      Browse everything you've entered across all four parts
+                      Browse everything you&apos;ve entered across all four parts
                     </p>
                   </div>
                 </div>
