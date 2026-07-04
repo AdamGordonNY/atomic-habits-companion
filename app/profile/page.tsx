@@ -9,7 +9,7 @@ import {
   getIdealsData,
   getVisionData,
 } from "@/lib/profile-data";
-import { readProfileVisibilitySettings } from "@/lib/profile-settings";
+import { readProfileVisibilitySettings } from "@/lib/profile-settings-server";
 
 export const metadata: Metadata = {
   title: "Profile · Atomic Habits Companion",

@@ -1,7 +1,3 @@
-import "server-only";
-
-import { cookies } from "next/headers";
-
 export const PROFILE_SETTINGS_COOKIE = "profile-visibility-settings";
 
 export const PROFILE_SECTION_KEYS = [
@@ -59,15 +55,32 @@ function normalizeProfileVisibilitySettings(input: unknown): ProfileVisibilitySe
   return next;
 }
 
-export async function readProfileVisibilitySettings(): Promise<ProfileVisibilitySettings> {
-  const store = await cookies();
-  const raw = store.get(PROFILE_SETTINGS_COOKIE)?.value;
+export function parseProfileVisibilitySettings(raw?: string | null): ProfileVisibilitySettings {
   if (!raw) return getDefaultProfileVisibilitySettings();
 
   try {
     return normalizeProfileVisibilitySettings(JSON.parse(raw));
   } catch {
     return getDefaultProfileVisibilitySettings();
+  }
+}
+
+export function readProfileVisibilitySettingsFromCookieString(cookieString: string): ProfileVisibilitySettings {
+  if (!cookieString) return getDefaultProfileVisibilitySettings();
+
+  const cookie = cookieString
+    .split(";")
+    .map((part) => part.trim())
+    .find((part) => part.startsWith(`${PROFILE_SETTINGS_COOKIE}=`));
+
+  if (!cookie) return getDefaultProfileVisibilitySettings();
+
+  const rawValue = cookie.slice(PROFILE_SETTINGS_COOKIE.length + 1);
+
+  try {
+    return parseProfileVisibilitySettings(decodeURIComponent(rawValue));
+  } catch {
+    return parseProfileVisibilitySettings(rawValue);
   }
 }
 

@@ -6,13 +6,19 @@ import {
   PROFILE_SECTION_KEYS,
   PROFILE_SECTION_LABELS,
   PROFILE_SECTION_ROUTES,
+  getDefaultProfileVisibilitySettings,
+  readProfileVisibilitySettingsFromCookieString,
   type ProfileVisibilitySettings,
 } from "@/lib/profile-settings";
 import { updateProfileVisibilitySettings } from "@/lib/actions/profile-settings-actions";
 
-export function ProfileSettingsForm({ initialSettings }: { initialSettings: ProfileVisibilitySettings }) {
+export function ProfileSettingsForm({ initialSettings }: { initialSettings?: ProfileVisibilitySettings }) {
   const router = useRouter();
-  const [settings, setSettings] = useState(initialSettings);
+  const [settings, setSettings] = useState<ProfileVisibilitySettings>(() => {
+    if (initialSettings) return initialSettings;
+    if (typeof document === "undefined") return getDefaultProfileVisibilitySettings();
+    return readProfileVisibilitySettingsFromCookieString(document.cookie);
+  });
   const [message, setMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
