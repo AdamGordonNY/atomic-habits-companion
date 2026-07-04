@@ -144,6 +144,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       name: r.name,
       category: r.category,
       createdAt: r.createdAt.toISOString(),
+      updatedAt: r.updatedAt.toISOString(),
     })),
     goals: (nextStep?.goalEntries ?? []).map((g) => ({
       id: g.id,
