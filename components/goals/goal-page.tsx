@@ -228,17 +228,13 @@ export function GoalPage({ goalId }: { goalId: string }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-50">
-      <header className="sticky top-0 z-10 border-b border-slate-200/70 bg-white/90 px-5 py-4 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-2xl items-center justify-between gap-3">
-          <div className="flex min-w-0 items-center gap-3">
-            <Link href="/goals" className="text-xs font-medium text-slate-500 hover:text-slate-800">
-              &lt; Goals
-            </Link>
-            <span className="text-slate-300">/</span>
-            <h1 className="truncate text-sm font-semibold text-slate-900">Goal</h1>
-          </div>
+      <div className="border-b border-slate-100 bg-white px-4 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-2xl items-center gap-2 text-xs text-slate-500">
+          <Link href="/goals" className="hover:text-slate-800">Goals</Link>
+          <span>/</span>
+          <span className="font-semibold text-slate-800">Goal</span>
         </div>
-      </header>
+      </div>
 
       <main className="flex-1 px-5 py-8">
         <div className="mx-auto max-w-2xl space-y-6">

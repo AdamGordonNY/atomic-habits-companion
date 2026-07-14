@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { PostSigninSync } from "@/components/auth/post-signin-sync";
+import { SiteNavbar } from "@/components/site-navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,8 +34,11 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <ClerkProvider>
           <Providers>
-            <PostSigninSync />
-            {children}
+            <SiteNavbar />
+            <main className="flex-1">
+              <PostSigninSync />
+              {children}
+            </main>
           </Providers>
         </ClerkProvider>
       </body>

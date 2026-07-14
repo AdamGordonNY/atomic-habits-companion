@@ -76,14 +76,14 @@ export default async function IdentityGoalDetailPage({ params }: PageProps) {
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-slate-500">Identity</h2>
         {assignableIdentities.length > 0 && (
-          <form action={attachIdentityAction} className="mt-3 flex flex-wrap items-center gap-2">
+          <form action={attachIdentityAction} className="mt-3 flex flex-col gap-2 sm:flex-row">
             <select
               name="identityId"
               defaultValue=""
-              className="h-9 rounded-full border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
+              className="h-10 min-w-0 flex-1 rounded-full border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
             >
               <option value="" disabled>
-                Attach goal to an identity...
+                Attach goal to an identity…
               </option>
               {assignableIdentities.map((identityOption) => (
                 <option key={identityOption.id} value={identityOption.id}>
@@ -93,25 +93,33 @@ export default async function IdentityGoalDetailPage({ params }: PageProps) {
             </select>
             <button
               type="submit"
-              className="inline-flex h-9 items-center rounded-full bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800"
             >
-              Attach identity
+              Attach
             </button>
           </form>
         )}
       </section>
 
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-slate-500">Habits For This Goal</h2>
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-slate-500">Habits For This Goal</h2>
+          <Link
+            href="/habits/new"
+            className="inline-flex h-8 items-center rounded-full border border-slate-300 px-3 text-xs font-semibold text-slate-700 hover:border-slate-400 hover:text-slate-900"
+          >
+            + New habit
+          </Link>
+        </div>
         {assignableHabits.length > 0 && (
-          <form action={attachHabitAction} className="mt-3 flex flex-wrap items-center gap-2">
+          <form action={attachHabitAction} className="mt-3 flex flex-col gap-2 sm:flex-row">
             <select
               name="habitId"
               defaultValue=""
-              className="h-9 rounded-full border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
+              className="h-10 min-w-0 flex-1 rounded-full border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
             >
               <option value="" disabled>
-                Attach habit to this goal...
+                Attach habit to this goal…
               </option>
               {assignableHabits.map((habit) => (
                 <option key={habit.id} value={habit.id}>
@@ -121,9 +129,9 @@ export default async function IdentityGoalDetailPage({ params }: PageProps) {
             </select>
             <button
               type="submit"
-              className="inline-flex h-9 items-center rounded-full bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800"
             >
-              Attach habit
+              Attach
             </button>
           </form>
         )}

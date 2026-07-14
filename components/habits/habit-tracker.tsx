@@ -150,29 +150,19 @@ export function HabitTracker({ habitId }: { habitId: string }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-50">
-      {/* Header */}
-      <header className="sticky top-0 z-10 border-b border-slate-200/70 bg-white/90 px-5 py-4 backdrop-blur-xl">
+      {/* Page sub-header */}
+      <div className="border-b border-slate-100 bg-white px-4 py-3 sm:px-6">
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-3">
-          <div className="flex min-w-0 items-center gap-3">
-            <Link
-              href="/dashboard"
-              className="flex-shrink-0 text-xs font-medium text-slate-500 hover:text-slate-800"
-            >
-              ← Dashboard
-            </Link>
-            <span className="text-slate-300">/</span>
+          <div className="flex min-w-0 items-center gap-2 text-xs text-slate-500">
+            <Link href="/habits" className="hover:text-slate-800">Habits</Link>
+            <span>/</span>
             {category && (
               <>
-                <Link
-                  href={`/habits/category/${encodeURIComponent(category)}`}
-                  className="hidden text-xs font-medium text-slate-500 hover:text-slate-800 sm:block"
-                >
-                  {category}
-                </Link>
-                <span className="hidden text-slate-300 sm:block">/</span>
+                <Link href={`/habits/category/${encodeURIComponent(category)}`} className="hover:text-slate-800">{category}</Link>
+                <span>/</span>
               </>
             )}
-            <h1 className="truncate text-sm font-semibold text-slate-900">{habitName || "Habit"}</h1>
+            <span className="font-semibold text-slate-800">{habitName || "Habit"}</span>
           </div>
           <button
             type="button"
@@ -183,7 +173,7 @@ export function HabitTracker({ habitId }: { habitId: string }) {
             {creating ? "Creating…" : "+ New checklist"}
           </button>
         </div>
-      </header>
+      </div>
 
       <main className="flex-1 px-5 py-8">
         <div className="mx-auto max-w-2xl space-y-6">
@@ -258,11 +248,11 @@ export function HabitTracker({ habitId }: { habitId: string }) {
           <section className="grid gap-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:grid-cols-2">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">Attach to goal</p>
-              <div className="mt-2 flex gap-2">
+              <div className="mt-2 flex flex-col gap-2 sm:flex-row">
                 <select
                   value={selectedAttachGoalId}
                   onChange={(e) => setSelectedAttachGoalId(e.target.value)}
-                  className="h-9 flex-1 rounded-full border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
+                  className="h-10 min-w-0 flex-1 rounded-full border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
                 >
                   {attachableGoals.map((goal) => (
                     <option key={goal.id} value={goal.id}>
@@ -274,7 +264,7 @@ export function HabitTracker({ habitId }: { habitId: string }) {
                   type="button"
                   onClick={attachGoal}
                   disabled={attachingGoal || !selectedAttachGoalId}
-                  className="inline-flex h-9 items-center rounded-full bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-50"
+                  className="inline-flex h-10 items-center justify-center rounded-full bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-50"
                 >
                   {attachingGoal ? "Attaching..." : "Attach"}
                 </button>
@@ -282,11 +272,11 @@ export function HabitTracker({ habitId }: { habitId: string }) {
             </div>
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">Attach to identity</p>
-              <div className="mt-2 flex gap-2">
+              <div className="mt-2 flex flex-col gap-2 sm:flex-row">
                 <select
                   value={selectedAttachIdentityId}
                   onChange={(e) => setSelectedAttachIdentityId(e.target.value)}
-                  className="h-9 flex-1 rounded-full border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
+                  className="h-10 min-w-0 flex-1 rounded-full border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
                 >
                   {attachableIdentities.map((identity) => (
                     <option key={identity.id} value={identity.id}>
@@ -298,7 +288,7 @@ export function HabitTracker({ habitId }: { habitId: string }) {
                   type="button"
                   onClick={attachIdentity}
                   disabled={attachingIdentity || !selectedAttachIdentityId}
-                  className="inline-flex h-9 items-center rounded-full bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-50"
+                  className="inline-flex h-10 items-center justify-center rounded-full bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-50"
                 >
                   {attachingIdentity ? "Attaching..." : "Attach"}
                 </button>
