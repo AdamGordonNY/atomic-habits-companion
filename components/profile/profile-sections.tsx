@@ -3,7 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { actionUpdateGoalHabit, type TrackedHabitData } from "@/lib/actions/habit-actions";
+import {
+  actionDeleteTrackedHabit,
+  actionUpdateGoalHabit,
+  actionUpsertTrackedHabit,
+  type TrackedHabitData,
+} from "@/lib/actions/habit-actions";
 import { type NextStepGoalData, upsertNextStep } from "@/lib/actions/next-step-actions";
 import { upsertPartFour } from "@/lib/actions/part-four-actions";
 import {
@@ -133,6 +138,94 @@ function EmptyState({ message }: { message: string }) {
   return <p className="text-sm text-slate-500">{message}</p>;
 }
 
+function TagColumnView({
+  label,
+  items,
+  emptyText = "No entries.",
+}: {
+  label: string;
+  items: string[];
+  emptyText?: string;
+}) {
+  return (
+    <div>
+      <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">{label}</p>
+      {items.length > 0 ? (
+        <div className="mt-2 space-y-2">
+          {items.map((item, index) => (
+            <div
+              key={`${label}-tag-${index}`}
+              className="w-full rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700"
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="mt-2 text-sm text-slate-500">{emptyText}</p>
+      )}
+    </div>
+  );
+}
+
+function TagColumnEditor({
+  label,
+  items,
+  onChange,
+  addLabel,
+  placeholder,
+}: {
+  label: string;
+  items: string[];
+  onChange: (next: string[]) => void;
+  addLabel: string;
+  placeholder: string;
+}) {
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">{label}</p>
+        <button
+          type="button"
+          onClick={() => onChange([...items, ""])}
+          className="text-xs font-medium text-slate-600 hover:text-slate-900"
+        >
+          {addLabel}
+        </button>
+      </div>
+
+      {items.length === 0 ? (
+        <p className="text-sm text-slate-500">No entries yet.</p>
+      ) : (
+        <div className="space-y-2">
+          {items.map((item, index) => (
+            <div
+              key={`${label}-editor-${index}`}
+              className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-2 py-1"
+            >
+              <input
+                value={item}
+                onChange={(e) =>
+                  onChange(items.map((entry, entryIndex) => (entryIndex === index ? e.target.value : entry)))
+                }
+                placeholder={placeholder}
+                className="h-8 flex-1 bg-transparent px-2 text-sm text-slate-800 focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => onChange(items.filter((_, entryIndex) => entryIndex !== index))}
+                className="inline-flex h-7 items-center rounded-full border border-rose-200 px-2 text-xs font-semibold text-rose-600 hover:border-rose-300 hover:text-rose-700"
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function CommitmentsSection({ data, showRouteLink = true }: { data: CommitmentsData | null; showRouteLink?: boolean }) {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
@@ -173,37 +266,37 @@ export function CommitmentsSection({ data, showRouteLink = true }: { data: Commi
       saving={saving}
       showRouteLink={showRouteLink}
     >
-      {!data ? (
-        <EmptyState message="No commitments data yet." />
-      ) : isEditing ? (
+      {isEditing ? (
         <div className="space-y-4">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Existing commitments</p>
-            <textarea value={listToLines(draft.existingCommitments)} onChange={(e) => setDraft((prev) => ({ ...prev, existingCommitments: parseLines(e.target.value) }))} rows={4} className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
-          </div>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Desired commitments</p>
-            <textarea value={listToLines(draft.desiredCommitments)} onChange={(e) => setDraft((prev) => ({ ...prev, desiredCommitments: parseLines(e.target.value) }))} rows={4} className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
-          </div>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Unwanted commitments</p>
-            <textarea value={listToLines(draft.unwantedCommitments)} onChange={(e) => setDraft((prev) => ({ ...prev, unwantedCommitments: parseLines(e.target.value) }))} rows={4} className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
-          </div>
+          <TagColumnEditor
+            label="Existing commitments"
+            items={draft.existingCommitments}
+            onChange={(existingCommitments) => setDraft((prev) => ({ ...prev, existingCommitments }))}
+            addLabel="+ Add existing"
+            placeholder="Existing commitment"
+          />
+          <TagColumnEditor
+            label="Desired commitments"
+            items={draft.desiredCommitments}
+            onChange={(desiredCommitments) => setDraft((prev) => ({ ...prev, desiredCommitments }))}
+            addLabel="+ Add desired"
+            placeholder="Desired commitment"
+          />
+          <TagColumnEditor
+            label="Unwanted commitments"
+            items={draft.unwantedCommitments}
+            onChange={(unwantedCommitments) => setDraft((prev) => ({ ...prev, unwantedCommitments }))}
+            addLabel="+ Add unwanted"
+            placeholder="Unwanted commitment"
+          />
         </div>
+      ) : !data ? (
+        <EmptyState message="No commitments data yet." />
       ) : (
         <div className="space-y-4">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Existing commitments</p>
-            {data.existingCommitments.length > 0 ? <ul className="mt-2 space-y-1">{data.existingCommitments.map((item, index) => <li key={`existing-${index}`} className="text-sm text-slate-700">{item}</li>)}</ul> : <p className="mt-2 text-sm text-slate-500">No entries.</p>}
-          </div>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Desired commitments</p>
-            {data.desiredCommitments.length > 0 ? <ul className="mt-2 space-y-1">{data.desiredCommitments.map((item, index) => <li key={`desired-${index}`} className="text-sm text-slate-700">{item}</li>)}</ul> : <p className="mt-2 text-sm text-slate-500">No entries.</p>}
-          </div>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Unwanted commitments</p>
-            {data.unwantedCommitments.length > 0 ? <ul className="mt-2 space-y-1">{data.unwantedCommitments.map((item, index) => <li key={`unwanted-${index}`} className="text-sm text-slate-700">{item}</li>)}</ul> : <p className="mt-2 text-sm text-slate-500">No entries.</p>}
-          </div>
+          <TagColumnView label="Existing commitments" items={data.existingCommitments} />
+          <TagColumnView label="Desired commitments" items={data.desiredCommitments} />
+          <TagColumnView label="Unwanted commitments" items={data.unwantedCommitments} />
         </div>
       )}
     </SectionCard>
@@ -475,44 +568,56 @@ export function GoalsSection({ data, showRouteLink = true }: { data: GoalsData |
       saving={saving}
       showRouteLink={showRouteLink}
     >
-      {!data ? (
-        <EmptyState message="No goals yet. Complete The Next Step to generate them." />
-      ) : isEditing ? (
+      {isEditing ? (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Goal entries</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Goal tags</p>
             <button type="button" onClick={() => setDraft((prev) => [...prev, defaultGoalEntry()])} className="text-xs font-medium text-slate-600 hover:text-slate-900">+ Add goal</button>
           </div>
           {draft.map((entry, index) => (
-            <div key={`goal-entry-${index}`} className="rounded-xl border border-slate-200 p-3">
-              <textarea value={entry.goal} onChange={(e) => setDraft((prev) => prev.map((item, itemIndex) => itemIndex === index ? { ...item, goal: e.target.value } : item))} rows={2} placeholder="Goal" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                <textarea value={entry.currentSystem} onChange={(e) => setDraft((prev) => prev.map((item, itemIndex) => itemIndex === index ? { ...item, currentSystem: e.target.value } : item))} rows={3} placeholder="Current system" className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
-                <textarea value={entry.systemEval} onChange={(e) => setDraft((prev) => prev.map((item, itemIndex) => itemIndex === index ? { ...item, systemEval: e.target.value } : item))} rows={3} placeholder="System evaluation" className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
-                <input type="number" min={0} max={5} value={entry.systemRating} onChange={(e) => setDraft((prev) => prev.map((item, itemIndex) => itemIndex === index ? { ...item, systemRating: Math.max(0, Math.min(5, Number(e.target.value) || 0)) } : item))} className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
-                <textarea value={entry.idealSystem} onChange={(e) => setDraft((prev) => prev.map((item, itemIndex) => itemIndex === index ? { ...item, idealSystem: e.target.value } : item))} rows={3} placeholder="Ideal system" className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
-              </div>
-              <textarea value={listToLines(entry.componentHabits)} onChange={(e) => setDraft((prev) => prev.map((item, itemIndex) => itemIndex === index ? { ...item, componentHabits: parseLines(e.target.value) } : item))} rows={3} placeholder="Component habits (one per line)" className="mt-3 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
-              <button type="button" onClick={() => setDraft((prev) => prev.filter((_, itemIndex) => itemIndex !== index))} className="mt-2 text-xs font-medium text-rose-600 hover:text-rose-700">Remove goal</button>
+            <div
+              key={`goal-entry-${index}`}
+              className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-2 py-1"
+            >
+              <input
+                value={entry.goal}
+                onChange={(e) =>
+                  setDraft((prev) =>
+                    prev.map((item, itemIndex) =>
+                      itemIndex === index ? { ...item, goal: e.target.value } : item,
+                    ),
+                  )
+                }
+                placeholder="Goal"
+                className="h-8 flex-1 bg-transparent px-2 text-sm text-slate-800 focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setDraft((prev) => prev.filter((_, itemIndex) => itemIndex !== index))}
+                className="inline-flex h-7 items-center rounded-full border border-rose-200 px-2 text-xs font-semibold text-rose-600 hover:border-rose-300 hover:text-rose-700"
+              >
+                Remove
+              </button>
             </div>
           ))}
         </div>
+      ) : !data ? (
+        <EmptyState message="No goals yet. Complete The Next Step to generate them." />
       ) : data.entries.length === 0 ? (
         <EmptyState message="No goals yet. Complete The Next Step to generate them." />
       ) : (
-        <div className="space-y-4">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Goal tags</p>
+          <div className="mt-2 space-y-2">
           {data.entries.map((entry, index) => (
-            <div key={`goal-view-${index}`} className="rounded-xl border border-slate-200 p-4">
-              <p className="text-sm font-semibold text-slate-900">{entry.goal || "Untitled goal"}</p>
-              <div className="mt-3 space-y-3">
-                <div><p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400">Current system</p><p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">{entry.currentSystem || "No answer yet."}</p></div>
-                <div><p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400">System evaluation</p><p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">{entry.systemEval || "No answer yet."}</p></div>
-                <div><p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400">System rating</p><p className="mt-1 text-sm text-slate-700">{entry.systemRating > 0 ? `${entry.systemRating}/5` : "Not rated"}</p></div>
-                <div><p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400">Ideal system</p><p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">{entry.idealSystem || "No answer yet."}</p></div>
-                <div><p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400">Component habits</p>{entry.componentHabits.length > 0 ? <ul className="mt-1 space-y-1">{entry.componentHabits.map((habit, habitIndex) => <li key={`goal-habit-${index}-${habitIndex}`} className="text-sm text-slate-700">{habit}</li>)}</ul> : <p className="mt-1 text-sm text-slate-500">No habits yet.</p>}</div>
-              </div>
+            <div
+              key={`goal-view-${index}`}
+              className="w-full rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700"
+            >
+              {entry.goal || "Untitled goal"}
             </div>
           ))}
+          </div>
         </div>
       )}
     </SectionCard>
@@ -525,17 +630,47 @@ export function HabitsSection({ data, showRouteLink = true }: { data: HabitsData
   const [saving, setSaving] = useState(false);
   const [draft, setDraft] = useState<TrackedHabitData[]>(data.habits);
 
+  function addDraftHabit() {
+    const suffix = Math.random().toString(36).slice(2, 10);
+    const now = new Date().toISOString();
+    setDraft((prev) => [
+      ...prev,
+      {
+        id: `new-${Date.now()}-${suffix}`,
+        name: "",
+        category: null,
+        goalEntryId: null,
+        createdAt: now,
+        updatedAt: now,
+      },
+    ]);
+  }
+
   async function handleSave() {
     setSaving(true);
     try {
+      const existingIds = new Set(data.habits.map((habit) => habit.id));
+      const retainedIds = new Set(draft.filter((habit) => existingIds.has(habit.id)).map((habit) => habit.id));
+      const toDelete = data.habits.filter((habit) => !retainedIds.has(habit.id));
+
+      if (toDelete.length > 0) {
+        await Promise.all(toDelete.map((habit) => actionDeleteTrackedHabit(habit.id)));
+      }
+
+      const cleanedDraft = draft.filter((habit) => habit.name.trim().length > 0);
       await Promise.all(
-        draft.map((habit) =>
-          actionUpdateGoalHabit(habit.id, {
-            name: habit.name,
-            category: habit.category,
-          }),
-        ),
+        cleanedDraft.map((habit) => {
+          const normalizedCategory = habit.category?.trim() ? habit.category.trim() : null;
+          if (existingIds.has(habit.id)) {
+            return actionUpdateGoalHabit(habit.id, {
+              name: habit.name.trim(),
+              category: normalizedCategory,
+            });
+          }
+          return actionUpsertTrackedHabit(habit.name.trim(), normalizedCategory);
+        }),
       );
+
       setIsEditing(false);
       router.refresh();
     } finally {
@@ -562,31 +697,52 @@ export function HabitsSection({ data, showRouteLink = true }: { data: HabitsData
       saving={saving}
       showRouteLink={showRouteLink}
     >
-      {data.habits.length === 0 ? (
-        <EmptyState message="No tracked habits yet." />
-      ) : isEditing ? (
+      {isEditing ? (
         <div className="space-y-3">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Habit tags</p>
+            <button
+              type="button"
+              onClick={addDraftHabit}
+              className="text-xs font-medium text-slate-600 hover:text-slate-900"
+            >
+              + Add habit
+            </button>
+          </div>
           {draft.map((habit, index) => (
-            <div key={habit.id} className="rounded-xl border border-slate-200 p-3">
-              <input value={habit.name} onChange={(e) => setDraft((prev) => prev.map((item, itemIndex) => itemIndex === index ? { ...item, name: e.target.value } : item))} placeholder="Habit name" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
-              <input value={habit.category ?? ""} onChange={(e) => setDraft((prev) => prev.map((item, itemIndex) => itemIndex === index ? { ...item, category: e.target.value || null } : item))} placeholder="Category" className="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
-              <p className="mt-2 text-[11px] text-slate-500">Last edited {formatDate(habit.updatedAt)}</p>
+            <div key={habit.id} className="space-y-2 rounded-full border border-slate-200 bg-white px-3 py-2">
+              <input value={habit.name} onChange={(e) => setDraft((prev) => prev.map((item, itemIndex) => itemIndex === index ? { ...item, name: e.target.value } : item))} placeholder="Habit name" className="h-8 w-full bg-transparent text-sm text-slate-800 focus:outline-none" />
+              <div className="flex items-center gap-2">
+                <input value={habit.category ?? ""} onChange={(e) => setDraft((prev) => prev.map((item, itemIndex) => itemIndex === index ? { ...item, category: e.target.value || null } : item))} placeholder="Category (optional)" className="h-8 flex-1 rounded-full border border-slate-200 px-3 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
+                <button
+                  type="button"
+                  onClick={() => setDraft((prev) => prev.filter((_, itemIndex) => itemIndex !== index))}
+                  className="inline-flex h-7 items-center rounded-full border border-rose-200 px-2 text-xs font-semibold text-rose-600 hover:border-rose-300 hover:text-rose-700"
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           ))}
         </div>
+      ) : data.habits.length === 0 ? (
+        <EmptyState message="No tracked habits yet." />
       ) : (
-        <div className="space-y-3">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Habit tags</p>
+          <div className="mt-2 space-y-2">
           {data.habits.map((habit) => (
-            <div key={habit.id} className="rounded-xl border border-slate-200 p-3">
+            <div key={habit.id} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <Link href={`/habits/${habit.id}`} className="text-sm font-semibold text-slate-900 hover:text-slate-700">{habit.name}</Link>
-                  <p className="mt-1 text-sm text-slate-600">{habit.category || "No category"}</p>
+                  {habit.category && <p className="mt-0.5 text-xs text-slate-500">{habit.category}</p>}
                 </div>
                 <p className="text-[11px] text-slate-500">Edited {formatDate(habit.updatedAt)}</p>
               </div>
             </div>
           ))}
+          </div>
         </div>
       )}
     </SectionCard>
