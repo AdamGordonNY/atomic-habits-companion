@@ -22,6 +22,7 @@ export interface DashboardData {
   habitNames: string[];
   trackedHabits: TrackedHabitData[];
   goals: { id: string; label: string }[];
+  identityCount: number;
   recentNotes: { id: string; title: string; updatedAt: string }[];
   recentChecklists: { id: string; title: string; updatedAt: string }[];
 }
@@ -44,6 +45,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       habitNames: [],
       trackedHabits: [],
       goals: [],
+      identityCount: 0,
       recentNotes: [],
       recentChecklists: [],
     };
@@ -100,7 +102,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
     orderBy: [{ category: "asc" }, { name: "asc" }],
   });
 
-  const [notes, checklists] = await Promise.all([
+  const [notes, checklists, identityCount] = await Promise.all([
     prisma.note.findMany({
       where: { userId },
       orderBy: [{ pinned: "desc" }, { updatedAt: "desc" }],
@@ -113,6 +115,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       take: 10,
       select: { id: true, title: true, updatedAt: true },
     }),
+    prisma.identityRecord.count({ where: { assessment: { userId } } }),
   ]);
 
   return {
@@ -150,6 +153,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       id: g.id,
       label: g.goal,
     })),
+    identityCount,
     recentNotes: notes.map((n) => ({
       id: n.id,
       title: n.title || "Untitled note",
