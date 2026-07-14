@@ -241,7 +241,7 @@ export async function actionAddHabitToGoal(
 
   const goal = await prisma.nextStepGoalEntry.findFirst({
     where: { id: goalId, nextStep: { userId } },
-    select: { id: true },
+    select: { id: true, identityId: true },
   });
   if (!goal) throw new Error("Goal not found");
 
@@ -264,7 +264,7 @@ export async function actionAddHabitToGoal(
         userId,
         name: trimmedName,
         goalEntryId: goal.id,
-          identityId: goal.identityId,
+        identityId: goal.identityId,
         category: category ?? null,
       },
     });
