@@ -125,7 +125,9 @@ export async function fetchDashboardData(): Promise<DashboardData> {
         : null,
       partTwo: p2
         ? {
-            completedAt: p2.completedAt?.toISOString() ?? null,
+            completedAt:
+              p2.completedAt?.toISOString() ??
+              (p2.days.length >= 7 ? p2.updatedAt.toISOString() : null),
             dayIndex: p2.days.length > 0 ? p2.days.length - 1 : 0,
             startDate: p2.days[0]?.date ? isoDate(p2.days[0].date) : null,
             exists: true,

@@ -8,6 +8,7 @@ import type {
   HabitAssessmentPartTwo,
   times,
 } from "@/types/habit";
+import { syncPartTwo } from "@/lib/sync-actions";
 
 // ─── constants ────────────────────────────────────────────────────────────────
 
@@ -249,7 +250,12 @@ export function AssessmentPartTwoForm({ assessmentId }: AssessmentPartTwoFormPro
   }
 
   function finishAll() {
-    persist(new Date().toISOString());
+    const completedAt = new Date().toISOString();
+    persist(completedAt);
+    const payload = JSON.parse(
+      localStorage.getItem(storageKey) ?? "{}",
+    );
+    syncPartTwo(payload).catch(() => {/* non-critical */});
     router.push(`/habit-assessment/${assessmentId}/part-three`);
   }
 
