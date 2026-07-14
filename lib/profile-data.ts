@@ -170,7 +170,7 @@ export function getHabitsData(snapshot: ProfileSnapshot): HabitsData {
         ...habit,
         goalId: habit.goalEntryId ?? null,
         goalName: goal?.goal ?? null,
-        identityId: goal?.identityId ?? null,
+        identityId: habit.identityId ?? goal?.identityId ?? null,
       };
     }),
   };

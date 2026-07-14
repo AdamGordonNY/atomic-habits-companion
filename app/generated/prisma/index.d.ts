@@ -3149,10 +3149,12 @@ export namespace Prisma {
 
   export type IdentityRecordCountOutputType = {
     goals: number
+    trackedHabits: number
   }
 
   export type IdentityRecordCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     goals?: boolean | IdentityRecordCountOutputTypeCountGoalsArgs
+    trackedHabits?: boolean | IdentityRecordCountOutputTypeCountTrackedHabitsArgs
   }
 
   // Custom InputTypes
@@ -3171,6 +3173,13 @@ export namespace Prisma {
    */
   export type IdentityRecordCountOutputTypeCountGoalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NextStepGoalEntryWhereInput
+  }
+
+  /**
+   * IdentityRecordCountOutputType without action
+   */
+  export type IdentityRecordCountOutputTypeCountTrackedHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TrackedHabitWhereInput
   }
 
 
@@ -22897,6 +22906,7 @@ export namespace Prisma {
     assessmentId?: boolean
     assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
     goals?: boolean | IdentityRecord$goalsArgs<ExtArgs>
+    trackedHabits?: boolean | IdentityRecord$trackedHabitsArgs<ExtArgs>
     _count?: boolean | IdentityRecordCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["identityRecord"]>
 
@@ -22927,6 +22937,7 @@ export namespace Prisma {
   export type IdentityRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
     goals?: boolean | IdentityRecord$goalsArgs<ExtArgs>
+    trackedHabits?: boolean | IdentityRecord$trackedHabitsArgs<ExtArgs>
     _count?: boolean | IdentityRecordCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type IdentityRecordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -22941,6 +22952,7 @@ export namespace Prisma {
     objects: {
       assessment: Prisma.$AssessmentPartFourPayload<ExtArgs>
       goals: Prisma.$NextStepGoalEntryPayload<ExtArgs>[]
+      trackedHabits: Prisma.$TrackedHabitPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -23343,6 +23355,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     assessment<T extends AssessmentPartFourDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentPartFourDefaultArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     goals<T extends IdentityRecord$goalsArgs<ExtArgs> = {}>(args?: Subset<T, IdentityRecord$goalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    trackedHabits<T extends IdentityRecord$trackedHabitsArgs<ExtArgs> = {}>(args?: Subset<T, IdentityRecord$trackedHabitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23798,6 +23811,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NextStepGoalEntryScalarFieldEnum | NextStepGoalEntryScalarFieldEnum[]
+  }
+
+  /**
+   * IdentityRecord.trackedHabits
+   */
+  export type IdentityRecord$trackedHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackedHabit
+     */
+    select?: TrackedHabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackedHabit
+     */
+    omit?: TrackedHabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackedHabitInclude<ExtArgs> | null
+    where?: TrackedHabitWhereInput
+    orderBy?: TrackedHabitOrderByWithRelationInput | TrackedHabitOrderByWithRelationInput[]
+    cursor?: TrackedHabitWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TrackedHabitScalarFieldEnum | TrackedHabitScalarFieldEnum[]
   }
 
   /**
@@ -27242,6 +27279,7 @@ export namespace Prisma {
     updatedAt: Date | null
     userId: string | null
     goalEntryId: string | null
+    identityId: string | null
   }
 
   export type TrackedHabitMaxAggregateOutputType = {
@@ -27252,6 +27290,7 @@ export namespace Prisma {
     updatedAt: Date | null
     userId: string | null
     goalEntryId: string | null
+    identityId: string | null
   }
 
   export type TrackedHabitCountAggregateOutputType = {
@@ -27262,6 +27301,7 @@ export namespace Prisma {
     updatedAt: number
     userId: number
     goalEntryId: number
+    identityId: number
     _all: number
   }
 
@@ -27274,6 +27314,7 @@ export namespace Prisma {
     updatedAt?: true
     userId?: true
     goalEntryId?: true
+    identityId?: true
   }
 
   export type TrackedHabitMaxAggregateInputType = {
@@ -27284,6 +27325,7 @@ export namespace Prisma {
     updatedAt?: true
     userId?: true
     goalEntryId?: true
+    identityId?: true
   }
 
   export type TrackedHabitCountAggregateInputType = {
@@ -27294,6 +27336,7 @@ export namespace Prisma {
     updatedAt?: true
     userId?: true
     goalEntryId?: true
+    identityId?: true
     _all?: true
   }
 
@@ -27377,6 +27420,7 @@ export namespace Prisma {
     updatedAt: Date
     userId: string
     goalEntryId: string | null
+    identityId: string | null
     _count: TrackedHabitCountAggregateOutputType | null
     _min: TrackedHabitMinAggregateOutputType | null
     _max: TrackedHabitMaxAggregateOutputType | null
@@ -27404,8 +27448,10 @@ export namespace Prisma {
     updatedAt?: boolean
     userId?: boolean
     goalEntryId?: boolean
+    identityId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     goalEntry?: boolean | TrackedHabit$goalEntryArgs<ExtArgs>
+    identity?: boolean | TrackedHabit$identityArgs<ExtArgs>
     cues?: boolean | TrackedHabit$cuesArgs<ExtArgs>
     _count?: boolean | TrackedHabitCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["trackedHabit"]>
@@ -27418,8 +27464,10 @@ export namespace Prisma {
     updatedAt?: boolean
     userId?: boolean
     goalEntryId?: boolean
+    identityId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     goalEntry?: boolean | TrackedHabit$goalEntryArgs<ExtArgs>
+    identity?: boolean | TrackedHabit$identityArgs<ExtArgs>
   }, ExtArgs["result"]["trackedHabit"]>
 
   export type TrackedHabitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -27430,8 +27478,10 @@ export namespace Prisma {
     updatedAt?: boolean
     userId?: boolean
     goalEntryId?: boolean
+    identityId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     goalEntry?: boolean | TrackedHabit$goalEntryArgs<ExtArgs>
+    identity?: boolean | TrackedHabit$identityArgs<ExtArgs>
   }, ExtArgs["result"]["trackedHabit"]>
 
   export type TrackedHabitSelectScalar = {
@@ -27442,22 +27492,26 @@ export namespace Prisma {
     updatedAt?: boolean
     userId?: boolean
     goalEntryId?: boolean
+    identityId?: boolean
   }
 
-  export type TrackedHabitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "category" | "createdAt" | "updatedAt" | "userId" | "goalEntryId", ExtArgs["result"]["trackedHabit"]>
+  export type TrackedHabitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "category" | "createdAt" | "updatedAt" | "userId" | "goalEntryId" | "identityId", ExtArgs["result"]["trackedHabit"]>
   export type TrackedHabitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     goalEntry?: boolean | TrackedHabit$goalEntryArgs<ExtArgs>
+    identity?: boolean | TrackedHabit$identityArgs<ExtArgs>
     cues?: boolean | TrackedHabit$cuesArgs<ExtArgs>
     _count?: boolean | TrackedHabitCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TrackedHabitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     goalEntry?: boolean | TrackedHabit$goalEntryArgs<ExtArgs>
+    identity?: boolean | TrackedHabit$identityArgs<ExtArgs>
   }
   export type TrackedHabitIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     goalEntry?: boolean | TrackedHabit$goalEntryArgs<ExtArgs>
+    identity?: boolean | TrackedHabit$identityArgs<ExtArgs>
   }
 
   export type $TrackedHabitPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -27465,6 +27519,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       goalEntry: Prisma.$NextStepGoalEntryPayload<ExtArgs> | null
+      identity: Prisma.$IdentityRecordPayload<ExtArgs> | null
       cues: Prisma.$HabitCuePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -27475,6 +27530,7 @@ export namespace Prisma {
       updatedAt: Date
       userId: string
       goalEntryId: string | null
+      identityId: string | null
     }, ExtArgs["result"]["trackedHabit"]>
     composites: {}
   }
@@ -27871,6 +27927,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     goalEntry<T extends TrackedHabit$goalEntryArgs<ExtArgs> = {}>(args?: Subset<T, TrackedHabit$goalEntryArgs<ExtArgs>>): Prisma__NextStepGoalEntryClient<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    identity<T extends TrackedHabit$identityArgs<ExtArgs> = {}>(args?: Subset<T, TrackedHabit$identityArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     cues<T extends TrackedHabit$cuesArgs<ExtArgs> = {}>(args?: Subset<T, TrackedHabit$cuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitCuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -27908,6 +27965,7 @@ export namespace Prisma {
     readonly updatedAt: FieldRef<"TrackedHabit", 'DateTime'>
     readonly userId: FieldRef<"TrackedHabit", 'String'>
     readonly goalEntryId: FieldRef<"TrackedHabit", 'String'>
+    readonly identityId: FieldRef<"TrackedHabit", 'String'>
   }
     
 
@@ -28325,6 +28383,25 @@ export namespace Prisma {
      */
     include?: NextStepGoalEntryInclude<ExtArgs> | null
     where?: NextStepGoalEntryWhereInput
+  }
+
+  /**
+   * TrackedHabit.identity
+   */
+  export type TrackedHabit$identityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordInclude<ExtArgs> | null
+    where?: IdentityRecordWhereInput
   }
 
   /**
@@ -29797,7 +29874,8 @@ export namespace Prisma {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     userId: 'userId',
-    goalEntryId: 'goalEntryId'
+    goalEntryId: 'goalEntryId',
+    identityId: 'identityId'
   };
 
   export type TrackedHabitScalarFieldEnum = (typeof TrackedHabitScalarFieldEnum)[keyof typeof TrackedHabitScalarFieldEnum]
@@ -31210,6 +31288,7 @@ export namespace Prisma {
     assessmentId?: StringFilter<"IdentityRecord"> | string
     assessment?: XOR<AssessmentPartFourScalarRelationFilter, AssessmentPartFourWhereInput>
     goals?: NextStepGoalEntryListRelationFilter
+    trackedHabits?: TrackedHabitListRelationFilter
   }
 
   export type IdentityRecordOrderByWithRelationInput = {
@@ -31219,6 +31298,7 @@ export namespace Prisma {
     assessmentId?: SortOrder
     assessment?: AssessmentPartFourOrderByWithRelationInput
     goals?: NextStepGoalEntryOrderByRelationAggregateInput
+    trackedHabits?: TrackedHabitOrderByRelationAggregateInput
   }
 
   export type IdentityRecordWhereUniqueInput = Prisma.AtLeast<{
@@ -31231,6 +31311,7 @@ export namespace Prisma {
     assessmentId?: StringFilter<"IdentityRecord"> | string
     assessment?: XOR<AssessmentPartFourScalarRelationFilter, AssessmentPartFourWhereInput>
     goals?: NextStepGoalEntryListRelationFilter
+    trackedHabits?: TrackedHabitListRelationFilter
   }, "id">
 
   export type IdentityRecordOrderByWithAggregationInput = {
@@ -31470,8 +31551,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"TrackedHabit"> | Date | string
     userId?: StringFilter<"TrackedHabit"> | string
     goalEntryId?: StringNullableFilter<"TrackedHabit"> | string | null
+    identityId?: StringNullableFilter<"TrackedHabit"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     goalEntry?: XOR<NextStepGoalEntryNullableScalarRelationFilter, NextStepGoalEntryWhereInput> | null
+    identity?: XOR<IdentityRecordNullableScalarRelationFilter, IdentityRecordWhereInput> | null
     cues?: HabitCueListRelationFilter
   }
 
@@ -31483,8 +31566,10 @@ export namespace Prisma {
     updatedAt?: SortOrder
     userId?: SortOrder
     goalEntryId?: SortOrderInput | SortOrder
+    identityId?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     goalEntry?: NextStepGoalEntryOrderByWithRelationInput
+    identity?: IdentityRecordOrderByWithRelationInput
     cues?: HabitCueOrderByRelationAggregateInput
   }
 
@@ -31500,8 +31585,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"TrackedHabit"> | Date | string
     userId?: StringFilter<"TrackedHabit"> | string
     goalEntryId?: StringNullableFilter<"TrackedHabit"> | string | null
+    identityId?: StringNullableFilter<"TrackedHabit"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     goalEntry?: XOR<NextStepGoalEntryNullableScalarRelationFilter, NextStepGoalEntryWhereInput> | null
+    identity?: XOR<IdentityRecordNullableScalarRelationFilter, IdentityRecordWhereInput> | null
     cues?: HabitCueListRelationFilter
   }, "id" | "userId_name">
 
@@ -31513,6 +31600,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     userId?: SortOrder
     goalEntryId?: SortOrderInput | SortOrder
+    identityId?: SortOrderInput | SortOrder
     _count?: TrackedHabitCountOrderByAggregateInput
     _max?: TrackedHabitMaxOrderByAggregateInput
     _min?: TrackedHabitMinOrderByAggregateInput
@@ -31529,6 +31617,7 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"TrackedHabit"> | Date | string
     userId?: StringWithAggregatesFilter<"TrackedHabit"> | string
     goalEntryId?: StringNullableWithAggregatesFilter<"TrackedHabit"> | string | null
+    identityId?: StringNullableWithAggregatesFilter<"TrackedHabit"> | string | null
   }
 
   export type HabitCueWhereInput = {
@@ -33019,6 +33108,7 @@ export namespace Prisma {
     habits?: IdentityRecordCreatehabitsInput | string[]
     assessment: AssessmentPartFourCreateNestedOneWithoutIdentitiesInput
     goals?: NextStepGoalEntryCreateNestedManyWithoutIdentityInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutIdentityInput
   }
 
   export type IdentityRecordUncheckedCreateInput = {
@@ -33027,6 +33117,7 @@ export namespace Prisma {
     habits?: IdentityRecordCreatehabitsInput | string[]
     assessmentId: string
     goals?: NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutIdentityInput
   }
 
   export type IdentityRecordUpdateInput = {
@@ -33035,6 +33126,7 @@ export namespace Prisma {
     habits?: IdentityRecordUpdatehabitsInput | string[]
     assessment?: AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput
     goals?: NextStepGoalEntryUpdateManyWithoutIdentityNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutIdentityNestedInput
   }
 
   export type IdentityRecordUncheckedUpdateInput = {
@@ -33043,6 +33135,7 @@ export namespace Prisma {
     habits?: IdentityRecordUpdatehabitsInput | string[]
     assessmentId?: StringFieldUpdateOperationsInput | string
     goals?: NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutIdentityNestedInput
   }
 
   export type IdentityRecordCreateManyInput = {
@@ -33287,6 +33380,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutTrackedHabitsInput
     goalEntry?: NextStepGoalEntryCreateNestedOneWithoutTrackedHabitsInput
+    identity?: IdentityRecordCreateNestedOneWithoutTrackedHabitsInput
     cues?: HabitCueCreateNestedManyWithoutHabitInput
   }
 
@@ -33298,6 +33392,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     userId: string
     goalEntryId?: string | null
+    identityId?: string | null
     cues?: HabitCueUncheckedCreateNestedManyWithoutHabitInput
   }
 
@@ -33309,6 +33404,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutTrackedHabitsNestedInput
     goalEntry?: NextStepGoalEntryUpdateOneWithoutTrackedHabitsNestedInput
+    identity?: IdentityRecordUpdateOneWithoutTrackedHabitsNestedInput
     cues?: HabitCueUpdateManyWithoutHabitNestedInput
   }
 
@@ -33320,6 +33416,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
     cues?: HabitCueUncheckedUpdateManyWithoutHabitNestedInput
   }
 
@@ -33331,6 +33428,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     userId: string
     goalEntryId?: string | null
+    identityId?: string | null
   }
 
   export type TrackedHabitUpdateManyMutationInput = {
@@ -33349,6 +33447,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type HabitCueCreateInput = {
@@ -34561,6 +34660,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     userId?: SortOrder
     goalEntryId?: SortOrder
+    identityId?: SortOrder
   }
 
   export type TrackedHabitMaxOrderByAggregateInput = {
@@ -34571,6 +34671,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     userId?: SortOrder
     goalEntryId?: SortOrder
+    identityId?: SortOrder
   }
 
   export type TrackedHabitMinOrderByAggregateInput = {
@@ -34581,6 +34682,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     userId?: SortOrder
     goalEntryId?: SortOrder
+    identityId?: SortOrder
   }
 
   export type TrackedHabitScalarRelationFilter = {
@@ -35937,11 +36039,25 @@ export namespace Prisma {
     connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
   }
 
+  export type TrackedHabitCreateNestedManyWithoutIdentityInput = {
+    create?: XOR<TrackedHabitCreateWithoutIdentityInput, TrackedHabitUncheckedCreateWithoutIdentityInput> | TrackedHabitCreateWithoutIdentityInput[] | TrackedHabitUncheckedCreateWithoutIdentityInput[]
+    connectOrCreate?: TrackedHabitCreateOrConnectWithoutIdentityInput | TrackedHabitCreateOrConnectWithoutIdentityInput[]
+    createMany?: TrackedHabitCreateManyIdentityInputEnvelope
+    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+  }
+
   export type NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput = {
     create?: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput> | NextStepGoalEntryCreateWithoutIdentityInput[] | NextStepGoalEntryUncheckedCreateWithoutIdentityInput[]
     connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutIdentityInput | NextStepGoalEntryCreateOrConnectWithoutIdentityInput[]
     createMany?: NextStepGoalEntryCreateManyIdentityInputEnvelope
     connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+  }
+
+  export type TrackedHabitUncheckedCreateNestedManyWithoutIdentityInput = {
+    create?: XOR<TrackedHabitCreateWithoutIdentityInput, TrackedHabitUncheckedCreateWithoutIdentityInput> | TrackedHabitCreateWithoutIdentityInput[] | TrackedHabitUncheckedCreateWithoutIdentityInput[]
+    connectOrCreate?: TrackedHabitCreateOrConnectWithoutIdentityInput | TrackedHabitCreateOrConnectWithoutIdentityInput[]
+    createMany?: TrackedHabitCreateManyIdentityInputEnvelope
+    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
   }
 
   export type IdentityRecordUpdatehabitsInput = {
@@ -35971,6 +36087,20 @@ export namespace Prisma {
     deleteMany?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
   }
 
+  export type TrackedHabitUpdateManyWithoutIdentityNestedInput = {
+    create?: XOR<TrackedHabitCreateWithoutIdentityInput, TrackedHabitUncheckedCreateWithoutIdentityInput> | TrackedHabitCreateWithoutIdentityInput[] | TrackedHabitUncheckedCreateWithoutIdentityInput[]
+    connectOrCreate?: TrackedHabitCreateOrConnectWithoutIdentityInput | TrackedHabitCreateOrConnectWithoutIdentityInput[]
+    upsert?: TrackedHabitUpsertWithWhereUniqueWithoutIdentityInput | TrackedHabitUpsertWithWhereUniqueWithoutIdentityInput[]
+    createMany?: TrackedHabitCreateManyIdentityInputEnvelope
+    set?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    disconnect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    delete?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    update?: TrackedHabitUpdateWithWhereUniqueWithoutIdentityInput | TrackedHabitUpdateWithWhereUniqueWithoutIdentityInput[]
+    updateMany?: TrackedHabitUpdateManyWithWhereWithoutIdentityInput | TrackedHabitUpdateManyWithWhereWithoutIdentityInput[]
+    deleteMany?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
+  }
+
   export type NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput = {
     create?: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput> | NextStepGoalEntryCreateWithoutIdentityInput[] | NextStepGoalEntryUncheckedCreateWithoutIdentityInput[]
     connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutIdentityInput | NextStepGoalEntryCreateOrConnectWithoutIdentityInput[]
@@ -35983,6 +36113,20 @@ export namespace Prisma {
     update?: NextStepGoalEntryUpdateWithWhereUniqueWithoutIdentityInput | NextStepGoalEntryUpdateWithWhereUniqueWithoutIdentityInput[]
     updateMany?: NextStepGoalEntryUpdateManyWithWhereWithoutIdentityInput | NextStepGoalEntryUpdateManyWithWhereWithoutIdentityInput[]
     deleteMany?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
+  }
+
+  export type TrackedHabitUncheckedUpdateManyWithoutIdentityNestedInput = {
+    create?: XOR<TrackedHabitCreateWithoutIdentityInput, TrackedHabitUncheckedCreateWithoutIdentityInput> | TrackedHabitCreateWithoutIdentityInput[] | TrackedHabitUncheckedCreateWithoutIdentityInput[]
+    connectOrCreate?: TrackedHabitCreateOrConnectWithoutIdentityInput | TrackedHabitCreateOrConnectWithoutIdentityInput[]
+    upsert?: TrackedHabitUpsertWithWhereUniqueWithoutIdentityInput | TrackedHabitUpsertWithWhereUniqueWithoutIdentityInput[]
+    createMany?: TrackedHabitCreateManyIdentityInputEnvelope
+    set?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    disconnect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    delete?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+    update?: TrackedHabitUpdateWithWhereUniqueWithoutIdentityInput | TrackedHabitUpdateWithWhereUniqueWithoutIdentityInput[]
+    updateMany?: TrackedHabitUpdateManyWithWhereWithoutIdentityInput | TrackedHabitUpdateManyWithWhereWithoutIdentityInput[]
+    deleteMany?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAssessmentNextStepInput = {
@@ -36156,6 +36300,12 @@ export namespace Prisma {
     connect?: NextStepGoalEntryWhereUniqueInput
   }
 
+  export type IdentityRecordCreateNestedOneWithoutTrackedHabitsInput = {
+    create?: XOR<IdentityRecordCreateWithoutTrackedHabitsInput, IdentityRecordUncheckedCreateWithoutTrackedHabitsInput>
+    connectOrCreate?: IdentityRecordCreateOrConnectWithoutTrackedHabitsInput
+    connect?: IdentityRecordWhereUniqueInput
+  }
+
   export type HabitCueCreateNestedManyWithoutHabitInput = {
     create?: XOR<HabitCueCreateWithoutHabitInput, HabitCueUncheckedCreateWithoutHabitInput> | HabitCueCreateWithoutHabitInput[] | HabitCueUncheckedCreateWithoutHabitInput[]
     connectOrCreate?: HabitCueCreateOrConnectWithoutHabitInput | HabitCueCreateOrConnectWithoutHabitInput[]
@@ -36186,6 +36336,16 @@ export namespace Prisma {
     delete?: NextStepGoalEntryWhereInput | boolean
     connect?: NextStepGoalEntryWhereUniqueInput
     update?: XOR<XOR<NextStepGoalEntryUpdateToOneWithWhereWithoutTrackedHabitsInput, NextStepGoalEntryUpdateWithoutTrackedHabitsInput>, NextStepGoalEntryUncheckedUpdateWithoutTrackedHabitsInput>
+  }
+
+  export type IdentityRecordUpdateOneWithoutTrackedHabitsNestedInput = {
+    create?: XOR<IdentityRecordCreateWithoutTrackedHabitsInput, IdentityRecordUncheckedCreateWithoutTrackedHabitsInput>
+    connectOrCreate?: IdentityRecordCreateOrConnectWithoutTrackedHabitsInput
+    upsert?: IdentityRecordUpsertWithoutTrackedHabitsInput
+    disconnect?: IdentityRecordWhereInput | boolean
+    delete?: IdentityRecordWhereInput | boolean
+    connect?: IdentityRecordWhereUniqueInput
+    update?: XOR<XOR<IdentityRecordUpdateToOneWithWhereWithoutTrackedHabitsInput, IdentityRecordUpdateWithoutTrackedHabitsInput>, IdentityRecordUncheckedUpdateWithoutTrackedHabitsInput>
   }
 
   export type HabitCueUpdateManyWithoutHabitNestedInput = {
@@ -36765,6 +36925,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     goalEntry?: NextStepGoalEntryCreateNestedOneWithoutTrackedHabitsInput
+    identity?: IdentityRecordCreateNestedOneWithoutTrackedHabitsInput
     cues?: HabitCueCreateNestedManyWithoutHabitInput
   }
 
@@ -36775,6 +36936,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     goalEntryId?: string | null
+    identityId?: string | null
     cues?: HabitCueUncheckedCreateNestedManyWithoutHabitInput
   }
 
@@ -37170,6 +37332,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"TrackedHabit"> | Date | string
     userId?: StringFilter<"TrackedHabit"> | string
     goalEntryId?: StringNullableFilter<"TrackedHabit"> | string | null
+    identityId?: StringNullableFilter<"TrackedHabit"> | string | null
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -39292,6 +39455,7 @@ export namespace Prisma {
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
     goals?: NextStepGoalEntryCreateNestedManyWithoutIdentityInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutIdentityInput
   }
 
   export type IdentityRecordUncheckedCreateWithoutAssessmentInput = {
@@ -39299,6 +39463,7 @@ export namespace Prisma {
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
     goals?: NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutIdentityInput
   }
 
   export type IdentityRecordCreateOrConnectWithoutAssessmentInput = {
@@ -39611,6 +39776,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TrackedHabitCreateWithoutIdentityInput = {
+    id?: string
+    name: string
+    category?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutTrackedHabitsInput
+    goalEntry?: NextStepGoalEntryCreateNestedOneWithoutTrackedHabitsInput
+    cues?: HabitCueCreateNestedManyWithoutHabitInput
+  }
+
+  export type TrackedHabitUncheckedCreateWithoutIdentityInput = {
+    id?: string
+    name: string
+    category?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    goalEntryId?: string | null
+    cues?: HabitCueUncheckedCreateNestedManyWithoutHabitInput
+  }
+
+  export type TrackedHabitCreateOrConnectWithoutIdentityInput = {
+    where: TrackedHabitWhereUniqueInput
+    create: XOR<TrackedHabitCreateWithoutIdentityInput, TrackedHabitUncheckedCreateWithoutIdentityInput>
+  }
+
+  export type TrackedHabitCreateManyIdentityInputEnvelope = {
+    data: TrackedHabitCreateManyIdentityInput | TrackedHabitCreateManyIdentityInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AssessmentPartFourUpsertWithoutIdentitiesInput = {
     update: XOR<AssessmentPartFourUpdateWithoutIdentitiesInput, AssessmentPartFourUncheckedUpdateWithoutIdentitiesInput>
     create: XOR<AssessmentPartFourCreateWithoutIdentitiesInput, AssessmentPartFourUncheckedCreateWithoutIdentitiesInput>
@@ -39699,6 +39896,22 @@ export namespace Prisma {
     componentHabits?: StringNullableListFilter<"NextStepGoalEntry">
     nextStepId?: StringFilter<"NextStepGoalEntry"> | string
     identityId?: StringNullableFilter<"NextStepGoalEntry"> | string | null
+  }
+
+  export type TrackedHabitUpsertWithWhereUniqueWithoutIdentityInput = {
+    where: TrackedHabitWhereUniqueInput
+    update: XOR<TrackedHabitUpdateWithoutIdentityInput, TrackedHabitUncheckedUpdateWithoutIdentityInput>
+    create: XOR<TrackedHabitCreateWithoutIdentityInput, TrackedHabitUncheckedCreateWithoutIdentityInput>
+  }
+
+  export type TrackedHabitUpdateWithWhereUniqueWithoutIdentityInput = {
+    where: TrackedHabitWhereUniqueInput
+    data: XOR<TrackedHabitUpdateWithoutIdentityInput, TrackedHabitUncheckedUpdateWithoutIdentityInput>
+  }
+
+  export type TrackedHabitUpdateManyWithWhereWithoutIdentityInput = {
+    where: TrackedHabitScalarWhereInput
+    data: XOR<TrackedHabitUpdateManyMutationInput, TrackedHabitUncheckedUpdateManyWithoutIdentityInput>
   }
 
   export type UserCreateWithoutAssessmentNextStepInput = {
@@ -39869,6 +40082,7 @@ export namespace Prisma {
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
     assessment: AssessmentPartFourCreateNestedOneWithoutIdentitiesInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutIdentityInput
   }
 
   export type IdentityRecordUncheckedCreateWithoutGoalsInput = {
@@ -39876,6 +40090,7 @@ export namespace Prisma {
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
     assessmentId: string
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutIdentityInput
   }
 
   export type IdentityRecordCreateOrConnectWithoutGoalsInput = {
@@ -39890,6 +40105,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutTrackedHabitsInput
+    identity?: IdentityRecordCreateNestedOneWithoutTrackedHabitsInput
     cues?: HabitCueCreateNestedManyWithoutHabitInput
   }
 
@@ -39900,6 +40116,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
+    identityId?: string | null
     cues?: HabitCueUncheckedCreateNestedManyWithoutHabitInput
   }
 
@@ -39956,6 +40173,7 @@ export namespace Prisma {
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
     assessment?: AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutIdentityNestedInput
   }
 
   export type IdentityRecordUncheckedUpdateWithoutGoalsInput = {
@@ -39963,6 +40181,7 @@ export namespace Prisma {
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
     assessmentId?: StringFieldUpdateOperationsInput | string
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutIdentityNestedInput
   }
 
   export type TrackedHabitUpsertWithWhereUniqueWithoutGoalEntryInput = {
@@ -40145,6 +40364,27 @@ export namespace Prisma {
     create: XOR<NextStepGoalEntryCreateWithoutTrackedHabitsInput, NextStepGoalEntryUncheckedCreateWithoutTrackedHabitsInput>
   }
 
+  export type IdentityRecordCreateWithoutTrackedHabitsInput = {
+    id?: string
+    identity: string
+    habits?: IdentityRecordCreatehabitsInput | string[]
+    assessment: AssessmentPartFourCreateNestedOneWithoutIdentitiesInput
+    goals?: NextStepGoalEntryCreateNestedManyWithoutIdentityInput
+  }
+
+  export type IdentityRecordUncheckedCreateWithoutTrackedHabitsInput = {
+    id?: string
+    identity: string
+    habits?: IdentityRecordCreatehabitsInput | string[]
+    assessmentId: string
+    goals?: NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput
+  }
+
+  export type IdentityRecordCreateOrConnectWithoutTrackedHabitsInput = {
+    where: IdentityRecordWhereUniqueInput
+    create: XOR<IdentityRecordCreateWithoutTrackedHabitsInput, IdentityRecordUncheckedCreateWithoutTrackedHabitsInput>
+  }
+
   export type HabitCueCreateWithoutHabitInput = {
     id?: string
     behavior: string
@@ -40261,6 +40501,33 @@ export namespace Prisma {
     identityId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type IdentityRecordUpsertWithoutTrackedHabitsInput = {
+    update: XOR<IdentityRecordUpdateWithoutTrackedHabitsInput, IdentityRecordUncheckedUpdateWithoutTrackedHabitsInput>
+    create: XOR<IdentityRecordCreateWithoutTrackedHabitsInput, IdentityRecordUncheckedCreateWithoutTrackedHabitsInput>
+    where?: IdentityRecordWhereInput
+  }
+
+  export type IdentityRecordUpdateToOneWithWhereWithoutTrackedHabitsInput = {
+    where?: IdentityRecordWhereInput
+    data: XOR<IdentityRecordUpdateWithoutTrackedHabitsInput, IdentityRecordUncheckedUpdateWithoutTrackedHabitsInput>
+  }
+
+  export type IdentityRecordUpdateWithoutTrackedHabitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identity?: StringFieldUpdateOperationsInput | string
+    habits?: IdentityRecordUpdatehabitsInput | string[]
+    assessment?: AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput
+    goals?: NextStepGoalEntryUpdateManyWithoutIdentityNestedInput
+  }
+
+  export type IdentityRecordUncheckedUpdateWithoutTrackedHabitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identity?: StringFieldUpdateOperationsInput | string
+    habits?: IdentityRecordUpdatehabitsInput | string[]
+    assessmentId?: StringFieldUpdateOperationsInput | string
+    goals?: NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput
+  }
+
   export type HabitCueUpsertWithWhereUniqueWithoutHabitInput = {
     where: HabitCueWhereUniqueInput
     update: XOR<HabitCueUpdateWithoutHabitInput, HabitCueUncheckedUpdateWithoutHabitInput>
@@ -40300,6 +40567,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutTrackedHabitsInput
     goalEntry?: NextStepGoalEntryCreateNestedOneWithoutTrackedHabitsInput
+    identity?: IdentityRecordCreateNestedOneWithoutTrackedHabitsInput
   }
 
   export type TrackedHabitUncheckedCreateWithoutCuesInput = {
@@ -40310,6 +40578,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     userId: string
     goalEntryId?: string | null
+    identityId?: string | null
   }
 
   export type TrackedHabitCreateOrConnectWithoutCuesInput = {
@@ -40336,6 +40605,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutTrackedHabitsNestedInput
     goalEntry?: NextStepGoalEntryUpdateOneWithoutTrackedHabitsNestedInput
+    identity?: IdentityRecordUpdateOneWithoutTrackedHabitsNestedInput
   }
 
   export type TrackedHabitUncheckedUpdateWithoutCuesInput = {
@@ -40346,6 +40616,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AccountCreateManyUserInput = {
@@ -40397,6 +40668,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     goalEntryId?: string | null
+    identityId?: string | null
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -40532,6 +40804,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     goalEntry?: NextStepGoalEntryUpdateOneWithoutTrackedHabitsNestedInput
+    identity?: IdentityRecordUpdateOneWithoutTrackedHabitsNestedInput
     cues?: HabitCueUpdateManyWithoutHabitNestedInput
   }
 
@@ -40542,6 +40815,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
     cues?: HabitCueUncheckedUpdateManyWithoutHabitNestedInput
   }
 
@@ -40552,6 +40826,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ProjectCreateManyAssessmentInput = {
@@ -40779,6 +41054,7 @@ export namespace Prisma {
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
     goals?: NextStepGoalEntryUpdateManyWithoutIdentityNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutIdentityNestedInput
   }
 
   export type IdentityRecordUncheckedUpdateWithoutAssessmentInput = {
@@ -40786,6 +41062,7 @@ export namespace Prisma {
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
     goals?: NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutIdentityNestedInput
   }
 
   export type IdentityRecordUncheckedUpdateManyWithoutAssessmentInput = {
@@ -40803,6 +41080,16 @@ export namespace Prisma {
     idealSystem?: string
     componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
     nextStepId: string
+  }
+
+  export type TrackedHabitCreateManyIdentityInput = {
+    id?: string
+    name: string
+    category?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    goalEntryId?: string | null
   }
 
   export type NextStepGoalEntryUpdateWithoutIdentityInput = {
@@ -40838,6 +41125,38 @@ export namespace Prisma {
     idealSystem?: StringFieldUpdateOperationsInput | string
     componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
     nextStepId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TrackedHabitUpdateWithoutIdentityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTrackedHabitsNestedInput
+    goalEntry?: NextStepGoalEntryUpdateOneWithoutTrackedHabitsNestedInput
+    cues?: HabitCueUpdateManyWithoutHabitNestedInput
+  }
+
+  export type TrackedHabitUncheckedUpdateWithoutIdentityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
+    cues?: HabitCueUncheckedUpdateManyWithoutHabitNestedInput
+  }
+
+  export type TrackedHabitUncheckedUpdateManyWithoutIdentityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type NextStepGoalEntryCreateManyNextStepInput = {
@@ -40893,6 +41212,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
+    identityId?: string | null
   }
 
   export type TrackedHabitUpdateWithoutGoalEntryInput = {
@@ -40902,6 +41222,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutTrackedHabitsNestedInput
+    identity?: IdentityRecordUpdateOneWithoutTrackedHabitsNestedInput
     cues?: HabitCueUpdateManyWithoutHabitNestedInput
   }
 
@@ -40912,6 +41233,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
     cues?: HabitCueUncheckedUpdateManyWithoutHabitNestedInput
   }
 
@@ -40922,6 +41244,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type HabitCueCreateManyHabitInput = {

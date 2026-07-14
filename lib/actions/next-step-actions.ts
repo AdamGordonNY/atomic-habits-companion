@@ -39,6 +39,7 @@ export interface GoalAssignmentOption {
   id: string;
   goal: string;
   identityId: string | null;
+  supportingHabits: string[];
 }
 
 // ─── read ─────────────────────────────────────────────────────────────────────
@@ -181,6 +182,10 @@ export async function actionGetAssignableGoalsForIdentity(identityId: string): P
       id: true,
       goal: true,
       identityId: true,
+      trackedHabits: {
+        orderBy: { name: "asc" },
+        select: { name: true },
+      },
     },
   });
 
@@ -188,7 +193,28 @@ export async function actionGetAssignableGoalsForIdentity(identityId: string): P
     id: row.id,
     goal: row.goal,
     identityId: row.identityId,
+    supportingHabits: row.trackedHabits.map((habit) => habit.name),
   }));
+}
+
+export async function actionGetAttachableIdentitiesForGoal(goalId: string): Promise<Array<{ id: string; identity: string }>> {
+  const userId = await requireUserId();
+
+  const current = await prisma.nextStepGoalEntry.findFirst({
+    where: { id: goalId, nextStep: { userId } },
+    select: { identityId: true },
+  });
+
+  const rows = await prisma.identityRecord.findMany({
+    where: {
+      assessment: { userId },
+      ...(current?.identityId ? { id: { not: current.identityId } } : {}),
+    },
+    orderBy: { identity: "asc" },
+    select: { id: true, identity: true },
+  });
+
+  return rows;
 }
 
 export async function actionAttachGoalToIdentity(goalId: string, identityId: string): Promise<void> {
@@ -214,6 +240,11 @@ export async function actionAttachGoalToIdentity(goalId: string, identityId: str
 
   await prisma.nextStepGoalEntry.update({
     where: { id: goalId },
+    data: { identityId },
+  });
+
+  await prisma.trackedHabit.updateMany({
+    where: { goalEntryId: goalId, userId },
     data: { identityId },
   });
 }

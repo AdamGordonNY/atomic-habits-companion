@@ -515,7 +515,7 @@ export function IdentitiesSection({ data, showRouteLink = true }: { data: Identi
           {draft.identities.map((entry, index) => (
             <div key={`identity-entry-${index}`} className="rounded-xl border border-slate-200 p-3">
               <input value={entry.identity} onChange={(e) => setDraft((prev) => ({ identities: prev.identities.map((item, itemIndex) => itemIndex === index ? { ...item, identity: e.target.value } : item) }))} placeholder="Identity" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
-              <textarea value={listToLines(entry.habits)} onChange={(e) => setDraft((prev) => ({ identities: prev.identities.map((item, itemIndex) => itemIndex === index ? { ...item, habits: parseLines(e.target.value) } : item) }))} rows={3} placeholder="Supporting habits (one per line)" className="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
+              <textarea value={listToLines(entry.habits)} onChange={(e) => setDraft((prev) => ({ identities: prev.identities.map((item, itemIndex) => itemIndex === index ? { ...item, habits: parseLines(e.target.value) } : item) }))} rows={3} placeholder="Supporting goals and habits (one per line)" className="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none" />
               <button type="button" onClick={() => setDraft((prev) => ({ identities: prev.identities.filter((_, itemIndex) => itemIndex !== index) }))} className="mt-2 text-xs font-medium text-rose-600 hover:text-rose-700">Remove</button>
             </div>
           ))}

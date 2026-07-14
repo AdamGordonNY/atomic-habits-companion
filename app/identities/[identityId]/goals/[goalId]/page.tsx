@@ -7,6 +7,10 @@ import {
   actionAttachHabitToGoal,
   actionGetAttachableHabitsForGoal,
 } from "@/lib/actions/habit-actions";
+import {
+  actionAttachGoalToIdentity,
+  actionGetAttachableIdentitiesForGoal,
+} from "@/lib/actions/next-step-actions";
 
 type PageProps = { params: Promise<{ identityId: string; goalId: string }> };
 
@@ -28,6 +32,18 @@ export default async function IdentityGoalDetailPage({ params }: PageProps) {
     revalidatePath("/profile");
   };
 
+  const attachIdentityAction = async (formData: FormData) => {
+    "use server";
+
+    const selectedIdentityId = String(formData.get("identityId") ?? "").trim();
+    if (!selectedIdentityId) return;
+
+    await actionAttachGoalToIdentity(goalId, selectedIdentityId);
+    revalidatePath(`/identities/${selectedIdentityId}/goals/${goalId}`);
+    revalidatePath(`/identities/${selectedIdentityId}`);
+    revalidatePath("/profile");
+  };
+
   const goal = await prisma.nextStepGoalEntry.findFirst({
     where: {
       id: goalId,
@@ -42,7 +58,10 @@ export default async function IdentityGoalDetailPage({ params }: PageProps) {
 
   if (!goal) notFound();
 
-  const assignableHabits = await actionGetAttachableHabitsForGoal(goalId);
+  const [assignableHabits, assignableIdentities] = await Promise.all([
+    actionGetAttachableHabitsForGoal(goalId),
+    actionGetAttachableIdentitiesForGoal(goalId),
+  ]);
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 px-5 py-8">
@@ -53,6 +72,34 @@ export default async function IdentityGoalDetailPage({ params }: PageProps) {
           Identity: <Link href={`/identities/${identityId}`} className="font-medium text-slate-800 hover:text-slate-900">{goal.identity?.identity || "Unknown"}</Link>
         </p>
       </header>
+
+      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-slate-500">Identity</h2>
+        {assignableIdentities.length > 0 && (
+          <form action={attachIdentityAction} className="mt-3 flex flex-wrap items-center gap-2">
+            <select
+              name="identityId"
+              defaultValue=""
+              className="h-9 rounded-full border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
+            >
+              <option value="" disabled>
+                Attach goal to an identity...
+              </option>
+              {assignableIdentities.map((identityOption) => (
+                <option key={identityOption.id} value={identityOption.id}>
+                  {identityOption.identity}
+                </option>
+              ))}
+            </select>
+            <button
+              type="submit"
+              className="inline-flex h-9 items-center rounded-full bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800"
+            >
+              Attach identity
+            </button>
+          </form>
+        )}
+      </section>
 
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-slate-500">Habits For This Goal</h2>

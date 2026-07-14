@@ -543,7 +543,7 @@ export function IdentityEditor({
                       markEdited(`part4.identities.${idx}.habits`);
                     }}
                     rows={3}
-                    placeholder="Supporting habits (one per line)"
+                        placeholder="Supporting goals and habits (one per line)"
                     className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none"
                   />
                   <FieldLastEdited value={lastEdited[`part4.identities.${idx}.identity`] ?? lastEdited[`part4.identities.${idx}.habits`]} />

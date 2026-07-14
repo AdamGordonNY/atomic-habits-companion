@@ -6,10 +6,15 @@ import { useRouter } from "next/navigation";
 import { fetchNextStep } from "@/lib/actions/next-step-actions";
 import { actionCreateHabitChecklist, actionGetHabitChecklists } from "@/lib/checklists-actions";
 import {
+  actionAttachHabitToGoal,
+  actionAttachHabitToIdentity,
   actionGetTrackedHabitById,
+  actionGetAttachableGoalsForHabit,
+  actionGetAttachableIdentitiesForHabit,
   actionUpdateHabitCategory,
 } from "@/lib/actions/habit-actions";
 import type { ChecklistRecord } from "@/types/checklist";
+import type { HabitAssignmentOption, IdentityAssignmentOption } from "@/lib/actions/habit-actions";
 
 interface GoalContext {
   id: string;
@@ -26,46 +31,59 @@ export function HabitTracker({ habitId }: { habitId: string }) {
   const [categoryInput, setCategoryInput] = useState("");
   const [savingCategory, setSavingCategory] = useState(false);
   const [goalContexts, setGoalContexts] = useState<GoalContext[]>([]);
+  const [attachableGoals, setAttachableGoals] = useState<HabitAssignmentOption[]>([]);
+  const [attachableIdentities, setAttachableIdentities] = useState<IdentityAssignmentOption[]>([]);
   const [checklists, setChecklists] = useState<ChecklistRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
+  const [attachingGoal, setAttachingGoal] = useState(false);
+  const [attachingIdentity, setAttachingIdentity] = useState(false);
+  const [selectedAttachGoalId, setSelectedAttachGoalId] = useState("");
+  const [selectedAttachIdentityId, setSelectedAttachIdentityId] = useState("");
   const categoryInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    async function load() {
-      const tracked = await actionGetTrackedHabitById(habitId);
-      if (!tracked) {
-        setLoading(false);
-        return;
-      }
-
-      const [nextStepData, habitChecklists] = await Promise.all([
-        fetchNextStep(),
-        actionGetHabitChecklists(tracked.id, tracked.name),
-      ]);
-
-      setHabitName(tracked.name);
-      setCategory(tracked.category ?? "");
-
-      const entries = (nextStepData?.goalEntries ?? []).filter(
-        (e) => e.componentHabits.includes(tracked.name) || e.id === tracked.goalEntryId,
-      );
-
-      const uniqueEntries = [...new Map(entries.map((e) => [e.id ?? e.goal, e])).values()];
-      setGoalContexts(
-        uniqueEntries.map((entry, idx) => ({
-          id: entry.id ?? `goal-${idx}`,
-          goal: entry.goal,
-          systemEval: entry.systemEval,
-          idealSystem: entry.idealSystem,
-        })),
-      );
-
-      setChecklists(habitChecklists);
-
+  async function loadHabitState() {
+    const tracked = await actionGetTrackedHabitById(habitId);
+    if (!tracked) {
       setLoading(false);
+      return;
     }
-    load();
+
+    const [nextStepData, habitChecklists, goals, identities] = await Promise.all([
+      fetchNextStep(),
+      actionGetHabitChecklists(tracked.id, tracked.name),
+      actionGetAttachableGoalsForHabit(tracked.id),
+      actionGetAttachableIdentitiesForHabit(tracked.id),
+    ]);
+
+    setHabitName(tracked.name);
+    setCategory(tracked.category ?? "");
+
+    const entries = (nextStepData?.goalEntries ?? []).filter(
+      (e) => e.componentHabits.includes(tracked.name) || e.id === tracked.goalEntryId,
+    );
+
+    const uniqueEntries = [...new Map(entries.map((e) => [e.id ?? e.goal, e])).values()];
+    setGoalContexts(
+      uniqueEntries.map((entry, idx) => ({
+        id: entry.id ?? `goal-${idx}`,
+        goal: entry.goal,
+        systemEval: entry.systemEval,
+        idealSystem: entry.idealSystem,
+      })),
+    );
+
+    setAttachableGoals(goals);
+    setAttachableIdentities(identities);
+    setSelectedAttachGoalId(goals[0]?.id ?? "");
+    setSelectedAttachIdentityId(identities[0]?.id ?? "");
+    setChecklists(habitChecklists);
+
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    loadHabitState();
   }, [habitId]);
 
   // Focus the category input when editing starts
@@ -97,6 +115,28 @@ export function HabitTracker({ habitId }: { habitId: string }) {
     } catch (err) {
       console.error(err);
       setCreating(false);
+    }
+  }
+
+  async function attachGoal() {
+    if (!selectedAttachGoalId) return;
+    setAttachingGoal(true);
+    try {
+      await actionAttachHabitToGoal(habitId, selectedAttachGoalId);
+      await loadHabitState();
+    } finally {
+      setAttachingGoal(false);
+    }
+  }
+
+  async function attachIdentity() {
+    if (!selectedAttachIdentityId) return;
+    setAttachingIdentity(true);
+    try {
+      await actionAttachHabitToIdentity(habitId, selectedAttachIdentityId);
+      await loadHabitState();
+    } finally {
+      setAttachingIdentity(false);
     }
   }
 
@@ -212,6 +252,57 @@ export function HabitTracker({ habitId }: { habitId: string }) {
                   Add category
                 </button>
               )}
+            </div>
+          </section>
+
+          <section className="grid gap-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:grid-cols-2">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">Attach to goal</p>
+              <div className="mt-2 flex gap-2">
+                <select
+                  value={selectedAttachGoalId}
+                  onChange={(e) => setSelectedAttachGoalId(e.target.value)}
+                  className="h-9 flex-1 rounded-full border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
+                >
+                  {attachableGoals.map((goal) => (
+                    <option key={goal.id} value={goal.id}>
+                      {goal.name}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  type="button"
+                  onClick={attachGoal}
+                  disabled={attachingGoal || !selectedAttachGoalId}
+                  className="inline-flex h-9 items-center rounded-full bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-50"
+                >
+                  {attachingGoal ? "Attaching..." : "Attach"}
+                </button>
+              </div>
+            </div>
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">Attach to identity</p>
+              <div className="mt-2 flex gap-2">
+                <select
+                  value={selectedAttachIdentityId}
+                  onChange={(e) => setSelectedAttachIdentityId(e.target.value)}
+                  className="h-9 flex-1 rounded-full border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
+                >
+                  {attachableIdentities.map((identity) => (
+                    <option key={identity.id} value={identity.id}>
+                      {identity.identity}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  type="button"
+                  onClick={attachIdentity}
+                  disabled={attachingIdentity || !selectedAttachIdentityId}
+                  className="inline-flex h-9 items-center rounded-full bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-50"
+                >
+                  {attachingIdentity ? "Attaching..." : "Attach"}
+                </button>
+              </div>
             </div>
           </section>
 

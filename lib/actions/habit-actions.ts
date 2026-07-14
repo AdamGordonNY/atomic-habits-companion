@@ -14,6 +14,7 @@ export interface TrackedHabitData {
   name: string;
   category: string | null;
   goalEntryId?: string | null;
+  identityId?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -37,6 +38,12 @@ export interface HabitAssignmentOption {
   goalEntryId: string | null;
 }
 
+export interface IdentityAssignmentOption {
+  id: string;
+  identity: string;
+  supportingGoals: Array<{ id: string; goal: string }>;
+}
+
 // ─── reads ────────────────────────────────────────────────────────────────────
 
 export async function actionGetTrackedHabits(): Promise<TrackedHabitData[]> {
@@ -50,6 +57,7 @@ export async function actionGetTrackedHabits(): Promise<TrackedHabitData[]> {
     name: r.name,
     category: r.category,
     goalEntryId: r.goalEntryId,
+    identityId: r.identityId,
     createdAt: r.createdAt.toISOString(),
     updatedAt: r.updatedAt.toISOString(),
   }));
@@ -61,7 +69,7 @@ export async function actionGetTrackedHabit(name: string): Promise<TrackedHabitD
     where: { userId_name: { userId, name } },
   });
   return row
-    ? { id: row.id, name: row.name, category: row.category, goalEntryId: row.goalEntryId, createdAt: row.createdAt.toISOString(), updatedAt: row.updatedAt.toISOString() }
+    ? { id: row.id, name: row.name, category: row.category, goalEntryId: row.goalEntryId, identityId: row.identityId, createdAt: row.createdAt.toISOString(), updatedAt: row.updatedAt.toISOString() }
     : null;
 }
 
@@ -71,8 +79,95 @@ export async function actionGetTrackedHabitById(id: string): Promise<TrackedHabi
     where: { id, userId },
   });
   return row
-    ? { id: row.id, name: row.name, category: row.category, goalEntryId: row.goalEntryId, createdAt: row.createdAt.toISOString(), updatedAt: row.updatedAt.toISOString() }
+    ? { id: row.id, name: row.name, category: row.category, goalEntryId: row.goalEntryId, identityId: row.identityId, createdAt: row.createdAt.toISOString(), updatedAt: row.updatedAt.toISOString() }
     : null;
+}
+
+export async function actionGetAttachableGoalsForHabit(habitId: string): Promise<HabitAssignmentOption[]> {
+  const userId = await requireUserId();
+
+  const current = await prisma.trackedHabit.findFirst({
+    where: { id: habitId, userId },
+    select: { goalEntryId: true },
+  });
+
+  const rows = await prisma.nextStepGoalEntry.findMany({
+    where: {
+      nextStep: { userId },
+      ...(current?.goalEntryId ? { id: { not: current.goalEntryId } } : {}),
+    },
+    orderBy: { goal: "asc" },
+    select: { id: true, goal: true, identityId: true },
+  });
+
+  return rows.map((row) => ({
+    id: row.id,
+    name: row.goal,
+    category: null,
+    goalEntryId: row.identityId,
+  }));
+}
+
+export async function actionGetAttachableIdentitiesForHabit(habitId: string): Promise<IdentityAssignmentOption[]> {
+  const userId = await requireUserId();
+
+  const current = await prisma.trackedHabit.findFirst({
+    where: { id: habitId, userId },
+    select: { identityId: true },
+  });
+
+  const rows = await prisma.identityRecord.findMany({
+    where: {
+      assessment: { userId },
+      ...(current?.identityId ? { id: { not: current.identityId } } : {}),
+    },
+    orderBy: { identity: "asc" },
+    select: {
+      id: true,
+      identity: true,
+      goals: {
+        orderBy: { goal: "asc" },
+        select: {
+          id: true,
+          goal: true,
+        },
+      },
+    },
+  });
+
+  return rows.map((row) => ({
+    id: row.id,
+    identity: row.identity,
+    supportingGoals: row.goals.map((goal) => ({ id: goal.id, goal: goal.goal })),
+  }));
+}
+
+export async function actionGetAttachableHabitsForIdentity(identityId: string): Promise<HabitAssignmentOption[]> {
+  const userId = await requireUserId();
+
+  const rows = await prisma.trackedHabit.findMany({
+    where: {
+      userId,
+      OR: [
+        { identityId: null },
+        { identityId: { not: identityId } },
+      ],
+    },
+    orderBy: [{ category: "asc" }, { name: "asc" }],
+    select: {
+      id: true,
+      name: true,
+      category: true,
+      goalEntryId: true,
+    },
+  });
+
+  return rows.map((row) => ({
+    id: row.id,
+    name: row.name,
+    category: row.category,
+    goalEntryId: row.goalEntryId,
+  }));
 }
 
 export async function actionGetAttachableHabitsForGoal(goalId: string): Promise<HabitAssignmentOption[]> {
@@ -99,7 +194,7 @@ export async function actionGetOrCreateHabitsForGoal(goalId: string): Promise<Tr
 
   const goal = await prisma.nextStepGoalEntry.findFirst({
     where: { id: goalId, nextStep: { userId } },
-    select: { id: true, componentHabits: true },
+    select: { id: true, componentHabits: true, identityId: true },
   });
 
   if (!goal) return [];
@@ -107,7 +202,7 @@ export async function actionGetOrCreateHabitsForGoal(goalId: string): Promise<Tr
   const names = [...new Set(goal.componentHabits.map((h) => h.trim()).filter(Boolean))];
   if (names.length > 0) {
     await prisma.trackedHabit.createMany({
-      data: names.map((name) => ({ userId, name, goalEntryId: goal.id })),
+      data: names.map((name) => ({ userId, name, goalEntryId: goal.id, identityId: goal.identityId })),
       skipDuplicates: true,
     });
   }
@@ -115,7 +210,7 @@ export async function actionGetOrCreateHabitsForGoal(goalId: string): Promise<Tr
   if (names.length > 0) {
     await prisma.trackedHabit.updateMany({
       where: { userId, name: { in: names } },
-      data: { goalEntryId: goal.id },
+      data: { goalEntryId: goal.id, identityId: goal.identityId },
     });
   }
 
@@ -129,6 +224,7 @@ export async function actionGetOrCreateHabitsForGoal(goalId: string): Promise<Tr
     name: r.name,
     category: r.category,
     goalEntryId: r.goalEntryId,
+    identityId: r.identityId,
     createdAt: r.createdAt.toISOString(),
     updatedAt: r.updatedAt.toISOString(),
   }));
@@ -158,6 +254,7 @@ export async function actionAddHabitToGoal(
       where: { id: existing.id, userId },
       data: {
         goalEntryId: goal.id,
+        identityId: goal.identityId,
         ...(category !== undefined ? { category } : {}),
         updatedAt: new Date(),
       },
@@ -167,6 +264,7 @@ export async function actionAddHabitToGoal(
         userId,
         name: trimmedName,
         goalEntryId: goal.id,
+          identityId: goal.identityId,
         category: category ?? null,
       },
     });
@@ -176,6 +274,35 @@ export async function actionAddHabitToGoal(
     name: row.name,
     category: row.category,
     goalEntryId: row.goalEntryId,
+    identityId: row.identityId,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
+}
+
+export async function actionAttachHabitToIdentity(
+  habitId: string,
+  identityId: string,
+): Promise<TrackedHabitData> {
+  const userId = await requireUserId();
+
+  const identity = await prisma.identityRecord.findFirst({
+    where: { id: identityId, assessment: { userId } },
+    select: { id: true },
+  });
+  if (!identity) throw new Error("Identity not found");
+
+  const row = await prisma.trackedHabit.update({
+    where: { id: habitId, userId },
+    data: { identityId: identity.id, updatedAt: new Date() },
+  });
+
+  return {
+    id: row.id,
+    name: row.name,
+    category: row.category,
+    goalEntryId: row.goalEntryId,
+    identityId: row.identityId,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
   };
@@ -246,6 +373,7 @@ export async function actionUpdateGoalHabit(
     name: row.name,
     category: row.category,
     goalEntryId: row.goalEntryId,
+    identityId: row.identityId,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
   };

@@ -292,8 +292,6 @@ model HabitScorecardEntry {
   @@map("habit_scorecard_entries")
 }
 
-// ─── Part Four — Ideal Life Design ────────────────────────────────────────────
-
 model AssessmentPartFour {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
@@ -349,6 +347,7 @@ model IdentityRecord {
   assessmentId String
   assessment   AssessmentPartFour @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
   goals        NextStepGoalEntry[]
+  trackedHabits TrackedHabit[]
 
   @@index([assessmentId])
   @@map("identity_records")
@@ -429,11 +428,14 @@ model TrackedHabit {
 
   goalEntryId String?
   goalEntry   NextStepGoalEntry? @relation(fields: [goalEntryId], references: [id], onDelete: SetNull)
+  identityId String?
+  identity   IdentityRecord? @relation(fields: [identityId], references: [id], onDelete: SetNull)
   cues        HabitCue[]
 
   @@unique([userId, name])
   @@index([userId])
   @@index([goalEntryId])
+  @@index([identityId])
   @@map("tracked_habits")
 }
 

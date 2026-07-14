@@ -355,7 +355,8 @@ exports.Prisma.TrackedHabitScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId',
-  goalEntryId: 'goalEntryId'
+  goalEntryId: 'goalEntryId',
+  identityId: 'identityId'
 };
 
 exports.Prisma.HabitCueScalarFieldEnum = {
