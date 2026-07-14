@@ -334,7 +334,8 @@ exports.Prisma.NextStepGoalEntryScalarFieldEnum = {
   systemRating: 'systemRating',
   idealSystem: 'idealSystem',
   componentHabits: 'componentHabits',
-  nextStepId: 'nextStepId'
+  nextStepId: 'nextStepId',
+  identityId: 'identityId'
 };
 
 exports.Prisma.ChecklistScalarFieldEnum = {

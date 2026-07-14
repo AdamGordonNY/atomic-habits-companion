@@ -3144,6 +3144,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type IdentityRecordCountOutputType
+   */
+
+  export type IdentityRecordCountOutputType = {
+    goals: number
+  }
+
+  export type IdentityRecordCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    goals?: boolean | IdentityRecordCountOutputTypeCountGoalsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * IdentityRecordCountOutputType without action
+   */
+  export type IdentityRecordCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecordCountOutputType
+     */
+    select?: IdentityRecordCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * IdentityRecordCountOutputType without action
+   */
+  export type IdentityRecordCountOutputTypeCountGoalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NextStepGoalEntryWhereInput
+  }
+
+
+  /**
    * Count Type AssessmentNextStepCountOutputType
    */
 
@@ -22865,6 +22896,8 @@ export namespace Prisma {
     habits?: boolean
     assessmentId?: boolean
     assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+    goals?: boolean | IdentityRecord$goalsArgs<ExtArgs>
+    _count?: boolean | IdentityRecordCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["identityRecord"]>
 
   export type IdentityRecordSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -22893,6 +22926,8 @@ export namespace Prisma {
   export type IdentityRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "identity" | "habits" | "assessmentId", ExtArgs["result"]["identityRecord"]>
   export type IdentityRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+    goals?: boolean | IdentityRecord$goalsArgs<ExtArgs>
+    _count?: boolean | IdentityRecordCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type IdentityRecordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
@@ -22905,6 +22940,7 @@ export namespace Prisma {
     name: "IdentityRecord"
     objects: {
       assessment: Prisma.$AssessmentPartFourPayload<ExtArgs>
+      goals: Prisma.$NextStepGoalEntryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -23306,6 +23342,7 @@ export namespace Prisma {
   export interface Prisma__IdentityRecordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     assessment<T extends AssessmentPartFourDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentPartFourDefaultArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    goals<T extends IdentityRecord$goalsArgs<ExtArgs> = {}>(args?: Subset<T, IdentityRecord$goalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23737,6 +23774,30 @@ export namespace Prisma {
      * Limit how many IdentityRecords to delete.
      */
     limit?: number
+  }
+
+  /**
+   * IdentityRecord.goals
+   */
+  export type IdentityRecord$goalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NextStepGoalEntry
+     */
+    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NextStepGoalEntry
+     */
+    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NextStepGoalEntryInclude<ExtArgs> | null
+    where?: NextStepGoalEntryWhereInput
+    orderBy?: NextStepGoalEntryOrderByWithRelationInput | NextStepGoalEntryOrderByWithRelationInput[]
+    cursor?: NextStepGoalEntryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NextStepGoalEntryScalarFieldEnum | NextStepGoalEntryScalarFieldEnum[]
   }
 
   /**
@@ -24879,6 +24940,7 @@ export namespace Prisma {
     systemRating: number | null
     idealSystem: string | null
     nextStepId: string | null
+    identityId: string | null
   }
 
   export type NextStepGoalEntryMaxAggregateOutputType = {
@@ -24889,6 +24951,7 @@ export namespace Prisma {
     systemRating: number | null
     idealSystem: string | null
     nextStepId: string | null
+    identityId: string | null
   }
 
   export type NextStepGoalEntryCountAggregateOutputType = {
@@ -24900,6 +24963,7 @@ export namespace Prisma {
     idealSystem: number
     componentHabits: number
     nextStepId: number
+    identityId: number
     _all: number
   }
 
@@ -24920,6 +24984,7 @@ export namespace Prisma {
     systemRating?: true
     idealSystem?: true
     nextStepId?: true
+    identityId?: true
   }
 
   export type NextStepGoalEntryMaxAggregateInputType = {
@@ -24930,6 +24995,7 @@ export namespace Prisma {
     systemRating?: true
     idealSystem?: true
     nextStepId?: true
+    identityId?: true
   }
 
   export type NextStepGoalEntryCountAggregateInputType = {
@@ -24941,6 +25007,7 @@ export namespace Prisma {
     idealSystem?: true
     componentHabits?: true
     nextStepId?: true
+    identityId?: true
     _all?: true
   }
 
@@ -25039,6 +25106,7 @@ export namespace Prisma {
     idealSystem: string
     componentHabits: string[]
     nextStepId: string
+    identityId: string | null
     _count: NextStepGoalEntryCountAggregateOutputType | null
     _avg: NextStepGoalEntryAvgAggregateOutputType | null
     _sum: NextStepGoalEntrySumAggregateOutputType | null
@@ -25069,7 +25137,9 @@ export namespace Prisma {
     idealSystem?: boolean
     componentHabits?: boolean
     nextStepId?: boolean
+    identityId?: boolean
     nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
+    identity?: boolean | NextStepGoalEntry$identityArgs<ExtArgs>
     trackedHabits?: boolean | NextStepGoalEntry$trackedHabitsArgs<ExtArgs>
     _count?: boolean | NextStepGoalEntryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["nextStepGoalEntry"]>
@@ -25083,7 +25153,9 @@ export namespace Prisma {
     idealSystem?: boolean
     componentHabits?: boolean
     nextStepId?: boolean
+    identityId?: boolean
     nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
+    identity?: boolean | NextStepGoalEntry$identityArgs<ExtArgs>
   }, ExtArgs["result"]["nextStepGoalEntry"]>
 
   export type NextStepGoalEntrySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -25095,7 +25167,9 @@ export namespace Prisma {
     idealSystem?: boolean
     componentHabits?: boolean
     nextStepId?: boolean
+    identityId?: boolean
     nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
+    identity?: boolean | NextStepGoalEntry$identityArgs<ExtArgs>
   }, ExtArgs["result"]["nextStepGoalEntry"]>
 
   export type NextStepGoalEntrySelectScalar = {
@@ -25107,25 +25181,30 @@ export namespace Prisma {
     idealSystem?: boolean
     componentHabits?: boolean
     nextStepId?: boolean
+    identityId?: boolean
   }
 
-  export type NextStepGoalEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "goal" | "currentSystem" | "systemEval" | "systemRating" | "idealSystem" | "componentHabits" | "nextStepId", ExtArgs["result"]["nextStepGoalEntry"]>
+  export type NextStepGoalEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "goal" | "currentSystem" | "systemEval" | "systemRating" | "idealSystem" | "componentHabits" | "nextStepId" | "identityId", ExtArgs["result"]["nextStepGoalEntry"]>
   export type NextStepGoalEntryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
+    identity?: boolean | NextStepGoalEntry$identityArgs<ExtArgs>
     trackedHabits?: boolean | NextStepGoalEntry$trackedHabitsArgs<ExtArgs>
     _count?: boolean | NextStepGoalEntryCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type NextStepGoalEntryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
+    identity?: boolean | NextStepGoalEntry$identityArgs<ExtArgs>
   }
   export type NextStepGoalEntryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
+    identity?: boolean | NextStepGoalEntry$identityArgs<ExtArgs>
   }
 
   export type $NextStepGoalEntryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "NextStepGoalEntry"
     objects: {
       nextStep: Prisma.$AssessmentNextStepPayload<ExtArgs>
+      identity: Prisma.$IdentityRecordPayload<ExtArgs> | null
       trackedHabits: Prisma.$TrackedHabitPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -25155,6 +25234,7 @@ export namespace Prisma {
        */
       componentHabits: string[]
       nextStepId: string
+      identityId: string | null
     }, ExtArgs["result"]["nextStepGoalEntry"]>
     composites: {}
   }
@@ -25550,6 +25630,7 @@ export namespace Prisma {
   export interface Prisma__NextStepGoalEntryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     nextStep<T extends AssessmentNextStepDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentNextStepDefaultArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    identity<T extends NextStepGoalEntry$identityArgs<ExtArgs> = {}>(args?: Subset<T, NextStepGoalEntry$identityArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     trackedHabits<T extends NextStepGoalEntry$trackedHabitsArgs<ExtArgs> = {}>(args?: Subset<T, NextStepGoalEntry$trackedHabitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -25588,6 +25669,7 @@ export namespace Prisma {
     readonly idealSystem: FieldRef<"NextStepGoalEntry", 'String'>
     readonly componentHabits: FieldRef<"NextStepGoalEntry", 'String[]'>
     readonly nextStepId: FieldRef<"NextStepGoalEntry", 'String'>
+    readonly identityId: FieldRef<"NextStepGoalEntry", 'String'>
   }
     
 
@@ -25986,6 +26068,25 @@ export namespace Prisma {
      * Limit how many NextStepGoalEntries to delete.
      */
     limit?: number
+  }
+
+  /**
+   * NextStepGoalEntry.identity
+   */
+  export type NextStepGoalEntry$identityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdentityRecord
+     */
+    select?: IdentityRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdentityRecord
+     */
+    omit?: IdentityRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityRecordInclude<ExtArgs> | null
+    where?: IdentityRecordWhereInput
   }
 
   /**
@@ -29669,7 +29770,8 @@ export namespace Prisma {
     systemRating: 'systemRating',
     idealSystem: 'idealSystem',
     componentHabits: 'componentHabits',
-    nextStepId: 'nextStepId'
+    nextStepId: 'nextStepId',
+    identityId: 'identityId'
   };
 
   export type NextStepGoalEntryScalarFieldEnum = (typeof NextStepGoalEntryScalarFieldEnum)[keyof typeof NextStepGoalEntryScalarFieldEnum]
@@ -31107,6 +31209,7 @@ export namespace Prisma {
     habits?: StringNullableListFilter<"IdentityRecord">
     assessmentId?: StringFilter<"IdentityRecord"> | string
     assessment?: XOR<AssessmentPartFourScalarRelationFilter, AssessmentPartFourWhereInput>
+    goals?: NextStepGoalEntryListRelationFilter
   }
 
   export type IdentityRecordOrderByWithRelationInput = {
@@ -31115,6 +31218,7 @@ export namespace Prisma {
     habits?: SortOrder
     assessmentId?: SortOrder
     assessment?: AssessmentPartFourOrderByWithRelationInput
+    goals?: NextStepGoalEntryOrderByRelationAggregateInput
   }
 
   export type IdentityRecordWhereUniqueInput = Prisma.AtLeast<{
@@ -31126,6 +31230,7 @@ export namespace Prisma {
     habits?: StringNullableListFilter<"IdentityRecord">
     assessmentId?: StringFilter<"IdentityRecord"> | string
     assessment?: XOR<AssessmentPartFourScalarRelationFilter, AssessmentPartFourWhereInput>
+    goals?: NextStepGoalEntryListRelationFilter
   }, "id">
 
   export type IdentityRecordOrderByWithAggregationInput = {
@@ -31218,7 +31323,9 @@ export namespace Prisma {
     idealSystem?: StringFilter<"NextStepGoalEntry"> | string
     componentHabits?: StringNullableListFilter<"NextStepGoalEntry">
     nextStepId?: StringFilter<"NextStepGoalEntry"> | string
+    identityId?: StringNullableFilter<"NextStepGoalEntry"> | string | null
     nextStep?: XOR<AssessmentNextStepScalarRelationFilter, AssessmentNextStepWhereInput>
+    identity?: XOR<IdentityRecordNullableScalarRelationFilter, IdentityRecordWhereInput> | null
     trackedHabits?: TrackedHabitListRelationFilter
   }
 
@@ -31231,7 +31338,9 @@ export namespace Prisma {
     idealSystem?: SortOrder
     componentHabits?: SortOrder
     nextStepId?: SortOrder
+    identityId?: SortOrderInput | SortOrder
     nextStep?: AssessmentNextStepOrderByWithRelationInput
+    identity?: IdentityRecordOrderByWithRelationInput
     trackedHabits?: TrackedHabitOrderByRelationAggregateInput
   }
 
@@ -31247,7 +31356,9 @@ export namespace Prisma {
     idealSystem?: StringFilter<"NextStepGoalEntry"> | string
     componentHabits?: StringNullableListFilter<"NextStepGoalEntry">
     nextStepId?: StringFilter<"NextStepGoalEntry"> | string
+    identityId?: StringNullableFilter<"NextStepGoalEntry"> | string | null
     nextStep?: XOR<AssessmentNextStepScalarRelationFilter, AssessmentNextStepWhereInput>
+    identity?: XOR<IdentityRecordNullableScalarRelationFilter, IdentityRecordWhereInput> | null
     trackedHabits?: TrackedHabitListRelationFilter
   }, "id">
 
@@ -31260,6 +31371,7 @@ export namespace Prisma {
     idealSystem?: SortOrder
     componentHabits?: SortOrder
     nextStepId?: SortOrder
+    identityId?: SortOrderInput | SortOrder
     _count?: NextStepGoalEntryCountOrderByAggregateInput
     _avg?: NextStepGoalEntryAvgOrderByAggregateInput
     _max?: NextStepGoalEntryMaxOrderByAggregateInput
@@ -31279,6 +31391,7 @@ export namespace Prisma {
     idealSystem?: StringWithAggregatesFilter<"NextStepGoalEntry"> | string
     componentHabits?: StringNullableListFilter<"NextStepGoalEntry">
     nextStepId?: StringWithAggregatesFilter<"NextStepGoalEntry"> | string
+    identityId?: StringNullableWithAggregatesFilter<"NextStepGoalEntry"> | string | null
   }
 
   export type ChecklistWhereInput = {
@@ -32905,6 +33018,7 @@ export namespace Prisma {
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
     assessment: AssessmentPartFourCreateNestedOneWithoutIdentitiesInput
+    goals?: NextStepGoalEntryCreateNestedManyWithoutIdentityInput
   }
 
   export type IdentityRecordUncheckedCreateInput = {
@@ -32912,6 +33026,7 @@ export namespace Prisma {
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
     assessmentId: string
+    goals?: NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput
   }
 
   export type IdentityRecordUpdateInput = {
@@ -32919,6 +33034,7 @@ export namespace Prisma {
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
     assessment?: AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput
+    goals?: NextStepGoalEntryUpdateManyWithoutIdentityNestedInput
   }
 
   export type IdentityRecordUncheckedUpdateInput = {
@@ -32926,6 +33042,7 @@ export namespace Prisma {
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
     assessmentId?: StringFieldUpdateOperationsInput | string
+    goals?: NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput
   }
 
   export type IdentityRecordCreateManyInput = {
@@ -33016,6 +33133,7 @@ export namespace Prisma {
     idealSystem?: string
     componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
     nextStep: AssessmentNextStepCreateNestedOneWithoutGoalEntriesInput
+    identity?: IdentityRecordCreateNestedOneWithoutGoalsInput
     trackedHabits?: TrackedHabitCreateNestedManyWithoutGoalEntryInput
   }
 
@@ -33028,6 +33146,7 @@ export namespace Prisma {
     idealSystem?: string
     componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
     nextStepId: string
+    identityId?: string | null
     trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutGoalEntryInput
   }
 
@@ -33040,6 +33159,7 @@ export namespace Prisma {
     idealSystem?: StringFieldUpdateOperationsInput | string
     componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
     nextStep?: AssessmentNextStepUpdateOneRequiredWithoutGoalEntriesNestedInput
+    identity?: IdentityRecordUpdateOneWithoutGoalsNestedInput
     trackedHabits?: TrackedHabitUpdateManyWithoutGoalEntryNestedInput
   }
 
@@ -33052,6 +33172,7 @@ export namespace Prisma {
     idealSystem?: StringFieldUpdateOperationsInput | string
     componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
     nextStepId?: StringFieldUpdateOperationsInput | string
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
     trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutGoalEntryNestedInput
   }
 
@@ -33064,6 +33185,7 @@ export namespace Prisma {
     idealSystem?: string
     componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
     nextStepId: string
+    identityId?: string | null
   }
 
   export type NextStepGoalEntryUpdateManyMutationInput = {
@@ -33085,6 +33207,7 @@ export namespace Prisma {
     idealSystem?: StringFieldUpdateOperationsInput | string
     componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
     nextStepId?: StringFieldUpdateOperationsInput | string
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ChecklistCreateInput = {
@@ -34248,6 +34371,16 @@ export namespace Prisma {
     assessmentId?: SortOrder
   }
 
+  export type NextStepGoalEntryListRelationFilter = {
+    every?: NextStepGoalEntryWhereInput
+    some?: NextStepGoalEntryWhereInput
+    none?: NextStepGoalEntryWhereInput
+  }
+
+  export type NextStepGoalEntryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type IdentityRecordCountOrderByAggregateInput = {
     id?: SortOrder
     identity?: SortOrder
@@ -34265,16 +34398,6 @@ export namespace Prisma {
     id?: SortOrder
     identity?: SortOrder
     assessmentId?: SortOrder
-  }
-
-  export type NextStepGoalEntryListRelationFilter = {
-    every?: NextStepGoalEntryWhereInput
-    some?: NextStepGoalEntryWhereInput
-    none?: NextStepGoalEntryWhereInput
-  }
-
-  export type NextStepGoalEntryOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type AssessmentNextStepCountOrderByAggregateInput = {
@@ -34317,6 +34440,11 @@ export namespace Prisma {
     isNot?: AssessmentNextStepWhereInput
   }
 
+  export type IdentityRecordNullableScalarRelationFilter = {
+    is?: IdentityRecordWhereInput | null
+    isNot?: IdentityRecordWhereInput | null
+  }
+
   export type NextStepGoalEntryCountOrderByAggregateInput = {
     id?: SortOrder
     goal?: SortOrder
@@ -34326,6 +34454,7 @@ export namespace Prisma {
     idealSystem?: SortOrder
     componentHabits?: SortOrder
     nextStepId?: SortOrder
+    identityId?: SortOrder
   }
 
   export type NextStepGoalEntryAvgOrderByAggregateInput = {
@@ -34340,6 +34469,7 @@ export namespace Prisma {
     systemRating?: SortOrder
     idealSystem?: SortOrder
     nextStepId?: SortOrder
+    identityId?: SortOrder
   }
 
   export type NextStepGoalEntryMinOrderByAggregateInput = {
@@ -34350,6 +34480,7 @@ export namespace Prisma {
     systemRating?: SortOrder
     idealSystem?: SortOrder
     nextStepId?: SortOrder
+    identityId?: SortOrder
   }
 
   export type NextStepGoalEntrySumOrderByAggregateInput = {
@@ -35799,6 +35930,20 @@ export namespace Prisma {
     connect?: AssessmentPartFourWhereUniqueInput
   }
 
+  export type NextStepGoalEntryCreateNestedManyWithoutIdentityInput = {
+    create?: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput> | NextStepGoalEntryCreateWithoutIdentityInput[] | NextStepGoalEntryUncheckedCreateWithoutIdentityInput[]
+    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutIdentityInput | NextStepGoalEntryCreateOrConnectWithoutIdentityInput[]
+    createMany?: NextStepGoalEntryCreateManyIdentityInputEnvelope
+    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+  }
+
+  export type NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput = {
+    create?: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput> | NextStepGoalEntryCreateWithoutIdentityInput[] | NextStepGoalEntryUncheckedCreateWithoutIdentityInput[]
+    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutIdentityInput | NextStepGoalEntryCreateOrConnectWithoutIdentityInput[]
+    createMany?: NextStepGoalEntryCreateManyIdentityInputEnvelope
+    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+  }
+
   export type IdentityRecordUpdatehabitsInput = {
     set?: string[]
     push?: string | string[]
@@ -35810,6 +35955,34 @@ export namespace Prisma {
     upsert?: AssessmentPartFourUpsertWithoutIdentitiesInput
     connect?: AssessmentPartFourWhereUniqueInput
     update?: XOR<XOR<AssessmentPartFourUpdateToOneWithWhereWithoutIdentitiesInput, AssessmentPartFourUpdateWithoutIdentitiesInput>, AssessmentPartFourUncheckedUpdateWithoutIdentitiesInput>
+  }
+
+  export type NextStepGoalEntryUpdateManyWithoutIdentityNestedInput = {
+    create?: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput> | NextStepGoalEntryCreateWithoutIdentityInput[] | NextStepGoalEntryUncheckedCreateWithoutIdentityInput[]
+    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutIdentityInput | NextStepGoalEntryCreateOrConnectWithoutIdentityInput[]
+    upsert?: NextStepGoalEntryUpsertWithWhereUniqueWithoutIdentityInput | NextStepGoalEntryUpsertWithWhereUniqueWithoutIdentityInput[]
+    createMany?: NextStepGoalEntryCreateManyIdentityInputEnvelope
+    set?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    disconnect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    delete?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    update?: NextStepGoalEntryUpdateWithWhereUniqueWithoutIdentityInput | NextStepGoalEntryUpdateWithWhereUniqueWithoutIdentityInput[]
+    updateMany?: NextStepGoalEntryUpdateManyWithWhereWithoutIdentityInput | NextStepGoalEntryUpdateManyWithWhereWithoutIdentityInput[]
+    deleteMany?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
+  }
+
+  export type NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput = {
+    create?: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput> | NextStepGoalEntryCreateWithoutIdentityInput[] | NextStepGoalEntryUncheckedCreateWithoutIdentityInput[]
+    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutIdentityInput | NextStepGoalEntryCreateOrConnectWithoutIdentityInput[]
+    upsert?: NextStepGoalEntryUpsertWithWhereUniqueWithoutIdentityInput | NextStepGoalEntryUpsertWithWhereUniqueWithoutIdentityInput[]
+    createMany?: NextStepGoalEntryCreateManyIdentityInputEnvelope
+    set?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    disconnect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    delete?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
+    update?: NextStepGoalEntryUpdateWithWhereUniqueWithoutIdentityInput | NextStepGoalEntryUpdateWithWhereUniqueWithoutIdentityInput[]
+    updateMany?: NextStepGoalEntryUpdateManyWithWhereWithoutIdentityInput | NextStepGoalEntryUpdateManyWithWhereWithoutIdentityInput[]
+    deleteMany?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAssessmentNextStepInput = {
@@ -35878,6 +36051,12 @@ export namespace Prisma {
     connect?: AssessmentNextStepWhereUniqueInput
   }
 
+  export type IdentityRecordCreateNestedOneWithoutGoalsInput = {
+    create?: XOR<IdentityRecordCreateWithoutGoalsInput, IdentityRecordUncheckedCreateWithoutGoalsInput>
+    connectOrCreate?: IdentityRecordCreateOrConnectWithoutGoalsInput
+    connect?: IdentityRecordWhereUniqueInput
+  }
+
   export type TrackedHabitCreateNestedManyWithoutGoalEntryInput = {
     create?: XOR<TrackedHabitCreateWithoutGoalEntryInput, TrackedHabitUncheckedCreateWithoutGoalEntryInput> | TrackedHabitCreateWithoutGoalEntryInput[] | TrackedHabitUncheckedCreateWithoutGoalEntryInput[]
     connectOrCreate?: TrackedHabitCreateOrConnectWithoutGoalEntryInput | TrackedHabitCreateOrConnectWithoutGoalEntryInput[]
@@ -35911,6 +36090,16 @@ export namespace Prisma {
     upsert?: AssessmentNextStepUpsertWithoutGoalEntriesInput
     connect?: AssessmentNextStepWhereUniqueInput
     update?: XOR<XOR<AssessmentNextStepUpdateToOneWithWhereWithoutGoalEntriesInput, AssessmentNextStepUpdateWithoutGoalEntriesInput>, AssessmentNextStepUncheckedUpdateWithoutGoalEntriesInput>
+  }
+
+  export type IdentityRecordUpdateOneWithoutGoalsNestedInput = {
+    create?: XOR<IdentityRecordCreateWithoutGoalsInput, IdentityRecordUncheckedCreateWithoutGoalsInput>
+    connectOrCreate?: IdentityRecordCreateOrConnectWithoutGoalsInput
+    upsert?: IdentityRecordUpsertWithoutGoalsInput
+    disconnect?: IdentityRecordWhereInput | boolean
+    delete?: IdentityRecordWhereInput | boolean
+    connect?: IdentityRecordWhereUniqueInput
+    update?: XOR<XOR<IdentityRecordUpdateToOneWithWhereWithoutGoalsInput, IdentityRecordUpdateWithoutGoalsInput>, IdentityRecordUncheckedUpdateWithoutGoalsInput>
   }
 
   export type TrackedHabitUpdateManyWithoutGoalEntryNestedInput = {
@@ -39102,12 +39291,14 @@ export namespace Prisma {
     id?: string
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
+    goals?: NextStepGoalEntryCreateNestedManyWithoutIdentityInput
   }
 
   export type IdentityRecordUncheckedCreateWithoutAssessmentInput = {
     id?: string
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
+    goals?: NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput
   }
 
   export type IdentityRecordCreateOrConnectWithoutAssessmentInput = {
@@ -39386,6 +39577,40 @@ export namespace Prisma {
     create: XOR<AssessmentPartFourCreateWithoutIdentitiesInput, AssessmentPartFourUncheckedCreateWithoutIdentitiesInput>
   }
 
+  export type NextStepGoalEntryCreateWithoutIdentityInput = {
+    id?: string
+    goal: string
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
+    nextStep: AssessmentNextStepCreateNestedOneWithoutGoalEntriesInput
+    trackedHabits?: TrackedHabitCreateNestedManyWithoutGoalEntryInput
+  }
+
+  export type NextStepGoalEntryUncheckedCreateWithoutIdentityInput = {
+    id?: string
+    goal: string
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
+    nextStepId: string
+    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutGoalEntryInput
+  }
+
+  export type NextStepGoalEntryCreateOrConnectWithoutIdentityInput = {
+    where: NextStepGoalEntryWhereUniqueInput
+    create: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput>
+  }
+
+  export type NextStepGoalEntryCreateManyIdentityInputEnvelope = {
+    data: NextStepGoalEntryCreateManyIdentityInput | NextStepGoalEntryCreateManyIdentityInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AssessmentPartFourUpsertWithoutIdentitiesInput = {
     update: XOR<AssessmentPartFourUpdateWithoutIdentitiesInput, AssessmentPartFourUncheckedUpdateWithoutIdentitiesInput>
     create: XOR<AssessmentPartFourCreateWithoutIdentitiesInput, AssessmentPartFourUncheckedCreateWithoutIdentitiesInput>
@@ -39445,6 +39670,37 @@ export namespace Prisma {
     domainVisions?: DomainVisionEntryUncheckedUpdateManyWithoutAssessmentNestedInput
   }
 
+  export type NextStepGoalEntryUpsertWithWhereUniqueWithoutIdentityInput = {
+    where: NextStepGoalEntryWhereUniqueInput
+    update: XOR<NextStepGoalEntryUpdateWithoutIdentityInput, NextStepGoalEntryUncheckedUpdateWithoutIdentityInput>
+    create: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput>
+  }
+
+  export type NextStepGoalEntryUpdateWithWhereUniqueWithoutIdentityInput = {
+    where: NextStepGoalEntryWhereUniqueInput
+    data: XOR<NextStepGoalEntryUpdateWithoutIdentityInput, NextStepGoalEntryUncheckedUpdateWithoutIdentityInput>
+  }
+
+  export type NextStepGoalEntryUpdateManyWithWhereWithoutIdentityInput = {
+    where: NextStepGoalEntryScalarWhereInput
+    data: XOR<NextStepGoalEntryUpdateManyMutationInput, NextStepGoalEntryUncheckedUpdateManyWithoutIdentityInput>
+  }
+
+  export type NextStepGoalEntryScalarWhereInput = {
+    AND?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
+    OR?: NextStepGoalEntryScalarWhereInput[]
+    NOT?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
+    id?: StringFilter<"NextStepGoalEntry"> | string
+    goal?: StringFilter<"NextStepGoalEntry"> | string
+    currentSystem?: StringFilter<"NextStepGoalEntry"> | string
+    systemEval?: StringFilter<"NextStepGoalEntry"> | string
+    systemRating?: IntFilter<"NextStepGoalEntry"> | number
+    idealSystem?: StringFilter<"NextStepGoalEntry"> | string
+    componentHabits?: StringNullableListFilter<"NextStepGoalEntry">
+    nextStepId?: StringFilter<"NextStepGoalEntry"> | string
+    identityId?: StringNullableFilter<"NextStepGoalEntry"> | string | null
+  }
+
   export type UserCreateWithoutAssessmentNextStepInput = {
     id?: string
     email: string
@@ -39496,6 +39752,7 @@ export namespace Prisma {
     systemRating?: number
     idealSystem?: string
     componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
+    identity?: IdentityRecordCreateNestedOneWithoutGoalsInput
     trackedHabits?: TrackedHabitCreateNestedManyWithoutGoalEntryInput
   }
 
@@ -39507,6 +39764,7 @@ export namespace Prisma {
     systemRating?: number
     idealSystem?: string
     componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
+    identityId?: string | null
     trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutGoalEntryInput
   }
 
@@ -39585,20 +39843,6 @@ export namespace Prisma {
     data: XOR<NextStepGoalEntryUpdateManyMutationInput, NextStepGoalEntryUncheckedUpdateManyWithoutNextStepInput>
   }
 
-  export type NextStepGoalEntryScalarWhereInput = {
-    AND?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
-    OR?: NextStepGoalEntryScalarWhereInput[]
-    NOT?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
-    id?: StringFilter<"NextStepGoalEntry"> | string
-    goal?: StringFilter<"NextStepGoalEntry"> | string
-    currentSystem?: StringFilter<"NextStepGoalEntry"> | string
-    systemEval?: StringFilter<"NextStepGoalEntry"> | string
-    systemRating?: IntFilter<"NextStepGoalEntry"> | number
-    idealSystem?: StringFilter<"NextStepGoalEntry"> | string
-    componentHabits?: StringNullableListFilter<"NextStepGoalEntry">
-    nextStepId?: StringFilter<"NextStepGoalEntry"> | string
-  }
-
   export type AssessmentNextStepCreateWithoutGoalEntriesInput = {
     id?: string
     createdAt?: Date | string
@@ -39618,6 +39862,25 @@ export namespace Prisma {
   export type AssessmentNextStepCreateOrConnectWithoutGoalEntriesInput = {
     where: AssessmentNextStepWhereUniqueInput
     create: XOR<AssessmentNextStepCreateWithoutGoalEntriesInput, AssessmentNextStepUncheckedCreateWithoutGoalEntriesInput>
+  }
+
+  export type IdentityRecordCreateWithoutGoalsInput = {
+    id?: string
+    identity: string
+    habits?: IdentityRecordCreatehabitsInput | string[]
+    assessment: AssessmentPartFourCreateNestedOneWithoutIdentitiesInput
+  }
+
+  export type IdentityRecordUncheckedCreateWithoutGoalsInput = {
+    id?: string
+    identity: string
+    habits?: IdentityRecordCreatehabitsInput | string[]
+    assessmentId: string
+  }
+
+  export type IdentityRecordCreateOrConnectWithoutGoalsInput = {
+    where: IdentityRecordWhereUniqueInput
+    create: XOR<IdentityRecordCreateWithoutGoalsInput, IdentityRecordUncheckedCreateWithoutGoalsInput>
   }
 
   export type TrackedHabitCreateWithoutGoalEntryInput = {
@@ -39675,6 +39938,31 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type IdentityRecordUpsertWithoutGoalsInput = {
+    update: XOR<IdentityRecordUpdateWithoutGoalsInput, IdentityRecordUncheckedUpdateWithoutGoalsInput>
+    create: XOR<IdentityRecordCreateWithoutGoalsInput, IdentityRecordUncheckedCreateWithoutGoalsInput>
+    where?: IdentityRecordWhereInput
+  }
+
+  export type IdentityRecordUpdateToOneWithWhereWithoutGoalsInput = {
+    where?: IdentityRecordWhereInput
+    data: XOR<IdentityRecordUpdateWithoutGoalsInput, IdentityRecordUncheckedUpdateWithoutGoalsInput>
+  }
+
+  export type IdentityRecordUpdateWithoutGoalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identity?: StringFieldUpdateOperationsInput | string
+    habits?: IdentityRecordUpdatehabitsInput | string[]
+    assessment?: AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput
+  }
+
+  export type IdentityRecordUncheckedUpdateWithoutGoalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    identity?: StringFieldUpdateOperationsInput | string
+    habits?: IdentityRecordUpdatehabitsInput | string[]
+    assessmentId?: StringFieldUpdateOperationsInput | string
   }
 
   export type TrackedHabitUpsertWithWhereUniqueWithoutGoalEntryInput = {
@@ -39837,6 +40125,7 @@ export namespace Prisma {
     idealSystem?: string
     componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
     nextStep: AssessmentNextStepCreateNestedOneWithoutGoalEntriesInput
+    identity?: IdentityRecordCreateNestedOneWithoutGoalsInput
   }
 
   export type NextStepGoalEntryUncheckedCreateWithoutTrackedHabitsInput = {
@@ -39848,6 +40137,7 @@ export namespace Prisma {
     idealSystem?: string
     componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
     nextStepId: string
+    identityId?: string | null
   }
 
   export type NextStepGoalEntryCreateOrConnectWithoutTrackedHabitsInput = {
@@ -39956,6 +40246,7 @@ export namespace Prisma {
     idealSystem?: StringFieldUpdateOperationsInput | string
     componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
     nextStep?: AssessmentNextStepUpdateOneRequiredWithoutGoalEntriesNestedInput
+    identity?: IdentityRecordUpdateOneWithoutGoalsNestedInput
   }
 
   export type NextStepGoalEntryUncheckedUpdateWithoutTrackedHabitsInput = {
@@ -39967,6 +40258,7 @@ export namespace Prisma {
     idealSystem?: StringFieldUpdateOperationsInput | string
     componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
     nextStepId?: StringFieldUpdateOperationsInput | string
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type HabitCueUpsertWithWhereUniqueWithoutHabitInput = {
@@ -40486,18 +40778,66 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+    goals?: NextStepGoalEntryUpdateManyWithoutIdentityNestedInput
   }
 
   export type IdentityRecordUncheckedUpdateWithoutAssessmentInput = {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+    goals?: NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput
   }
 
   export type IdentityRecordUncheckedUpdateManyWithoutAssessmentInput = {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+  }
+
+  export type NextStepGoalEntryCreateManyIdentityInput = {
+    id?: string
+    goal: string
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
+    nextStepId: string
+  }
+
+  export type NextStepGoalEntryUpdateWithoutIdentityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    goal?: StringFieldUpdateOperationsInput | string
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
+    nextStep?: AssessmentNextStepUpdateOneRequiredWithoutGoalEntriesNestedInput
+    trackedHabits?: TrackedHabitUpdateManyWithoutGoalEntryNestedInput
+  }
+
+  export type NextStepGoalEntryUncheckedUpdateWithoutIdentityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    goal?: StringFieldUpdateOperationsInput | string
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
+    nextStepId?: StringFieldUpdateOperationsInput | string
+    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutGoalEntryNestedInput
+  }
+
+  export type NextStepGoalEntryUncheckedUpdateManyWithoutIdentityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    goal?: StringFieldUpdateOperationsInput | string
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
+    nextStepId?: StringFieldUpdateOperationsInput | string
   }
 
   export type NextStepGoalEntryCreateManyNextStepInput = {
@@ -40508,6 +40848,7 @@ export namespace Prisma {
     systemRating?: number
     idealSystem?: string
     componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
+    identityId?: string | null
   }
 
   export type NextStepGoalEntryUpdateWithoutNextStepInput = {
@@ -40518,6 +40859,7 @@ export namespace Prisma {
     systemRating?: IntFieldUpdateOperationsInput | number
     idealSystem?: StringFieldUpdateOperationsInput | string
     componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
+    identity?: IdentityRecordUpdateOneWithoutGoalsNestedInput
     trackedHabits?: TrackedHabitUpdateManyWithoutGoalEntryNestedInput
   }
 
@@ -40529,6 +40871,7 @@ export namespace Prisma {
     systemRating?: IntFieldUpdateOperationsInput | number
     idealSystem?: StringFieldUpdateOperationsInput | string
     componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
     trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutGoalEntryNestedInput
   }
 
@@ -40540,6 +40883,7 @@ export namespace Prisma {
     systemRating?: IntFieldUpdateOperationsInput | number
     idealSystem?: StringFieldUpdateOperationsInput | string
     componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TrackedHabitCreateManyGoalEntryInput = {
