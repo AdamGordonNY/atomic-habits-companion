@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import {
+  actionAttachGoalToIdentity,
+  actionGetAssignableGoalsForIdentity,
+} from "@/lib/actions/next-step-actions";
 
 type PageProps = { params: Promise<{ identityId: string }> };
 
@@ -10,6 +15,17 @@ export default async function IdentityDetailPage({ params }: PageProps) {
   if (!userId) notFound();
 
   const { identityId } = await params;
+
+  const assignGoalAction = async (formData: FormData) => {
+    "use server";
+
+    const goalId = String(formData.get("goalId") ?? "").trim();
+    if (!goalId) return;
+
+    await actionAttachGoalToIdentity(goalId, identityId);
+    revalidatePath(`/identities/${identityId}`);
+    revalidatePath("/profile");
+  };
 
   const identity = await prisma.identityRecord.findFirst({
     where: {
@@ -30,6 +46,8 @@ export default async function IdentityDetailPage({ params }: PageProps) {
 
   if (!identity) notFound();
 
+  const assignableGoals = await actionGetAssignableGoalsForIdentity(identity.id);
+
   const allHabits = identity.goals.flatMap((goal) =>
     goal.trackedHabits.map((habit) => ({ ...habit, goalId: goal.id, goalName: goal.goal })),
   );
@@ -43,6 +61,30 @@ export default async function IdentityDetailPage({ params }: PageProps) {
 
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-slate-500">Goals</h2>
+        {assignableGoals.length > 0 && (
+          <form action={assignGoalAction} className="mt-3 flex flex-wrap items-center gap-2">
+            <select
+              name="goalId"
+              defaultValue=""
+              className="h-9 rounded-full border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
+            >
+              <option value="" disabled>
+                Attach goal to this identity...
+              </option>
+              {assignableGoals.map((goal) => (
+                <option key={goal.id} value={goal.id}>
+                  {goal.goal || "Untitled goal"}
+                </option>
+              ))}
+            </select>
+            <button
+              type="submit"
+              className="inline-flex h-9 items-center rounded-full bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800"
+            >
+              Attach goal
+            </button>
+          </form>
+        )}
         {identity.goals.length === 0 ? (
           <p className="mt-3 text-sm text-slate-500">No goals linked to this identity yet.</p>
         ) : (

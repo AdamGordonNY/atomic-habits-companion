@@ -7,10 +7,13 @@ import { fetchGoalEntryById, type GoalEntryData } from "@/lib/actions/next-step-
 import { actionCreateHabitChecklist, actionGetHabitChecklists } from "@/lib/checklists-actions";
 import {
   actionAddHabitToGoal,
+  actionAttachHabitToGoal,
   actionCreateHabitCue,
+  actionGetAttachableHabitsForGoal,
   actionGetHabitCues,
   actionGetOrCreateHabitsForGoal,
   actionUpdateGoalHabit,
+  type HabitAssignmentOption,
   actionUpdateHabitCueReflection,
   type HabitCueData,
   type TrackedHabitData,
@@ -41,11 +44,17 @@ export function GoalPage({ goalId }: { goalId: string }) {
   const [habitActionError, setHabitActionError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [creatingForHabitId, setCreatingForHabitId] = useState<string | null>(null);
+  const [attachableHabits, setAttachableHabits] = useState<HabitAssignmentOption[]>([]);
+  const [attachHabitId, setAttachHabitId] = useState("");
 
   useEffect(() => {
     let cancelled = false;
     async function load() {
-      const [g, hs] = await Promise.all([fetchGoalEntryById(goalId), actionGetOrCreateHabitsForGoal(goalId)]);
+      const [g, hs, attachable] = await Promise.all([
+        fetchGoalEntryById(goalId),
+        actionGetOrCreateHabitsForGoal(goalId),
+        actionGetAttachableHabitsForGoal(goalId),
+      ]);
       if (cancelled) return;
       setGoal(g);
 
@@ -58,9 +67,11 @@ export function GoalPage({ goalId }: { goalId: string }) {
 
       if (cancelled) return;
       setHabits(hs);
+      setAttachableHabits(attachable);
       setChecklistsByHabit(Object.fromEntries(checklistPairs));
       setCuesByHabit(Object.fromEntries(cuePairs));
       if (hs.length > 0) setSelectedHabitId(hs[0].id);
+      if (attachable.length > 0) setAttachHabitId(attachable[0].id);
       setLoading(false);
     }
     load();
@@ -146,6 +157,27 @@ export function GoalPage({ goalId }: { goalId: string }) {
       setShowAddHabit(false);
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unable to add habit";
+      setHabitActionError(message);
+    } finally {
+      setSavingHabit(false);
+    }
+  }
+
+  async function handleAttachExistingHabit() {
+    if (!attachHabitId) return;
+    setHabitActionError(null);
+    setSavingHabit(true);
+    try {
+      const attached = await actionAttachHabitToGoal(attachHabitId, goalId);
+      setHabits((prev) => [...prev, attached].sort((a, b) => a.name.localeCompare(b.name)));
+      setChecklistsByHabit((prev) => ({ ...prev, [attached.id]: [] }));
+      setCuesByHabit((prev) => ({ ...prev, [attached.id]: [] }));
+
+      const remaining = attachableHabits.filter((habit) => habit.id !== attachHabitId);
+      setAttachableHabits(remaining);
+      setAttachHabitId(remaining[0]?.id ?? "");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unable to attach habit";
       setHabitActionError(message);
     } finally {
       setSavingHabit(false);
@@ -259,6 +291,33 @@ export function GoalPage({ goalId }: { goalId: string }) {
                 >
                   {savingHabit ? "Adding..." : "Add to goal"}
                 </button>
+              </div>
+            )}
+
+            {attachableHabits.length > 0 && (
+              <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50 p-3">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Attach existing habit</p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <select
+                    value={attachHabitId}
+                    onChange={(e) => setAttachHabitId(e.target.value)}
+                    className="h-9 min-w-[220px] rounded-full border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
+                  >
+                    {attachableHabits.map((habit) => (
+                      <option key={habit.id} value={habit.id}>
+                        {habit.name}{habit.category ? ` (${habit.category})` : ""}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    onClick={handleAttachExistingHabit}
+                    disabled={savingHabit || !attachHabitId}
+                    className="inline-flex h-9 items-center rounded-full bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-50"
+                  >
+                    {savingHabit ? "Attaching..." : "Attach habit"}
+                  </button>
+                </div>
               </div>
             )}
 

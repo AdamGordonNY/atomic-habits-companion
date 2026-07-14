@@ -30,6 +30,13 @@ export interface HabitCueData {
   updatedAt: string;
 }
 
+export interface HabitAssignmentOption {
+  id: string;
+  name: string;
+  category: string | null;
+  goalEntryId: string | null;
+}
+
 // ─── reads ────────────────────────────────────────────────────────────────────
 
 export async function actionGetTrackedHabits(): Promise<TrackedHabitData[]> {
@@ -66,6 +73,25 @@ export async function actionGetTrackedHabitById(id: string): Promise<TrackedHabi
   return row
     ? { id: row.id, name: row.name, category: row.category, goalEntryId: row.goalEntryId, createdAt: row.createdAt.toISOString(), updatedAt: row.updatedAt.toISOString() }
     : null;
+}
+
+export async function actionGetAttachableHabitsForGoal(goalId: string): Promise<HabitAssignmentOption[]> {
+  const userId = await requireUserId();
+
+  const rows = await prisma.trackedHabit.findMany({
+    where: {
+      userId,
+      OR: [{ goalEntryId: null }, { goalEntryId: { not: goalId } }],
+    },
+    orderBy: [{ category: "asc" }, { name: "asc" }],
+  });
+
+  return rows.map((row) => ({
+    id: row.id,
+    name: row.name,
+    category: row.category,
+    goalEntryId: row.goalEntryId,
+  }));
 }
 
 export async function actionGetOrCreateHabitsForGoal(goalId: string): Promise<TrackedHabitData[]> {
@@ -144,6 +170,33 @@ export async function actionAddHabitToGoal(
         category: category ?? null,
       },
     });
+
+  return {
+    id: row.id,
+    name: row.name,
+    category: row.category,
+    goalEntryId: row.goalEntryId,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
+}
+
+export async function actionAttachHabitToGoal(
+  habitId: string,
+  goalId: string,
+): Promise<TrackedHabitData> {
+  const userId = await requireUserId();
+
+  const goal = await prisma.nextStepGoalEntry.findFirst({
+    where: { id: goalId, nextStep: { userId } },
+    select: { id: true },
+  });
+  if (!goal) throw new Error("Goal not found");
+
+  const row = await prisma.trackedHabit.update({
+    where: { id: habitId, userId },
+    data: { goalEntryId: goal.id, updatedAt: new Date() },
+  });
 
   return {
     id: row.id,

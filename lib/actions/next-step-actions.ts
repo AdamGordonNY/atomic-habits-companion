@@ -35,6 +35,12 @@ export interface GoalEntryData extends NextStepGoalData {
   id: string;
 }
 
+export interface GoalAssignmentOption {
+  id: string;
+  goal: string;
+  identityId: string | null;
+}
+
 // ─── read ─────────────────────────────────────────────────────────────────────
 
 export async function fetchNextStep(): Promise<NextStepData | null> {
@@ -159,5 +165,55 @@ export async function upsertNextStep(
         },
       });
     }
+  });
+}
+
+export async function actionGetAssignableGoalsForIdentity(identityId: string): Promise<GoalAssignmentOption[]> {
+  const userId = await requireUserId();
+
+  const rows = await prisma.nextStepGoalEntry.findMany({
+    where: {
+      nextStep: { userId },
+      OR: [{ identityId: null }, { identityId: { not: identityId } }],
+    },
+    orderBy: { goal: "asc" },
+    select: {
+      id: true,
+      goal: true,
+      identityId: true,
+    },
+  });
+
+  return rows.map((row) => ({
+    id: row.id,
+    goal: row.goal,
+    identityId: row.identityId,
+  }));
+}
+
+export async function actionAttachGoalToIdentity(goalId: string, identityId: string): Promise<void> {
+  const userId = await requireUserId();
+
+  const goal = await prisma.nextStepGoalEntry.findFirst({
+    where: {
+      id: goalId,
+      nextStep: { userId },
+    },
+    select: { id: true },
+  });
+  if (!goal) throw new Error("Goal not found");
+
+  const identity = await prisma.identityRecord.findFirst({
+    where: {
+      id: identityId,
+      assessment: { userId },
+    },
+    select: { id: true },
+  });
+  if (!identity) throw new Error("Identity not found");
+
+  await prisma.nextStepGoalEntry.update({
+    where: { id: goalId },
+    data: { identityId },
   });
 }
