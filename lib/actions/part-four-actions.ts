@@ -130,7 +130,7 @@ export async function upsertPartFour(data: PartFourPayload): Promise<void> {
         await tx.identityRecord.deleteMany({ where: { id: { in: deleteIds } } });
       }
 
-      for (const entry of data.identities) {
+      for (const entry of data?.identities!) {
         if (entry.id && existingIds.has(entry.id)) {
           await tx.identityRecord.update({
             where: { id: entry.id },
