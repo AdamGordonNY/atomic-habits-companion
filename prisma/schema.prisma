@@ -348,6 +348,7 @@ model IdentityRecord {
 
   assessmentId String
   assessment   AssessmentPartFour @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  goals        NextStepGoalEntry[]
 
   @@index([assessmentId])
   @@map("identity_records")
@@ -386,9 +387,12 @@ model NextStepGoalEntry {
 
   nextStepId String
   nextStep   AssessmentNextStep @relation(fields: [nextStepId], references: [id], onDelete: Cascade)
+  identityId String?
+  identity   IdentityRecord? @relation(fields: [identityId], references: [id], onDelete: SetNull)
   trackedHabits TrackedHabit[]
 
   @@index([nextStepId])
+  @@index([identityId])
   @@map("next_step_goal_entries")
 }
 

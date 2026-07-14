@@ -3,12 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import {
-  actionDeleteTrackedHabit,
-  actionUpdateGoalHabit,
-  actionUpsertTrackedHabit,
-  type TrackedHabitData,
-} from "@/lib/actions/habit-actions";
+import { actionDeleteTrackedHabit, actionUpdateGoalHabit, type TrackedHabitData } from "@/lib/actions/habit-actions";
 import { type NextStepGoalData, upsertNextStep } from "@/lib/actions/next-step-actions";
 import { upsertPartFour } from "@/lib/actions/part-four-actions";
 import {
@@ -45,6 +40,10 @@ function parseLines(value: string): string[] {
 
 function listToLines(items: string[]): string {
   return items.join("\n");
+}
+
+function buildNestedHabitRoute(identityId: string, goalId: string, habitId: string): string {
+  return `/identities/${identityId}/goals/${goalId}/habits/${habitId}`;
 }
 
 function sectionMeta(updatedAt?: string | null, completedAt?: string | null): string {
@@ -142,10 +141,12 @@ function TagColumnView({
   label,
   items,
   emptyText = "No entries.",
+  getHref,
 }: {
   label: string;
   items: string[];
   emptyText?: string;
+  getHref?: (item: string, index: number) => string;
 }) {
   return (
     <div>
@@ -153,12 +154,22 @@ function TagColumnView({
       {items.length > 0 ? (
         <div className="mt-2 space-y-2">
           {items.map((item, index) => (
-            <div
-              key={`${label}-tag-${index}`}
-              className="w-full rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700"
-            >
-              {item}
-            </div>
+            getHref ? (
+              <Link
+                key={`${label}-tag-${index}`}
+                href={getHref(item, index)}
+                className="block w-full rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 hover:border-slate-300 hover:text-slate-900"
+              >
+                {item}
+              </Link>
+            ) : (
+              <div
+                key={`${label}-tag-${index}`}
+                className="w-full rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700"
+              >
+                {item}
+              </div>
+            )
           ))}
         </div>
       ) : (
@@ -294,9 +305,9 @@ export function CommitmentsSection({ data, showRouteLink = true }: { data: Commi
         <EmptyState message="No commitments data yet." />
       ) : (
         <div className="space-y-4">
-          <TagColumnView label="Existing commitments" items={data.existingCommitments} />
-          <TagColumnView label="Desired commitments" items={data.desiredCommitments} />
-          <TagColumnView label="Unwanted commitments" items={data.unwantedCommitments} />
+          <TagColumnView label="Existing commitments" items={data.existingCommitments} getHref={() => "/committments"} />
+          <TagColumnView label="Desired commitments" items={data.desiredCommitments} getHref={() => "/committments"} />
+          <TagColumnView label="Unwanted commitments" items={data.unwantedCommitments} getHref={() => "/committments"} />
         </div>
       )}
     </SectionCard>
@@ -513,12 +524,18 @@ export function IdentitiesSection({ data, showRouteLink = true }: { data: Identi
         <EmptyState message="No identity entries yet." />
       ) : (
         <div className="space-y-3">
-          {data.identities.map((entry, index) => (
-            <div key={`identity-view-${index}`} className="rounded-xl border border-slate-200 p-3">
-              <p className="text-sm font-semibold text-slate-900">{entry.identity || "Untitled identity"}</p>
-              {entry.habits.length > 0 ? <ul className="mt-2 space-y-1">{entry.habits.map((habit, habitIndex) => <li key={`identity-habit-${index}-${habitIndex}`} className="text-sm text-slate-700">{habit}</li>)}</ul> : <p className="mt-2 text-sm text-slate-500">No habits attached.</p>}
-            </div>
-          ))}
+          {data.identities.map((entry, index) => {
+            const route = entry.id ? `/identities/${entry.id}` : "/identities";
+            return (
+              <Link
+                key={`identity-view-${index}`}
+                href={route}
+                className="block rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300 hover:text-slate-900"
+              >
+                {entry.identity || "Untitled identity"}
+              </Link>
+            );
+          })}
         </div>
       )}
     </SectionCard>
@@ -610,12 +627,13 @@ export function GoalsSection({ data, showRouteLink = true }: { data: GoalsData |
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Goal tags</p>
           <div className="mt-2 space-y-2">
           {data.entries.map((entry, index) => (
-            <div
+            <Link
               key={`goal-view-${index}`}
-              className="w-full rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700"
+              href={entry.identityId && entry.id ? `/identities/${entry.identityId}/goals/${entry.id}` : "/goals"}
+              className="block w-full rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 hover:border-slate-300 hover:text-slate-900"
             >
               {entry.goal || "Untitled goal"}
-            </div>
+            </Link>
           ))}
           </div>
         </div>
@@ -630,22 +648,6 @@ export function HabitsSection({ data, showRouteLink = true }: { data: HabitsData
   const [saving, setSaving] = useState(false);
   const [draft, setDraft] = useState<TrackedHabitData[]>(data.habits);
 
-  function addDraftHabit() {
-    const suffix = Math.random().toString(36).slice(2, 10);
-    const now = new Date().toISOString();
-    setDraft((prev) => [
-      ...prev,
-      {
-        id: `new-${Date.now()}-${suffix}`,
-        name: "",
-        category: null,
-        goalEntryId: null,
-        createdAt: now,
-        updatedAt: now,
-      },
-    ]);
-  }
-
   async function handleSave() {
     setSaving(true);
     try {
@@ -657,17 +659,14 @@ export function HabitsSection({ data, showRouteLink = true }: { data: HabitsData
         await Promise.all(toDelete.map((habit) => actionDeleteTrackedHabit(habit.id)));
       }
 
-      const cleanedDraft = draft.filter((habit) => habit.name.trim().length > 0);
+      const cleanedDraft = draft.filter((habit) => habit.name.trim().length > 0 && existingIds.has(habit.id));
       await Promise.all(
         cleanedDraft.map((habit) => {
           const normalizedCategory = habit.category?.trim() ? habit.category.trim() : null;
-          if (existingIds.has(habit.id)) {
-            return actionUpdateGoalHabit(habit.id, {
-              name: habit.name.trim(),
-              category: normalizedCategory,
-            });
-          }
-          return actionUpsertTrackedHabit(habit.name.trim(), normalizedCategory);
+          return actionUpdateGoalHabit(habit.id, {
+            name: habit.name.trim(),
+            category: normalizedCategory,
+          });
         }),
       );
 
@@ -699,16 +698,7 @@ export function HabitsSection({ data, showRouteLink = true }: { data: HabitsData
     >
       {isEditing ? (
         <div className="space-y-3">
-          <div className="flex items-center justify-between gap-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Habit tags</p>
-            <button
-              type="button"
-              onClick={addDraftHabit}
-              className="text-xs font-medium text-slate-600 hover:text-slate-900"
-            >
-              + Add habit
-            </button>
-          </div>
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Habit tags</p>
           {draft.map((habit, index) => (
             <div key={habit.id} className="space-y-2 rounded-full border border-slate-200 bg-white px-3 py-2">
               <input value={habit.name} onChange={(e) => setDraft((prev) => prev.map((item, itemIndex) => itemIndex === index ? { ...item, name: e.target.value } : item))} placeholder="Habit name" className="h-8 w-full bg-transparent text-sm text-slate-800 focus:outline-none" />
@@ -735,7 +725,13 @@ export function HabitsSection({ data, showRouteLink = true }: { data: HabitsData
             <div key={habit.id} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <Link href={`/habits/${habit.id}`} className="text-sm font-semibold text-slate-900 hover:text-slate-700">{habit.name}</Link>
+                  <Link
+                    href={habit.identityId && habit.goalId ? buildNestedHabitRoute(habit.identityId, habit.goalId, habit.id) : `/habits/${habit.id}`}
+                    className="text-sm font-semibold text-slate-900 hover:text-slate-700"
+                  >
+                    {habit.name}
+                  </Link>
+                  {!habit.goalId && <p className="mt-0.5 text-xs text-amber-600">Unlinked to a goal</p>}
                   {habit.category && <p className="mt-0.5 text-xs text-slate-500">{habit.category}</p>}
                 </div>
                 <p className="text-[11px] text-slate-500">Edited {formatDate(habit.updatedAt)}</p>

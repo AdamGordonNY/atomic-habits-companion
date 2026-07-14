@@ -61,7 +61,13 @@ export interface GoalsData {
 }
 
 export interface HabitsData {
-  habits: TrackedHabitData[];
+  habits: Array<
+    TrackedHabitData & {
+      goalId: string | null;
+      goalName: string | null;
+      identityId: string | null;
+    }
+  >;
 }
 
 export async function fetchProfileSnapshot(): Promise<ProfileSnapshot> {
@@ -152,8 +158,21 @@ export function getGoalsData(snapshot: ProfileSnapshot): GoalsData | null {
 }
 
 export function getHabitsData(snapshot: ProfileSnapshot): HabitsData {
+  const goalLookup = new Map<string, NonNullable<NextStepData["goalEntries"][number]>>();
+  for (const goal of snapshot.nextStep?.goalEntries ?? []) {
+    if (goal.id) goalLookup.set(goal.id, goal);
+  }
+
   return {
-    habits: snapshot.trackedHabits,
+    habits: snapshot.trackedHabits.map((habit) => {
+      const goal = habit.goalEntryId ? goalLookup.get(habit.goalEntryId) : undefined;
+      return {
+        ...habit,
+        goalId: habit.goalEntryId ?? null,
+        goalName: goal?.goal ?? null,
+        identityId: goal?.identityId ?? null,
+      };
+    }),
   };
 }
 

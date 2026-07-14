@@ -328,7 +328,7 @@ export async function fetchPartFourForReview(): Promise<HabitAssessmentPartFour 
     majorChanges: row.majorChanges,
     successDefinition: row.successDefinition,
     domainVisions: row.domainVisions.map((d: { domain: string; vision: string }) => ({ domain: d.domain, vision: d.vision })),
-    identities: row.identities.map((i: { identity: string; habits: string[] }) => ({ identity: i.identity, habits: i.habits })),
+    identities: row.identities.map((i: { id: string; identity: string; habits: string[] }) => ({ id: i.id, identity: i.identity, habits: i.habits })),
     futureReflection: row.futureReflection,
     reflectionGoals: row.reflectionGoals,
   };

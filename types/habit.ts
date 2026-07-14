@@ -249,6 +249,7 @@ export interface DomainVision {
 }
 
 export interface IdentityEntry {
+  id?: string;
   identity: string;
   habits: string[];
 }

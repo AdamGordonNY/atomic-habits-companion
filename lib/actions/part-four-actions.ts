@@ -44,7 +44,7 @@ export async function fetchPartFour(): Promise<HabitAssessmentPartFour | null> {
     majorChanges: row.majorChanges,
     successDefinition: row.successDefinition,
     domainVisions: row.domainVisions.map((d: { domain: string; vision: string }) => ({ domain: d.domain, vision: d.vision })),
-    identities: row.identities.map((i: { identity: string; habits: string[] }) => ({ identity: i.identity, habits: i.habits })),
+    identities: row.identities.map((i: { id: string; identity: string; habits: string[] }) => ({ id: i.id, identity: i.identity, habits: i.habits })),
     futureReflection: row.futureReflection,
     reflectionGoals: row.reflectionGoals,
   };
@@ -115,17 +115,41 @@ export async function upsertPartFour(data: PartFourPayload): Promise<void> {
     }
   }
 
-  // Sync identities (delete + recreate)
+  // Sync identities while preserving existing IDs for route stability.
   if (data.identities !== undefined) {
-    await prisma.identityRecord.deleteMany({ where: { assessmentId: record.id } });
-    if (data.identities.length > 0) {
-      await prisma.identityRecord.createMany({
-        data: data.identities.map((i) => ({
-          identity: i.identity,
-          habits: i.habits,
-          assessmentId: record.id,
-        })),
-      });
-    }
+    const existing = await prisma.identityRecord.findMany({
+      where: { assessmentId: record.id },
+      select: { id: true },
+    });
+    const existingIds = new Set(existing.map((row) => row.id));
+    const retainedIds = new Set(data.identities.map((entry) => entry.id).filter((id): id is string => Boolean(id)));
+    const deleteIds = [...existingIds].filter((id) => !retainedIds.has(id));
+
+    await prisma.$transaction(async (tx) => {
+      if (deleteIds.length > 0) {
+        await tx.identityRecord.deleteMany({ where: { id: { in: deleteIds } } });
+      }
+
+      for (const entry of data.identities) {
+        if (entry.id && existingIds.has(entry.id)) {
+          await tx.identityRecord.update({
+            where: { id: entry.id },
+            data: {
+              identity: entry.identity,
+              habits: entry.habits,
+            },
+          });
+          continue;
+        }
+
+        await tx.identityRecord.create({
+          data: {
+            identity: entry.identity,
+            habits: entry.habits,
+            assessmentId: record.id,
+          },
+        });
+      }
+    });
   }
 }

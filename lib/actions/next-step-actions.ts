@@ -15,6 +15,7 @@ async function requireUserId(): Promise<string> {
 
 export interface NextStepGoalData {
   id?: string;
+  identityId?: string | null;
   goal: string;
   currentSystem: string;
   systemEval: string;
@@ -41,7 +42,7 @@ export async function fetchNextStep(): Promise<NextStepData | null> {
 
   const row = await prisma.assessmentNextStep.findUnique({
     where: { userId },
-    include: { goalEntries: true },
+    include: { goalEntries: { orderBy: { id: "asc" } } },
   });
 
   if (!row) return null;
@@ -52,6 +53,7 @@ export async function fetchNextStep(): Promise<NextStepData | null> {
     completedAt: row.completedAt?.toISOString() ?? null,
     goalEntries: row.goalEntries.map((e) => ({
       id: e.id,
+      identityId: e.identityId,
       goal: e.goal,
       currentSystem: e.currentSystem,
       systemEval: e.systemEval,
@@ -76,6 +78,7 @@ export async function fetchGoalEntryById(goalId: string): Promise<GoalEntryData 
 
   return {
     id: row.id,
+    identityId: row.identityId,
     goal: row.goal,
     currentSystem: row.currentSystem,
     systemEval: row.systemEval,
@@ -105,20 +108,56 @@ export async function upsertNextStep(
     select: { id: true },
   });
 
-  // Replace all goal entries atomically
-  await prisma.nextStepGoalEntry.deleteMany({ where: { nextStepId: parent.id } });
+  const partFour = await prisma.assessmentPartFour.findUnique({
+    where: { userId },
+    include: { identities: { orderBy: { id: "asc" } } },
+  });
+  const fallbackIdentityId = partFour?.identities[0]?.id ?? null;
 
-  if (payload.length > 0) {
-    await prisma.nextStepGoalEntry.createMany({
-      data: payload.map((e) => ({
-        nextStepId: parent.id,
-        goal: e.goal,
-        currentSystem: e.currentSystem,
-        systemEval: e.systemEval,
-        systemRating: e.systemRating,
-        idealSystem: e.idealSystem,
-        componentHabits: e.componentHabits,
-      })),
-    });
-  }
+  const existing = await prisma.nextStepGoalEntry.findMany({
+    where: { nextStepId: parent.id },
+    select: { id: true },
+  });
+  const existingIds = new Set(existing.map((entry) => entry.id));
+  const retainedIds = new Set(payload.map((entry) => entry.id).filter((id): id is string => Boolean(id)));
+  const deleteIds = [...existingIds].filter((id) => !retainedIds.has(id));
+
+  await prisma.$transaction(async (tx) => {
+    if (deleteIds.length > 0) {
+      await tx.nextStepGoalEntry.deleteMany({ where: { id: { in: deleteIds } } });
+    }
+
+    for (const entry of payload) {
+      const normalizedIdentityId = entry.identityId ?? fallbackIdentityId;
+
+      if (entry.id && existingIds.has(entry.id)) {
+        await tx.nextStepGoalEntry.update({
+          where: { id: entry.id },
+          data: {
+            identityId: normalizedIdentityId,
+            goal: entry.goal,
+            currentSystem: entry.currentSystem,
+            systemEval: entry.systemEval,
+            systemRating: entry.systemRating,
+            idealSystem: entry.idealSystem,
+            componentHabits: entry.componentHabits,
+          },
+        });
+        continue;
+      }
+
+      await tx.nextStepGoalEntry.create({
+        data: {
+          nextStepId: parent.id,
+          identityId: normalizedIdentityId,
+          goal: entry.goal,
+          currentSystem: entry.currentSystem,
+          systemEval: entry.systemEval,
+          systemRating: entry.systemRating,
+          idealSystem: entry.idealSystem,
+          componentHabits: entry.componentHabits,
+        },
+      });
+    }
+  });
 }
