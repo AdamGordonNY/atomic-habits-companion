@@ -67,7 +67,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
     }),
     prisma.assessmentPartThree.findUnique({
       where: { userId },
-      select: { completedAt: true },
+      select: { completedAt: true, updatedAt: true, part1WrapUpReflection: true },
     }),
     prisma.assessmentPartFour.findUnique({
       where: { userId },
@@ -134,7 +134,12 @@ export async function fetchDashboardData(): Promise<DashboardData> {
           }
         : null,
       partThree: p3
-        ? { completedAt: p3.completedAt?.toISOString() ?? null, exists: true }
+        ? {
+            completedAt:
+              p3.completedAt?.toISOString() ??
+              (p3.part1WrapUpReflection !== "" ? p3.updatedAt.toISOString() : null),
+            exists: true,
+          }
         : null,
       partFour: p4
         ? { completedAt: p4.completedAt?.toISOString() ?? null, exists: true }

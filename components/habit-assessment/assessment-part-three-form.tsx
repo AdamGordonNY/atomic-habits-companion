@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetchPartTwoForReview } from "@/lib/assessment-reads";
+import { syncPartThree } from "@/lib/sync-actions";
 import { analyzePartTwoEnergy } from "@/lib/energy-analysis";
 import type {
   EnergyAnalysis,
@@ -768,7 +769,12 @@ export function AssessmentPartThreeForm({ assessmentId }: AssessmentPartThreeFor
   }
 
   function finish() {
-    persist(new Date().toISOString());
+    const completedAt = new Date().toISOString();
+    persist(completedAt);
+    const payload = JSON.parse(
+      localStorage.getItem(storageKey) ?? "{}",
+    );
+    syncPartThree(payload).catch(() => {/* non-critical */});
     router.push("/dashboard");
   }
 
