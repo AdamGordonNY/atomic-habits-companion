@@ -12,9 +12,12 @@ import {
   actionGetAttachableGoalsForHabit,
   actionGetAttachableIdentitiesForHabit,
   actionUpdateHabitCategory,
+  actionGetHabitCheckIns,
 } from "@/lib/actions/habit-actions";
 import type { ChecklistRecord } from "@/types/checklist";
 import type { HabitAssignmentOption, IdentityAssignmentOption } from "@/lib/actions/habit-actions";
+import { HabitCheckInCard } from "@/components/habits/habit-check-in-card";
+import { HabitCalendar } from "@/components/habits/habit-calendar";
 
 interface GoalContext {
   id: string;
@@ -40,6 +43,8 @@ export function HabitTracker({ habitId }: { habitId: string }) {
   const [attachingIdentity, setAttachingIdentity] = useState(false);
   const [selectedAttachGoalId, setSelectedAttachGoalId] = useState("");
   const [selectedAttachIdentityId, setSelectedAttachIdentityId] = useState("");
+  const [checkIns, setCheckIns] = useState<{ date: string; completed: boolean; note: string }[]>([]);
+  const [habitCreatedAt, setHabitCreatedAt] = useState("");
   const categoryInputRef = useRef<HTMLInputElement>(null);
 
   async function loadHabitState() {
@@ -56,6 +61,12 @@ export function HabitTracker({ habitId }: { habitId: string }) {
       actionGetAttachableIdentitiesForHabit(tracked.id),
     ]);
 
+    // Fetch this month's check-ins
+    const now = new Date();
+    const yearMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    const monthCheckIns = await actionGetHabitCheckIns(tracked.id, yearMonth);
+    setCheckIns(monthCheckIns);
+    setHabitCreatedAt(tracked.createdAt);
     setHabitName(tracked.name);
     setCategory(tracked.category ?? "");
 
@@ -178,9 +189,37 @@ export function HabitTracker({ habitId }: { habitId: string }) {
       <main className="flex-1 px-5 py-8">
         <div className="mx-auto max-w-2xl space-y-6">
 
-          {/* Habit title + category */}
+          {/* Habit title + streak subheading */}
           <section>
             <h2 className="text-2xl font-semibold tracking-tight text-slate-950">{habitName || "Habit"}</h2>
+            {(() => {
+              const today = (() => {
+                const d = new Date();
+                return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+              })();
+              const completed = new Set(checkIns.filter((c) => c.completed).map((c) => c.date));
+              const startDate = completed.has(today) ? today : (() => {
+                const d = new Date(today + "T00:00:00");
+                d.setDate(d.getDate() - 1);
+                return d.toISOString().split("T")[0];
+              })();
+              let streak = 0;
+              const d = new Date(startDate + "T00:00:00");
+              while (completed.has(d.toISOString().split("T")[0])) {
+                streak++;
+                d.setDate(d.getDate() - 1);
+              }
+              const fires = "🔥".repeat(Math.min(Math.floor(streak / 3), 5));
+              return (
+                <p className="mt-1 text-sm text-slate-500">
+                  {streak > 0 ? (
+                    <>{fires && <span className="mr-1">{fires}</span>}{streak} day streak</>
+                  ) : (
+                    "No streak yet — check in today to start one"
+                  )}
+                </p>
+              );
+            })()}
 
             {/* Category badge / editor */}
             <div className="mt-2 flex items-center gap-2">
@@ -244,6 +283,22 @@ export function HabitTracker({ habitId }: { habitId: string }) {
               )}
             </div>
           </section>
+
+          {/* Daily check-in card */}
+          {habitName && (
+            <HabitCheckInCard
+              habitId={habitId}
+              habitName={habitName}
+              habitCreatedAt={habitCreatedAt}
+              checkIns={checkIns}
+              showLink={false}
+            />
+          )}
+
+          {/* Monthly calendar */}
+          {habitCreatedAt && (
+            <HabitCalendar checkIns={checkIns} habitCreatedAt={habitCreatedAt} />
+          )}
 
           <section className="grid gap-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:grid-cols-2">
             <div>

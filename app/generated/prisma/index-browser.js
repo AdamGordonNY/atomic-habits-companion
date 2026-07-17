@@ -371,6 +371,16 @@ exports.Prisma.HabitCueScalarFieldEnum = {
   habitId: 'habitId'
 };
 
+exports.Prisma.HabitCheckInScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  completed: 'completed',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  habitId: 'habitId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -410,7 +420,8 @@ exports.Prisma.ModelName = {
   NextStepGoalEntry: 'NextStepGoalEntry',
   Checklist: 'Checklist',
   TrackedHabit: 'TrackedHabit',
-  HabitCue: 'HabitCue'
+  HabitCue: 'HabitCue',
+  HabitCheckIn: 'HabitCheckIn'
 };
 
 /**

@@ -97,9 +97,20 @@ export async function fetchDashboardData(): Promise<DashboardData> {
     });
   }
 
+  const sixtyDaysAgoStr = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .split("T")[0];
+
   const tracked = await prisma.trackedHabit.findMany({
     where: { userId },
     orderBy: [{ category: "asc" }, { name: "asc" }],
+    include: {
+      checkIns: {
+        where: { date: { gte: sixtyDaysAgoStr } },
+        select: { date: true, completed: true, note: true },
+        orderBy: { date: "asc" },
+      },
+    },
   });
 
   const [notes, checklists, identityCount] = await Promise.all([
@@ -155,6 +166,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       category: r.category,
       createdAt: r.createdAt.toISOString(),
       updatedAt: r.updatedAt.toISOString(),
+      checkIns: r.checkIns.map((c) => ({ date: c.date, completed: c.completed, note: c.note })),
     })),
     goals: (nextStep?.goalEntries ?? []).map((g) => ({
       id: g.id,

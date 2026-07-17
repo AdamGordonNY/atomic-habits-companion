@@ -436,6 +436,7 @@ model TrackedHabit {
   identityId  String?
   identity    IdentityRecord?    @relation(fields: [identityId], references: [id], onDelete: SetNull)
   cues        HabitCue[]
+  checkIns    HabitCheckIn[]
 
   @@unique([userId, name])
   @@index([userId])
@@ -460,4 +461,21 @@ model HabitCue {
   @@index([habitId])
   @@index([createdAt])
   @@map("habit_cues")
+}
+
+model HabitCheckIn {
+  id        String   @id @default(cuid())
+  /// YYYY-MM-DD
+  date      String
+  completed Boolean  @default(true)
+  note      String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  habitId String
+  habit   TrackedHabit @relation(fields: [habitId], references: [id], onDelete: Cascade)
+
+  @@unique([habitId, date])
+  @@index([habitId])
+  @@map("habit_check_ins")
 }

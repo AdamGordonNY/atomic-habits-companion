@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchDashboardData, type DashboardStatus, type DashboardData } from "@/lib/actions/dashboard-actions";
+import { HabitCheckInCard } from "@/components/habits/habit-check-in-card";
 
 interface PartOneSnapshot {
   stepIndex: number;
@@ -115,6 +116,29 @@ function BentoDashboard({ data }: { data: DashboardData }) {
             <Link href="/habit-assessment/onboarding" className="mt-3 inline-flex h-9 items-center rounded-full bg-amber-900 px-4 text-xs font-semibold text-white hover:bg-amber-800">
               Continue assessment →
             </Link>
+          </section>
+        )}
+
+        {data.trackedHabits.length > 0 && (
+          <section className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold tracking-tight text-slate-950">Habits</h2>
+              <Link href="/habits" className="text-xs font-medium text-slate-500 hover:text-slate-800">
+                View all →
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {data.trackedHabits.map((habit) => (
+                <HabitCheckInCard
+                  key={habit.id}
+                  habitId={habit.id}
+                  habitName={habit.name}
+                  habitCreatedAt={habit.createdAt}
+                  checkIns={habit.checkIns ?? []}
+                  showLink
+                />
+              ))}
+            </div>
           </section>
         )}
       </div>

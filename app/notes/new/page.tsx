@@ -17,9 +17,16 @@ const ENTITY_TYPES: { value: ProfileEntityType; label: string }[] = [
   { value: "habits", label: "Habit" },
 ];
 
-export default async function NewNotePage() {
+export default async function NewNotePage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string>>;
+}) {
   const { userId } = await auth();
   if (!userId) notFound();
+
+  const sp = await searchParams;
+  const presetHabitId = sp.habitId ?? null;
 
   const [identities, goals, habits] = await Promise.all([
     prisma.identityRecord.findMany({
@@ -100,7 +107,7 @@ export default async function NewNotePage() {
                 <span className="text-xs text-slate-500">Type</span>
                 <select
                   name="entityType"
-                  defaultValue=""
+                  defaultValue={presetHabitId ? "habits" : ""}
                   className="mt-1 h-10 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
                 >
                   <option value="">None</option>
@@ -114,7 +121,7 @@ export default async function NewNotePage() {
                 <span className="text-xs text-slate-500">Which one?</span>
                 <select
                   name="entityId"
-                  defaultValue=""
+                  defaultValue={presetHabitId ?? ""}
                   className="mt-1 h-10 w-full rounded-xl border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
                 >
                   <option value="">—</option>

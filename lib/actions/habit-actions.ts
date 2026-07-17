@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 
@@ -17,6 +18,7 @@ export interface TrackedHabitData {
   identityId?: string | null;
   createdAt: string;
   updatedAt: string;
+  checkIns?: { date: string; completed: boolean; note: string }[];
 }
 
 export interface HabitCueData {
@@ -481,4 +483,47 @@ export async function actionUpdateHabitCategory(
 export async function actionDeleteTrackedHabit(id: string): Promise<void> {
   const userId = await requireUserId();
   await prisma.trackedHabit.delete({ where: { id, userId } });
+}
+
+// ─── Check-ins ────────────────────────────────────────────────────────────────
+
+export async function actionToggleHabitCheckIn(
+  habitId: string,
+  date: string, // YYYY-MM-DD
+  completed: boolean,
+): Promise<void> {
+  const userId = await requireUserId();
+  const habit = await prisma.trackedHabit.findUnique({
+    where: { id: habitId },
+    select: { userId: true },
+  });
+  if (!habit || habit.userId !== userId) throw new Error("Not found");
+
+  await prisma.habitCheckIn.upsert({
+    where: { habitId_date: { habitId, date } },
+    create: { habitId, date, completed },
+    update: { completed },
+  });
+
+  revalidatePath("/dashboard");
+  revalidatePath(`/habits/${habitId}`);
+}
+
+export async function actionGetHabitCheckIns(
+  habitId: string,
+  yearMonth: string, // YYYY-MM
+): Promise<{ date: string; completed: boolean; note: string }[]> {
+  const userId = await requireUserId();
+  const habit = await prisma.trackedHabit.findUnique({
+    where: { id: habitId },
+    select: { userId: true },
+  });
+  if (!habit || habit.userId !== userId) throw new Error("Not found");
+
+  const rows = await prisma.habitCheckIn.findMany({
+    where: { habitId, date: { startsWith: yearMonth } },
+    orderBy: { date: "asc" },
+  });
+
+  return rows.map((r) => ({ date: r.date, completed: r.completed, note: r.note }));
 }

@@ -36,7 +36,7 @@ export default function RootLayout({
           <Providers>
             <SiteNavbar />
             <main className="flex-1">
-              <PostSigninSync />
+              
               {children}
             </main>
           </Providers>
