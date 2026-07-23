@@ -348,6 +348,7 @@ model IdentityRecord {
   id       String   @id @default(cuid())
   identity String
   habits   String[] @default([])
+  category String?
 
   assessmentId  String
   assessment    AssessmentPartFour  @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
@@ -378,6 +379,7 @@ model NextStepGoalEntry {
   id              String   @id @default(cuid())
   /// Goal text (copied from Part 4 reflectionGoals or entered by user)
   goal            String
+  category        String?
   /// "none" or a description of the existing system
   currentSystem   String   @default("")
   /// Evaluation of whether the current system is working

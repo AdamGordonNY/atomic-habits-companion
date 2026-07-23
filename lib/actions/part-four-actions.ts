@@ -44,7 +44,7 @@ export async function fetchPartFour(): Promise<HabitAssessmentPartFour | null> {
     majorChanges: row.majorChanges,
     successDefinition: row.successDefinition,
     domainVisions: row.domainVisions.map((d: { domain: string; vision: string }) => ({ domain: d.domain, vision: d.vision })),
-    identities: row.identities.map((i: { id: string; identity: string; habits: string[] }) => ({ id: i.id, identity: i.identity, habits: i.habits })),
+    identities: row.identities.map((i: { id: string; identity: string; habits: string[]; category: string | null }) => ({ id: i.id, identity: i.identity, habits: i.habits, category: i.category })),
     futureReflection: row.futureReflection,
     reflectionGoals: row.reflectionGoals,
   };

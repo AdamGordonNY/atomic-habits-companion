@@ -1,24 +1,18 @@
-import Link from "next/link";
-import { auth } from "@clerk/nextjs/server";
-import { notFound } from "next/navigation";
-import { revalidatePath } from "next/cache";
-import { prisma } from "@/lib/prisma";
-import {
-  actionAttachHabitToGoal,
-  actionGetAttachableHabitsForGoal,
-} from "@/lib/actions/habit-actions";
-import {
-  actionAttachGoalToIdentity,
-  actionGetAttachableIdentitiesForGoal,
-} from "@/lib/actions/next-step-actions";
+import { GoalPage } from "@/components/goals/goal-page";
 
 type PageProps = { params: Promise<{ identityId: string; goalId: string }> };
 
 export default async function IdentityGoalDetailPage({ params }: PageProps) {
-  const { userId } = await auth();
-  if (!userId) notFound();
-
   const { identityId, goalId } = await params;
+  return (
+    <GoalPage
+      goalId={goalId}
+      parentHref={`/identities/${identityId}`}
+      parentLabel="Identity"
+    />
+  );
+}
+
 
   const attachHabitAction = async (formData: FormData) => {
     "use server";

@@ -315,6 +315,7 @@ exports.Prisma.IdentityRecordScalarFieldEnum = {
   id: 'id',
   identity: 'identity',
   habits: 'habits',
+  category: 'category',
   assessmentId: 'assessmentId'
 };
 
@@ -329,6 +330,7 @@ exports.Prisma.AssessmentNextStepScalarFieldEnum = {
 exports.Prisma.NextStepGoalEntryScalarFieldEnum = {
   id: 'id',
   goal: 'goal',
+  category: 'category',
   currentSystem: 'currentSystem',
   systemEval: 'systemEval',
   systemRating: 'systemRating',

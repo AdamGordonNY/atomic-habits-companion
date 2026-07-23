@@ -22865,12 +22865,14 @@ export namespace Prisma {
   export type IdentityRecordMinAggregateOutputType = {
     id: string | null
     identity: string | null
+    category: string | null
     assessmentId: string | null
   }
 
   export type IdentityRecordMaxAggregateOutputType = {
     id: string | null
     identity: string | null
+    category: string | null
     assessmentId: string | null
   }
 
@@ -22878,6 +22880,7 @@ export namespace Prisma {
     id: number
     identity: number
     habits: number
+    category: number
     assessmentId: number
     _all: number
   }
@@ -22886,12 +22889,14 @@ export namespace Prisma {
   export type IdentityRecordMinAggregateInputType = {
     id?: true
     identity?: true
+    category?: true
     assessmentId?: true
   }
 
   export type IdentityRecordMaxAggregateInputType = {
     id?: true
     identity?: true
+    category?: true
     assessmentId?: true
   }
 
@@ -22899,6 +22904,7 @@ export namespace Prisma {
     id?: true
     identity?: true
     habits?: true
+    category?: true
     assessmentId?: true
     _all?: true
   }
@@ -22979,6 +22985,7 @@ export namespace Prisma {
     id: string
     identity: string
     habits: string[]
+    category: string | null
     assessmentId: string
     _count: IdentityRecordCountAggregateOutputType | null
     _min: IdentityRecordMinAggregateOutputType | null
@@ -23003,6 +23010,7 @@ export namespace Prisma {
     id?: boolean
     identity?: boolean
     habits?: boolean
+    category?: boolean
     assessmentId?: boolean
     assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
     goals?: boolean | IdentityRecord$goalsArgs<ExtArgs>
@@ -23014,6 +23022,7 @@ export namespace Prisma {
     id?: boolean
     identity?: boolean
     habits?: boolean
+    category?: boolean
     assessmentId?: boolean
     assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["identityRecord"]>
@@ -23022,6 +23031,7 @@ export namespace Prisma {
     id?: boolean
     identity?: boolean
     habits?: boolean
+    category?: boolean
     assessmentId?: boolean
     assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["identityRecord"]>
@@ -23030,10 +23040,11 @@ export namespace Prisma {
     id?: boolean
     identity?: boolean
     habits?: boolean
+    category?: boolean
     assessmentId?: boolean
   }
 
-  export type IdentityRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "identity" | "habits" | "assessmentId", ExtArgs["result"]["identityRecord"]>
+  export type IdentityRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "identity" | "habits" | "category" | "assessmentId", ExtArgs["result"]["identityRecord"]>
   export type IdentityRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
     goals?: boolean | IdentityRecord$goalsArgs<ExtArgs>
@@ -23058,6 +23069,7 @@ export namespace Prisma {
       id: string
       identity: string
       habits: string[]
+      category: string | null
       assessmentId: string
     }, ExtArgs["result"]["identityRecord"]>
     composites: {}
@@ -23488,6 +23500,7 @@ export namespace Prisma {
     readonly id: FieldRef<"IdentityRecord", 'String'>
     readonly identity: FieldRef<"IdentityRecord", 'String'>
     readonly habits: FieldRef<"IdentityRecord", 'String[]'>
+    readonly category: FieldRef<"IdentityRecord", 'String'>
     readonly assessmentId: FieldRef<"IdentityRecord", 'String'>
   }
     
@@ -25072,6 +25085,7 @@ export namespace Prisma {
   export type NextStepGoalEntryMinAggregateOutputType = {
     id: string | null
     goal: string | null
+    category: string | null
     currentSystem: string | null
     systemEval: string | null
     systemRating: number | null
@@ -25083,6 +25097,7 @@ export namespace Prisma {
   export type NextStepGoalEntryMaxAggregateOutputType = {
     id: string | null
     goal: string | null
+    category: string | null
     currentSystem: string | null
     systemEval: string | null
     systemRating: number | null
@@ -25094,6 +25109,7 @@ export namespace Prisma {
   export type NextStepGoalEntryCountAggregateOutputType = {
     id: number
     goal: number
+    category: number
     currentSystem: number
     systemEval: number
     systemRating: number
@@ -25116,6 +25132,7 @@ export namespace Prisma {
   export type NextStepGoalEntryMinAggregateInputType = {
     id?: true
     goal?: true
+    category?: true
     currentSystem?: true
     systemEval?: true
     systemRating?: true
@@ -25127,6 +25144,7 @@ export namespace Prisma {
   export type NextStepGoalEntryMaxAggregateInputType = {
     id?: true
     goal?: true
+    category?: true
     currentSystem?: true
     systemEval?: true
     systemRating?: true
@@ -25138,6 +25156,7 @@ export namespace Prisma {
   export type NextStepGoalEntryCountAggregateInputType = {
     id?: true
     goal?: true
+    category?: true
     currentSystem?: true
     systemEval?: true
     systemRating?: true
@@ -25237,6 +25256,7 @@ export namespace Prisma {
   export type NextStepGoalEntryGroupByOutputType = {
     id: string
     goal: string
+    category: string | null
     currentSystem: string
     systemEval: string
     systemRating: number
@@ -25268,6 +25288,7 @@ export namespace Prisma {
   export type NextStepGoalEntrySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     goal?: boolean
+    category?: boolean
     currentSystem?: boolean
     systemEval?: boolean
     systemRating?: boolean
@@ -25284,6 +25305,7 @@ export namespace Prisma {
   export type NextStepGoalEntrySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     goal?: boolean
+    category?: boolean
     currentSystem?: boolean
     systemEval?: boolean
     systemRating?: boolean
@@ -25298,6 +25320,7 @@ export namespace Prisma {
   export type NextStepGoalEntrySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     goal?: boolean
+    category?: boolean
     currentSystem?: boolean
     systemEval?: boolean
     systemRating?: boolean
@@ -25312,6 +25335,7 @@ export namespace Prisma {
   export type NextStepGoalEntrySelectScalar = {
     id?: boolean
     goal?: boolean
+    category?: boolean
     currentSystem?: boolean
     systemEval?: boolean
     systemRating?: boolean
@@ -25321,7 +25345,7 @@ export namespace Prisma {
     identityId?: boolean
   }
 
-  export type NextStepGoalEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "goal" | "currentSystem" | "systemEval" | "systemRating" | "idealSystem" | "componentHabits" | "nextStepId" | "identityId", ExtArgs["result"]["nextStepGoalEntry"]>
+  export type NextStepGoalEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "goal" | "category" | "currentSystem" | "systemEval" | "systemRating" | "idealSystem" | "componentHabits" | "nextStepId" | "identityId", ExtArgs["result"]["nextStepGoalEntry"]>
   export type NextStepGoalEntryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
     identity?: boolean | NextStepGoalEntry$identityArgs<ExtArgs>
@@ -25350,6 +25374,7 @@ export namespace Prisma {
        * Goal text (copied from Part 4 reflectionGoals or entered by user)
        */
       goal: string
+      category: string | null
       /**
        * "none" or a description of the existing system
        */
@@ -25800,6 +25825,7 @@ export namespace Prisma {
   interface NextStepGoalEntryFieldRefs {
     readonly id: FieldRef<"NextStepGoalEntry", 'String'>
     readonly goal: FieldRef<"NextStepGoalEntry", 'String'>
+    readonly category: FieldRef<"NextStepGoalEntry", 'String'>
     readonly currentSystem: FieldRef<"NextStepGoalEntry", 'String'>
     readonly systemEval: FieldRef<"NextStepGoalEntry", 'String'>
     readonly systemRating: FieldRef<"NextStepGoalEntry", 'Int'>
@@ -31042,6 +31068,7 @@ export namespace Prisma {
     id: 'id',
     identity: 'identity',
     habits: 'habits',
+    category: 'category',
     assessmentId: 'assessmentId'
   };
 
@@ -31062,6 +31089,7 @@ export namespace Prisma {
   export const NextStepGoalEntryScalarFieldEnum: {
     id: 'id',
     goal: 'goal',
+    category: 'category',
     currentSystem: 'currentSystem',
     systemEval: 'systemEval',
     systemRating: 'systemRating',
@@ -32518,6 +32546,7 @@ export namespace Prisma {
     id?: StringFilter<"IdentityRecord"> | string
     identity?: StringFilter<"IdentityRecord"> | string
     habits?: StringNullableListFilter<"IdentityRecord">
+    category?: StringNullableFilter<"IdentityRecord"> | string | null
     assessmentId?: StringFilter<"IdentityRecord"> | string
     assessment?: XOR<AssessmentPartFourScalarRelationFilter, AssessmentPartFourWhereInput>
     goals?: NextStepGoalEntryListRelationFilter
@@ -32528,6 +32557,7 @@ export namespace Prisma {
     id?: SortOrder
     identity?: SortOrder
     habits?: SortOrder
+    category?: SortOrderInput | SortOrder
     assessmentId?: SortOrder
     assessment?: AssessmentPartFourOrderByWithRelationInput
     goals?: NextStepGoalEntryOrderByRelationAggregateInput
@@ -32541,6 +32571,7 @@ export namespace Prisma {
     NOT?: IdentityRecordWhereInput | IdentityRecordWhereInput[]
     identity?: StringFilter<"IdentityRecord"> | string
     habits?: StringNullableListFilter<"IdentityRecord">
+    category?: StringNullableFilter<"IdentityRecord"> | string | null
     assessmentId?: StringFilter<"IdentityRecord"> | string
     assessment?: XOR<AssessmentPartFourScalarRelationFilter, AssessmentPartFourWhereInput>
     goals?: NextStepGoalEntryListRelationFilter
@@ -32551,6 +32582,7 @@ export namespace Prisma {
     id?: SortOrder
     identity?: SortOrder
     habits?: SortOrder
+    category?: SortOrderInput | SortOrder
     assessmentId?: SortOrder
     _count?: IdentityRecordCountOrderByAggregateInput
     _max?: IdentityRecordMaxOrderByAggregateInput
@@ -32564,6 +32596,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"IdentityRecord"> | string
     identity?: StringWithAggregatesFilter<"IdentityRecord"> | string
     habits?: StringNullableListFilter<"IdentityRecord">
+    category?: StringNullableWithAggregatesFilter<"IdentityRecord"> | string | null
     assessmentId?: StringWithAggregatesFilter<"IdentityRecord"> | string
   }
 
@@ -32631,6 +32664,7 @@ export namespace Prisma {
     NOT?: NextStepGoalEntryWhereInput | NextStepGoalEntryWhereInput[]
     id?: StringFilter<"NextStepGoalEntry"> | string
     goal?: StringFilter<"NextStepGoalEntry"> | string
+    category?: StringNullableFilter<"NextStepGoalEntry"> | string | null
     currentSystem?: StringFilter<"NextStepGoalEntry"> | string
     systemEval?: StringFilter<"NextStepGoalEntry"> | string
     systemRating?: IntFilter<"NextStepGoalEntry"> | number
@@ -32646,6 +32680,7 @@ export namespace Prisma {
   export type NextStepGoalEntryOrderByWithRelationInput = {
     id?: SortOrder
     goal?: SortOrder
+    category?: SortOrderInput | SortOrder
     currentSystem?: SortOrder
     systemEval?: SortOrder
     systemRating?: SortOrder
@@ -32664,6 +32699,7 @@ export namespace Prisma {
     OR?: NextStepGoalEntryWhereInput[]
     NOT?: NextStepGoalEntryWhereInput | NextStepGoalEntryWhereInput[]
     goal?: StringFilter<"NextStepGoalEntry"> | string
+    category?: StringNullableFilter<"NextStepGoalEntry"> | string | null
     currentSystem?: StringFilter<"NextStepGoalEntry"> | string
     systemEval?: StringFilter<"NextStepGoalEntry"> | string
     systemRating?: IntFilter<"NextStepGoalEntry"> | number
@@ -32679,6 +32715,7 @@ export namespace Prisma {
   export type NextStepGoalEntryOrderByWithAggregationInput = {
     id?: SortOrder
     goal?: SortOrder
+    category?: SortOrderInput | SortOrder
     currentSystem?: SortOrder
     systemEval?: SortOrder
     systemRating?: SortOrder
@@ -32699,6 +32736,7 @@ export namespace Prisma {
     NOT?: NextStepGoalEntryScalarWhereWithAggregatesInput | NextStepGoalEntryScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"NextStepGoalEntry"> | string
     goal?: StringWithAggregatesFilter<"NextStepGoalEntry"> | string
+    category?: StringNullableWithAggregatesFilter<"NextStepGoalEntry"> | string | null
     currentSystem?: StringWithAggregatesFilter<"NextStepGoalEntry"> | string
     systemEval?: StringWithAggregatesFilter<"NextStepGoalEntry"> | string
     systemRating?: IntWithAggregatesFilter<"NextStepGoalEntry"> | number
@@ -34408,6 +34446,7 @@ export namespace Prisma {
     id?: string
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
+    category?: string | null
     assessment: AssessmentPartFourCreateNestedOneWithoutIdentitiesInput
     goals?: NextStepGoalEntryCreateNestedManyWithoutIdentityInput
     trackedHabits?: TrackedHabitCreateNestedManyWithoutIdentityInput
@@ -34417,6 +34456,7 @@ export namespace Prisma {
     id?: string
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
+    category?: string | null
     assessmentId: string
     goals?: NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput
     trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutIdentityInput
@@ -34426,6 +34466,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     assessment?: AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput
     goals?: NextStepGoalEntryUpdateManyWithoutIdentityNestedInput
     trackedHabits?: TrackedHabitUpdateManyWithoutIdentityNestedInput
@@ -34435,6 +34476,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     assessmentId?: StringFieldUpdateOperationsInput | string
     goals?: NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput
     trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutIdentityNestedInput
@@ -34444,6 +34486,7 @@ export namespace Prisma {
     id?: string
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
+    category?: string | null
     assessmentId: string
   }
 
@@ -34451,12 +34494,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+    category?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type IdentityRecordUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     assessmentId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -34522,6 +34567,7 @@ export namespace Prisma {
   export type NextStepGoalEntryCreateInput = {
     id?: string
     goal: string
+    category?: string | null
     currentSystem?: string
     systemEval?: string
     systemRating?: number
@@ -34535,6 +34581,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUncheckedCreateInput = {
     id?: string
     goal: string
+    category?: string | null
     currentSystem?: string
     systemEval?: string
     systemRating?: number
@@ -34548,6 +34595,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     goal?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     currentSystem?: StringFieldUpdateOperationsInput | string
     systemEval?: StringFieldUpdateOperationsInput | string
     systemRating?: IntFieldUpdateOperationsInput | number
@@ -34561,6 +34609,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     goal?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     currentSystem?: StringFieldUpdateOperationsInput | string
     systemEval?: StringFieldUpdateOperationsInput | string
     systemRating?: IntFieldUpdateOperationsInput | number
@@ -34574,6 +34623,7 @@ export namespace Prisma {
   export type NextStepGoalEntryCreateManyInput = {
     id?: string
     goal: string
+    category?: string | null
     currentSystem?: string
     systemEval?: string
     systemRating?: number
@@ -34586,6 +34636,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     goal?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     currentSystem?: StringFieldUpdateOperationsInput | string
     systemEval?: StringFieldUpdateOperationsInput | string
     systemRating?: IntFieldUpdateOperationsInput | number
@@ -34596,6 +34647,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     goal?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     currentSystem?: StringFieldUpdateOperationsInput | string
     systemEval?: StringFieldUpdateOperationsInput | string
     systemRating?: IntFieldUpdateOperationsInput | number
@@ -35859,18 +35911,21 @@ export namespace Prisma {
     id?: SortOrder
     identity?: SortOrder
     habits?: SortOrder
+    category?: SortOrder
     assessmentId?: SortOrder
   }
 
   export type IdentityRecordMaxOrderByAggregateInput = {
     id?: SortOrder
     identity?: SortOrder
+    category?: SortOrder
     assessmentId?: SortOrder
   }
 
   export type IdentityRecordMinOrderByAggregateInput = {
     id?: SortOrder
     identity?: SortOrder
+    category?: SortOrder
     assessmentId?: SortOrder
   }
 
@@ -35922,6 +35977,7 @@ export namespace Prisma {
   export type NextStepGoalEntryCountOrderByAggregateInput = {
     id?: SortOrder
     goal?: SortOrder
+    category?: SortOrder
     currentSystem?: SortOrder
     systemEval?: SortOrder
     systemRating?: SortOrder
@@ -35938,6 +35994,7 @@ export namespace Prisma {
   export type NextStepGoalEntryMaxOrderByAggregateInput = {
     id?: SortOrder
     goal?: SortOrder
+    category?: SortOrder
     currentSystem?: SortOrder
     systemEval?: SortOrder
     systemRating?: SortOrder
@@ -35949,6 +36006,7 @@ export namespace Prisma {
   export type NextStepGoalEntryMinOrderByAggregateInput = {
     id?: SortOrder
     goal?: SortOrder
+    category?: SortOrder
     currentSystem?: SortOrder
     systemEval?: SortOrder
     systemRating?: SortOrder
@@ -40932,6 +40990,7 @@ export namespace Prisma {
     id?: string
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
+    category?: string | null
     goals?: NextStepGoalEntryCreateNestedManyWithoutIdentityInput
     trackedHabits?: TrackedHabitCreateNestedManyWithoutIdentityInput
   }
@@ -40940,6 +40999,7 @@ export namespace Prisma {
     id?: string
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
+    category?: string | null
     goals?: NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput
     trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutIdentityInput
   }
@@ -41052,6 +41112,7 @@ export namespace Prisma {
     id?: StringFilter<"IdentityRecord"> | string
     identity?: StringFilter<"IdentityRecord"> | string
     habits?: StringNullableListFilter<"IdentityRecord">
+    category?: StringNullableFilter<"IdentityRecord"> | string | null
     assessmentId?: StringFilter<"IdentityRecord"> | string
   }
 
@@ -41223,6 +41284,7 @@ export namespace Prisma {
   export type NextStepGoalEntryCreateWithoutIdentityInput = {
     id?: string
     goal: string
+    category?: string | null
     currentSystem?: string
     systemEval?: string
     systemRating?: number
@@ -41235,6 +41297,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUncheckedCreateWithoutIdentityInput = {
     id?: string
     goal: string
+    category?: string | null
     currentSystem?: string
     systemEval?: string
     systemRating?: number
@@ -41369,6 +41432,7 @@ export namespace Prisma {
     NOT?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
     id?: StringFilter<"NextStepGoalEntry"> | string
     goal?: StringFilter<"NextStepGoalEntry"> | string
+    category?: StringNullableFilter<"NextStepGoalEntry"> | string | null
     currentSystem?: StringFilter<"NextStepGoalEntry"> | string
     systemEval?: StringFilter<"NextStepGoalEntry"> | string
     systemRating?: IntFilter<"NextStepGoalEntry"> | number
@@ -41440,6 +41504,7 @@ export namespace Prisma {
   export type NextStepGoalEntryCreateWithoutNextStepInput = {
     id?: string
     goal: string
+    category?: string | null
     currentSystem?: string
     systemEval?: string
     systemRating?: number
@@ -41452,6 +41517,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUncheckedCreateWithoutNextStepInput = {
     id?: string
     goal: string
+    category?: string | null
     currentSystem?: string
     systemEval?: string
     systemRating?: number
@@ -41561,6 +41627,7 @@ export namespace Prisma {
     id?: string
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
+    category?: string | null
     assessment: AssessmentPartFourCreateNestedOneWithoutIdentitiesInput
     trackedHabits?: TrackedHabitCreateNestedManyWithoutIdentityInput
   }
@@ -41569,6 +41636,7 @@ export namespace Prisma {
     id?: string
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
+    category?: string | null
     assessmentId: string
     trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutIdentityInput
   }
@@ -41654,6 +41722,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     assessment?: AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput
     trackedHabits?: TrackedHabitUpdateManyWithoutIdentityNestedInput
   }
@@ -41662,6 +41731,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     assessmentId?: StringFieldUpdateOperationsInput | string
     trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutIdentityNestedInput
   }
@@ -41820,6 +41890,7 @@ export namespace Prisma {
   export type NextStepGoalEntryCreateWithoutTrackedHabitsInput = {
     id?: string
     goal: string
+    category?: string | null
     currentSystem?: string
     systemEval?: string
     systemRating?: number
@@ -41832,6 +41903,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUncheckedCreateWithoutTrackedHabitsInput = {
     id?: string
     goal: string
+    category?: string | null
     currentSystem?: string
     systemEval?: string
     systemRating?: number
@@ -41850,6 +41922,7 @@ export namespace Prisma {
     id?: string
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
+    category?: string | null
     assessment: AssessmentPartFourCreateNestedOneWithoutIdentitiesInput
     goals?: NextStepGoalEntryCreateNestedManyWithoutIdentityInput
   }
@@ -41858,6 +41931,7 @@ export namespace Prisma {
     id?: string
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
+    category?: string | null
     assessmentId: string
     goals?: NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput
   }
@@ -41990,6 +42064,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUpdateWithoutTrackedHabitsInput = {
     id?: StringFieldUpdateOperationsInput | string
     goal?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     currentSystem?: StringFieldUpdateOperationsInput | string
     systemEval?: StringFieldUpdateOperationsInput | string
     systemRating?: IntFieldUpdateOperationsInput | number
@@ -42002,6 +42077,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUncheckedUpdateWithoutTrackedHabitsInput = {
     id?: StringFieldUpdateOperationsInput | string
     goal?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     currentSystem?: StringFieldUpdateOperationsInput | string
     systemEval?: StringFieldUpdateOperationsInput | string
     systemRating?: IntFieldUpdateOperationsInput | number
@@ -42026,6 +42102,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     assessment?: AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput
     goals?: NextStepGoalEntryUpdateManyWithoutIdentityNestedInput
   }
@@ -42034,6 +42111,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     assessmentId?: StringFieldUpdateOperationsInput | string
     goals?: NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput
   }
@@ -42638,6 +42716,7 @@ export namespace Prisma {
     id?: string
     identity: string
     habits?: IdentityRecordCreatehabitsInput | string[]
+    category?: string | null
   }
 
   export type DomainVisionEntryUpdateWithoutAssessmentInput = {
@@ -42662,6 +42741,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     goals?: NextStepGoalEntryUpdateManyWithoutIdentityNestedInput
     trackedHabits?: TrackedHabitUpdateManyWithoutIdentityNestedInput
   }
@@ -42670,6 +42750,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     goals?: NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput
     trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutIdentityNestedInput
   }
@@ -42678,11 +42759,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     identity?: StringFieldUpdateOperationsInput | string
     habits?: IdentityRecordUpdatehabitsInput | string[]
+    category?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type NextStepGoalEntryCreateManyIdentityInput = {
     id?: string
     goal: string
+    category?: string | null
     currentSystem?: string
     systemEval?: string
     systemRating?: number
@@ -42704,6 +42787,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUpdateWithoutIdentityInput = {
     id?: StringFieldUpdateOperationsInput | string
     goal?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     currentSystem?: StringFieldUpdateOperationsInput | string
     systemEval?: StringFieldUpdateOperationsInput | string
     systemRating?: IntFieldUpdateOperationsInput | number
@@ -42716,6 +42800,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUncheckedUpdateWithoutIdentityInput = {
     id?: StringFieldUpdateOperationsInput | string
     goal?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     currentSystem?: StringFieldUpdateOperationsInput | string
     systemEval?: StringFieldUpdateOperationsInput | string
     systemRating?: IntFieldUpdateOperationsInput | number
@@ -42728,6 +42813,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUncheckedUpdateManyWithoutIdentityInput = {
     id?: StringFieldUpdateOperationsInput | string
     goal?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     currentSystem?: StringFieldUpdateOperationsInput | string
     systemEval?: StringFieldUpdateOperationsInput | string
     systemRating?: IntFieldUpdateOperationsInput | number
@@ -42773,6 +42859,7 @@ export namespace Prisma {
   export type NextStepGoalEntryCreateManyNextStepInput = {
     id?: string
     goal: string
+    category?: string | null
     currentSystem?: string
     systemEval?: string
     systemRating?: number
@@ -42784,6 +42871,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUpdateWithoutNextStepInput = {
     id?: StringFieldUpdateOperationsInput | string
     goal?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     currentSystem?: StringFieldUpdateOperationsInput | string
     systemEval?: StringFieldUpdateOperationsInput | string
     systemRating?: IntFieldUpdateOperationsInput | number
@@ -42796,6 +42884,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUncheckedUpdateWithoutNextStepInput = {
     id?: StringFieldUpdateOperationsInput | string
     goal?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     currentSystem?: StringFieldUpdateOperationsInput | string
     systemEval?: StringFieldUpdateOperationsInput | string
     systemRating?: IntFieldUpdateOperationsInput | number
@@ -42808,6 +42897,7 @@ export namespace Prisma {
   export type NextStepGoalEntryUncheckedUpdateManyWithoutNextStepInput = {
     id?: StringFieldUpdateOperationsInput | string
     goal?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     currentSystem?: StringFieldUpdateOperationsInput | string
     systemEval?: StringFieldUpdateOperationsInput | string
     systemRating?: IntFieldUpdateOperationsInput | number

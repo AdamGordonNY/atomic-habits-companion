@@ -252,6 +252,7 @@ export interface IdentityEntry {
   id?: string;
   identity: string;
   habits: string[];
+  category?: string | null;
 }
 
 export const LIFE_DOMAINS = [

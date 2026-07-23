@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import {
   actionAttachGoalToIdentity,
   actionGetAssignableGoalsForIdentity,
+  actionUpdateIdentityCategory,
 } from "@/lib/actions/next-step-actions";
 import {
   actionAttachHabitToIdentity,
@@ -29,6 +30,13 @@ export default async function IdentityDetailPage({ params }: PageProps) {
     await actionAttachGoalToIdentity(goalId, identityId);
     revalidatePath(`/identities/${identityId}`);
     revalidatePath("/profile");
+  };
+
+  const updateCategoryAction = async (formData: FormData) => {
+    "use server";
+    const category = String(formData.get("category") ?? "").trim() || null;
+    await actionUpdateIdentityCategory(identityId, category);
+    revalidatePath(`/identities/${identityId}`);
   };
 
   const assignHabitAction = async (formData: FormData) => {
@@ -89,6 +97,25 @@ export default async function IdentityDetailPage({ params }: PageProps) {
       <header className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">Identity</p>
         <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">{identity.identity || "Untitled identity"}</h1>
+        {identity.category && (
+          <span className="mt-2 inline-block rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
+            {identity.category}
+          </span>
+        )}
+        <form action={updateCategoryAction} className="mt-4 flex items-center gap-2">
+          <input
+            name="category"
+            defaultValue={identity.category ?? ""}
+            placeholder="Add a category…"
+            className="h-8 flex-1 rounded-full border border-slate-200 bg-slate-50 px-3 text-sm text-slate-800 focus:border-slate-400 focus:outline-none sm:max-w-xs"
+          />
+          <button
+            type="submit"
+            className="inline-flex h-8 items-center rounded-full border border-slate-300 px-3 text-xs font-semibold text-slate-700 hover:border-slate-400 hover:text-slate-900"
+          >
+            {identity.category ? "Update category" : "Save category"}
+          </button>
+        </form>
       </header>
 
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">

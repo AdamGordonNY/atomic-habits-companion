@@ -17,6 +17,7 @@ export interface NextStepGoalData {
   id?: string;
   identityId?: string | null;
   goal: string;
+  category?: string | null;
   currentSystem: string;
   systemEval: string;
   systemRating: number;
@@ -87,6 +88,7 @@ export async function fetchGoalEntryById(goalId: string): Promise<GoalEntryData 
     id: row.id,
     identityId: row.identityId,
     goal: row.goal,
+    category: row.category,
     currentSystem: row.currentSystem,
     systemEval: row.systemEval,
     systemRating: row.systemRating,
@@ -143,6 +145,7 @@ export async function upsertNextStep(
           data: {
             identityId: normalizedIdentityId,
             goal: entry.goal,
+            category: entry.category ?? undefined,
             currentSystem: entry.currentSystem,
             systemEval: entry.systemEval,
             systemRating: entry.systemRating,
@@ -158,6 +161,7 @@ export async function upsertNextStep(
           nextStepId: parent.id,
           identityId: normalizedIdentityId,
           goal: entry.goal,
+          category: entry.category ?? undefined,
           currentSystem: entry.currentSystem,
           systemEval: entry.systemEval,
           systemRating: entry.systemRating,
@@ -246,5 +250,27 @@ export async function actionAttachGoalToIdentity(goalId: string, identityId: str
   await prisma.trackedHabit.updateMany({
     where: { goalEntryId: goalId, userId },
     data: { identityId },
+  });
+}
+
+export async function actionUpdateGoalCategory(
+  goalId: string,
+  category: string | null,
+): Promise<void> {
+  const userId = await requireUserId();
+  await prisma.nextStepGoalEntry.updateMany({
+    where: { id: goalId, nextStep: { userId } },
+    data: { category },
+  });
+}
+
+export async function actionUpdateIdentityCategory(
+  identityId: string,
+  category: string | null,
+): Promise<void> {
+  const userId = await requireUserId();
+  await prisma.identityRecord.updateMany({
+    where: { id: identityId, assessment: { userId } },
+    data: { category },
   });
 }

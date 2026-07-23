@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { fetchGoalEntryById, type GoalEntryData } from "@/lib/actions/next-step-actions";
+import { fetchGoalEntryById, actionUpdateGoalCategory, type GoalEntryData } from "@/lib/actions/next-step-actions";
 import { actionCreateHabitChecklist, actionGetHabitChecklists } from "@/lib/checklists-actions";
 import {
   actionAddHabitToGoal,
@@ -20,9 +20,20 @@ import {
 } from "@/lib/actions/habit-actions";
 import type { ChecklistRecord } from "@/types/checklist";
 
-export function GoalPage({ goalId }: { goalId: string }) {
+export function GoalPage({
+  goalId,
+  parentHref,
+  parentLabel,
+}: {
+  goalId: string;
+  parentHref?: string;
+  parentLabel?: string;
+}) {
   const router = useRouter();
   const [goal, setGoal] = useState<GoalEntryData | null>(null);
+  const [editingCategory, setEditingCategory] = useState(false);
+  const [categoryDraft, setCategoryDraft] = useState("");
+  const [savingCategory, setSavingCategory] = useState(false);
   const [habits, setHabits] = useState<TrackedHabitData[]>([]);
   const [checklistsByHabit, setChecklistsByHabit] = useState<Record<string, ChecklistRecord[]>>({});
   const [cuesByHabit, setCuesByHabit] = useState<Record<string, HabitCueData[]>>({});
@@ -97,6 +108,18 @@ export function GoalPage({ goalId }: { goalId: string }) {
     } catch (err) {
       console.error("[GoalPage] create habit checklist failed", err);
       setCreatingForHabitId(null);
+    }
+  }
+
+  async function handleSaveCategory() {
+    if (!goal) return;
+    setSavingCategory(true);
+    try {
+      await actionUpdateGoalCategory(goal.id, categoryDraft.trim() || null);
+      setGoal((prev) => prev ? { ...prev, category: categoryDraft.trim() || null } : prev);
+      setEditingCategory(false);
+    } finally {
+      setSavingCategory(false);
     }
   }
 
@@ -230,7 +253,7 @@ export function GoalPage({ goalId }: { goalId: string }) {
     <div className="flex min-h-screen flex-col bg-slate-50">
       <div className="border-b border-slate-100 bg-white px-4 py-3 sm:px-6">
         <div className="mx-auto flex max-w-2xl items-center gap-2 text-xs text-slate-500">
-          <Link href="/goals" className="hover:text-slate-800">Goals</Link>
+          <Link href={parentHref ?? "/goals"} className="hover:text-slate-800">{parentLabel ?? "Goals"}</Link>
           <span>/</span>
           <span className="font-semibold text-slate-800">Goal</span>
         </div>
@@ -244,6 +267,49 @@ export function GoalPage({ goalId }: { goalId: string }) {
             {goal.idealSystem && (
               <p className="mt-3 text-sm text-slate-600">Ideal system: {goal.idealSystem}</p>
             )}
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              {editingCategory ? (
+                <>
+                  <input
+                    value={categoryDraft}
+                    onChange={(e) => setCategoryDraft(e.target.value)}
+                    placeholder="Category"
+                    autoFocus
+                    className="h-8 rounded-full border border-slate-200 px-3 text-sm text-slate-800 focus:border-slate-400 focus:outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleSaveCategory}
+                    disabled={savingCategory}
+                    className="inline-flex h-8 items-center rounded-full bg-slate-900 px-3 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-50"
+                  >
+                    {savingCategory ? "Saving..." : "Save"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEditingCategory(false)}
+                    className="text-xs text-slate-400 hover:text-slate-600"
+                  >
+                    Cancel
+                  </button>
+                </>
+              ) : (
+                <>
+                  {goal.category && (
+                    <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
+                      {goal.category}
+                    </span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => { setEditingCategory(true); setCategoryDraft(goal.category ?? ""); }}
+                    className="inline-flex h-7 items-center rounded-full border border-slate-200 px-2.5 text-xs font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700"
+                  >
+                    {goal.category ? "Edit category" : "+ Add category"}
+                  </button>
+                </>
+              )}
+            </div>
           </section>
 
           <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
