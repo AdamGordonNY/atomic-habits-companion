@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchDashboardData, type DashboardStatus, type DashboardData } from "@/lib/actions/dashboard-actions";
 import { HabitCheckInCard } from "@/components/habits/habit-check-in-card";
+import { IdentityTree } from "@/components/identity/identity-tree";
 
 interface PartOneSnapshot {
   stepIndex: number;
@@ -116,6 +117,22 @@ function BentoDashboard({ data }: { data: DashboardData }) {
             <Link href="/habit-assessment/onboarding" className="mt-3 inline-flex h-9 items-center rounded-full bg-amber-900 px-4 text-xs font-semibold text-white hover:bg-amber-800">
               Continue assessment →
             </Link>
+          </section>
+        )}
+
+        {data.identities.length > 0 && (
+          <section className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold tracking-tight text-slate-950">Identities</h2>
+              <Link href="/identities" className="text-xs font-medium text-slate-500 hover:text-slate-800">
+                View all →
+              </Link>
+            </div>
+            <IdentityTree
+              identities={data.identities}
+              goals={data.goals.map((g) => ({ id: g.id, goal: g.label, identityId: g.identityId }))}
+              habits={data.trackedHabits.map((h) => ({ id: h.id, name: h.name, category: h.category, goalEntryId: h.goalEntryId ?? null, identityId: h.identityId ?? null }))}
+            />
           </section>
         )}
 

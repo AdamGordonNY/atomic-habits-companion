@@ -85,8 +85,8 @@ export function ProfilePageClient({
           {visibilitySettings.commitments && <CommitmentsSection data={commitments} />}
           {visibilitySettings.ideals && <IdealsSection data={ideals} />}
           {visibilitySettings.vision && <VisionSection data={vision} />}
-          {visibilitySettings.identities && <IdentitiesSection data={identities} />}
-          {visibilitySettings.goals && <GoalsSection data={goals} />}
+          {visibilitySettings.identities && <IdentitiesSection data={identities} goals={goals} habits={habits} />}
+          {visibilitySettings.goals && <GoalsSection data={goals} habits={habits} />}
           {visibilitySettings.habits && <HabitsSection data={habits} />}
         </div>
       )}

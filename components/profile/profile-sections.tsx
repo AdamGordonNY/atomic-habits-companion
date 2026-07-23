@@ -19,6 +19,7 @@ import type {
   IdealsData,
   VisionData,
 } from "@/lib/profile-data";
+import { GoalHabitsTree, IdentityTree } from "@/components/identity/identity-tree";
 
 function formatDate(value?: string | null): string {
   if (!value) return "";
@@ -472,7 +473,7 @@ export function VisionSection({ data, showRouteLink = true }: { data: VisionData
   );
 }
 
-export function IdentitiesSection({ data, showRouteLink = true }: { data: IdentitiesData | null; showRouteLink?: boolean }) {
+export function IdentitiesSection({ data, goals, habits, showRouteLink = true }: { data: IdentitiesData | null; goals?: GoalsData | null; habits?: HabitsData | null; showRouteLink?: boolean }) {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -523,20 +524,11 @@ export function IdentitiesSection({ data, showRouteLink = true }: { data: Identi
       ) : data.identities.length === 0 ? (
         <EmptyState message="No identity entries yet." />
       ) : (
-        <div className="space-y-3">
-          {data.identities.map((entry, index) => {
-            const route = entry.id ? `/identities/${entry.id}` : "/identities";
-            return (
-              <Link
-                key={`identity-view-${index}`}
-                href={route}
-                className="block rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300 hover:text-slate-900"
-              >
-                {entry.identity || "Untitled identity"}
-              </Link>
-            );
-          })}
-        </div>
+        <IdentityTree
+          identities={data.identities.filter((e) => e.id).map((e) => ({ id: e.id!, identity: e.identity }))}
+          goals={(goals?.entries ?? []).filter((g) => g.id).map((g) => ({ id: g.id!, goal: g.goal, identityId: g.identityId ?? null }))}
+          habits={habits?.habits ?? []}
+        />
       )}
     </SectionCard>
   );
@@ -553,7 +545,7 @@ function defaultGoalEntry(): NextStepGoalData {
   };
 }
 
-export function GoalsSection({ data, showRouteLink = true }: { data: GoalsData | null; showRouteLink?: boolean }) {
+export function GoalsSection({ data, habits, showRouteLink = true }: { data: GoalsData | null; habits?: HabitsData | null; showRouteLink?: boolean }) {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -623,20 +615,10 @@ export function GoalsSection({ data, showRouteLink = true }: { data: GoalsData |
       ) : data.entries.length === 0 ? (
         <EmptyState message="No goals yet. Complete The Next Step to generate them." />
       ) : (
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">Goal tags</p>
-          <div className="mt-2 space-y-2">
-          {data.entries.map((entry, index) => (
-            <Link
-              key={`goal-view-${index}`}
-              href={entry.identityId && entry.id ? `/identities/${entry.identityId}/goals/${entry.id}` : "/goals"}
-              className="block w-full rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 hover:border-slate-300 hover:text-slate-900"
-            >
-              {entry.goal || "Untitled goal"}
-            </Link>
-          ))}
-          </div>
-        </div>
+        <GoalHabitsTree
+          goals={(data.entries ?? []).filter((g) => g.id).map((g) => ({ id: g.id!, goal: g.goal, identityId: g.identityId ?? null }))}
+          habits={habits?.habits ?? []}
+        />
       )}
     </SectionCard>
   );

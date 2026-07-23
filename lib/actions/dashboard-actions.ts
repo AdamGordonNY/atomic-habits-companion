@@ -21,8 +21,9 @@ export interface DashboardData {
   status: DashboardStatus;
   habitNames: string[];
   trackedHabits: TrackedHabitData[];
-  goals: { id: string; label: string }[];
+  goals: { id: string; label: string; identityId: string | null }[];
   identityCount: number;
+  identities: { id: string; identity: string }[];
   recentNotes: { id: string; title: string; updatedAt: string }[];
   recentChecklists: { id: string; title: string; updatedAt: string }[];
 }
@@ -46,6 +47,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       trackedHabits: [],
       goals: [],
       identityCount: 0,
+      identities: [],
       recentNotes: [],
       recentChecklists: [],
     };
@@ -78,7 +80,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       select: {
         completedAt: true,
         goalEntries: {
-          select: { id: true, goal: true, componentHabits: true },
+          select: { id: true, goal: true, componentHabits: true, identityId: true },
         },
       },
     }),
@@ -113,7 +115,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
     },
   });
 
-  const [notes, checklists, identityCount] = await Promise.all([
+  const [notes, checklists, identities] = await Promise.all([
     prisma.note.findMany({
       where: { userId },
       orderBy: [{ pinned: "desc" }, { updatedAt: "desc" }],
@@ -126,8 +128,13 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       take: 10,
       select: { id: true, title: true, updatedAt: true },
     }),
-    prisma.identityRecord.count({ where: { assessment: { userId } } }),
+    prisma.identityRecord.findMany({
+      where: { assessment: { userId } },
+      orderBy: { identity: "asc" },
+      select: { id: true, identity: true },
+    }),
   ]);
+  const identityCount = identities.length;
 
   return {
     status: {
@@ -164,6 +171,8 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       id: r.id,
       name: r.name,
       category: r.category,
+      goalEntryId: r.goalEntryId,
+      identityId: r.identityId,
       createdAt: r.createdAt.toISOString(),
       updatedAt: r.updatedAt.toISOString(),
       checkIns: r.checkIns.map((c) => ({ date: c.date, completed: c.completed, note: c.note })),
@@ -171,8 +180,10 @@ export async function fetchDashboardData(): Promise<DashboardData> {
     goals: (nextStep?.goalEntries ?? []).map((g) => ({
       id: g.id,
       label: g.goal,
+      identityId: g.identityId ?? null,
     })),
     identityCount,
+    identities,
     recentNotes: notes.map((n) => ({
       id: n.id,
       title: n.title || "Untitled note",
