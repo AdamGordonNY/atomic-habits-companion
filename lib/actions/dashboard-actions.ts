@@ -3,7 +3,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import type { TrackedHabitData } from "@/lib/actions/habit-actions";
-
+// Assessment Status for Dashboard Display
 export interface DashboardStatus {
   partOne: { completedAt: string | null; exists: boolean } | null;
   partTwo: {

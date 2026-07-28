@@ -9,18 +9,7 @@ import {
   actionDeleteChecklist,
 } from "@/lib/checklists-actions";
 import type { ChecklistRecord } from "@/types/checklist";
-
-function formatDate(iso: string): string {
-  try {
-    return new Date(iso).toLocaleDateString(undefined, {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  } catch {
-    return iso;
-  }
-}
+import formatDate from "@/lib/utils";
 
 export function ChecklistsClient() {
   const router = useRouter();

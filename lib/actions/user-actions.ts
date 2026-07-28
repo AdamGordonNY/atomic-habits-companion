@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { auth } from "@clerk/nextjs/server";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -64,4 +65,9 @@ export async function updateUser(data: UserData): Promise<void> {
  */
 export async function deleteUser(id: string): Promise<void> {
   await prisma.user.deleteMany({ where: { id } });
+}
+export async function requireUserId(): Promise<string> {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Not authenticated");
+  return userId;
 }

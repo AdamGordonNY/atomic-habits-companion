@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { Providers } from "@/components/providers";
-import { PostSigninSync } from "@/components/auth/post-signin-sync";
 import { SiteNavbar } from "@/components/site-navbar";
 
 const geistSans = Geist({

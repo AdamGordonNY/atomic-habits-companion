@@ -16,14 +16,8 @@ import type {
   HabitAssessmentPartThree,
   HabitInventoryScorecard,
 } from "@/types/habit";
+import { requireUserId } from "./actions/user-actions";
 
-// ─── helpers ──────────────────────────────────────────────────────────────────
-
-async function requireUserId(): Promise<string> {
-  const { userId } = await auth();
-  if (!userId) throw new Error("Not authenticated");
-  return userId;
-}
 
 // ─── User provisioning ────────────────────────────────────────────────────────
 
