@@ -340,6 +340,17 @@ exports.Prisma.NextStepGoalEntryScalarFieldEnum = {
   identityId: 'identityId'
 };
 
+exports.Prisma.ChecklistTemplateScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  description: 'description',
+  icon: 'icon',
+  fields: 'fields',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.ChecklistScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -347,7 +358,10 @@ exports.Prisma.ChecklistScalarFieldEnum = {
   content: 'content',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  userId: 'userId'
+  userId: 'userId',
+  mode: 'mode',
+  templateId: 'templateId',
+  customEntries: 'customEntries'
 };
 
 exports.Prisma.TrackedHabitScalarFieldEnum = {
@@ -420,6 +434,7 @@ exports.Prisma.ModelName = {
   IdentityRecord: 'IdentityRecord',
   AssessmentNextStep: 'AssessmentNextStep',
   NextStepGoalEntry: 'NextStepGoalEntry',
+  ChecklistTemplate: 'ChecklistTemplate',
   Checklist: 'Checklist',
   TrackedHabit: 'TrackedHabit',
   HabitCue: 'HabitCue',

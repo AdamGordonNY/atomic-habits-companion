@@ -398,7 +398,19 @@ model NextStepGoalEntry {
 }
 
 // ─── Checklists ───────────────────────────────────────────────────────────────
+model ChecklistTemplate {
+  id          String      @id @default(cuid())
+  userId      String
+  name        String
+  description String?
+  icon        String?
+  fields      String      @default("[]")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  checklists  Checklist[]
 
+  @@index([userId])
+}
 model Checklist {
   id           String   @id @default(cuid())
   title        String   @default("Habit Assessment Checklist")
@@ -410,7 +422,10 @@ model Checklist {
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  mode           String   @default("habit-assessment")
+  templateId     String?
+  customEntries  String   @default("[]")
+  template       ChecklistTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
   @@index([userId])
   @@index([createdAt])
   @@map("checklists")

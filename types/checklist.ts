@@ -17,11 +17,44 @@ export interface ChecklistHabitEntry {
   learnings: string;
 }
 
+export type FieldType = "text" | "textarea" | "rating" | "date" | "url";
+
+export interface CustomField {
+  id: string;
+  label: string;
+  type: FieldType;
+  placeholder?: string;
+  required?: boolean;
+}
+
+export interface ChecklistTemplate {
+  id: string;
+  name: string;           // e.g. "Reading Log"
+  description?: string;
+  icon?: string;          // emoji or icon name
+  fields: CustomField[];  // the form definition
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CustomEntryRecord {
+  id: string;
+  templateId: string;
+  values: Record<string, string>; // fieldId → value
+  createdAt: string;
+}
+
+// Extend ChecklistRecord to support both modes
+export type ChecklistMode = "habit-assessment" | "custom";
+
 export interface ChecklistRecord {
   id: string;
   title: string;
-  templateType: string;
-  content: ChecklistHabitEntry[];
+  templateType: "habit-assessment" | "custom"; // existing field
+  mode: ChecklistMode;                      // NEW
+  templateId?: string;                      // NEW — links to a ChecklistTemplate
+  content: ChecklistHabitEntry[];           // existing habit mode
+  customEntries: CustomEntryRecord[];       // NEW — custom mode entries
   createdAt: string;
   updatedAt: string;
 }
