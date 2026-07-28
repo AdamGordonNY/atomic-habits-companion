@@ -2,7 +2,8 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
-import type { ChecklistRecord, ChecklistTemplate } from "@/types/checklist";
+import type { ChecklistRecord, ChecklistTemplate, CustomField } from "@/types/checklist";
+import { randomUUID } from "crypto";
 
 // ─── auth ─────────────────────────────────────────────────────────────────────
 
