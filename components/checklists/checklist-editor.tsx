@@ -3,10 +3,8 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { actionGetChecklist, actionUpdateChecklist } from "@/lib/checklists-actions";
-import type { ChecklistHabitEntry, ChecklistObstacle, ChecklistRecord } from "@/types/checklist";
+import type { ChecklistHabitEntry,  ChecklistRecord } from "@/types/checklist";
 import {uid} from "@/lib/utils";
-import{ Textarea }from "@/components/Textarea";
-import { ObstacleList } from "@/components/checklists/obstacle-list";
 import HabitCard from "../HabitCard";
 
 function emptyHabitEntry(): ChecklistHabitEntry {
