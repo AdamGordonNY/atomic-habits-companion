@@ -29,32 +29,28 @@ export interface CustomField {
 
 export interface ChecklistTemplate {
   id: string;
-  name: string;           // e.g. "Reading Log"
+  name: string;
   description?: string;
-  icon?: string;          // emoji or icon name
-  fields: CustomField[];  // the form definition
+  icon?: string;
+  fields: CustomField[];
   createdAt: string;
   updatedAt: string;
 }
 
-export interface CustomEntryRecord {
-  id: string;
-  templateId: string;
-  values: Record<string, string>; // fieldId → value
-  createdAt: string;
-}
+// Removed CustomEntryRecord — redundant with ChecklistRecord.id + templateId
+// fieldId → response value lives directly on the checklist
+export type CustomEntryRecord = Record<string, string>;
 
-// Extend ChecklistRecord to support both modes
 export type ChecklistMode = "habit-assessment" | "custom";
 
 export interface ChecklistRecord {
   id: string;
   title: string;
-  templateType: "habit-assessment" | "custom"; // existing field
-  mode: ChecklistMode;                      // NEW
-  templateId?: string;                      // NEW — links to a ChecklistTemplate
-  content: ChecklistHabitEntry[];           // existing habit mode
-  customEntries: CustomEntryRecord[];       // NEW — custom mode entries
+  templateType: "habit-assessment" | "custom";
+  mode: ChecklistMode;
+  templateId?: string;
+  content: ChecklistHabitEntry[];
+  customEntries: CustomEntryRecord; // ← was CustomEntryRecord[], now Record<string, string>
   createdAt: string;
   updatedAt: string;
 }

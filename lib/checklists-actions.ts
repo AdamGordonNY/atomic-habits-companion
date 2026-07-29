@@ -2,7 +2,7 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
-import type { ChecklistRecord, ChecklistTemplate, CustomField } from "@/types/checklist";
+import type { ChecklistRecord, ChecklistTemplate, CustomField,CustomEntryRecord } from "@/types/checklist";
 import { randomUUID } from "crypto";
 
 // ─── auth ─────────────────────────────────────────────────────────────────────
@@ -243,3 +243,32 @@ export async function actionDeleteTemplate(id: string): Promise<void> {
   // Optionally: decide whether to also delete or orphan linked checklists
   await prisma.checklistTemplate.delete({ where: { id, userId } });
 }
+// in checklists-actions.ts
+
+export async function actionGetTemplateById(
+  id: string,
+): Promise<ChecklistTemplate | null> {
+  const { userId } = await auth();
+  if (!userId) return null;
+
+  const row = await prisma.checklistTemplate.findFirst({
+    where: { id, userId },
+  });
+
+  if (!row) return null;
+
+  return {
+    id: row.id,
+    name: row.name,
+    icon: row.icon ?? undefined,
+    description: row.description ?? undefined,
+    fields: (
+      typeof row.fields === "string"
+        ? JSON.parse(row.fields)
+        : row.fields
+    ) as CustomField[],
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
+}
+

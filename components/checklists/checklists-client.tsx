@@ -27,7 +27,7 @@ function checklistIcon(cl: ChecklistRecord, templates: ChecklistTemplate[]): str
 function checklistSubtitle(cl: ChecklistRecord, templates: ChecklistTemplate[]): string {
   if (cl.mode === "custom") {
     const templateName = templates.find((t) => t.id === cl.templateId)?.name;
-    const count = cl.customEntries?.length ?? 0;
+    const count = Object.values(cl.customEntries ?? {}).filter(Boolean).length;
     return `${templateName ? templateName + " · " : ""}${count} entr${count !== 1 ? "ies" : "y"} · ${formatDate(cl.updatedAt)}`;
   }
   return `${cl.content.length} habit${cl.content.length !== 1 ? "s" : ""} · ${formatDate(cl.updatedAt)}`;
