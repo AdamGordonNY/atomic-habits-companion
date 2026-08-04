@@ -1,8 +1,8 @@
 import "server-only";
 
 import { actionGetTrackedHabits, type TrackedHabitData } from "@/lib/actions/habit-actions";
-import { fetchNextStep, type NextStepData } from "@/lib/actions/next-step-actions";
-import { fetchPartFour } from "@/lib/actions/part-four-actions";
+import { fetchNextStep, type NextStepData } from "@/lib/actions/assessment-next-step-actions";
+import { fetchPartFour } from "@/lib/actions/assessment-part-four-actions";
 import type { HabitAssessmentPartFour } from "@/types/habit";
 
 export interface ProfileSnapshot {

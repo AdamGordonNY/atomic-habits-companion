@@ -142,24 +142,28 @@ sequenceDiagram
   autonumber
   participant Page as app/goals/page.tsx + app/identity/page.tsx
   participant UI as components/habit-assessment/*
-  participant P4 as lib/actions/part-four-actions.ts
-  participant NS as lib/actions/next-step-actions.ts
+  participant P4 as lib/actions/assessment-part-four-actions.ts
+  participant NS as lib/actions/assessment-next-step-actions.ts
+  participant WG as lib/actions/identity-goal-actions.ts
   participant Prisma as lib/prisma.ts
   participant DB as PostgreSQL
 
   Page->>UI: Render form with fetched data
   UI->>P4: fetchPartFour() / upsertPartFour(payload)
   UI->>NS: fetchNextStep() / upsertNextStep(payload)
+  UI->>WG: attach/update identity and goal mappings after assessment completion
   P4->>Prisma: findUnique/upsert + child sync
   NS->>Prisma: findUnique/upsert + goal entries replace
+  WG->>Prisma: update identity/goal linkage records
   Prisma->>DB: write and read records
   DB-->>Prisma: persisted state
   Prisma-->>UI: normalized records
 ```
 
 Implementation anchors:
-- [lib/actions/part-four-actions.ts](lib/actions/part-four-actions.ts)
-- [lib/actions/next-step-actions.ts](lib/actions/next-step-actions.ts)
+- [lib/actions/assessment-part-four-actions.ts](lib/actions/assessment-part-four-actions.ts)
+- [lib/actions/assessment-next-step-actions.ts](lib/actions/assessment-next-step-actions.ts)
+- [lib/actions/identity-goal-actions.ts](lib/actions/identity-goal-actions.ts)
 
 ### 3.4 Goal to Tracked Habit to Cue Flow
 

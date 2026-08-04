@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { fetchNextStep, upsertNextStep } from "@/lib/actions/next-step-actions";
-import { fetchPartFour } from "@/lib/actions/part-four-actions";
-import type { NextStepGoalData } from "@/lib/actions/next-step-actions";
+import { fetchNextStep, upsertNextStep } from "@/lib/actions/assessment-next-step-actions";
+import { fetchPartFour } from "@/lib/actions/assessment-part-four-actions";
+import type { NextStepGoalData } from "@/lib/actions/assessment-next-step-actions";
 
 // ─── constants ────────────────────────────────────────────────────────────────
 

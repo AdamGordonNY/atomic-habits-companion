@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { fetchGoalEntryById, actionUpdateGoalCategory, type GoalEntryData } from "@/lib/actions/next-step-actions";
+import { fetchGoalEntryById } from "@/lib/actions/assessment-next-step-actions";
+import { actionUpdateGoalCategory } from "@/lib/actions/identity-goal-actions";
+import type { GoalEntryData } from "@/lib/actions/assessment-next-step-actions";
 import { actionCreateHabitChecklist, actionGetHabitChecklists } from "@/lib/checklists-actions";
 import {
   actionAddHabitToGoal,

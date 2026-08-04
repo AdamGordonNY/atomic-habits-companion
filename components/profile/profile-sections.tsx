@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { actionDeleteTrackedHabit, actionUpdateGoalHabit, type TrackedHabitData } from "@/lib/actions/habit-actions";
-import { type NextStepGoalData, upsertNextStep } from "@/lib/actions/next-step-actions";
-import { upsertPartFour } from "@/lib/actions/part-four-actions";
+import { type NextStepGoalData, upsertNextStep } from "@/lib/actions/assessment-next-step-actions";
+import { upsertPartFour } from "@/lib/actions/assessment-part-four-actions";
 import {
   PROFILE_SECTION_LABELS,
   PROFILE_SECTION_ROUTES,

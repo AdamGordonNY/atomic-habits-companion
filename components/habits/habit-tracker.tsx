@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { fetchNextStep } from "@/lib/actions/next-step-actions";
+import { fetchNextStep } from "@/lib/actions/assessment-next-step-actions";
 import { actionCreateHabitChecklist, actionGetHabitChecklists } from "@/lib/checklists-actions";
 import {
   actionAttachHabitToGoal,

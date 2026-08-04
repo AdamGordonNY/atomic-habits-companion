@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { fetchPartFour, upsertPartFour } from "@/lib/actions/part-four-actions";
+import { fetchPartFour, upsertPartFour } from "@/lib/actions/assessment-part-four-actions";
 import { fetchPartTwoForReview } from "@/lib/assessment-reads";
 import { analyzePartTwoEnergy } from "@/lib/energy-analysis";
 import { LIFE_DOMAINS } from "@/types/habit";

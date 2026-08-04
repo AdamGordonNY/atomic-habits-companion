@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { upsertPartFour } from "@/lib/actions/part-four-actions";
-import { type NextStepGoalData, upsertNextStep } from "@/lib/actions/next-step-actions";
+import { upsertPartFour } from "@/lib/actions/assessment-part-four-actions";
+import { type NextStepGoalData, upsertNextStep } from "@/lib/actions/assessment-next-step-actions";
 import type { HabitAssessmentPartFour } from "@/types/habit";
 
 interface IdentityEditorProps {

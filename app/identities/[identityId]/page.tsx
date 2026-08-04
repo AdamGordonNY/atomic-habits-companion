@@ -7,7 +7,7 @@ import {
   actionAttachGoalToIdentity,
   actionGetAssignableGoalsForIdentity,
   actionUpdateIdentityCategory,
-} from "@/lib/actions/next-step-actions";
+} from "@/lib/actions/identity-goal-actions";
 import {
   actionAttachHabitToIdentity,
   actionGetAttachableHabitsForIdentity,
