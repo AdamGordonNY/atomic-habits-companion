@@ -10,8 +10,8 @@ import type {
   HabitAssessmentPartThree,
   HabitInventoryEntry,
   HabitInventoryScorecard,
-  HabitRecord,
-  HabitAttempt,
+  WizardHabitRecord,
+  WizardHabitAttempt,
 } from "@/types/habit";
 
 // ─── constants ────────────────────────────────────────────────────────────────
@@ -200,7 +200,7 @@ function ListInput({
             <button
               type="button"
               onClick={() => remove(idx)}
-              className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600"
               aria-label="Remove"
             >
               ×
@@ -228,14 +228,14 @@ function PairListInput({
   placeholder1,
   placeholder2,
 }: {
-  items: HabitRecord[];
-  onChange: (items: HabitRecord[]) => void;
+  items: WizardHabitRecord[];
+  onChange: (items: WizardHabitRecord[]) => void;
   label1?: string;
   label2?: string;
   placeholder1?: string;
   placeholder2?: string;
 }) {
-  function update(idx: number, key: keyof HabitRecord, val: string) {
+  function update(idx: number, key: keyof WizardHabitRecord, val: string) {
     const next = [...items];
     next[idx] = { ...next[idx], [key]: val };
     onChange(next);
@@ -303,12 +303,12 @@ function HabitAttemptList({
   items,
   onChange,
 }: {
-  items: HabitAttempt[];
-  onChange: (items: HabitAttempt[]) => void;
+  items: WizardHabitAttempt[];
+  onChange: (items: WizardHabitAttempt[]) => void;
 }) {
-  function update(idx: number, key: keyof HabitAttempt, val: string) {
+  function update(idx: number, key: keyof WizardHabitAttempt, val: string) {
     const next = [...items];
-    next[idx] = { ...next[idx], [key]: val } as HabitAttempt;
+    next[idx] = { ...next[idx], [key]: val } as WizardHabitAttempt;
     onChange(next);
   }
   function add() {
@@ -495,7 +495,7 @@ function BulletAnswer({ items }: { items: string[] }) {
   );
 }
 
-function PairAnswer({ items }: { items: HabitRecord[] }) {
+function PairAnswer({ items }: { items: WizardHabitRecord[] }) {
   const filled = items.filter((i) => i.habit.trim());
   if (!filled.length) return <p className="text-xs italic text-slate-400">No answer yet</p>;
   return (
@@ -650,7 +650,7 @@ function PreviousAnswersPanel({
                   {STEP_QUESTIONS[idx]}
                 </span>
                 <svg
-                  className={`h-3.5 w-3.5 flex-shrink-0 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                  className={`h-3.5 w-3.5 shrink-0 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

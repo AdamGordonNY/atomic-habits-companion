@@ -48,21 +48,26 @@ export interface GoalAssignmentOption {
 export async function fetchNextStep(): Promise<NextStepData | null> {
   const userId = await requireUserId();
 
-  const row = await prisma.assessmentNextStep.findUnique({
+  const partFour = await prisma.assessmentPartFour.findUnique({
     where: { userId },
-    include: { goalEntries: { orderBy: { id: "asc" } } },
+    select: { id: true, updatedAt: true, completedAt: true },
+  });
+  if (!partFour) return null;
+
+  const goalEntries = await prisma.nextStepGoalEntry.findMany({
+    where: { nextStepId: partFour.id },
+    orderBy: [{ goal: "asc" }, { id: "asc" }],
   });
 
-  if (!row) return null;
-
   return {
-    id: row.id,
-    updatedAt: row.updatedAt.toISOString(),
-    completedAt: row.completedAt?.toISOString() ?? null,
-    goalEntries: row.goalEntries.map((e) => ({
+    id: partFour.id,
+    updatedAt: partFour.updatedAt.toISOString(),
+    completedAt: partFour.completedAt?.toISOString() ?? null,
+    goalEntries: goalEntries.map((e) => ({
       id: e.id,
       identityId: e.identityId,
       goal: e.goal,
+      category: e.category,
       currentSystem: e.currentSystem,
       systemEval: e.systemEval,
       systemRating: e.systemRating,
@@ -75,10 +80,16 @@ export async function fetchNextStep(): Promise<NextStepData | null> {
 export async function fetchGoalEntryById(goalId: string): Promise<GoalEntryData | null> {
   const userId = await requireUserId();
 
+  const partFour = await prisma.assessmentPartFour.findUnique({
+    where: { userId },
+    select: { id: true },
+  });
+  if (!partFour) return null;
+
   const row = await prisma.nextStepGoalEntry.findFirst({
     where: {
       id: goalId,
-      nextStep: { userId },
+      nextStepId: partFour.id,
     },
   });
 
@@ -105,9 +116,14 @@ export async function upsertNextStep(
 ): Promise<void> {
   const userId = await requireUserId();
 
-  const parent = await prisma.assessmentNextStep.upsert({
+  const partFour = await prisma.assessmentPartFour.upsert({
     where: { userId },
-    create: { userId },
+    create: {
+      userId,
+      ...(completedAt !== undefined
+        ? { completedAt: completedAt ? new Date(completedAt) : null }
+        : {}),
+    },
     update: {
       updatedAt: new Date(),
       ...(completedAt !== undefined
@@ -117,14 +133,23 @@ export async function upsertNextStep(
     select: { id: true },
   });
 
-  const partFour = await prisma.assessmentPartFour.findUnique({
+  const identities = await prisma.identity.findMany({
     where: { userId },
-    include: { identities: { orderBy: { id: "asc" } } },
+    orderBy: { id: "asc" },
+    select: { id: true },
   });
-  const fallbackIdentityId = partFour?.identities[0]?.id ?? null;
+
+  let fallbackIdentityId = identities[0]?.id ?? null;
+  if (!fallbackIdentityId && payload.some((entry) => !entry.identityId)) {
+    const created = await prisma.identity.create({
+      data: { userId, name: "General", category: null },
+      select: { id: true },
+    });
+    fallbackIdentityId = created.id;
+  }
 
   const existing = await prisma.nextStepGoalEntry.findMany({
-    where: { nextStepId: parent.id },
+    where: { nextStepId: partFour.id },
     select: { id: true },
   });
   const existingIds = new Set(existing.map((entry) => entry.id));
@@ -158,7 +183,7 @@ export async function upsertNextStep(
 
       await tx.nextStepGoalEntry.create({
         data: {
-          nextStepId: parent.id,
+          nextStepId: partFour.id,
           identityId: normalizedIdentityId,
           goal: entry.goal,
           category: entry.category ?? undefined,
@@ -176,17 +201,17 @@ export async function upsertNextStep(
 export async function actionGetAssignableGoalsForIdentity(identityId: string): Promise<GoalAssignmentOption[]> {
   const userId = await requireUserId();
 
-  const rows = await prisma.nextStepGoalEntry.findMany({
+  const rows = await prisma.goal.findMany({
     where: {
-      nextStep: { userId },
-      OR: [{ identityId: null }, { identityId: { not: identityId } }],
+      identity: { userId },
+      identityId: { not: identityId },
     },
-    orderBy: { goal: "asc" },
+    orderBy: { text: "asc" },
     select: {
       id: true,
-      goal: true,
+      text: true,
       identityId: true,
-      trackedHabits: {
+      habits: {
         orderBy: { name: "asc" },
         select: { name: true },
       },
@@ -195,60 +220,55 @@ export async function actionGetAssignableGoalsForIdentity(identityId: string): P
 
   return rows.map((row) => ({
     id: row.id,
-    goal: row.goal,
+    goal: row.text,
     identityId: row.identityId,
-    supportingHabits: row.trackedHabits.map((habit) => habit.name),
+    supportingHabits: row.habits.map((habit) => habit.name),
   }));
 }
 
 export async function actionGetAttachableIdentitiesForGoal(goalId: string): Promise<Array<{ id: string; identity: string }>> {
   const userId = await requireUserId();
 
-  const current = await prisma.nextStepGoalEntry.findFirst({
-    where: { id: goalId, nextStep: { userId } },
+  const current = await prisma.goal.findFirst({
+    where: { id: goalId, identity: { userId } },
     select: { identityId: true },
   });
 
-  const rows = await prisma.identityRecord.findMany({
+  const rows = await prisma.identity.findMany({
     where: {
-      assessment: { userId },
+      userId,
       ...(current?.identityId ? { id: { not: current.identityId } } : {}),
     },
-    orderBy: { identity: "asc" },
-    select: { id: true, identity: true },
+    orderBy: { name: "asc" },
+    select: { id: true, name: true },
   });
 
-  return rows;
+  return rows.map((row) => ({ id: row.id, identity: row.name }));
 }
 
 export async function actionAttachGoalToIdentity(goalId: string, identityId: string): Promise<void> {
   const userId = await requireUserId();
 
-  const goal = await prisma.nextStepGoalEntry.findFirst({
+  const goal = await prisma.goal.findFirst({
     where: {
       id: goalId,
-      nextStep: { userId },
+      identity: { userId },
     },
     select: { id: true },
   });
   if (!goal) throw new Error("Goal not found");
 
-  const identity = await prisma.identityRecord.findFirst({
+  const identity = await prisma.identity.findFirst({
     where: {
       id: identityId,
-      assessment: { userId },
+      userId,
     },
     select: { id: true },
   });
   if (!identity) throw new Error("Identity not found");
 
-  await prisma.nextStepGoalEntry.update({
+  await prisma.goal.update({
     where: { id: goalId },
-    data: { identityId },
-  });
-
-  await prisma.trackedHabit.updateMany({
-    where: { goalEntryId: goalId, userId },
     data: { identityId },
   });
 }
@@ -258,8 +278,8 @@ export async function actionUpdateGoalCategory(
   category: string | null,
 ): Promise<void> {
   const userId = await requireUserId();
-  await prisma.nextStepGoalEntry.updateMany({
-    where: { id: goalId, nextStep: { userId } },
+  await prisma.goal.updateMany({
+    where: { id: goalId, identity: { userId } },
     data: { category },
   });
 }
@@ -269,8 +289,8 @@ export async function actionUpdateIdentityCategory(
   category: string | null,
 ): Promise<void> {
   const userId = await requireUserId();
-  await prisma.identityRecord.updateMany({
-    where: { id: identityId, assessment: { userId } },
+  await prisma.identity.updateMany({
+    where: { id: identityId, userId },
     data: { category },
   });
 }

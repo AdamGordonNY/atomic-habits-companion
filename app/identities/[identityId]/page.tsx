@@ -50,26 +50,21 @@ export default async function IdentityDetailPage({ params }: PageProps) {
     revalidatePath("/profile");
   };
 
-  const identity = await prisma.identityRecord.findFirst({
+  const identity = await prisma.identity.findFirst({
     where: {
       id: identityId,
-      assessment: { userId },
+     
     },
     include: {
       goals: {
         orderBy: { id: "asc" },
         include: {
-          trackedHabits: {
+          habits: {
             orderBy: { name: "asc" },
           },
         },
       },
-      trackedHabits: {
-        orderBy: { name: "asc" },
-        include: {
-          goalEntry: true,
-        },
-      },
+
     },
   });
 
@@ -81,14 +76,10 @@ export default async function IdentityDetailPage({ params }: PageProps) {
   ]);
 
   const goalHabits = identity.goals.flatMap((goal) =>
-    goal.trackedHabits.map((habit) => ({ ...habit, goalId: goal.id, goalName: goal.goal })),
+    goal.habits.map((habit) => ({ ...habit, goalId: goal.id, goalName: goal.text })),
   );
-  const directHabits = identity.trackedHabits.map((habit) => ({
-    ...habit,
-    goalId: habit.goalEntryId ?? habit.goalEntry?.id ?? null,
-    goalName: habit.goalEntry?.goal ?? null,
-  }));
-  const allHabits = [...goalHabits, ...directHabits].filter((habit, index, array) =>
+
+  const allHabits = [...goalHabits].filter((habit, index, array) =>
     array.findIndex((candidate) => candidate.id === habit.id) === index,
   );
 
@@ -96,7 +87,7 @@ export default async function IdentityDetailPage({ params }: PageProps) {
     <div className="mx-auto max-w-4xl space-y-6 px-5 py-8">
       <header className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">Identity</p>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">{identity.identity || "Untitled identity"}</h1>
+        <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">{identity.name || "Untitled identity"}</h1>
         {identity.category && (
           <span className="mt-2 inline-block rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
             {identity.category}
@@ -162,7 +153,7 @@ export default async function IdentityDetailPage({ params }: PageProps) {
                 href={`/identities/${identity.id}/goals/${goal.id}`}
                 className="block rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 hover:border-slate-300 hover:text-slate-900"
               >
-                {goal.goal || "Untitled goal"}
+                {goal.text || "Untitled goal"}
               </Link>
             ))}
           </div>

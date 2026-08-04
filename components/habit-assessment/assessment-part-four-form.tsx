@@ -6,7 +6,7 @@ import { fetchPartFour, upsertPartFour } from "@/lib/actions/part-four-actions";
 import { fetchPartTwoForReview } from "@/lib/assessment-reads";
 import { analyzePartTwoEnergy } from "@/lib/energy-analysis";
 import { LIFE_DOMAINS } from "@/types/habit";
-import type { DomainVision, EnergyAnalysis, HabitAssessmentPartFour, IdentityEntry } from "@/types/habit";
+import type { DomainVision, EnergyAnalysis, HabitAssessmentPartFour, WizardIdentityEntry } from "@/types/habit";
 
 // ─── constants ────────────────────────────────────────────────────────────────
 
@@ -180,7 +180,7 @@ function ListInput({
             <button
               type="button"
               onClick={() => remove(idx)}
-              className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600"
               aria-label="Remove"
             >
               ×
@@ -283,10 +283,10 @@ function IdentityCard({
   onChange,
   onRemove,
 }: {
-  entry: IdentityEntry;
+  entry: WizardIdentityEntry;
   index: number;
   total: number;
-  onChange: (e: IdentityEntry) => void;
+  onChange: (e: WizardIdentityEntry) => void;
   onRemove: () => void;
 }) {
   const [habitInput, setHabitInput] = useState("");
@@ -317,7 +317,7 @@ function IdentityCard({
           <button
             type="button"
             onClick={onRemove}
-            className="mt-5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-200 hover:text-slate-700"
+            className="mt-5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-200 hover:text-slate-700"
             aria-label="Remove identity"
           >
             ×
@@ -376,7 +376,8 @@ function IdentityCard({
 
 // ─── main component ───────────────────────────────────────────────────────────
 
-export function AssessmentPartFourForm({ assessmentId: _assessmentId }: { assessmentId: string }) {
+export function AssessmentPartFourForm({ assessmentId }: { assessmentId: string }) {
+  void assessmentId;
   const router = useRouter();
 
   const [draft, setDraft] = useState<DraftState>(defaultDraft);

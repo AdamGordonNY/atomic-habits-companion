@@ -1,8 +1,3 @@
-// Prisma schema — Atomic Habits Companion
-// Docs: https://pris.ly/d/prisma-schema
-//
-// Run `npx prisma migrate dev --name init` after connecting DATABASE_URL in .env
-
 generator client {
   provider = "prisma-client-js"
   output   = "../app/generated/prisma"
@@ -33,11 +28,13 @@ model User {
   assessmentPartTwo  AssessmentPartTwo?
   assessmentPartThree AssessmentPartThree?
   assessmentPartFour  AssessmentPartFour?
-  assessmentNextStep  AssessmentNextStep?
+ 
   checklists          Checklist[]
-  trackedHabits       TrackedHabit[]
+
 
   @@map("users")
+  identities Identity[]
+  habits Habit[]
 }
 model Account { 
   id                String  @id @default(cuid()) 
@@ -322,7 +319,7 @@ model AssessmentPartFour {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   domainVisions DomainVisionEntry[]
-  identities    IdentityRecord[]
+
 
   @@map("assessment_part_four")
 }
@@ -338,37 +335,61 @@ model DomainVisionEntry {
   @@index([assessmentId])
   @@map("domain_vision_entries")
 }
+model Goal {
+  id            String  @id @default(cuid())
+  text          String
+  category      String?
+  currentSystem String  @default("")
+  systemEval    String  @default("")
+  systemRating  Int     @default(0)
+  idealSystem   String  @default("")
 
-model IdentityRecord {
-  id       String   @id @default(cuid())
-  identity String
-  habits   String[] @default([])
+  identityId String
+  identity   Identity @relation(fields: [identityId], references: [id], onDelete: Cascade)
+
+  habits Habit[]
+
+  @@index([identityId])
+  @@map("goals")
+}
+model Habit {
+  id        String   @id @default(cuid())
+  name      String
+  category  String?
+  mode      String   @default("building")   // "building" | "breaking"
+  cue       String   @default("")           // implementation intention: when/where
+  time      String   @default("")
+  location  String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  goalId String
+  goal   Goal   @relation(fields: [goalId], references: [id], onDelete: Cascade)
+
+  checkIns   HabitCheckIn[]
+  checklists Checklist[]
+
+  @@index([goalId])
+  @@map("habits")
+}
+model Identity {
+  id       String @id @default(cuid())
+  name     String
   category String?
 
-  assessmentId String
-  assessment   AssessmentPartFour @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
-  goals        NextStepGoalEntry[]
-  trackedHabits TrackedHabit[]
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([assessmentId])
-  @@map("identity_records")
+  goals Goal[]
+
+  @@index([userId])
+  @@map("identities")
 }
 
 // ─── Next Step — System Design ────────────────────────────────────────────────
 
-model AssessmentNextStep {
-  id          String    @id @default(cuid())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  completedAt DateTime?
 
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  goalEntries NextStepGoalEntry[]
-
-  @@map("assessment_next_step")
-}
 
 model NextStepGoalEntry {
   id              String   @id @default(cuid())
@@ -387,10 +408,9 @@ model NextStepGoalEntry {
   componentHabits String[] @default([])
 
   nextStepId String
-  nextStep   AssessmentNextStep @relation(fields: [nextStepId], references: [id], onDelete: Cascade)
   identityId String?
-  identity   IdentityRecord? @relation(fields: [identityId], references: [id], onDelete: SetNull)
-  trackedHabits TrackedHabit[]
+
+
 
   @@index([nextStepId])
   @@index([identityId])
@@ -399,95 +419,58 @@ model NextStepGoalEntry {
 
 // ─── Checklists ───────────────────────────────────────────────────────────────
 model ChecklistTemplate {
-  id          String      @id @default(cuid())
+  id          String   @id @default(cuid())
   userId      String
   name        String
   description String?
   icon        String?
-  fields      String      @default("[]")
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  checklists  Checklist[]
+  fields      String   @default("[]")      // CustomField[] serialised as JSON
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  checklists Checklist[]
 
   @@index([userId])
+  @@map("checklist_templates")
 }
 model Checklist {
   id           String   @id @default(cuid())
-  title        String   @default("Habit Assessment Checklist")
-  templateType String   @default("habit-assessment")
-  /// JSON: ChecklistHabitEntry[] — stored as a serialised string
-  content      String   @default("[]")
+  title        String   @default("Checklist")
+  mode         String   @default("habit-assessment")  // "habit-assessment" | "custom"
+  content      String   @default("[]")                // habit-assessment entries (JSON)
+  customEntries String  @default("{}")                // custom template responses (JSON)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  mode           String   @default("habit-assessment")
-  templateId     String?
-  customEntries  String   @default("[]")
-  template       ChecklistTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+
+  habitId    String?
+  habit      Habit?            @relation(fields: [habitId], references: [id], onDelete: SetNull)
+
+  templateId String?
+  template   ChecklistTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+
   @@index([userId])
-  @@index([createdAt])
+  @@index([habitId])
   @@map("checklists")
 }
 
-// ─── Tracked Habits ───────────────────────────────────────────────────────────
-
-model TrackedHabit {
-  id        String   @id @default(cuid())
-  name      String
-  category  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  goalEntryId String?
-  goalEntry   NextStepGoalEntry? @relation(fields: [goalEntryId], references: [id], onDelete: SetNull)
-  identityId String?
-  identity   IdentityRecord? @relation(fields: [identityId], references: [id], onDelete: SetNull)
-  cues        HabitCue[]
-  checkIns    HabitCheckIn[]
-
-  @@unique([userId, name])
-  @@index([userId])
-  @@index([goalEntryId])
-  @@index([identityId])
-  @@map("tracked_habits")
-}
-
-model HabitCue {
-  id         String   @id @default(cuid())
-  behavior   String
-  time       String
-  location   String
-  isBreaking Boolean  @default(false)
-  reflection String   @default("")
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  habitId String
-  habit   TrackedHabit @relation(fields: [habitId], references: [id], onDelete: Cascade)
-
-  @@index([habitId])
-  @@index([createdAt])
-  @@map("habit_cues")
-}
 
 model HabitCheckIn {
   id        String   @id @default(cuid())
-  /// YYYY-MM-DD
   date      String
   completed Boolean  @default(true)
   note      String   @default("")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  habitId String
-  habit   TrackedHabit @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  // Final state — only the new FK remains
+  habitId   String
+  habit     Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
 
   @@unique([habitId, date])
   @@index([habitId])
   @@map("habit_check_ins")
 }
+

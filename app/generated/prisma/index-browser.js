@@ -311,19 +311,35 @@ exports.Prisma.DomainVisionEntryScalarFieldEnum = {
   assessmentId: 'assessmentId'
 };
 
-exports.Prisma.IdentityRecordScalarFieldEnum = {
+exports.Prisma.GoalScalarFieldEnum = {
   id: 'id',
-  identity: 'identity',
-  habits: 'habits',
+  text: 'text',
   category: 'category',
-  assessmentId: 'assessmentId'
+  currentSystem: 'currentSystem',
+  systemEval: 'systemEval',
+  systemRating: 'systemRating',
+  idealSystem: 'idealSystem',
+  identityId: 'identityId'
 };
 
-exports.Prisma.AssessmentNextStepScalarFieldEnum = {
+exports.Prisma.HabitScalarFieldEnum = {
   id: 'id',
+  name: 'name',
+  category: 'category',
+  mode: 'mode',
+  cue: 'cue',
+  time: 'time',
+  location: 'location',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  completedAt: 'completedAt',
+  userId: 'userId',
+  goalId: 'goalId'
+};
+
+exports.Prisma.IdentityScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  category: 'category',
   userId: 'userId'
 };
 
@@ -354,37 +370,14 @@ exports.Prisma.ChecklistTemplateScalarFieldEnum = {
 exports.Prisma.ChecklistScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  templateType: 'templateType',
-  content: 'content',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  userId: 'userId',
   mode: 'mode',
-  templateId: 'templateId',
-  customEntries: 'customEntries'
-};
-
-exports.Prisma.TrackedHabitScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  category: 'category',
+  content: 'content',
+  customEntries: 'customEntries',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId',
-  goalEntryId: 'goalEntryId',
-  identityId: 'identityId'
-};
-
-exports.Prisma.HabitCueScalarFieldEnum = {
-  id: 'id',
-  behavior: 'behavior',
-  time: 'time',
-  location: 'location',
-  isBreaking: 'isBreaking',
-  reflection: 'reflection',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  habitId: 'habitId'
+  habitId: 'habitId',
+  templateId: 'templateId'
 };
 
 exports.Prisma.HabitCheckInScalarFieldEnum = {
@@ -431,13 +424,12 @@ exports.Prisma.ModelName = {
   HabitScorecardEntry: 'HabitScorecardEntry',
   AssessmentPartFour: 'AssessmentPartFour',
   DomainVisionEntry: 'DomainVisionEntry',
-  IdentityRecord: 'IdentityRecord',
-  AssessmentNextStep: 'AssessmentNextStep',
+  Goal: 'Goal',
+  Habit: 'Habit',
+  Identity: 'Identity',
   NextStepGoalEntry: 'NextStepGoalEntry',
   ChecklistTemplate: 'ChecklistTemplate',
   Checklist: 'Checklist',
-  TrackedHabit: 'TrackedHabit',
-  HabitCue: 'HabitCue',
   HabitCheckIn: 'HabitCheckIn'
 };
 

@@ -25,22 +25,23 @@ function isActive(pathname: string, href: string): boolean {
 
 export function SiteNavbar() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const [menuState, setMenuState] = useState<{ open: boolean; pathname: string }>({
+    open: false,
+    pathname,
+  });
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const open = menuState.open && menuState.pathname === pathname;
 
   // Close on outside click
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setOpen(false);
+        setMenuState({ open: false, pathname });
       }
     }
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
-
-  // Close when route changes
-  useEffect(() => { setOpen(false); }, [pathname]);
+  }, [pathname]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
@@ -69,7 +70,7 @@ export function SiteNavbar() {
           <div ref={dropdownRef} className="relative">
             <button
               type="button"
-              onClick={() => setOpen((v) => !v)}
+              onClick={() => setMenuState({ open: !open, pathname })}
               className="rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-slate-800"
             >
               Add New
@@ -80,7 +81,7 @@ export function SiteNavbar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => setOpen(false)}
+                    onClick={() => setMenuState({ open: false, pathname })}
                     className="block rounded-xl px-3 py-2 text-sm text-slate-700 transition hover:bg-slate-50 hover:text-slate-950"
                   >
                     {item.label}

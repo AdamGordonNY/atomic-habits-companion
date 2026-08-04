@@ -245,7 +245,7 @@ export async function fetchAssessmentStatus(): Promise<AssessmentStatus> {
   const userId = await getUserId();
   if (!userId) return { partOne: null, partTwo: null, partThree: null, partFour: null, nextStep: null };
 
-  const [p1, p2, p3, p4, ns] = await Promise.all([
+  const [p1, p2, p3, p4] = await Promise.all([
     prisma.assessmentPartOne.findUnique({
       where: { userId },
       select: { completedAt: true },
@@ -265,13 +265,13 @@ export async function fetchAssessmentStatus(): Promise<AssessmentStatus> {
     }),
     prisma.assessmentPartFour.findUnique({
       where: { userId },
-      select: { completedAt: true },
-    }),
-    prisma.assessmentNextStep.findUnique({
-      where: { userId },
-      select: { completedAt: true },
+      select: { id: true, completedAt: true },
     }),
   ]);
+
+  const nsCount = p4
+    ? await prisma.nextStepGoalEntry.count({ where: { nextStepId: p4.id } })
+    : 0;
 
   return {
     partOne: p1
@@ -291,8 +291,8 @@ export async function fetchAssessmentStatus(): Promise<AssessmentStatus> {
     partFour: p4
       ? { completedAt: p4.completedAt?.toISOString() ?? null, exists: true }
       : null,
-    nextStep: ns
-      ? { completedAt: ns.completedAt?.toISOString() ?? null, exists: true }
+    nextStep: p4 && nsCount > 0
+      ? { completedAt: p4.completedAt?.toISOString() ?? null, exists: true }
       : null,
   };
 }
@@ -303,10 +303,27 @@ export async function fetchPartFourForReview(): Promise<HabitAssessmentPartFour 
   const userId = await getUserId();
   if (!userId) return null;
 
-  const row = await prisma.assessmentPartFour.findUnique({
-    where: { userId },
-    include: { domainVisions: true, identities: true },
-  });
+  const [row, identities] = await Promise.all([
+    prisma.assessmentPartFour.findUnique({
+      where: { userId },
+      include: { domainVisions: true },
+    }),
+    prisma.identity.findMany({
+      where: { userId },
+      orderBy: { name: "asc" },
+      include: {
+        goals: {
+          include: {
+            habits: {
+              select: { name: true },
+              orderBy: { name: "asc" },
+            },
+          },
+          orderBy: { text: "asc" },
+        },
+      },
+    }),
+  ]);
 
   if (!row) return null;
 
@@ -328,7 +345,12 @@ export async function fetchPartFourForReview(): Promise<HabitAssessmentPartFour 
     majorChanges: row.majorChanges,
     successDefinition: row.successDefinition,
     domainVisions: row.domainVisions.map((d: { domain: string; vision: string }) => ({ domain: d.domain, vision: d.vision })),
-    identities: row.identities.map((i: { id: string; identity: string; habits: string[] }) => ({ id: i.id, identity: i.identity, habits: i.habits })),
+    identities: identities.map((i) => ({
+      id: i.id,
+      identity: i.name,
+      category: i.category,
+      habits: [...new Set(i.goals.flatMap((goal) => goal.habits.map((habit) => habit.name)))],
+    })),
     futureReflection: row.futureReflection,
     reflectionGoals: row.reflectionGoals,
   };

@@ -15,17 +15,17 @@ export default async function NewChecklistPage() {
   if (!userId) notFound();
 
   const [identities, goals, habits] = await Promise.all([
-    prisma.identityRecord.findMany({
-      where: { assessment: { userId } },
-      orderBy: { identity: "asc" },
-      select: { id: true, identity: true },
+    prisma.identity.findMany({
+      where: { userId },
+      orderBy: { name: "asc" },
+      select: { id: true, name: true },
     }),
-    prisma.nextStepGoalEntry.findMany({
-      where: { nextStep: { userId } },
-      orderBy: { goal: "asc" },
-      select: { id: true, goal: true },
+    prisma.goal.findMany({
+      where: { identity: { userId } },
+      orderBy: { text: "asc" },
+      select: { id: true, text: true },
     }),
-    prisma.trackedHabit.findMany({
+    prisma.habit.findMany({
       where: { userId },
       orderBy: { name: "asc" },
       select: { id: true, name: true },
@@ -42,14 +42,24 @@ export default async function NewChecklistPage() {
     const entityKind = String(formData.get("entityKind") ?? "").trim();
     const entityId = String(formData.get("entityId") ?? "").trim();
 
-    // Encode attachment in templateType: "identity:<id>", "goal:<id>", "habit-tracking:<id>", or "custom"
-    let templateType = "custom";
-    if (entityKind === "identity" && entityId) templateType = `identity:${entityId}`;
-    else if (entityKind === "goal" && entityId) templateType = `goal:${entityId}`;
-    else if (entityKind === "habit" && entityId) templateType = `habit-tracking:${entityId}`;
+    let habitId: string | null = null;
+    if (entityKind === "habit" && entityId) {
+      const habit = await prisma.habit.findFirst({
+        where: { id: entityId, userId },
+        select: { id: true },
+      });
+      if (habit) habitId = habit.id;
+    }
 
     const row = await prisma.checklist.create({
-      data: { userId, title, templateType, content: "[]" },
+      data: {
+        userId,
+        title,
+        mode: habitId ? "habit-assessment" : "custom",
+        habitId,
+        content: "[]",
+        customEntries: "{}",
+      },
     });
 
     revalidatePath("/checklists");
@@ -58,7 +68,7 @@ export default async function NewChecklistPage() {
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-      <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">Add New</p>
         <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">Create checklist</h1>
 
@@ -99,12 +109,12 @@ export default async function NewChecklistPage() {
                   <option value="">—</option>
                   {identities.length > 0 && (
                     <optgroup label="Identities">
-                      {identities.map((i) => <option key={i.id} value={i.id}>{i.identity}</option>)}
+                      {identities.map((i) => <option key={i.id} value={i.id}>{i.name}</option>)}
                     </optgroup>
                   )}
                   {goals.length > 0 && (
                     <optgroup label="Goals">
-                      {goals.map((g) => <option key={g.id} value={g.id}>{g.goal}</option>)}
+                      {goals.map((g) => <option key={g.id} value={g.id}>{g.text}</option>)}
                     </optgroup>
                   )}
                   {habits.length > 0 && (

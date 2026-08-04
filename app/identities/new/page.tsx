@@ -28,38 +28,24 @@ export default async function NewIdentityPage() {
 
     const goals = parseLines(formData.get("goals"));
 
-    const existingPartFour = await prisma.assessmentPartFour.findUnique({
-      where: { userId },
-      select: { id: true },
-    });
-    const partFourId = existingPartFour?.id ?? (await prisma.assessmentPartFour.create({ data: { userId } })).id;
-
-    const identity = await prisma.identityRecord.create({
+    const identity = await prisma.identity.create({
       data: {
-        identity: identityName,
-        habits: [],
-        assessmentId: partFourId,
+        userId,
+        name: identityName,
+        category: null,
       },
     });
 
-    const nextStep = await prisma.assessmentNextStep.upsert({
-      where: { userId },
-      create: { userId },
-      update: { updatedAt: new Date() },
-      select: { id: true },
-    });
-
     if (goals.length > 0) {
-      await prisma.nextStepGoalEntry.createMany({
+      await prisma.goal.createMany({
         data: goals.map((goal) => ({
-          nextStepId: nextStep.id,
           identityId: identity.id,
-          goal,
+          text: goal,
+          category: null,
           currentSystem: "",
           systemEval: "",
           systemRating: 0,
           idealSystem: "",
-          componentHabits: [],
         })),
       });
     }
@@ -72,7 +58,7 @@ export default async function NewIdentityPage() {
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-      <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">Add New</p>
         <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">Create identity</h1>
         <p className="mt-2 text-sm text-slate-600">

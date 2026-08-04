@@ -330,7 +330,7 @@ export function AssessmentForm({ assessmentId }: AssessmentFormProps) {
   if (completedAt) {
     return (
       <main className="mx-auto flex min-h-screen w-full max-w-5xl items-center px-6 py-12">
-        <section className="w-full rounded-[2rem] border border-white/15 bg-white/80 p-8 text-center shadow-[0_30px_100px_rgba(15,23,42,0.12)] backdrop-blur-xl sm:p-12">
+        <section className="w-full rounded-4xl border border-white/15 bg-white/80 p-8 text-center shadow-[0_30px_100px_rgba(15,23,42,0.12)] backdrop-blur-xl sm:p-12">
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/10 text-2xl text-emerald-600">
             ✓
           </div>

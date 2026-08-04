@@ -2,7 +2,7 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
-import type { DomainVision, HabitAssessmentPartFour, IdentityEntry } from "@/types/habit";
+import type { DomainVision, HabitAssessmentPartFour, WizardIdentityEntry } from "@/types/habit";
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
 
@@ -17,10 +17,27 @@ async function requireUserId(): Promise<string> {
 export async function fetchPartFour(): Promise<HabitAssessmentPartFour | null> {
   const userId = await requireUserId();
 
-  const row = await prisma.assessmentPartFour.findUnique({
-    where: { userId },
-    include: { domainVisions: true, identities: true },
-  });
+  const [row, identities] = await Promise.all([
+    prisma.assessmentPartFour.findUnique({
+      where: { userId },
+      include: { domainVisions: true },
+    }),
+    prisma.identity.findMany({
+      where: { userId },
+      orderBy: { name: "asc" },
+      include: {
+        goals: {
+          orderBy: { text: "asc" },
+          include: {
+            habits: {
+              orderBy: { name: "asc" },
+              select: { name: true },
+            },
+          },
+        },
+      },
+    }),
+  ]);
 
   if (!row) return null;
 
@@ -44,7 +61,12 @@ export async function fetchPartFour(): Promise<HabitAssessmentPartFour | null> {
     majorChanges: row.majorChanges,
     successDefinition: row.successDefinition,
     domainVisions: row.domainVisions.map((d: { domain: string; vision: string }) => ({ domain: d.domain, vision: d.vision })),
-    identities: row.identities.map((i: { id: string; identity: string; habits: string[]; category: string | null }) => ({ id: i.id, identity: i.identity, habits: i.habits, category: i.category })),
+    identities: identities.map((i) => ({
+      id: i.id,
+      identity: i.name,
+      category: i.category,
+      habits: [...new Set(i.goals.flatMap((goal) => goal.habits.map((habit) => habit.name)))],
+    })),
     futureReflection: row.futureReflection,
     reflectionGoals: row.reflectionGoals,
   };
@@ -67,7 +89,7 @@ export interface PartFourPayload {
   majorChanges?: string[];
   successDefinition?: string;
   domainVisions?: DomainVision[];
-  identities?: IdentityEntry[];
+  identities?: WizardIdentityEntry[];
   futureReflection?: string;
   reflectionGoals?: string[];
   completedAt?: string | null;
@@ -117,8 +139,8 @@ export async function upsertPartFour(data: PartFourPayload): Promise<void> {
 
   // Sync identities while preserving existing IDs for route stability.
   if (data.identities !== undefined) {
-    const existing = await prisma.identityRecord.findMany({
-      where: { assessmentId: record.id },
+    const existing = await prisma.identity.findMany({
+      where: { userId },
       select: { id: true },
     });
     const existingIds = new Set(existing.map((row) => row.id));
@@ -127,26 +149,26 @@ export async function upsertPartFour(data: PartFourPayload): Promise<void> {
 
     await prisma.$transaction(async (tx) => {
       if (deleteIds.length > 0) {
-        await tx.identityRecord.deleteMany({ where: { id: { in: deleteIds } } });
+        await tx.identity.deleteMany({ where: { id: { in: deleteIds }, userId } });
       }
 
-      for (const entry of data?.identities!) {
+      for (const entry of data.identities!) {
         if (entry.id && existingIds.has(entry.id)) {
-          await tx.identityRecord.update({
+          await tx.identity.update({
             where: { id: entry.id },
             data: {
-              identity: entry.identity,
-              habits: entry.habits,
+              name: entry.identity,
+              category: entry.category ?? null,
             },
           });
           continue;
         }
 
-        await tx.identityRecord.create({
+        await tx.identity.create({
           data: {
-            identity: entry.identity,
-            habits: entry.habits,
-            assessmentId: record.id,
+            userId,
+            name: entry.identity,
+            category: entry.category ?? null,
           },
         });
       }

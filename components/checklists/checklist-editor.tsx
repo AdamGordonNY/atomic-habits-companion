@@ -144,14 +144,23 @@ export function ChecklistEditor({ checklistId }: { checklistId: string }) {
 
   // refs for autosave closure
   const titleRef = useRef(title);
-  titleRef.current = title;
   const entriesRef = useRef(entries);
-  entriesRef.current = entries;
   const customValuesRef = useRef(customValues);
-  customValuesRef.current = customValues;
   const modeRef = useRef<ChecklistRecord["mode"] | null>(null);
 
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    titleRef.current = title;
+  }, [title]);
+
+  useEffect(() => {
+    entriesRef.current = entries;
+  }, [entries]);
+
+  useEffect(() => {
+    customValuesRef.current = customValues;
+  }, [customValues]);
 
   // ── initial fetch ──
 
@@ -269,14 +278,14 @@ export function ChecklistEditor({ checklistId }: { checklistId: string }) {
           <div className="flex min-w-0 items-center gap-3">
             <Link
               href="/checklists"
-              className="flex-shrink-0 text-xs font-medium text-slate-500 hover:text-slate-800"
+              className="shrink-0 text-xs font-medium text-slate-500 hover:text-slate-800"
             >
               ← Checklists
             </Link>
             <span className="text-slate-300">/</span>
             {checklist.mode === "custom" && template && (
               <>
-                <span className="flex-shrink-0 text-slate-300 text-xs">
+                <span className="shrink-0 text-slate-300 text-xs">
                   {template.icon ?? "📋"} {template.name}
                 </span>
                 <span className="text-slate-300">/</span>
@@ -290,7 +299,7 @@ export function ChecklistEditor({ checklistId }: { checklistId: string }) {
               className="min-w-0 flex-1 bg-transparent text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none"
             />
           </div>
-          <div className="flex flex-shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             {lastSaved && (
               <span className="hidden text-[11px] text-slate-400 sm:block">
                 Saved{" "}

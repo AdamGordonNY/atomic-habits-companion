@@ -2,7 +2,7 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
-import type { ChecklistRecord, ChecklistTemplate, CustomField,CustomEntryRecord } from "@/types/checklist";
+import type { ChecklistRecord, ChecklistTemplate, CustomField } from "@/types/checklist";
 import { randomUUID } from "crypto";
 
 // ─── auth ─────────────────────────────────────────────────────────────────────
@@ -18,23 +18,22 @@ async function requireUserId(): Promise<string> {
 function rowToRecord(row: {
   id: string;
   title: string;
-  templateType: string;
   content: string;
   createdAt: Date;
   updatedAt: Date;
-  // new optional columns — add these to your Prisma schema
   mode?: string | null;
+  habitId?: string | null;
   templateId?: string | null;
   customEntries?: string | null;
 }): ChecklistRecord {
   return {
     id: row.id,
     title: row.title,
-    templateType: row.templateType as ChecklistRecord["templateType"],
     mode: (row.mode as ChecklistRecord["mode"]) ?? "habit-assessment",
+    habitId: row.habitId ?? undefined,
     templateId: row.templateId ?? undefined,
     content: JSON.parse(row.content),
-    customEntries: row.customEntries ? JSON.parse(row.customEntries) : [],
+    customEntries: row.customEntries ? JSON.parse(row.customEntries) : {},
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
   };
@@ -100,11 +99,10 @@ export async function actionCreateChecklist({
     data: {
       userId,
       title: resolvedTitle,
-      templateType: templateId ? `custom:${templateId}` : "habit-assessment",
       mode: resolvedMode,
       templateId: templateId ?? null,
       content: "[]",
-      customEntries: "[]",
+      customEntries: "{}",
     },
   });
   return rowToRecord(row);
@@ -119,10 +117,10 @@ export async function actionCreateHabitChecklist(
     data: {
       userId,
       title,
-      templateType: `habit-tracking:${habitId}`,
       mode: "habit-assessment",
+      habitId,
       content: "[]",
-      customEntries: "[]",
+      customEntries: "{}",
     },
   });
   return rowToRecord(row);
@@ -137,9 +135,9 @@ export async function actionGetHabitChecklists(
     where: {
       userId,
       OR: [
-        { templateType: `habit-tracking:${habitId}` },
+        { habitId },
         ...(habitName
-          ? [{ templateType: "habit-tracking", title: { contains: habitName, mode: "insensitive" as const } }]
+          ? [{ title: { contains: habitName, mode: "insensitive" as const } }]
           : []),
       ],
     },
@@ -240,10 +238,8 @@ export async function actionUpdateTemplate(
 
 export async function actionDeleteTemplate(id: string): Promise<void> {
   const userId = await requireUserId();
-  // Optionally: decide whether to also delete or orphan linked checklists
   await prisma.checklistTemplate.delete({ where: { id, userId } });
 }
-// in checklists-actions.ts
 
 export async function actionGetTemplateById(
   id: string,

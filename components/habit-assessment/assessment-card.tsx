@@ -32,10 +32,10 @@ export function AssessmentCard({
   const progress = Math.max(0, Math.min(100, (step / totalSteps) * 100));
 
   return (
-    <section className="overflow-hidden rounded-[2rem] border border-white/15 bg-white/80 shadow-[0_30px_100px_rgba(15,23,42,0.12)] backdrop-blur-xl">
+    <section className="overflow-hidden rounded-4xl border border-white/15 bg-white/80 shadow-[0_30px_100px_rgba(15,23,42,0.12)] backdrop-blur-xl">
       <div className="h-1.5 w-full bg-slate-200/70">
         <div
-          className="h-full rounded-r-full bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-400 transition-all duration-500 ease-out"
+          className="h-full rounded-r-full bg-linear-to-r from-indigo-500 via-sky-500 to-emerald-400 transition-all duration-500 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>

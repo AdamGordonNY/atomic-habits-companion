@@ -13,8 +13,8 @@ import type {
   HabitAssessmentPartThree,
   HabitAssessmentPartTwo,
   HabitInventoryScorecard,
-  HabitRecord,
-  HabitAttempt,
+  WizardHabitAttempt,
+  WizardHabitRecord,
 } from "@/types/habit";
 import {
   analyzePartTwoEnergy,
@@ -77,13 +77,6 @@ function formatDate(iso: string): string {
   } catch {
     return iso;
   }
-}
-
-function isEmpty(val: unknown): boolean {
-  if (val === null || val === undefined) return true;
-  if (typeof val === "string") return val.trim() === "";
-  if (Array.isArray(val)) return val.every((v) => isEmpty(v));
-  return false;
 }
 
 // ─── primitive display blocks ─────────────────────────────────────────────────
@@ -180,7 +173,7 @@ function QCard({
         {editHref && (
           <Link
             href={editHref}
-            className="flex-shrink-0 rounded-full border border-slate-200 px-2.5 py-1 text-[10px] font-medium text-slate-500 opacity-0 transition hover:border-slate-300 hover:text-slate-700 group-hover:opacity-100"
+            className="shrink-0 rounded-full border border-slate-200 px-2.5 py-1 text-[10px] font-medium text-slate-500 opacity-0 transition hover:border-slate-300 hover:text-slate-700 group-hover:opacity-100"
           >
             Edit
           </Link>
@@ -247,7 +240,7 @@ function ScorecardView({
                   className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3"
                 >
                   <span
-                    className={`mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+                    className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
                       e.score === "+"
                         ? "bg-emerald-100 text-emerald-700"
                         : "bg-rose-100 text-rose-700"
@@ -446,7 +439,7 @@ function ActivityPatternsPanel({ days }: { days: HabitAssessmentPartTwo["days"] 
                     {a.activity}
                   </span>
                   <span
-                    className={`flex-shrink-0 rounded-full border px-1.5 py-px text-[10px] font-bold ${energyColor}`}
+                    className={`shrink-0 rounded-full border px-1.5 py-px text-[10px] font-bold ${energyColor}`}
                   >
                     {energyLabel}
                   </span>
@@ -466,7 +459,7 @@ function ActivityPatternsPanel({ days }: { days: HabitAssessmentPartTwo["days"] 
               </div>
 
               {/* count + top hours */}
-              <div className="flex flex-shrink-0 flex-col items-end gap-0.5">
+              <div className="flex shrink-0 flex-col items-end gap-0.5">
                 <span className="text-xs font-semibold tabular-nums text-slate-700">
                   ×{a.count}
                 </span>
@@ -693,7 +686,7 @@ function EnergyInsightsPanel({ days }: { days: HabitAssessmentPartTwo["days"] })
           <div className="flex flex-col gap-2.5">
             {topHigh.map((h) => (
               <div key={h.hour} className="flex items-center gap-3">
-                <span className="w-[4.5rem] flex-shrink-0 text-[11px] font-semibold text-slate-700">
+                <span className="w-18 shrink-0 text-[11px] font-semibold text-slate-700">
                   {h.hour}
                 </span>
                 <ScoreBar score={h.energyScore} />
@@ -713,7 +706,7 @@ function EnergyInsightsPanel({ days }: { days: HabitAssessmentPartTwo["days"] })
           <div className="flex flex-col gap-2.5">
             {topLow.map((h) => (
               <div key={h.hour} className="flex items-center gap-3">
-                <span className="w-[4.5rem] flex-shrink-0 text-[11px] font-semibold text-slate-700">
+                <span className="w-18 shrink-0 text-[11px] font-semibold text-slate-700">
                   {h.hour}
                 </span>
                 <ScoreBar score={h.energyScore} />
@@ -736,10 +729,10 @@ function EnergyInsightsPanel({ days }: { days: HabitAssessmentPartTwo["days"] })
             const hasEntries = d.totalLogged > 0;
             return (
               <div key={d.date} className="flex items-center gap-3">
-                <span className="w-14 flex-shrink-0 text-[11px] font-semibold text-slate-600">
+                <span className="w-14 shrink-0 text-[11px] font-semibold text-slate-600">
                   Day {d.dayNumber}
                 </span>
-                <span className="w-24 flex-shrink-0 text-[11px] text-slate-400">
+                <span className="w-24 shrink-0 text-[11px] text-slate-400">
                   {d.date
                     ? new Date(d.date + "T00:00:00").toLocaleDateString(undefined, {
                         weekday: "short",
@@ -836,7 +829,7 @@ function PartTwoView({
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-2xl text-xs font-bold ${
+                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl text-xs font-bold ${
                       filled.length > 0
                         ? "bg-slate-950 text-white"
                         : "bg-slate-100 text-slate-400"
@@ -893,14 +886,14 @@ function PartTwoView({
                             key={hi}
                             className="flex items-center gap-3 rounded-xl px-3 py-2 even:bg-slate-50"
                           >
-                            <span className="w-16 flex-shrink-0 text-[11px] font-medium text-slate-400">
+                            <span className="w-16 shrink-0 text-[11px] font-medium text-slate-400">
                               {e.hour}
                             </span>
                             <span className="flex-1 text-sm text-slate-800">
                               {e.activity}
                             </span>
                             <span
-                              className={`flex-shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                              className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${
                                 e.energyLevel === "UP"
                                   ? "bg-emerald-100 text-emerald-700"
                                   : e.energyLevel === "DOWN"
@@ -1060,7 +1053,7 @@ function PartThreeView({
 
 // ─── sub‑components used by Part Three view ───────────────────────────────────
 
-function HabitRecordList({ items }: { items: HabitRecord[] }) {
+function HabitRecordList({ items }: { items: WizardHabitRecord[] }) {
   const filled = items.filter((r) => r.habit.trim());
   if (!filled.length) return <Empty />;
   return (
@@ -1080,7 +1073,7 @@ function HabitRecordList({ items }: { items: HabitRecord[] }) {
   );
 }
 
-function HabitAttemptList({ items }: { items: HabitAttempt[] }) {
+function HabitAttemptList({ items }: { items: WizardHabitAttempt[] }) {
   const filled = items.filter((a) => a.habit.trim());
   if (!filled.length) return <Empty />;
   return (
@@ -1364,7 +1357,7 @@ export function AssessmentReview({ assessmentId }: { assessmentId: string }) {
                 key={tab.key}
                 type="button"
                 onClick={() => setActiveTab(tab.key)}
-                className={`flex flex-shrink-0 items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold transition ${
+                className={`flex shrink-0 items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                   isActive
                     ? "bg-slate-950 text-white"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200"

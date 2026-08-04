@@ -15,21 +15,18 @@ export default async function IdentityGoalHabitDetailPage({ params }: PageProps)
 
   const { identityId, goalId, habitId } = await params;
 
-  const habit = await prisma.trackedHabit.findFirst({
+  const habit = await prisma.habit.findFirst({
     where: {
       id: habitId,
-      userId,
-      goalEntryId: goalId,
-      goalEntry: {
+      
+      goalId: goalId,
+      goal: {
         identityId,
       },
     },
     include: {
-      goalEntry: {
+      goal: {
         include: { identity: true },
-      },
-      cues: {
-        orderBy: { createdAt: "desc" },
       },
     },
   });
@@ -47,10 +44,10 @@ export default async function IdentityGoalHabitDetailPage({ params }: PageProps)
         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">Habit</p>
         <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">{habit.name}</h1>
         <p className="mt-2 text-sm text-slate-600">
-          Goal: <Link href={`/identities/${identityId}/goals/${goalId}`} className="font-medium text-slate-800 hover:text-slate-900">{habit.goalEntry?.goal || "Untitled goal"}</Link>
+          Goal: <Link href={`/identities/${identityId}/goals/${goalId}`} className="font-medium text-slate-800 hover:text-slate-900">{habit?.goal?.text || "Untitled goal"}</Link>
         </p>
         <p className="mt-1 text-sm text-slate-600">
-          Identity: <Link href={`/identities/${identityId}`} className="font-medium text-slate-800 hover:text-slate-900">{habit.goalEntry?.identity?.identity || "Unknown"}</Link>
+          Identity: <Link href={`/identities/${identityId}`} className="font-medium text-slate-800 hover:text-slate-900">{habit?.goal?.identity?.name || "Unknown"}</Link>
         </p>
       </header>
 
@@ -92,7 +89,7 @@ export default async function IdentityGoalHabitDetailPage({ params }: PageProps)
         )}
       </section>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      {/* <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-slate-500">Recent Habit Cues</h2>
         {habit.cues.length === 0 ? (
           <p className="mt-3 text-sm text-slate-500">No cues logged yet.</p>
@@ -107,7 +104,7 @@ export default async function IdentityGoalHabitDetailPage({ params }: PageProps)
             ))}
           </div>
         )}
-      </section>
+      </section> */}
     </div>
   );
 }

@@ -111,7 +111,16 @@ export function IdentityEditor({
   const [partFour, setPartFour] = useState<HabitAssessmentPartFour>(initialPartFour ?? defaultPartFour());
   const [entries, setEntries] = useState<NextStepGoalData[]>(initialEntries.length ? initialEntries : [defaultGoalEntry()]);
   const [nextStepCompletedAt] = useState<string | null>(initialNextStepCompletedAt);
-  const [lastEdited, setLastEdited] = useState<LastEditedMap>({});
+  const [lastEdited, setLastEdited] = useState<LastEditedMap>(() => {
+    if (typeof window === "undefined") return {};
+    try {
+      const raw = window.localStorage.getItem(LAST_EDITED_KEY);
+      if (!raw) return {};
+      return JSON.parse(raw) as LastEditedMap;
+    } catch {
+      return {};
+    }
+  });
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
@@ -124,18 +133,6 @@ export function IdentityEditor({
     reflection: true,
     existingGoalsHabits: true,
   });
-
-  useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(LAST_EDITED_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as LastEditedMap;
-        setLastEdited(parsed);
-      }
-    } catch {
-      // ignore malformed local storage
-    }
-  }, []);
 
   useEffect(() => {
     window.localStorage.setItem(LAST_EDITED_KEY, JSON.stringify(lastEdited));

@@ -80,7 +80,7 @@ function TextInput({
 function GoalBadge({ goal, index }: { goal: string; index: number }) {
   return (
     <div className="mb-3 flex items-center gap-2">
-      <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-slate-950 text-[10px] font-bold text-white">
+      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-950 text-[10px] font-bold text-white">
         {index + 1}
       </span>
       <p className="text-sm font-semibold text-slate-800">{goal || `Goal ${index + 1}`}</p>
@@ -199,36 +199,20 @@ function HabitChipInput({
   );
 }
 
-// ─── SkeletonCard ─────────────────────────────────────────────────────────────
-
-function SkeletonCard() {
-  return (
-    <div className="animate-pulse rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-      <div className="mb-3 h-4 w-2/3 rounded-full bg-slate-100" />
-      <div className="flex flex-col gap-3">
-        <div className="h-10 rounded-xl bg-slate-100" />
-        <div className="h-10 rounded-xl bg-slate-100" />
-        <div className="h-10 rounded-xl bg-slate-100" />
-      </div>
-    </div>
-  );
-}
-
 // ─── main component ───────────────────────────────────────────────────────────
 
-export function AssessmentNextStepForm({ assessmentId: _assessmentId }: { assessmentId: string }) {
+export function AssessmentNextStepForm({ assessmentId }: { assessmentId: string }) {
+  void assessmentId;
   const router = useRouter();
 
   const [entries, setEntries] = useState<NextStepGoalData[]>([defaultEntry()]);
   const [stepIndex, setStepIndex] = useState(0);
   const [hydrated, setHydrated] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [slideDir, setSlideDir] = useState<"right" | "left">("right");
-  const [panelKey, setPanelKey] = useState(0);
-  const [panelVisible, setPanelVisible] = useState(false);
-
   const entriesRef = useRef(entries);
-  entriesRef.current = entries;
+  useEffect(() => {
+    entriesRef.current = entries;
+  }, [entries]);
 
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -250,16 +234,6 @@ export function AssessmentNextStepForm({ assessmentId: _assessmentId }: { assess
       setHydrated(true);
     });
   }, []);
-
-  // Step slide animation
-  useEffect(() => {
-    setPanelVisible(false);
-    const f = requestAnimationFrame(() => {
-      setPanelKey((k) => k + 1);
-      requestAnimationFrame(() => setPanelVisible(true));
-    });
-    return () => cancelAnimationFrame(f);
-  }, [stepIndex]);
 
   // Autosave after 2 s of inactivity
   function scheduleAutosave() {
@@ -291,7 +265,6 @@ export function AssessmentNextStepForm({ assessmentId: _assessmentId }: { assess
 
   async function goTo(index: number) {
     if (index === stepIndex) return;
-    setSlideDir(index > stepIndex ? "right" : "left");
     await persist();
     setStepIndex(index);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -317,7 +290,7 @@ export function AssessmentNextStepForm({ assessmentId: _assessmentId }: { assess
 
   const progress = ((stepIndex + 1) / TOTAL_STEPS) * 100;
   const isLastStep = stepIndex === TOTAL_STEPS - 1;
-  const slideIn = slideDir === "right" ? "translate-x-4 opacity-0" : "-translate-x-4 opacity-0";
+  const slideIn = "translate-x-0 opacity-100";
 
   // ─── step renders ──────────────────────────────────────────────────────────
 
@@ -338,7 +311,7 @@ export function AssessmentNextStepForm({ assessmentId: _assessmentId }: { assess
               <div className="flex flex-col gap-2">
                 {entries.map((e, idx) => (
                   <div key={idx} className="flex items-center gap-2">
-                    <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-slate-100 text-[11px] font-bold text-slate-500">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[11px] font-bold text-slate-500">
                       {idx + 1}
                     </span>
                     <TextInput
@@ -353,7 +326,7 @@ export function AssessmentNextStepForm({ assessmentId: _assessmentId }: { assess
                           setEntries((prev) => prev.filter((_, i) => i !== idx));
                           scheduleAutosave();
                         }}
-                        className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600"
                         aria-label="Remove goal"
                       >
                         ×
@@ -583,10 +556,8 @@ export function AssessmentNextStepForm({ assessmentId: _assessmentId }: { assess
       <main className="flex-1 px-4 py-8">
         <div className="mx-auto max-w-2xl">
           <div
-            key={panelKey}
-            className={`transition-all duration-300 ease-out ${
-              panelVisible ? "translate-x-0 opacity-100" : slideIn
-            }`}
+            key={stepIndex}
+            className={`transition-all duration-300 ease-out ${slideIn}`}
           >
             {renderStep()}
           </div>

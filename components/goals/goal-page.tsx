@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetchGoalEntryById, actionUpdateGoalCategory, type GoalEntryData } from "@/lib/actions/next-step-actions";
 import { actionCreateHabitChecklist, actionGetHabitChecklists } from "@/lib/checklists-actions";
@@ -91,13 +91,10 @@ export function GoalPage({
     };
   }, [goalId]);
 
-  useEffect(() => {
-    if (habits.length === 0) {
-      setSelectedHabitId("");
-      return;
-    }
+  const resolvedSelectedHabitId = useMemo(() => {
+    if (habits.length === 0) return "";
     const exists = habits.some((h) => h.id === selectedHabitId);
-    if (!exists) setSelectedHabitId(habits[0].id);
+    return exists ? selectedHabitId : habits[0].id;
   }, [habits, selectedHabitId]);
 
   async function handleNewCheckIn(habit: TrackedHabitData) {
@@ -124,11 +121,11 @@ export function GoalPage({
   }
 
   async function handleSaveCue() {
-    if (!selectedHabitId || !behavior.trim() || !time.trim() || !location.trim()) return;
+    if (!resolvedSelectedHabitId || !behavior.trim() || !time.trim() || !location.trim()) return;
     setSavingCue(true);
     try {
       const cue = await actionCreateHabitCue({
-        habitId: selectedHabitId,
+        habitId: resolvedSelectedHabitId,
         behavior: behavior.trim(),
         time: time.trim(),
         location: location.trim(),
@@ -136,7 +133,7 @@ export function GoalPage({
       });
       setCuesByHabit((prev) => ({
         ...prev,
-        [selectedHabitId]: [cue, ...(prev[selectedHabitId] ?? [])],
+        [resolvedSelectedHabitId]: [cue, ...(prev[resolvedSelectedHabitId] ?? [])],
       }));
       setBehavior("");
       setTime("");
@@ -469,7 +466,7 @@ export function GoalPage({
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
               <select
-                value={selectedHabitId}
+                value={resolvedSelectedHabitId}
                 onChange={(e) => setSelectedHabitId(e.target.value)}
                 className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:border-slate-400 focus:outline-none"
               >
@@ -512,7 +509,7 @@ export function GoalPage({
             <button
               type="button"
               onClick={handleSaveCue}
-              disabled={savingCue || !selectedHabitId}
+              disabled={savingCue || !resolvedSelectedHabitId}
               className="mt-3 inline-flex h-8 items-center rounded-full bg-slate-950 px-4 text-xs font-semibold text-white transition hover:bg-slate-800 disabled:opacity-50"
             >
               {savingCue ? "Saving..." : "Save cue"}

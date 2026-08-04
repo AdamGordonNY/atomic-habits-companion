@@ -15,15 +15,15 @@ export default async function NewHabitPage() {
   if (!userId) notFound();
 
   const [goals, identities] = await Promise.all([
-    prisma.nextStepGoalEntry.findMany({
-      where: { nextStep: { userId } },
-      orderBy: { goal: "asc" },
-      select: { id: true, goal: true },
+    prisma.goal.findMany({
+      where: { identity: { userId } },
+      orderBy: { text: "asc" },
+      select: { id: true, text: true, identityId: true },
     }),
-    prisma.identityRecord.findMany({
-      where: { assessment: { userId } },
-      orderBy: { identity: "asc" },
-      select: { id: true, identity: true },
+    prisma.identity.findMany({
+      where: { userId },
+      orderBy: { name: "asc" },
+      select: { id: true, name: true },
     }),
   ]);
 
@@ -44,8 +44,8 @@ export default async function NewHabitPage() {
     let resolvedIdentityId = identityId;
 
     if (resolvedGoalId) {
-      const goal = await prisma.nextStepGoalEntry.findFirst({
-        where: { id: resolvedGoalId, nextStep: { userId } },
+      const goal = await prisma.goal.findFirst({
+        where: { id: resolvedGoalId, identity: { userId } },
         select: { id: true, identityId: true },
       });
       if (!goal) throw new Error("Goal not found");
@@ -54,30 +54,67 @@ export default async function NewHabitPage() {
     }
 
     if (resolvedIdentityId) {
-      const identity = await prisma.identityRecord.findFirst({
-        where: { id: resolvedIdentityId, assessment: { userId } },
+      const identity = await prisma.identity.findFirst({
+        where: { id: resolvedIdentityId, userId },
         select: { id: true },
       });
       if (!identity) throw new Error("Identity not found");
       resolvedIdentityId = identity.id;
     }
 
-    const habit = await prisma.trackedHabit.upsert({
-      where: { userId_name: { userId, name } },
-      create: {
-        userId,
-        name,
-        category,
-        goalEntryId: resolvedGoalId,
-        identityId: resolvedIdentityId,
-      },
-      update: {
-        category,
-        goalEntryId: resolvedGoalId,
-        identityId: resolvedIdentityId,
-        updatedAt: new Date(),
-      },
+    if (!resolvedGoalId && resolvedIdentityId) {
+      const createdGoal = await prisma.goal.create({
+        data: {
+          identityId: resolvedIdentityId,
+          text: `Support ${name}`,
+          category: null,
+          currentSystem: "",
+          systemEval: "",
+          systemRating: 0,
+          idealSystem: "",
+        },
+        select: { id: true },
+      });
+      resolvedGoalId = createdGoal.id;
+    }
+
+    if (!resolvedGoalId) {
+      const fallbackGoal = await prisma.goal.findFirst({
+        where: { identity: { userId } },
+        orderBy: { id: "asc" },
+        select: { id: true },
+      });
+      if (!fallbackGoal) throw new Error("Create an identity/goal before adding habits");
+      resolvedGoalId = fallbackGoal.id;
+    }
+
+    const existing = await prisma.habit.findFirst({
+      where: { userId, name },
+      orderBy: { createdAt: "asc" },
+      select: { id: true },
     });
+
+    const habit = existing
+      ? await prisma.habit.update({
+          where: { id: existing.id },
+          data: {
+            category: category ?? undefined,
+            goalId: resolvedGoalId,
+            updatedAt: new Date(),
+          },
+        })
+      : await prisma.habit.create({
+          data: {
+            userId,
+            name,
+            category,
+          goalId: resolvedGoalId,
+          mode: "building",
+          cue: "",
+          time: "",
+          location: "",
+          },
+      });
 
     revalidatePath("/habits");
     revalidatePath("/profile");
@@ -133,7 +170,7 @@ export default async function NewHabitPage() {
                 <option value="">No goal</option>
                 {goals.map((goal) => (
                   <option key={goal.id} value={goal.id}>
-                    {goal.goal}
+                    {goal.text}
                   </option>
                 ))}
               </select>
@@ -149,7 +186,7 @@ export default async function NewHabitPage() {
                 <option value="">No identity</option>
                 {identities.map((identity) => (
                   <option key={identity.id} value={identity.id}>
-                    {identity.identity}
+                    {identity.name}
                   </option>
                 ))}
               </select>

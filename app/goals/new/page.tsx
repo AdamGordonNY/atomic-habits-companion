@@ -21,9 +21,10 @@ export default async function NewGoalPage() {
   const { userId } = await auth();
   if (!userId) notFound();
 
-  const partFour = await prisma.assessmentPartFour.findUnique({
+  const identities = await prisma.identity.findMany({
     where: { userId },
-    include: { identities: { orderBy: { identity: "asc" } } },
+    orderBy: { name: "asc" },
+    select: { id: true, name: true },
   });
 
   const saveGoal = async (formData: FormData) => {
@@ -35,38 +36,47 @@ export default async function NewGoalPage() {
     const goal = String(formData.get("goal") ?? "").trim();
     if (!goal) return;
 
-    const identityId = String(formData.get("identityId") ?? "").trim() || null;
+    let identityId = String(formData.get("identityId") ?? "").trim() || null;
     const componentHabits = parseLines(formData.get("componentHabits"));
 
-    const nextStep = await prisma.assessmentNextStep.upsert({
-      where: { userId },
-      create: { userId },
-      update: { updatedAt: new Date() },
-      select: { id: true },
-    });
+    if (!identityId) {
+      const fallbackIdentity =
+        (await prisma.identity.findFirst({
+          where: { userId },
+          orderBy: { id: "asc" },
+          select: { id: true },
+        })) ??
+        (await prisma.identity.create({
+          data: { userId, name: "General", category: null },
+          select: { id: true },
+        }));
+      identityId = fallbackIdentity.id;
+    }
 
-    const record = await prisma.nextStepGoalEntry.create({
+    const record = await prisma.goal.create({
       data: {
-        nextStepId: nextStep.id,
         identityId,
-        goal,
+        text: goal,
+        category: null,
         currentSystem: "",
         systemEval: "",
         systemRating: 0,
         idealSystem: "",
-        componentHabits,
       },
     });
 
     if (componentHabits.length > 0) {
-      await prisma.trackedHabit.createMany({
+      await prisma.habit.createMany({
         data: componentHabits.map((name) => ({
           userId,
           name,
-          goalEntryId: record.id,
-          identityId,
+          goalId: record.id,
+          category: null,
+          mode: "building",
+          cue: "",
+          time: "",
+          location: "",
         })),
-        skipDuplicates: true,
       });
     }
 
@@ -81,7 +91,7 @@ export default async function NewGoalPage() {
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-      <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">Add New</p>
         <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">Create goal</h1>
         <p className="mt-2 text-sm text-slate-600">
@@ -107,9 +117,9 @@ export default async function NewGoalPage() {
                 className="mt-2 h-11 w-full rounded-2xl border border-slate-300 bg-white px-4 text-sm text-slate-700 focus:border-slate-400 focus:outline-none"
               >
                 <option value="">No identity</option>
-                {partFour?.identities.map((identity) => (
+                {identities.map((identity) => (
                   <option key={identity.id} value={identity.id}>
-                    {identity.identity}
+                    {identity.name}
                   </option>
                 ))}
               </select>

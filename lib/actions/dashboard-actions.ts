@@ -75,44 +75,47 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       where: { userId },
       select: { completedAt: true },
     }),
-    prisma.assessmentNextStep.findUnique({
+    prisma.assessmentPartFour.findUnique({
       where: { userId },
-      select: {
-        completedAt: true,
-        goalEntries: {
-          select: { id: true, goal: true, componentHabits: true, identityId: true },
-        },
-      },
+      select: { id: true, completedAt: true },
     }),
   ]);
 
+  const nextStepEntries = nextStep
+    ? await prisma.nextStepGoalEntry.findMany({
+        where: { nextStepId: nextStep.id },
+        select: { id: true, goal: true, componentHabits: true, identityId: true },
+        orderBy: { goal: "asc" },
+      })
+    : [];
+
   const habitNames = [
     ...new Set(
-      (nextStep?.goalEntries ?? []).flatMap((e) => e.componentHabits).filter(Boolean),
+      nextStepEntries.flatMap((e) => e.componentHabits).filter(Boolean),
     ),
   ];
-
-  if (habitNames.length > 0) {
-    await prisma.trackedHabit.createMany({
-      data: habitNames.map((name) => ({ userId, name })),
-      skipDuplicates: true,
-    });
-  }
 
   const sixtyDaysAgoStr = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000)
     .toISOString()
     .split("T")[0];
 
-  const tracked = await prisma.trackedHabit.findMany({
+  const tracked = await prisma.habit.findMany({
     where: { userId },
     orderBy: [{ category: "asc" }, { name: "asc" }],
     include: {
+      goal: { select: { identityId: true } },
       checkIns: {
         where: { date: { gte: sixtyDaysAgoStr } },
         select: { date: true, completed: true, note: true },
         orderBy: { date: "asc" },
       },
     },
+  });
+
+  const goals = await prisma.goal.findMany({
+    where: { identity: { userId } },
+    select: { id: true, text: true, identityId: true },
+    orderBy: { text: "asc" },
   });
 
   const [notes, checklists, identities] = await Promise.all([
@@ -128,12 +131,13 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       take: 10,
       select: { id: true, title: true, updatedAt: true },
     }),
-    prisma.identityRecord.findMany({
-      where: { assessment: { userId } },
-      orderBy: { identity: "asc" },
-      select: { id: true, identity: true },
+    prisma.identity.findMany({
+      where: { userId },
+      orderBy: { name: "asc" },
+      select: { id: true, name: true },
     }),
   ]);
+
   const identityCount = identities.length;
 
   return {
@@ -171,19 +175,20 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       id: r.id,
       name: r.name,
       category: r.category,
-      goalEntryId: r.goalEntryId,
-      identityId: r.identityId,
+      goalEntryId: r.goalId,
+      goalId: r.goalId,
+      identityId: r.goal.identityId,
       createdAt: r.createdAt.toISOString(),
       updatedAt: r.updatedAt.toISOString(),
       checkIns: r.checkIns.map((c) => ({ date: c.date, completed: c.completed, note: c.note })),
     })),
-    goals: (nextStep?.goalEntries ?? []).map((g) => ({
+    goals: goals.map((g) => ({
       id: g.id,
-      label: g.goal,
+      label: g.text,
       identityId: g.identityId ?? null,
     })),
     identityCount,
-    identities,
+    identities: identities.map((i) => ({ id: i.id, identity: i.name })),
     recentNotes: notes.map((n) => ({
       id: n.id,
       title: n.title || "Untitled note",

@@ -1,5 +1,3 @@
-// ─── Checklist types ──────────────────────────────────────────────────────────
-
 export interface ChecklistObstacle {
   id: string;
   obstacle: string;
@@ -37,20 +35,17 @@ export interface ChecklistTemplate {
   updatedAt: string;
 }
 
-// Removed CustomEntryRecord — redundant with ChecklistRecord.id + templateId
-// fieldId → response value lives directly on the checklist
 export type CustomEntryRecord = Record<string, string>;
-
 export type ChecklistMode = "habit-assessment" | "custom";
 
 export interface ChecklistRecord {
   id: string;
   title: string;
-  templateType: "habit-assessment" | "custom";
-  mode: ChecklistMode;
+  mode: ChecklistMode;           // "templateType" removed — this is the single source of truth
+  habitId?: string;              // NEW — links checklist to a specific habit
   templateId?: string;
   content: ChecklistHabitEntry[];
-  customEntries: CustomEntryRecord; // ← was CustomEntryRecord[], now Record<string, string>
+  customEntries: CustomEntryRecord;
   createdAt: string;
   updatedAt: string;
 }

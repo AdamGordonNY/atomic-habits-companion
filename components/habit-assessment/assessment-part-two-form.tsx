@@ -295,7 +295,7 @@ export function AssessmentPartTwoForm({ assessmentId }: AssessmentPartTwoFormPro
         {/* scrollable day tab strip */}
         <div
           ref={tabStripRef}
-          className="mx-auto mt-3 flex max-w-2xl gap-1.5 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="mx-auto mt-3 flex max-w-2xl gap-1.5 overflow-x-auto pb-0.5 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden"
         >
           {draft.days.map((day, i) => {
             const filled = countFilled(day);
@@ -306,7 +306,7 @@ export function AssessmentPartTwoForm({ assessmentId }: AssessmentPartTwoFormPro
                 ref={isActive ? activeTabRef : undefined}
                 type="button"
                 onClick={() => goToDay(i)}
-                className={`flex flex-shrink-0 flex-col items-center gap-0.5 rounded-2xl px-3.5 py-2 text-center transition-all duration-200 ${
+                className={`flex shrink-0 flex-col items-center gap-0.5 rounded-2xl px-3.5 py-2 text-center transition-all duration-200 ${
                   isActive
                     ? "bg-slate-950 text-white"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200"
@@ -419,7 +419,7 @@ function HourRow({ hour, activity, energyLevel, onActivity, onEnergy }: HourRowP
         filled ? "border-slate-200 bg-white shadow-sm" : "border-slate-100 bg-slate-50/60"
       }`}
     >
-      <span className="w-[4.5rem] flex-shrink-0 text-[11px] font-semibold text-slate-500">{hour}</span>
+      <span className="w-18 shrink-0 text-[11px] font-semibold text-slate-500">{hour}</span>
       <input
         type="text"
         value={activity}
@@ -427,7 +427,7 @@ function HourRow({ hour, activity, energyLevel, onActivity, onEnergy }: HourRowP
         placeholder="Activity…"
         className="min-w-0 flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
       />
-      <div className="flex flex-shrink-0 overflow-hidden rounded-full border border-slate-200 bg-white p-0.5">
+      <div className="flex shrink-0 overflow-hidden rounded-full border border-slate-200 bg-white p-0.5">
         <button
           type="button"
           onClick={() => onEnergy("UP")}

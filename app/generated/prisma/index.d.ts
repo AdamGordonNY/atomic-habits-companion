@@ -99,15 +99,20 @@ export type AssessmentPartFour = $Result.DefaultSelection<Prisma.$AssessmentPart
  */
 export type DomainVisionEntry = $Result.DefaultSelection<Prisma.$DomainVisionEntryPayload>
 /**
- * Model IdentityRecord
+ * Model Goal
  * 
  */
-export type IdentityRecord = $Result.DefaultSelection<Prisma.$IdentityRecordPayload>
+export type Goal = $Result.DefaultSelection<Prisma.$GoalPayload>
 /**
- * Model AssessmentNextStep
+ * Model Habit
  * 
  */
-export type AssessmentNextStep = $Result.DefaultSelection<Prisma.$AssessmentNextStepPayload>
+export type Habit = $Result.DefaultSelection<Prisma.$HabitPayload>
+/**
+ * Model Identity
+ * 
+ */
+export type Identity = $Result.DefaultSelection<Prisma.$IdentityPayload>
 /**
  * Model NextStepGoalEntry
  * 
@@ -123,16 +128,6 @@ export type ChecklistTemplate = $Result.DefaultSelection<Prisma.$ChecklistTempla
  * 
  */
 export type Checklist = $Result.DefaultSelection<Prisma.$ChecklistPayload>
-/**
- * Model TrackedHabit
- * 
- */
-export type TrackedHabit = $Result.DefaultSelection<Prisma.$TrackedHabitPayload>
-/**
- * Model HabitCue
- * 
- */
-export type HabitCue = $Result.DefaultSelection<Prisma.$HabitCuePayload>
 /**
  * Model HabitCheckIn
  * 
@@ -431,24 +426,34 @@ export class PrismaClient<
   get domainVisionEntry(): Prisma.DomainVisionEntryDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.identityRecord`: Exposes CRUD operations for the **IdentityRecord** model.
+   * `prisma.goal`: Exposes CRUD operations for the **Goal** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more IdentityRecords
-    * const identityRecords = await prisma.identityRecord.findMany()
+    * // Fetch zero or more Goals
+    * const goals = await prisma.goal.findMany()
     * ```
     */
-  get identityRecord(): Prisma.IdentityRecordDelegate<ExtArgs, ClientOptions>;
+  get goal(): Prisma.GoalDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.assessmentNextStep`: Exposes CRUD operations for the **AssessmentNextStep** model.
+   * `prisma.habit`: Exposes CRUD operations for the **Habit** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more AssessmentNextSteps
-    * const assessmentNextSteps = await prisma.assessmentNextStep.findMany()
+    * // Fetch zero or more Habits
+    * const habits = await prisma.habit.findMany()
     * ```
     */
-  get assessmentNextStep(): Prisma.AssessmentNextStepDelegate<ExtArgs, ClientOptions>;
+  get habit(): Prisma.HabitDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.identity`: Exposes CRUD operations for the **Identity** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Identities
+    * const identities = await prisma.identity.findMany()
+    * ```
+    */
+  get identity(): Prisma.IdentityDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.nextStepGoalEntry`: Exposes CRUD operations for the **NextStepGoalEntry** model.
@@ -479,26 +484,6 @@ export class PrismaClient<
     * ```
     */
   get checklist(): Prisma.ChecklistDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.trackedHabit`: Exposes CRUD operations for the **TrackedHabit** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more TrackedHabits
-    * const trackedHabits = await prisma.trackedHabit.findMany()
-    * ```
-    */
-  get trackedHabit(): Prisma.TrackedHabitDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.habitCue`: Exposes CRUD operations for the **HabitCue** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more HabitCues
-    * const habitCues = await prisma.habitCue.findMany()
-    * ```
-    */
-  get habitCue(): Prisma.HabitCueDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.habitCheckIn`: Exposes CRUD operations for the **HabitCheckIn** model.
@@ -960,13 +945,12 @@ export namespace Prisma {
     HabitScorecardEntry: 'HabitScorecardEntry',
     AssessmentPartFour: 'AssessmentPartFour',
     DomainVisionEntry: 'DomainVisionEntry',
-    IdentityRecord: 'IdentityRecord',
-    AssessmentNextStep: 'AssessmentNextStep',
+    Goal: 'Goal',
+    Habit: 'Habit',
+    Identity: 'Identity',
     NextStepGoalEntry: 'NextStepGoalEntry',
     ChecklistTemplate: 'ChecklistTemplate',
     Checklist: 'Checklist',
-    TrackedHabit: 'TrackedHabit',
-    HabitCue: 'HabitCue',
     HabitCheckIn: 'HabitCheckIn'
   };
 
@@ -983,7 +967,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "note" | "assessmentPartOne" | "project" | "assessmentPartTwo" | "dayLog" | "hourlyEntry" | "assessmentPartThree" | "habitRecord" | "habitAttempt" | "habitScorecard" | "habitScorecardEntry" | "assessmentPartFour" | "domainVisionEntry" | "identityRecord" | "assessmentNextStep" | "nextStepGoalEntry" | "checklistTemplate" | "checklist" | "trackedHabit" | "habitCue" | "habitCheckIn"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "note" | "assessmentPartOne" | "project" | "assessmentPartTwo" | "dayLog" | "hourlyEntry" | "assessmentPartThree" | "habitRecord" | "habitAttempt" | "habitScorecard" | "habitScorecardEntry" | "assessmentPartFour" | "domainVisionEntry" | "goal" | "habit" | "identity" | "nextStepGoalEntry" | "checklistTemplate" | "checklist" | "habitCheckIn"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2245,151 +2229,225 @@ export namespace Prisma {
           }
         }
       }
-      IdentityRecord: {
-        payload: Prisma.$IdentityRecordPayload<ExtArgs>
-        fields: Prisma.IdentityRecordFieldRefs
+      Goal: {
+        payload: Prisma.$GoalPayload<ExtArgs>
+        fields: Prisma.GoalFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.IdentityRecordFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload> | null
+            args: Prisma.GoalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoalPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.IdentityRecordFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>
+            args: Prisma.GoalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoalPayload>
           }
           findFirst: {
-            args: Prisma.IdentityRecordFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload> | null
+            args: Prisma.GoalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoalPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.IdentityRecordFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>
+            args: Prisma.GoalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoalPayload>
           }
           findMany: {
-            args: Prisma.IdentityRecordFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>[]
+            args: Prisma.GoalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoalPayload>[]
           }
           create: {
-            args: Prisma.IdentityRecordCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>
+            args: Prisma.GoalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoalPayload>
           }
           createMany: {
-            args: Prisma.IdentityRecordCreateManyArgs<ExtArgs>
+            args: Prisma.GoalCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.IdentityRecordCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>[]
+            args: Prisma.GoalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoalPayload>[]
           }
           delete: {
-            args: Prisma.IdentityRecordDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>
+            args: Prisma.GoalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoalPayload>
           }
           update: {
-            args: Prisma.IdentityRecordUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>
+            args: Prisma.GoalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoalPayload>
           }
           deleteMany: {
-            args: Prisma.IdentityRecordDeleteManyArgs<ExtArgs>
+            args: Prisma.GoalDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.IdentityRecordUpdateManyArgs<ExtArgs>
+            args: Prisma.GoalUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.IdentityRecordUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>[]
+            args: Prisma.GoalUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoalPayload>[]
           }
           upsert: {
-            args: Prisma.IdentityRecordUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityRecordPayload>
+            args: Prisma.GoalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoalPayload>
           }
           aggregate: {
-            args: Prisma.IdentityRecordAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateIdentityRecord>
+            args: Prisma.GoalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGoal>
           }
           groupBy: {
-            args: Prisma.IdentityRecordGroupByArgs<ExtArgs>
-            result: $Utils.Optional<IdentityRecordGroupByOutputType>[]
+            args: Prisma.GoalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GoalGroupByOutputType>[]
           }
           count: {
-            args: Prisma.IdentityRecordCountArgs<ExtArgs>
-            result: $Utils.Optional<IdentityRecordCountAggregateOutputType> | number
+            args: Prisma.GoalCountArgs<ExtArgs>
+            result: $Utils.Optional<GoalCountAggregateOutputType> | number
           }
         }
       }
-      AssessmentNextStep: {
-        payload: Prisma.$AssessmentNextStepPayload<ExtArgs>
-        fields: Prisma.AssessmentNextStepFieldRefs
+      Habit: {
+        payload: Prisma.$HabitPayload<ExtArgs>
+        fields: Prisma.HabitFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.AssessmentNextStepFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload> | null
+            args: Prisma.HabitFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.AssessmentNextStepFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>
+            args: Prisma.HabitFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
           }
           findFirst: {
-            args: Prisma.AssessmentNextStepFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload> | null
+            args: Prisma.HabitFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.AssessmentNextStepFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>
+            args: Prisma.HabitFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
           }
           findMany: {
-            args: Prisma.AssessmentNextStepFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>[]
+            args: Prisma.HabitFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>[]
           }
           create: {
-            args: Prisma.AssessmentNextStepCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>
+            args: Prisma.HabitCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
           }
           createMany: {
-            args: Prisma.AssessmentNextStepCreateManyArgs<ExtArgs>
+            args: Prisma.HabitCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.AssessmentNextStepCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>[]
+            args: Prisma.HabitCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>[]
           }
           delete: {
-            args: Prisma.AssessmentNextStepDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>
+            args: Prisma.HabitDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
           }
           update: {
-            args: Prisma.AssessmentNextStepUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>
+            args: Prisma.HabitUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
           }
           deleteMany: {
-            args: Prisma.AssessmentNextStepDeleteManyArgs<ExtArgs>
+            args: Prisma.HabitDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.AssessmentNextStepUpdateManyArgs<ExtArgs>
+            args: Prisma.HabitUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.AssessmentNextStepUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>[]
+            args: Prisma.HabitUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>[]
           }
           upsert: {
-            args: Prisma.AssessmentNextStepUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssessmentNextStepPayload>
+            args: Prisma.HabitUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
           }
           aggregate: {
-            args: Prisma.AssessmentNextStepAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAssessmentNextStep>
+            args: Prisma.HabitAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHabit>
           }
           groupBy: {
-            args: Prisma.AssessmentNextStepGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AssessmentNextStepGroupByOutputType>[]
+            args: Prisma.HabitGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HabitGroupByOutputType>[]
           }
           count: {
-            args: Prisma.AssessmentNextStepCountArgs<ExtArgs>
-            result: $Utils.Optional<AssessmentNextStepCountAggregateOutputType> | number
+            args: Prisma.HabitCountArgs<ExtArgs>
+            result: $Utils.Optional<HabitCountAggregateOutputType> | number
+          }
+        }
+      }
+      Identity: {
+        payload: Prisma.$IdentityPayload<ExtArgs>
+        fields: Prisma.IdentityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IdentityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IdentityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>
+          }
+          findFirst: {
+            args: Prisma.IdentityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IdentityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>
+          }
+          findMany: {
+            args: Prisma.IdentityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>[]
+          }
+          create: {
+            args: Prisma.IdentityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>
+          }
+          createMany: {
+            args: Prisma.IdentityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.IdentityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>[]
+          }
+          delete: {
+            args: Prisma.IdentityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>
+          }
+          update: {
+            args: Prisma.IdentityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>
+          }
+          deleteMany: {
+            args: Prisma.IdentityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IdentityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.IdentityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>[]
+          }
+          upsert: {
+            args: Prisma.IdentityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>
+          }
+          aggregate: {
+            args: Prisma.IdentityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIdentity>
+          }
+          groupBy: {
+            args: Prisma.IdentityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IdentityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IdentityCountArgs<ExtArgs>
+            result: $Utils.Optional<IdentityCountAggregateOutputType> | number
           }
         }
       }
@@ -2615,154 +2673,6 @@ export namespace Prisma {
           }
         }
       }
-      TrackedHabit: {
-        payload: Prisma.$TrackedHabitPayload<ExtArgs>
-        fields: Prisma.TrackedHabitFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.TrackedHabitFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.TrackedHabitFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>
-          }
-          findFirst: {
-            args: Prisma.TrackedHabitFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.TrackedHabitFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>
-          }
-          findMany: {
-            args: Prisma.TrackedHabitFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>[]
-          }
-          create: {
-            args: Prisma.TrackedHabitCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>
-          }
-          createMany: {
-            args: Prisma.TrackedHabitCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.TrackedHabitCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>[]
-          }
-          delete: {
-            args: Prisma.TrackedHabitDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>
-          }
-          update: {
-            args: Prisma.TrackedHabitUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>
-          }
-          deleteMany: {
-            args: Prisma.TrackedHabitDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.TrackedHabitUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.TrackedHabitUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>[]
-          }
-          upsert: {
-            args: Prisma.TrackedHabitUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TrackedHabitPayload>
-          }
-          aggregate: {
-            args: Prisma.TrackedHabitAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateTrackedHabit>
-          }
-          groupBy: {
-            args: Prisma.TrackedHabitGroupByArgs<ExtArgs>
-            result: $Utils.Optional<TrackedHabitGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.TrackedHabitCountArgs<ExtArgs>
-            result: $Utils.Optional<TrackedHabitCountAggregateOutputType> | number
-          }
-        }
-      }
-      HabitCue: {
-        payload: Prisma.$HabitCuePayload<ExtArgs>
-        fields: Prisma.HabitCueFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.HabitCueFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HabitCuePayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.HabitCueFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HabitCuePayload>
-          }
-          findFirst: {
-            args: Prisma.HabitCueFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HabitCuePayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.HabitCueFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HabitCuePayload>
-          }
-          findMany: {
-            args: Prisma.HabitCueFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HabitCuePayload>[]
-          }
-          create: {
-            args: Prisma.HabitCueCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HabitCuePayload>
-          }
-          createMany: {
-            args: Prisma.HabitCueCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.HabitCueCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HabitCuePayload>[]
-          }
-          delete: {
-            args: Prisma.HabitCueDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HabitCuePayload>
-          }
-          update: {
-            args: Prisma.HabitCueUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HabitCuePayload>
-          }
-          deleteMany: {
-            args: Prisma.HabitCueDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.HabitCueUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.HabitCueUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HabitCuePayload>[]
-          }
-          upsert: {
-            args: Prisma.HabitCueUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HabitCuePayload>
-          }
-          aggregate: {
-            args: Prisma.HabitCueAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateHabitCue>
-          }
-          groupBy: {
-            args: Prisma.HabitCueGroupByArgs<ExtArgs>
-            result: $Utils.Optional<HabitCueGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.HabitCueCountArgs<ExtArgs>
-            result: $Utils.Optional<HabitCueCountAggregateOutputType> | number
-          }
-        }
-      }
       HabitCheckIn: {
         payload: Prisma.$HabitCheckInPayload<ExtArgs>
         fields: Prisma.HabitCheckInFieldRefs
@@ -2962,13 +2872,12 @@ export namespace Prisma {
     habitScorecardEntry?: HabitScorecardEntryOmit
     assessmentPartFour?: AssessmentPartFourOmit
     domainVisionEntry?: DomainVisionEntryOmit
-    identityRecord?: IdentityRecordOmit
-    assessmentNextStep?: AssessmentNextStepOmit
+    goal?: GoalOmit
+    habit?: HabitOmit
+    identity?: IdentityOmit
     nextStepGoalEntry?: NextStepGoalEntryOmit
     checklistTemplate?: ChecklistTemplateOmit
     checklist?: ChecklistOmit
-    trackedHabit?: TrackedHabitOmit
-    habitCue?: HabitCueOmit
     habitCheckIn?: HabitCheckInOmit
   }
 
@@ -3054,7 +2963,8 @@ export namespace Prisma {
     sessions: number
     notes: number
     checklists: number
-    trackedHabits: number
+    identities: number
+    habits: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3062,7 +2972,8 @@ export namespace Prisma {
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     notes?: boolean | UserCountOutputTypeCountNotesArgs
     checklists?: boolean | UserCountOutputTypeCountChecklistsArgs
-    trackedHabits?: boolean | UserCountOutputTypeCountTrackedHabitsArgs
+    identities?: boolean | UserCountOutputTypeCountIdentitiesArgs
+    habits?: boolean | UserCountOutputTypeCountHabitsArgs
   }
 
   // Custom InputTypes
@@ -3107,8 +3018,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountTrackedHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TrackedHabitWhereInput
+  export type UserCountOutputTypeCountIdentitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdentityWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HabitWhereInput
   }
 
 
@@ -3291,12 +3209,10 @@ export namespace Prisma {
 
   export type AssessmentPartFourCountOutputType = {
     domainVisions: number
-    identities: number
   }
 
   export type AssessmentPartFourCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     domainVisions?: boolean | AssessmentPartFourCountOutputTypeCountDomainVisionsArgs
-    identities?: boolean | AssessmentPartFourCountOutputTypeCountIdentitiesArgs
   }
 
   // Custom InputTypes
@@ -3317,113 +3233,106 @@ export namespace Prisma {
     where?: DomainVisionEntryWhereInput
   }
 
+
   /**
-   * AssessmentPartFourCountOutputType without action
+   * Count Type GoalCountOutputType
    */
-  export type AssessmentPartFourCountOutputTypeCountIdentitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: IdentityRecordWhereInput
+
+  export type GoalCountOutputType = {
+    habits: number
+  }
+
+  export type GoalCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    habits?: boolean | GoalCountOutputTypeCountHabitsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * GoalCountOutputType without action
+   */
+  export type GoalCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoalCountOutputType
+     */
+    select?: GoalCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * GoalCountOutputType without action
+   */
+  export type GoalCountOutputTypeCountHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HabitWhereInput
   }
 
 
   /**
-   * Count Type IdentityRecordCountOutputType
+   * Count Type HabitCountOutputType
    */
 
-  export type IdentityRecordCountOutputType = {
+  export type HabitCountOutputType = {
+    checkIns: number
+    checklists: number
+  }
+
+  export type HabitCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    checkIns?: boolean | HabitCountOutputTypeCountCheckInsArgs
+    checklists?: boolean | HabitCountOutputTypeCountChecklistsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * HabitCountOutputType without action
+   */
+  export type HabitCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitCountOutputType
+     */
+    select?: HabitCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * HabitCountOutputType without action
+   */
+  export type HabitCountOutputTypeCountCheckInsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HabitCheckInWhereInput
+  }
+
+  /**
+   * HabitCountOutputType without action
+   */
+  export type HabitCountOutputTypeCountChecklistsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChecklistWhereInput
+  }
+
+
+  /**
+   * Count Type IdentityCountOutputType
+   */
+
+  export type IdentityCountOutputType = {
     goals: number
-    trackedHabits: number
   }
 
-  export type IdentityRecordCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    goals?: boolean | IdentityRecordCountOutputTypeCountGoalsArgs
-    trackedHabits?: boolean | IdentityRecordCountOutputTypeCountTrackedHabitsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * IdentityRecordCountOutputType without action
-   */
-  export type IdentityRecordCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityRecordCountOutputType
-     */
-    select?: IdentityRecordCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * IdentityRecordCountOutputType without action
-   */
-  export type IdentityRecordCountOutputTypeCountGoalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NextStepGoalEntryWhereInput
-  }
-
-  /**
-   * IdentityRecordCountOutputType without action
-   */
-  export type IdentityRecordCountOutputTypeCountTrackedHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TrackedHabitWhereInput
-  }
-
-
-  /**
-   * Count Type AssessmentNextStepCountOutputType
-   */
-
-  export type AssessmentNextStepCountOutputType = {
-    goalEntries: number
-  }
-
-  export type AssessmentNextStepCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    goalEntries?: boolean | AssessmentNextStepCountOutputTypeCountGoalEntriesArgs
+  export type IdentityCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    goals?: boolean | IdentityCountOutputTypeCountGoalsArgs
   }
 
   // Custom InputTypes
   /**
-   * AssessmentNextStepCountOutputType without action
+   * IdentityCountOutputType without action
    */
-  export type AssessmentNextStepCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssessmentNextStepCountOutputType
+     * Select specific fields to fetch from the IdentityCountOutputType
      */
-    select?: AssessmentNextStepCountOutputTypeSelect<ExtArgs> | null
+    select?: IdentityCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * AssessmentNextStepCountOutputType without action
+   * IdentityCountOutputType without action
    */
-  export type AssessmentNextStepCountOutputTypeCountGoalEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NextStepGoalEntryWhereInput
-  }
-
-
-  /**
-   * Count Type NextStepGoalEntryCountOutputType
-   */
-
-  export type NextStepGoalEntryCountOutputType = {
-    trackedHabits: number
-  }
-
-  export type NextStepGoalEntryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    trackedHabits?: boolean | NextStepGoalEntryCountOutputTypeCountTrackedHabitsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * NextStepGoalEntryCountOutputType without action
-   */
-  export type NextStepGoalEntryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NextStepGoalEntryCountOutputType
-     */
-    select?: NextStepGoalEntryCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * NextStepGoalEntryCountOutputType without action
-   */
-  export type NextStepGoalEntryCountOutputTypeCountTrackedHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TrackedHabitWhereInput
+  export type IdentityCountOutputTypeCountGoalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GoalWhereInput
   }
 
 
@@ -3455,46 +3364,6 @@ export namespace Prisma {
    */
   export type ChecklistTemplateCountOutputTypeCountChecklistsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ChecklistWhereInput
-  }
-
-
-  /**
-   * Count Type TrackedHabitCountOutputType
-   */
-
-  export type TrackedHabitCountOutputType = {
-    cues: number
-    checkIns: number
-  }
-
-  export type TrackedHabitCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    cues?: boolean | TrackedHabitCountOutputTypeCountCuesArgs
-    checkIns?: boolean | TrackedHabitCountOutputTypeCountCheckInsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * TrackedHabitCountOutputType without action
-   */
-  export type TrackedHabitCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabitCountOutputType
-     */
-    select?: TrackedHabitCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * TrackedHabitCountOutputType without action
-   */
-  export type TrackedHabitCountOutputTypeCountCuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: HabitCueWhereInput
-  }
-
-  /**
-   * TrackedHabitCountOutputType without action
-   */
-  export type TrackedHabitCountOutputTypeCountCheckInsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: HabitCheckInWhereInput
   }
 
 
@@ -3689,9 +3558,9 @@ export namespace Prisma {
     assessmentPartTwo?: boolean | User$assessmentPartTwoArgs<ExtArgs>
     assessmentPartThree?: boolean | User$assessmentPartThreeArgs<ExtArgs>
     assessmentPartFour?: boolean | User$assessmentPartFourArgs<ExtArgs>
-    assessmentNextStep?: boolean | User$assessmentNextStepArgs<ExtArgs>
     checklists?: boolean | User$checklistsArgs<ExtArgs>
-    trackedHabits?: boolean | User$trackedHabitsArgs<ExtArgs>
+    identities?: boolean | User$identitiesArgs<ExtArgs>
+    habits?: boolean | User$habitsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -3734,9 +3603,9 @@ export namespace Prisma {
     assessmentPartTwo?: boolean | User$assessmentPartTwoArgs<ExtArgs>
     assessmentPartThree?: boolean | User$assessmentPartThreeArgs<ExtArgs>
     assessmentPartFour?: boolean | User$assessmentPartFourArgs<ExtArgs>
-    assessmentNextStep?: boolean | User$assessmentNextStepArgs<ExtArgs>
     checklists?: boolean | User$checklistsArgs<ExtArgs>
-    trackedHabits?: boolean | User$trackedHabitsArgs<ExtArgs>
+    identities?: boolean | User$identitiesArgs<ExtArgs>
+    habits?: boolean | User$habitsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3752,9 +3621,9 @@ export namespace Prisma {
       assessmentPartTwo: Prisma.$AssessmentPartTwoPayload<ExtArgs> | null
       assessmentPartThree: Prisma.$AssessmentPartThreePayload<ExtArgs> | null
       assessmentPartFour: Prisma.$AssessmentPartFourPayload<ExtArgs> | null
-      assessmentNextStep: Prisma.$AssessmentNextStepPayload<ExtArgs> | null
       checklists: Prisma.$ChecklistPayload<ExtArgs>[]
-      trackedHabits: Prisma.$TrackedHabitPayload<ExtArgs>[]
+      identities: Prisma.$IdentityPayload<ExtArgs>[]
+      habits: Prisma.$HabitPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4165,9 +4034,9 @@ export namespace Prisma {
     assessmentPartTwo<T extends User$assessmentPartTwoArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentPartTwoArgs<ExtArgs>>): Prisma__AssessmentPartTwoClient<$Result.GetResult<Prisma.$AssessmentPartTwoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     assessmentPartThree<T extends User$assessmentPartThreeArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentPartThreeArgs<ExtArgs>>): Prisma__AssessmentPartThreeClient<$Result.GetResult<Prisma.$AssessmentPartThreePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     assessmentPartFour<T extends User$assessmentPartFourArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentPartFourArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    assessmentNextStep<T extends User$assessmentNextStepArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentNextStepArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     checklists<T extends User$checklistsArgs<ExtArgs> = {}>(args?: Subset<T, User$checklistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    trackedHabits<T extends User$trackedHabitsArgs<ExtArgs> = {}>(args?: Subset<T, User$trackedHabitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    identities<T extends User$identitiesArgs<ExtArgs> = {}>(args?: Subset<T, User$identitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    habits<T extends User$habitsArgs<ExtArgs> = {}>(args?: Subset<T, User$habitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4745,25 +4614,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.assessmentNextStep
-   */
-  export type User$assessmentNextStepArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssessmentNextStep
-     */
-    select?: AssessmentNextStepSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssessmentNextStep
-     */
-    omit?: AssessmentNextStepOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssessmentNextStepInclude<ExtArgs> | null
-    where?: AssessmentNextStepWhereInput
-  }
-
-  /**
    * User.checklists
    */
   export type User$checklistsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4788,27 +4638,51 @@ export namespace Prisma {
   }
 
   /**
-   * User.trackedHabits
+   * User.identities
    */
-  export type User$trackedHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$identitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TrackedHabit
+     * Select specific fields to fetch from the Identity
      */
-    select?: TrackedHabitSelect<ExtArgs> | null
+    select?: IdentitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TrackedHabit
+     * Omit specific fields from the Identity
      */
-    omit?: TrackedHabitOmit<ExtArgs> | null
+    omit?: IdentityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TrackedHabitInclude<ExtArgs> | null
-    where?: TrackedHabitWhereInput
-    orderBy?: TrackedHabitOrderByWithRelationInput | TrackedHabitOrderByWithRelationInput[]
-    cursor?: TrackedHabitWhereUniqueInput
+    include?: IdentityInclude<ExtArgs> | null
+    where?: IdentityWhereInput
+    orderBy?: IdentityOrderByWithRelationInput | IdentityOrderByWithRelationInput[]
+    cursor?: IdentityWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: TrackedHabitScalarFieldEnum | TrackedHabitScalarFieldEnum[]
+    distinct?: IdentityScalarFieldEnum | IdentityScalarFieldEnum[]
+  }
+
+  /**
+   * User.habits
+   */
+  export type User$habitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    where?: HabitWhereInput
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
+    cursor?: HabitWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HabitScalarFieldEnum | HabitScalarFieldEnum[]
   }
 
   /**
@@ -20894,7 +20768,6 @@ export namespace Prisma {
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     domainVisions?: boolean | AssessmentPartFour$domainVisionsArgs<ExtArgs>
-    identities?: boolean | AssessmentPartFour$identitiesArgs<ExtArgs>
     _count?: boolean | AssessmentPartFourCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["assessmentPartFour"]>
 
@@ -20973,7 +20846,6 @@ export namespace Prisma {
   export type AssessmentPartFourInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     domainVisions?: boolean | AssessmentPartFour$domainVisionsArgs<ExtArgs>
-    identities?: boolean | AssessmentPartFour$identitiesArgs<ExtArgs>
     _count?: boolean | AssessmentPartFourCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AssessmentPartFourIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -20988,7 +20860,6 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       domainVisions: Prisma.$DomainVisionEntryPayload<ExtArgs>[]
-      identities: Prisma.$IdentityRecordPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -21407,7 +21278,6 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     domainVisions<T extends AssessmentPartFour$domainVisionsArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentPartFour$domainVisionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DomainVisionEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    identities<T extends AssessmentPartFour$identitiesArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentPartFour$identitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -21879,30 +21749,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DomainVisionEntryScalarFieldEnum | DomainVisionEntryScalarFieldEnum[]
-  }
-
-  /**
-   * AssessmentPartFour.identities
-   */
-  export type AssessmentPartFour$identitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityRecord
-     */
-    select?: IdentityRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityRecord
-     */
-    omit?: IdentityRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityRecordInclude<ExtArgs> | null
-    where?: IdentityRecordWhereInput
-    orderBy?: IdentityRecordOrderByWithRelationInput | IdentityRecordOrderByWithRelationInput[]
-    cursor?: IdentityRecordWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: IdentityRecordScalarFieldEnum | IdentityRecordScalarFieldEnum[]
   }
 
   /**
@@ -22975,354 +22821,425 @@ export namespace Prisma {
 
 
   /**
-   * Model IdentityRecord
+   * Model Goal
    */
 
-  export type AggregateIdentityRecord = {
-    _count: IdentityRecordCountAggregateOutputType | null
-    _min: IdentityRecordMinAggregateOutputType | null
-    _max: IdentityRecordMaxAggregateOutputType | null
+  export type AggregateGoal = {
+    _count: GoalCountAggregateOutputType | null
+    _avg: GoalAvgAggregateOutputType | null
+    _sum: GoalSumAggregateOutputType | null
+    _min: GoalMinAggregateOutputType | null
+    _max: GoalMaxAggregateOutputType | null
   }
 
-  export type IdentityRecordMinAggregateOutputType = {
+  export type GoalAvgAggregateOutputType = {
+    systemRating: number | null
+  }
+
+  export type GoalSumAggregateOutputType = {
+    systemRating: number | null
+  }
+
+  export type GoalMinAggregateOutputType = {
     id: string | null
-    identity: string | null
+    text: string | null
     category: string | null
-    assessmentId: string | null
+    currentSystem: string | null
+    systemEval: string | null
+    systemRating: number | null
+    idealSystem: string | null
+    identityId: string | null
   }
 
-  export type IdentityRecordMaxAggregateOutputType = {
+  export type GoalMaxAggregateOutputType = {
     id: string | null
-    identity: string | null
+    text: string | null
     category: string | null
-    assessmentId: string | null
+    currentSystem: string | null
+    systemEval: string | null
+    systemRating: number | null
+    idealSystem: string | null
+    identityId: string | null
   }
 
-  export type IdentityRecordCountAggregateOutputType = {
+  export type GoalCountAggregateOutputType = {
     id: number
-    identity: number
-    habits: number
+    text: number
     category: number
-    assessmentId: number
+    currentSystem: number
+    systemEval: number
+    systemRating: number
+    idealSystem: number
+    identityId: number
     _all: number
   }
 
 
-  export type IdentityRecordMinAggregateInputType = {
-    id?: true
-    identity?: true
-    category?: true
-    assessmentId?: true
+  export type GoalAvgAggregateInputType = {
+    systemRating?: true
   }
 
-  export type IdentityRecordMaxAggregateInputType = {
-    id?: true
-    identity?: true
-    category?: true
-    assessmentId?: true
+  export type GoalSumAggregateInputType = {
+    systemRating?: true
   }
 
-  export type IdentityRecordCountAggregateInputType = {
+  export type GoalMinAggregateInputType = {
     id?: true
-    identity?: true
-    habits?: true
+    text?: true
     category?: true
-    assessmentId?: true
+    currentSystem?: true
+    systemEval?: true
+    systemRating?: true
+    idealSystem?: true
+    identityId?: true
+  }
+
+  export type GoalMaxAggregateInputType = {
+    id?: true
+    text?: true
+    category?: true
+    currentSystem?: true
+    systemEval?: true
+    systemRating?: true
+    idealSystem?: true
+    identityId?: true
+  }
+
+  export type GoalCountAggregateInputType = {
+    id?: true
+    text?: true
+    category?: true
+    currentSystem?: true
+    systemEval?: true
+    systemRating?: true
+    idealSystem?: true
+    identityId?: true
     _all?: true
   }
 
-  export type IdentityRecordAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which IdentityRecord to aggregate.
+     * Filter which Goal to aggregate.
      */
-    where?: IdentityRecordWhereInput
+    where?: GoalWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of IdentityRecords to fetch.
+     * Determine the order of Goals to fetch.
      */
-    orderBy?: IdentityRecordOrderByWithRelationInput | IdentityRecordOrderByWithRelationInput[]
+    orderBy?: GoalOrderByWithRelationInput | GoalOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: IdentityRecordWhereUniqueInput
+    cursor?: GoalWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` IdentityRecords from the position of the cursor.
+     * Take `±n` Goals from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` IdentityRecords.
+     * Skip the first `n` Goals.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned IdentityRecords
+     * Count returned Goals
     **/
-    _count?: true | IdentityRecordCountAggregateInputType
+    _count?: true | GoalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GoalAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GoalSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: IdentityRecordMinAggregateInputType
+    _min?: GoalMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: IdentityRecordMaxAggregateInputType
+    _max?: GoalMaxAggregateInputType
   }
 
-  export type GetIdentityRecordAggregateType<T extends IdentityRecordAggregateArgs> = {
-        [P in keyof T & keyof AggregateIdentityRecord]: P extends '_count' | 'count'
+  export type GetGoalAggregateType<T extends GoalAggregateArgs> = {
+        [P in keyof T & keyof AggregateGoal]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateIdentityRecord[P]>
-      : GetScalarType<T[P], AggregateIdentityRecord[P]>
+        : GetScalarType<T[P], AggregateGoal[P]>
+      : GetScalarType<T[P], AggregateGoal[P]>
   }
 
 
 
 
-  export type IdentityRecordGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: IdentityRecordWhereInput
-    orderBy?: IdentityRecordOrderByWithAggregationInput | IdentityRecordOrderByWithAggregationInput[]
-    by: IdentityRecordScalarFieldEnum[] | IdentityRecordScalarFieldEnum
-    having?: IdentityRecordScalarWhereWithAggregatesInput
+  export type GoalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GoalWhereInput
+    orderBy?: GoalOrderByWithAggregationInput | GoalOrderByWithAggregationInput[]
+    by: GoalScalarFieldEnum[] | GoalScalarFieldEnum
+    having?: GoalScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: IdentityRecordCountAggregateInputType | true
-    _min?: IdentityRecordMinAggregateInputType
-    _max?: IdentityRecordMaxAggregateInputType
+    _count?: GoalCountAggregateInputType | true
+    _avg?: GoalAvgAggregateInputType
+    _sum?: GoalSumAggregateInputType
+    _min?: GoalMinAggregateInputType
+    _max?: GoalMaxAggregateInputType
   }
 
-  export type IdentityRecordGroupByOutputType = {
+  export type GoalGroupByOutputType = {
     id: string
-    identity: string
-    habits: string[]
+    text: string
     category: string | null
-    assessmentId: string
-    _count: IdentityRecordCountAggregateOutputType | null
-    _min: IdentityRecordMinAggregateOutputType | null
-    _max: IdentityRecordMaxAggregateOutputType | null
+    currentSystem: string
+    systemEval: string
+    systemRating: number
+    idealSystem: string
+    identityId: string
+    _count: GoalCountAggregateOutputType | null
+    _avg: GoalAvgAggregateOutputType | null
+    _sum: GoalSumAggregateOutputType | null
+    _min: GoalMinAggregateOutputType | null
+    _max: GoalMaxAggregateOutputType | null
   }
 
-  type GetIdentityRecordGroupByPayload<T extends IdentityRecordGroupByArgs> = Prisma.PrismaPromise<
+  type GetGoalGroupByPayload<T extends GoalGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<IdentityRecordGroupByOutputType, T['by']> &
+      PickEnumerable<GoalGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof IdentityRecordGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof GoalGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], IdentityRecordGroupByOutputType[P]>
-            : GetScalarType<T[P], IdentityRecordGroupByOutputType[P]>
+              : GetScalarType<T[P], GoalGroupByOutputType[P]>
+            : GetScalarType<T[P], GoalGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type IdentityRecordSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type GoalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    identity?: boolean
-    habits?: boolean
+    text?: boolean
     category?: boolean
-    assessmentId?: boolean
-    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
-    goals?: boolean | IdentityRecord$goalsArgs<ExtArgs>
-    trackedHabits?: boolean | IdentityRecord$trackedHabitsArgs<ExtArgs>
-    _count?: boolean | IdentityRecordCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["identityRecord"]>
+    currentSystem?: boolean
+    systemEval?: boolean
+    systemRating?: boolean
+    idealSystem?: boolean
+    identityId?: boolean
+    identity?: boolean | IdentityDefaultArgs<ExtArgs>
+    habits?: boolean | Goal$habitsArgs<ExtArgs>
+    _count?: boolean | GoalCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["goal"]>
 
-  export type IdentityRecordSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type GoalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    identity?: boolean
-    habits?: boolean
+    text?: boolean
     category?: boolean
-    assessmentId?: boolean
-    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["identityRecord"]>
+    currentSystem?: boolean
+    systemEval?: boolean
+    systemRating?: boolean
+    idealSystem?: boolean
+    identityId?: boolean
+    identity?: boolean | IdentityDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["goal"]>
 
-  export type IdentityRecordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type GoalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    identity?: boolean
-    habits?: boolean
+    text?: boolean
     category?: boolean
-    assessmentId?: boolean
-    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["identityRecord"]>
+    currentSystem?: boolean
+    systemEval?: boolean
+    systemRating?: boolean
+    idealSystem?: boolean
+    identityId?: boolean
+    identity?: boolean | IdentityDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["goal"]>
 
-  export type IdentityRecordSelectScalar = {
+  export type GoalSelectScalar = {
     id?: boolean
-    identity?: boolean
-    habits?: boolean
+    text?: boolean
     category?: boolean
-    assessmentId?: boolean
+    currentSystem?: boolean
+    systemEval?: boolean
+    systemRating?: boolean
+    idealSystem?: boolean
+    identityId?: boolean
   }
 
-  export type IdentityRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "identity" | "habits" | "category" | "assessmentId", ExtArgs["result"]["identityRecord"]>
-  export type IdentityRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
-    goals?: boolean | IdentityRecord$goalsArgs<ExtArgs>
-    trackedHabits?: boolean | IdentityRecord$trackedHabitsArgs<ExtArgs>
-    _count?: boolean | IdentityRecordCountOutputTypeDefaultArgs<ExtArgs>
+  export type GoalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "category" | "currentSystem" | "systemEval" | "systemRating" | "idealSystem" | "identityId", ExtArgs["result"]["goal"]>
+  export type GoalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    identity?: boolean | IdentityDefaultArgs<ExtArgs>
+    habits?: boolean | Goal$habitsArgs<ExtArgs>
+    _count?: boolean | GoalCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type IdentityRecordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  export type GoalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    identity?: boolean | IdentityDefaultArgs<ExtArgs>
   }
-  export type IdentityRecordIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    assessment?: boolean | AssessmentPartFourDefaultArgs<ExtArgs>
+  export type GoalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    identity?: boolean | IdentityDefaultArgs<ExtArgs>
   }
 
-  export type $IdentityRecordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "IdentityRecord"
+  export type $GoalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Goal"
     objects: {
-      assessment: Prisma.$AssessmentPartFourPayload<ExtArgs>
-      goals: Prisma.$NextStepGoalEntryPayload<ExtArgs>[]
-      trackedHabits: Prisma.$TrackedHabitPayload<ExtArgs>[]
+      identity: Prisma.$IdentityPayload<ExtArgs>
+      habits: Prisma.$HabitPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      identity: string
-      habits: string[]
+      text: string
       category: string | null
-      assessmentId: string
-    }, ExtArgs["result"]["identityRecord"]>
+      currentSystem: string
+      systemEval: string
+      systemRating: number
+      idealSystem: string
+      identityId: string
+    }, ExtArgs["result"]["goal"]>
     composites: {}
   }
 
-  type IdentityRecordGetPayload<S extends boolean | null | undefined | IdentityRecordDefaultArgs> = $Result.GetResult<Prisma.$IdentityRecordPayload, S>
+  type GoalGetPayload<S extends boolean | null | undefined | GoalDefaultArgs> = $Result.GetResult<Prisma.$GoalPayload, S>
 
-  type IdentityRecordCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<IdentityRecordFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: IdentityRecordCountAggregateInputType | true
+  type GoalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GoalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GoalCountAggregateInputType | true
     }
 
-  export interface IdentityRecordDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['IdentityRecord'], meta: { name: 'IdentityRecord' } }
+  export interface GoalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Goal'], meta: { name: 'Goal' } }
     /**
-     * Find zero or one IdentityRecord that matches the filter.
-     * @param {IdentityRecordFindUniqueArgs} args - Arguments to find a IdentityRecord
+     * Find zero or one Goal that matches the filter.
+     * @param {GoalFindUniqueArgs} args - Arguments to find a Goal
      * @example
-     * // Get one IdentityRecord
-     * const identityRecord = await prisma.identityRecord.findUnique({
+     * // Get one Goal
+     * const goal = await prisma.goal.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends IdentityRecordFindUniqueArgs>(args: SelectSubset<T, IdentityRecordFindUniqueArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends GoalFindUniqueArgs>(args: SelectSubset<T, GoalFindUniqueArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one IdentityRecord that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Goal that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {IdentityRecordFindUniqueOrThrowArgs} args - Arguments to find a IdentityRecord
+     * @param {GoalFindUniqueOrThrowArgs} args - Arguments to find a Goal
      * @example
-     * // Get one IdentityRecord
-     * const identityRecord = await prisma.identityRecord.findUniqueOrThrow({
+     * // Get one Goal
+     * const goal = await prisma.goal.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends IdentityRecordFindUniqueOrThrowArgs>(args: SelectSubset<T, IdentityRecordFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends GoalFindUniqueOrThrowArgs>(args: SelectSubset<T, GoalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first IdentityRecord that matches the filter.
+     * Find the first Goal that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityRecordFindFirstArgs} args - Arguments to find a IdentityRecord
+     * @param {GoalFindFirstArgs} args - Arguments to find a Goal
      * @example
-     * // Get one IdentityRecord
-     * const identityRecord = await prisma.identityRecord.findFirst({
+     * // Get one Goal
+     * const goal = await prisma.goal.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends IdentityRecordFindFirstArgs>(args?: SelectSubset<T, IdentityRecordFindFirstArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends GoalFindFirstArgs>(args?: SelectSubset<T, GoalFindFirstArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first IdentityRecord that matches the filter or
+     * Find the first Goal that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityRecordFindFirstOrThrowArgs} args - Arguments to find a IdentityRecord
+     * @param {GoalFindFirstOrThrowArgs} args - Arguments to find a Goal
      * @example
-     * // Get one IdentityRecord
-     * const identityRecord = await prisma.identityRecord.findFirstOrThrow({
+     * // Get one Goal
+     * const goal = await prisma.goal.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends IdentityRecordFindFirstOrThrowArgs>(args?: SelectSubset<T, IdentityRecordFindFirstOrThrowArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends GoalFindFirstOrThrowArgs>(args?: SelectSubset<T, GoalFindFirstOrThrowArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more IdentityRecords that matches the filter.
+     * Find zero or more Goals that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityRecordFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {GoalFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all IdentityRecords
-     * const identityRecords = await prisma.identityRecord.findMany()
+     * // Get all Goals
+     * const goals = await prisma.goal.findMany()
      * 
-     * // Get first 10 IdentityRecords
-     * const identityRecords = await prisma.identityRecord.findMany({ take: 10 })
+     * // Get first 10 Goals
+     * const goals = await prisma.goal.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const identityRecordWithIdOnly = await prisma.identityRecord.findMany({ select: { id: true } })
+     * const goalWithIdOnly = await prisma.goal.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends IdentityRecordFindManyArgs>(args?: SelectSubset<T, IdentityRecordFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends GoalFindManyArgs>(args?: SelectSubset<T, GoalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a IdentityRecord.
-     * @param {IdentityRecordCreateArgs} args - Arguments to create a IdentityRecord.
+     * Create a Goal.
+     * @param {GoalCreateArgs} args - Arguments to create a Goal.
      * @example
-     * // Create one IdentityRecord
-     * const IdentityRecord = await prisma.identityRecord.create({
+     * // Create one Goal
+     * const Goal = await prisma.goal.create({
      *   data: {
-     *     // ... data to create a IdentityRecord
+     *     // ... data to create a Goal
      *   }
      * })
      * 
      */
-    create<T extends IdentityRecordCreateArgs>(args: SelectSubset<T, IdentityRecordCreateArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends GoalCreateArgs>(args: SelectSubset<T, GoalCreateArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many IdentityRecords.
-     * @param {IdentityRecordCreateManyArgs} args - Arguments to create many IdentityRecords.
+     * Create many Goals.
+     * @param {GoalCreateManyArgs} args - Arguments to create many Goals.
      * @example
-     * // Create many IdentityRecords
-     * const identityRecord = await prisma.identityRecord.createMany({
+     * // Create many Goals
+     * const goal = await prisma.goal.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends IdentityRecordCreateManyArgs>(args?: SelectSubset<T, IdentityRecordCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends GoalCreateManyArgs>(args?: SelectSubset<T, GoalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many IdentityRecords and returns the data saved in the database.
-     * @param {IdentityRecordCreateManyAndReturnArgs} args - Arguments to create many IdentityRecords.
+     * Create many Goals and returns the data saved in the database.
+     * @param {GoalCreateManyAndReturnArgs} args - Arguments to create many Goals.
      * @example
-     * // Create many IdentityRecords
-     * const identityRecord = await prisma.identityRecord.createManyAndReturn({
+     * // Create many Goals
+     * const goal = await prisma.goal.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many IdentityRecords and only return the `id`
-     * const identityRecordWithIdOnly = await prisma.identityRecord.createManyAndReturn({
+     * // Create many Goals and only return the `id`
+     * const goalWithIdOnly = await prisma.goal.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -23332,28 +23249,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends IdentityRecordCreateManyAndReturnArgs>(args?: SelectSubset<T, IdentityRecordCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends GoalCreateManyAndReturnArgs>(args?: SelectSubset<T, GoalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a IdentityRecord.
-     * @param {IdentityRecordDeleteArgs} args - Arguments to delete one IdentityRecord.
+     * Delete a Goal.
+     * @param {GoalDeleteArgs} args - Arguments to delete one Goal.
      * @example
-     * // Delete one IdentityRecord
-     * const IdentityRecord = await prisma.identityRecord.delete({
+     * // Delete one Goal
+     * const Goal = await prisma.goal.delete({
      *   where: {
-     *     // ... filter to delete one IdentityRecord
+     *     // ... filter to delete one Goal
      *   }
      * })
      * 
      */
-    delete<T extends IdentityRecordDeleteArgs>(args: SelectSubset<T, IdentityRecordDeleteArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends GoalDeleteArgs>(args: SelectSubset<T, GoalDeleteArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one IdentityRecord.
-     * @param {IdentityRecordUpdateArgs} args - Arguments to update one IdentityRecord.
+     * Update one Goal.
+     * @param {GoalUpdateArgs} args - Arguments to update one Goal.
      * @example
-     * // Update one IdentityRecord
-     * const identityRecord = await prisma.identityRecord.update({
+     * // Update one Goal
+     * const goal = await prisma.goal.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -23363,30 +23280,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends IdentityRecordUpdateArgs>(args: SelectSubset<T, IdentityRecordUpdateArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends GoalUpdateArgs>(args: SelectSubset<T, GoalUpdateArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more IdentityRecords.
-     * @param {IdentityRecordDeleteManyArgs} args - Arguments to filter IdentityRecords to delete.
+     * Delete zero or more Goals.
+     * @param {GoalDeleteManyArgs} args - Arguments to filter Goals to delete.
      * @example
-     * // Delete a few IdentityRecords
-     * const { count } = await prisma.identityRecord.deleteMany({
+     * // Delete a few Goals
+     * const { count } = await prisma.goal.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends IdentityRecordDeleteManyArgs>(args?: SelectSubset<T, IdentityRecordDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends GoalDeleteManyArgs>(args?: SelectSubset<T, GoalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more IdentityRecords.
+     * Update zero or more Goals.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityRecordUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {GoalUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many IdentityRecords
-     * const identityRecord = await prisma.identityRecord.updateMany({
+     * // Update many Goals
+     * const goal = await prisma.goal.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -23396,14 +23313,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends IdentityRecordUpdateManyArgs>(args: SelectSubset<T, IdentityRecordUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends GoalUpdateManyArgs>(args: SelectSubset<T, GoalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more IdentityRecords and returns the data updated in the database.
-     * @param {IdentityRecordUpdateManyAndReturnArgs} args - Arguments to update many IdentityRecords.
+     * Update zero or more Goals and returns the data updated in the database.
+     * @param {GoalUpdateManyAndReturnArgs} args - Arguments to update many Goals.
      * @example
-     * // Update many IdentityRecords
-     * const identityRecord = await prisma.identityRecord.updateManyAndReturn({
+     * // Update many Goals
+     * const goal = await prisma.goal.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -23412,8 +23329,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more IdentityRecords and only return the `id`
-     * const identityRecordWithIdOnly = await prisma.identityRecord.updateManyAndReturn({
+     * // Update zero or more Goals and only return the `id`
+     * const goalWithIdOnly = await prisma.goal.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -23426,56 +23343,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends IdentityRecordUpdateManyAndReturnArgs>(args: SelectSubset<T, IdentityRecordUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends GoalUpdateManyAndReturnArgs>(args: SelectSubset<T, GoalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one IdentityRecord.
-     * @param {IdentityRecordUpsertArgs} args - Arguments to update or create a IdentityRecord.
+     * Create or update one Goal.
+     * @param {GoalUpsertArgs} args - Arguments to update or create a Goal.
      * @example
-     * // Update or create a IdentityRecord
-     * const identityRecord = await prisma.identityRecord.upsert({
+     * // Update or create a Goal
+     * const goal = await prisma.goal.upsert({
      *   create: {
-     *     // ... data to create a IdentityRecord
+     *     // ... data to create a Goal
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the IdentityRecord we want to update
+     *     // ... the filter for the Goal we want to update
      *   }
      * })
      */
-    upsert<T extends IdentityRecordUpsertArgs>(args: SelectSubset<T, IdentityRecordUpsertArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends GoalUpsertArgs>(args: SelectSubset<T, GoalUpsertArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of IdentityRecords.
+     * Count the number of Goals.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityRecordCountArgs} args - Arguments to filter IdentityRecords to count.
+     * @param {GoalCountArgs} args - Arguments to filter Goals to count.
      * @example
-     * // Count the number of IdentityRecords
-     * const count = await prisma.identityRecord.count({
+     * // Count the number of Goals
+     * const count = await prisma.goal.count({
      *   where: {
-     *     // ... the filter for the IdentityRecords we want to count
+     *     // ... the filter for the Goals we want to count
      *   }
      * })
     **/
-    count<T extends IdentityRecordCountArgs>(
-      args?: Subset<T, IdentityRecordCountArgs>,
+    count<T extends GoalCountArgs>(
+      args?: Subset<T, GoalCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], IdentityRecordCountAggregateOutputType>
+          : GetScalarType<T['select'], GoalCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a IdentityRecord.
+     * Allows you to perform aggregations operations on a Goal.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityRecordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {GoalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -23495,13 +23412,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends IdentityRecordAggregateArgs>(args: Subset<T, IdentityRecordAggregateArgs>): Prisma.PrismaPromise<GetIdentityRecordAggregateType<T>>
+    aggregate<T extends GoalAggregateArgs>(args: Subset<T, GoalAggregateArgs>): Prisma.PrismaPromise<GetGoalAggregateType<T>>
 
     /**
-     * Group by IdentityRecord.
+     * Group by Goal.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityRecordGroupByArgs} args - Group by arguments.
+     * @param {GoalGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -23516,14 +23433,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends IdentityRecordGroupByArgs,
+      T extends GoalGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: IdentityRecordGroupByArgs['orderBy'] }
-        : { orderBy?: IdentityRecordGroupByArgs['orderBy'] },
+        ? { orderBy: GoalGroupByArgs['orderBy'] }
+        : { orderBy?: GoalGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -23572,24 +23489,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, IdentityRecordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIdentityRecordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, GoalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGoalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the IdentityRecord model
+   * Fields of the Goal model
    */
-  readonly fields: IdentityRecordFieldRefs;
+  readonly fields: GoalFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for IdentityRecord.
+   * The delegate class that acts as a "Promise-like" for Goal.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__IdentityRecordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__GoalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    assessment<T extends AssessmentPartFourDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentPartFourDefaultArgs<ExtArgs>>): Prisma__AssessmentPartFourClient<$Result.GetResult<Prisma.$AssessmentPartFourPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    goals<T extends IdentityRecord$goalsArgs<ExtArgs> = {}>(args?: Subset<T, IdentityRecord$goalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    trackedHabits<T extends IdentityRecord$trackedHabitsArgs<ExtArgs> = {}>(args?: Subset<T, IdentityRecord$trackedHabitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    identity<T extends IdentityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, IdentityDefaultArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    habits<T extends Goal$habitsArgs<ExtArgs> = {}>(args?: Subset<T, Goal$habitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23616,831 +23532,2005 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the IdentityRecord model
+   * Fields of the Goal model
    */
-  interface IdentityRecordFieldRefs {
-    readonly id: FieldRef<"IdentityRecord", 'String'>
-    readonly identity: FieldRef<"IdentityRecord", 'String'>
-    readonly habits: FieldRef<"IdentityRecord", 'String[]'>
-    readonly category: FieldRef<"IdentityRecord", 'String'>
-    readonly assessmentId: FieldRef<"IdentityRecord", 'String'>
+  interface GoalFieldRefs {
+    readonly id: FieldRef<"Goal", 'String'>
+    readonly text: FieldRef<"Goal", 'String'>
+    readonly category: FieldRef<"Goal", 'String'>
+    readonly currentSystem: FieldRef<"Goal", 'String'>
+    readonly systemEval: FieldRef<"Goal", 'String'>
+    readonly systemRating: FieldRef<"Goal", 'Int'>
+    readonly idealSystem: FieldRef<"Goal", 'String'>
+    readonly identityId: FieldRef<"Goal", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * IdentityRecord findUnique
+   * Goal findUnique
    */
-  export type IdentityRecordFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the IdentityRecord
+     * Select specific fields to fetch from the Goal
      */
-    select?: IdentityRecordSelect<ExtArgs> | null
+    select?: GoalSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the IdentityRecord
+     * Omit specific fields from the Goal
      */
-    omit?: IdentityRecordOmit<ExtArgs> | null
+    omit?: GoalOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: IdentityRecordInclude<ExtArgs> | null
+    include?: GoalInclude<ExtArgs> | null
     /**
-     * Filter, which IdentityRecord to fetch.
+     * Filter, which Goal to fetch.
      */
-    where: IdentityRecordWhereUniqueInput
+    where: GoalWhereUniqueInput
   }
 
   /**
-   * IdentityRecord findUniqueOrThrow
+   * Goal findUniqueOrThrow
    */
-  export type IdentityRecordFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the IdentityRecord
+     * Select specific fields to fetch from the Goal
      */
-    select?: IdentityRecordSelect<ExtArgs> | null
+    select?: GoalSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the IdentityRecord
+     * Omit specific fields from the Goal
      */
-    omit?: IdentityRecordOmit<ExtArgs> | null
+    omit?: GoalOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: IdentityRecordInclude<ExtArgs> | null
+    include?: GoalInclude<ExtArgs> | null
     /**
-     * Filter, which IdentityRecord to fetch.
+     * Filter, which Goal to fetch.
      */
-    where: IdentityRecordWhereUniqueInput
+    where: GoalWhereUniqueInput
   }
 
   /**
-   * IdentityRecord findFirst
+   * Goal findFirst
    */
-  export type IdentityRecordFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the IdentityRecord
+     * Select specific fields to fetch from the Goal
      */
-    select?: IdentityRecordSelect<ExtArgs> | null
+    select?: GoalSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the IdentityRecord
+     * Omit specific fields from the Goal
      */
-    omit?: IdentityRecordOmit<ExtArgs> | null
+    omit?: GoalOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: IdentityRecordInclude<ExtArgs> | null
+    include?: GoalInclude<ExtArgs> | null
     /**
-     * Filter, which IdentityRecord to fetch.
+     * Filter, which Goal to fetch.
      */
-    where?: IdentityRecordWhereInput
+    where?: GoalWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of IdentityRecords to fetch.
+     * Determine the order of Goals to fetch.
      */
-    orderBy?: IdentityRecordOrderByWithRelationInput | IdentityRecordOrderByWithRelationInput[]
+    orderBy?: GoalOrderByWithRelationInput | GoalOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for IdentityRecords.
+     * Sets the position for searching for Goals.
      */
-    cursor?: IdentityRecordWhereUniqueInput
+    cursor?: GoalWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` IdentityRecords from the position of the cursor.
+     * Take `±n` Goals from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` IdentityRecords.
+     * Skip the first `n` Goals.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of IdentityRecords.
+     * Filter by unique combinations of Goals.
      */
-    distinct?: IdentityRecordScalarFieldEnum | IdentityRecordScalarFieldEnum[]
+    distinct?: GoalScalarFieldEnum | GoalScalarFieldEnum[]
   }
 
   /**
-   * IdentityRecord findFirstOrThrow
+   * Goal findFirstOrThrow
    */
-  export type IdentityRecordFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the IdentityRecord
+     * Select specific fields to fetch from the Goal
      */
-    select?: IdentityRecordSelect<ExtArgs> | null
+    select?: GoalSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the IdentityRecord
+     * Omit specific fields from the Goal
      */
-    omit?: IdentityRecordOmit<ExtArgs> | null
+    omit?: GoalOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: IdentityRecordInclude<ExtArgs> | null
+    include?: GoalInclude<ExtArgs> | null
     /**
-     * Filter, which IdentityRecord to fetch.
+     * Filter, which Goal to fetch.
      */
-    where?: IdentityRecordWhereInput
+    where?: GoalWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of IdentityRecords to fetch.
+     * Determine the order of Goals to fetch.
      */
-    orderBy?: IdentityRecordOrderByWithRelationInput | IdentityRecordOrderByWithRelationInput[]
+    orderBy?: GoalOrderByWithRelationInput | GoalOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for IdentityRecords.
+     * Sets the position for searching for Goals.
      */
-    cursor?: IdentityRecordWhereUniqueInput
+    cursor?: GoalWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` IdentityRecords from the position of the cursor.
+     * Take `±n` Goals from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` IdentityRecords.
+     * Skip the first `n` Goals.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of IdentityRecords.
+     * Filter by unique combinations of Goals.
      */
-    distinct?: IdentityRecordScalarFieldEnum | IdentityRecordScalarFieldEnum[]
+    distinct?: GoalScalarFieldEnum | GoalScalarFieldEnum[]
   }
 
   /**
-   * IdentityRecord findMany
+   * Goal findMany
    */
-  export type IdentityRecordFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the IdentityRecord
+     * Select specific fields to fetch from the Goal
      */
-    select?: IdentityRecordSelect<ExtArgs> | null
+    select?: GoalSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the IdentityRecord
+     * Omit specific fields from the Goal
      */
-    omit?: IdentityRecordOmit<ExtArgs> | null
+    omit?: GoalOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: IdentityRecordInclude<ExtArgs> | null
+    include?: GoalInclude<ExtArgs> | null
     /**
-     * Filter, which IdentityRecords to fetch.
+     * Filter, which Goals to fetch.
      */
-    where?: IdentityRecordWhereInput
+    where?: GoalWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of IdentityRecords to fetch.
+     * Determine the order of Goals to fetch.
      */
-    orderBy?: IdentityRecordOrderByWithRelationInput | IdentityRecordOrderByWithRelationInput[]
+    orderBy?: GoalOrderByWithRelationInput | GoalOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing IdentityRecords.
+     * Sets the position for listing Goals.
      */
-    cursor?: IdentityRecordWhereUniqueInput
+    cursor?: GoalWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` IdentityRecords from the position of the cursor.
+     * Take `±n` Goals from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` IdentityRecords.
+     * Skip the first `n` Goals.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of IdentityRecords.
+     * Filter by unique combinations of Goals.
      */
-    distinct?: IdentityRecordScalarFieldEnum | IdentityRecordScalarFieldEnum[]
+    distinct?: GoalScalarFieldEnum | GoalScalarFieldEnum[]
   }
 
   /**
-   * IdentityRecord create
+   * Goal create
    */
-  export type IdentityRecordCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the IdentityRecord
+     * Select specific fields to fetch from the Goal
      */
-    select?: IdentityRecordSelect<ExtArgs> | null
+    select?: GoalSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the IdentityRecord
+     * Omit specific fields from the Goal
      */
-    omit?: IdentityRecordOmit<ExtArgs> | null
+    omit?: GoalOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: IdentityRecordInclude<ExtArgs> | null
+    include?: GoalInclude<ExtArgs> | null
     /**
-     * The data needed to create a IdentityRecord.
+     * The data needed to create a Goal.
      */
-    data: XOR<IdentityRecordCreateInput, IdentityRecordUncheckedCreateInput>
+    data: XOR<GoalCreateInput, GoalUncheckedCreateInput>
   }
 
   /**
-   * IdentityRecord createMany
+   * Goal createMany
    */
-  export type IdentityRecordCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many IdentityRecords.
+     * The data used to create many Goals.
      */
-    data: IdentityRecordCreateManyInput | IdentityRecordCreateManyInput[]
+    data: GoalCreateManyInput | GoalCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * IdentityRecord createManyAndReturn
+   * Goal createManyAndReturn
    */
-  export type IdentityRecordCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the IdentityRecord
+     * Select specific fields to fetch from the Goal
      */
-    select?: IdentityRecordSelectCreateManyAndReturn<ExtArgs> | null
+    select?: GoalSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the IdentityRecord
+     * Omit specific fields from the Goal
      */
-    omit?: IdentityRecordOmit<ExtArgs> | null
+    omit?: GoalOmit<ExtArgs> | null
     /**
-     * The data used to create many IdentityRecords.
+     * The data used to create many Goals.
      */
-    data: IdentityRecordCreateManyInput | IdentityRecordCreateManyInput[]
+    data: GoalCreateManyInput | GoalCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: IdentityRecordIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: GoalIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * IdentityRecord update
+   * Goal update
    */
-  export type IdentityRecordUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the IdentityRecord
+     * Select specific fields to fetch from the Goal
      */
-    select?: IdentityRecordSelect<ExtArgs> | null
+    select?: GoalSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the IdentityRecord
+     * Omit specific fields from the Goal
      */
-    omit?: IdentityRecordOmit<ExtArgs> | null
+    omit?: GoalOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: IdentityRecordInclude<ExtArgs> | null
+    include?: GoalInclude<ExtArgs> | null
     /**
-     * The data needed to update a IdentityRecord.
+     * The data needed to update a Goal.
      */
-    data: XOR<IdentityRecordUpdateInput, IdentityRecordUncheckedUpdateInput>
+    data: XOR<GoalUpdateInput, GoalUncheckedUpdateInput>
     /**
-     * Choose, which IdentityRecord to update.
+     * Choose, which Goal to update.
      */
-    where: IdentityRecordWhereUniqueInput
+    where: GoalWhereUniqueInput
   }
 
   /**
-   * IdentityRecord updateMany
+   * Goal updateMany
    */
-  export type IdentityRecordUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update IdentityRecords.
+     * The data used to update Goals.
      */
-    data: XOR<IdentityRecordUpdateManyMutationInput, IdentityRecordUncheckedUpdateManyInput>
+    data: XOR<GoalUpdateManyMutationInput, GoalUncheckedUpdateManyInput>
     /**
-     * Filter which IdentityRecords to update
+     * Filter which Goals to update
      */
-    where?: IdentityRecordWhereInput
+    where?: GoalWhereInput
     /**
-     * Limit how many IdentityRecords to update.
+     * Limit how many Goals to update.
      */
     limit?: number
   }
 
   /**
-   * IdentityRecord updateManyAndReturn
+   * Goal updateManyAndReturn
    */
-  export type IdentityRecordUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the IdentityRecord
+     * Select specific fields to fetch from the Goal
      */
-    select?: IdentityRecordSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: GoalSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the IdentityRecord
+     * Omit specific fields from the Goal
      */
-    omit?: IdentityRecordOmit<ExtArgs> | null
+    omit?: GoalOmit<ExtArgs> | null
     /**
-     * The data used to update IdentityRecords.
+     * The data used to update Goals.
      */
-    data: XOR<IdentityRecordUpdateManyMutationInput, IdentityRecordUncheckedUpdateManyInput>
+    data: XOR<GoalUpdateManyMutationInput, GoalUncheckedUpdateManyInput>
     /**
-     * Filter which IdentityRecords to update
+     * Filter which Goals to update
      */
-    where?: IdentityRecordWhereInput
+    where?: GoalWhereInput
     /**
-     * Limit how many IdentityRecords to update.
+     * Limit how many Goals to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: IdentityRecordIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: GoalIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * IdentityRecord upsert
+   * Goal upsert
    */
-  export type IdentityRecordUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the IdentityRecord
+     * Select specific fields to fetch from the Goal
      */
-    select?: IdentityRecordSelect<ExtArgs> | null
+    select?: GoalSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the IdentityRecord
+     * Omit specific fields from the Goal
      */
-    omit?: IdentityRecordOmit<ExtArgs> | null
+    omit?: GoalOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: IdentityRecordInclude<ExtArgs> | null
+    include?: GoalInclude<ExtArgs> | null
     /**
-     * The filter to search for the IdentityRecord to update in case it exists.
+     * The filter to search for the Goal to update in case it exists.
      */
-    where: IdentityRecordWhereUniqueInput
+    where: GoalWhereUniqueInput
     /**
-     * In case the IdentityRecord found by the `where` argument doesn't exist, create a new IdentityRecord with this data.
+     * In case the Goal found by the `where` argument doesn't exist, create a new Goal with this data.
      */
-    create: XOR<IdentityRecordCreateInput, IdentityRecordUncheckedCreateInput>
+    create: XOR<GoalCreateInput, GoalUncheckedCreateInput>
     /**
-     * In case the IdentityRecord was found with the provided `where` argument, update it with this data.
+     * In case the Goal was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<IdentityRecordUpdateInput, IdentityRecordUncheckedUpdateInput>
+    update: XOR<GoalUpdateInput, GoalUncheckedUpdateInput>
   }
 
   /**
-   * IdentityRecord delete
+   * Goal delete
    */
-  export type IdentityRecordDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the IdentityRecord
+     * Select specific fields to fetch from the Goal
      */
-    select?: IdentityRecordSelect<ExtArgs> | null
+    select?: GoalSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the IdentityRecord
+     * Omit specific fields from the Goal
      */
-    omit?: IdentityRecordOmit<ExtArgs> | null
+    omit?: GoalOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: IdentityRecordInclude<ExtArgs> | null
+    include?: GoalInclude<ExtArgs> | null
     /**
-     * Filter which IdentityRecord to delete.
+     * Filter which Goal to delete.
      */
-    where: IdentityRecordWhereUniqueInput
+    where: GoalWhereUniqueInput
   }
 
   /**
-   * IdentityRecord deleteMany
+   * Goal deleteMany
    */
-  export type IdentityRecordDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which IdentityRecords to delete
+     * Filter which Goals to delete
      */
-    where?: IdentityRecordWhereInput
+    where?: GoalWhereInput
     /**
-     * Limit how many IdentityRecords to delete.
+     * Limit how many Goals to delete.
      */
     limit?: number
   }
 
   /**
-   * IdentityRecord.goals
+   * Goal.habits
    */
-  export type IdentityRecord$goalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Goal$habitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the NextStepGoalEntry
+     * Select specific fields to fetch from the Habit
      */
-    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    select?: HabitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the NextStepGoalEntry
+     * Omit specific fields from the Habit
      */
-    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    omit?: HabitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: NextStepGoalEntryInclude<ExtArgs> | null
-    where?: NextStepGoalEntryWhereInput
-    orderBy?: NextStepGoalEntryOrderByWithRelationInput | NextStepGoalEntryOrderByWithRelationInput[]
-    cursor?: NextStepGoalEntryWhereUniqueInput
+    include?: HabitInclude<ExtArgs> | null
+    where?: HabitWhereInput
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
+    cursor?: HabitWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: NextStepGoalEntryScalarFieldEnum | NextStepGoalEntryScalarFieldEnum[]
+    distinct?: HabitScalarFieldEnum | HabitScalarFieldEnum[]
   }
 
   /**
-   * IdentityRecord.trackedHabits
+   * Goal without action
    */
-  export type IdentityRecord$trackedHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type GoalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TrackedHabit
+     * Select specific fields to fetch from the Goal
      */
-    select?: TrackedHabitSelect<ExtArgs> | null
+    select?: GoalSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TrackedHabit
+     * Omit specific fields from the Goal
      */
-    omit?: TrackedHabitOmit<ExtArgs> | null
+    omit?: GoalOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TrackedHabitInclude<ExtArgs> | null
-    where?: TrackedHabitWhereInput
-    orderBy?: TrackedHabitOrderByWithRelationInput | TrackedHabitOrderByWithRelationInput[]
-    cursor?: TrackedHabitWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TrackedHabitScalarFieldEnum | TrackedHabitScalarFieldEnum[]
-  }
-
-  /**
-   * IdentityRecord without action
-   */
-  export type IdentityRecordDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityRecord
-     */
-    select?: IdentityRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityRecord
-     */
-    omit?: IdentityRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityRecordInclude<ExtArgs> | null
+    include?: GoalInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model AssessmentNextStep
+   * Model Habit
    */
 
-  export type AggregateAssessmentNextStep = {
-    _count: AssessmentNextStepCountAggregateOutputType | null
-    _min: AssessmentNextStepMinAggregateOutputType | null
-    _max: AssessmentNextStepMaxAggregateOutputType | null
+  export type AggregateHabit = {
+    _count: HabitCountAggregateOutputType | null
+    _min: HabitMinAggregateOutputType | null
+    _max: HabitMaxAggregateOutputType | null
   }
 
-  export type AssessmentNextStepMinAggregateOutputType = {
+  export type HabitMinAggregateOutputType = {
     id: string | null
+    name: string | null
+    category: string | null
+    mode: string | null
+    cue: string | null
+    time: string | null
+    location: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    completedAt: Date | null
     userId: string | null
+    goalId: string | null
   }
 
-  export type AssessmentNextStepMaxAggregateOutputType = {
+  export type HabitMaxAggregateOutputType = {
     id: string | null
+    name: string | null
+    category: string | null
+    mode: string | null
+    cue: string | null
+    time: string | null
+    location: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    completedAt: Date | null
     userId: string | null
+    goalId: string | null
   }
 
-  export type AssessmentNextStepCountAggregateOutputType = {
+  export type HabitCountAggregateOutputType = {
     id: number
+    name: number
+    category: number
+    mode: number
+    cue: number
+    time: number
+    location: number
     createdAt: number
     updatedAt: number
-    completedAt: number
+    userId: number
+    goalId: number
+    _all: number
+  }
+
+
+  export type HabitMinAggregateInputType = {
+    id?: true
+    name?: true
+    category?: true
+    mode?: true
+    cue?: true
+    time?: true
+    location?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+    goalId?: true
+  }
+
+  export type HabitMaxAggregateInputType = {
+    id?: true
+    name?: true
+    category?: true
+    mode?: true
+    cue?: true
+    time?: true
+    location?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+    goalId?: true
+  }
+
+  export type HabitCountAggregateInputType = {
+    id?: true
+    name?: true
+    category?: true
+    mode?: true
+    cue?: true
+    time?: true
+    location?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+    goalId?: true
+    _all?: true
+  }
+
+  export type HabitAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Habit to aggregate.
+     */
+    where?: HabitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Habits to fetch.
+     */
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HabitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Habits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Habits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Habits
+    **/
+    _count?: true | HabitCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HabitMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HabitMaxAggregateInputType
+  }
+
+  export type GetHabitAggregateType<T extends HabitAggregateArgs> = {
+        [P in keyof T & keyof AggregateHabit]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHabit[P]>
+      : GetScalarType<T[P], AggregateHabit[P]>
+  }
+
+
+
+
+  export type HabitGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HabitWhereInput
+    orderBy?: HabitOrderByWithAggregationInput | HabitOrderByWithAggregationInput[]
+    by: HabitScalarFieldEnum[] | HabitScalarFieldEnum
+    having?: HabitScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HabitCountAggregateInputType | true
+    _min?: HabitMinAggregateInputType
+    _max?: HabitMaxAggregateInputType
+  }
+
+  export type HabitGroupByOutputType = {
+    id: string
+    name: string
+    category: string | null
+    mode: string
+    cue: string
+    time: string
+    location: string
+    createdAt: Date
+    updatedAt: Date
+    userId: string
+    goalId: string
+    _count: HabitCountAggregateOutputType | null
+    _min: HabitMinAggregateOutputType | null
+    _max: HabitMaxAggregateOutputType | null
+  }
+
+  type GetHabitGroupByPayload<T extends HabitGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HabitGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HabitGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HabitGroupByOutputType[P]>
+            : GetScalarType<T[P], HabitGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HabitSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    mode?: boolean
+    cue?: boolean
+    time?: boolean
+    location?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    goalId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    goal?: boolean | GoalDefaultArgs<ExtArgs>
+    checkIns?: boolean | Habit$checkInsArgs<ExtArgs>
+    checklists?: boolean | Habit$checklistsArgs<ExtArgs>
+    _count?: boolean | HabitCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["habit"]>
+
+  export type HabitSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    mode?: boolean
+    cue?: boolean
+    time?: boolean
+    location?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    goalId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    goal?: boolean | GoalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["habit"]>
+
+  export type HabitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    mode?: boolean
+    cue?: boolean
+    time?: boolean
+    location?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    goalId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    goal?: boolean | GoalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["habit"]>
+
+  export type HabitSelectScalar = {
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    mode?: boolean
+    cue?: boolean
+    time?: boolean
+    location?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    goalId?: boolean
+  }
+
+  export type HabitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "category" | "mode" | "cue" | "time" | "location" | "createdAt" | "updatedAt" | "userId" | "goalId", ExtArgs["result"]["habit"]>
+  export type HabitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    goal?: boolean | GoalDefaultArgs<ExtArgs>
+    checkIns?: boolean | Habit$checkInsArgs<ExtArgs>
+    checklists?: boolean | Habit$checklistsArgs<ExtArgs>
+    _count?: boolean | HabitCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type HabitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    goal?: boolean | GoalDefaultArgs<ExtArgs>
+  }
+  export type HabitIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    goal?: boolean | GoalDefaultArgs<ExtArgs>
+  }
+
+  export type $HabitPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Habit"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      goal: Prisma.$GoalPayload<ExtArgs>
+      checkIns: Prisma.$HabitCheckInPayload<ExtArgs>[]
+      checklists: Prisma.$ChecklistPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      category: string | null
+      mode: string
+      cue: string
+      time: string
+      location: string
+      createdAt: Date
+      updatedAt: Date
+      userId: string
+      goalId: string
+    }, ExtArgs["result"]["habit"]>
+    composites: {}
+  }
+
+  type HabitGetPayload<S extends boolean | null | undefined | HabitDefaultArgs> = $Result.GetResult<Prisma.$HabitPayload, S>
+
+  type HabitCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HabitFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HabitCountAggregateInputType | true
+    }
+
+  export interface HabitDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Habit'], meta: { name: 'Habit' } }
+    /**
+     * Find zero or one Habit that matches the filter.
+     * @param {HabitFindUniqueArgs} args - Arguments to find a Habit
+     * @example
+     * // Get one Habit
+     * const habit = await prisma.habit.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HabitFindUniqueArgs>(args: SelectSubset<T, HabitFindUniqueArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Habit that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HabitFindUniqueOrThrowArgs} args - Arguments to find a Habit
+     * @example
+     * // Get one Habit
+     * const habit = await prisma.habit.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HabitFindUniqueOrThrowArgs>(args: SelectSubset<T, HabitFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Habit that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitFindFirstArgs} args - Arguments to find a Habit
+     * @example
+     * // Get one Habit
+     * const habit = await prisma.habit.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HabitFindFirstArgs>(args?: SelectSubset<T, HabitFindFirstArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Habit that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitFindFirstOrThrowArgs} args - Arguments to find a Habit
+     * @example
+     * // Get one Habit
+     * const habit = await prisma.habit.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HabitFindFirstOrThrowArgs>(args?: SelectSubset<T, HabitFindFirstOrThrowArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Habits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Habits
+     * const habits = await prisma.habit.findMany()
+     * 
+     * // Get first 10 Habits
+     * const habits = await prisma.habit.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const habitWithIdOnly = await prisma.habit.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HabitFindManyArgs>(args?: SelectSubset<T, HabitFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Habit.
+     * @param {HabitCreateArgs} args - Arguments to create a Habit.
+     * @example
+     * // Create one Habit
+     * const Habit = await prisma.habit.create({
+     *   data: {
+     *     // ... data to create a Habit
+     *   }
+     * })
+     * 
+     */
+    create<T extends HabitCreateArgs>(args: SelectSubset<T, HabitCreateArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Habits.
+     * @param {HabitCreateManyArgs} args - Arguments to create many Habits.
+     * @example
+     * // Create many Habits
+     * const habit = await prisma.habit.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HabitCreateManyArgs>(args?: SelectSubset<T, HabitCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Habits and returns the data saved in the database.
+     * @param {HabitCreateManyAndReturnArgs} args - Arguments to create many Habits.
+     * @example
+     * // Create many Habits
+     * const habit = await prisma.habit.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Habits and only return the `id`
+     * const habitWithIdOnly = await prisma.habit.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HabitCreateManyAndReturnArgs>(args?: SelectSubset<T, HabitCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Habit.
+     * @param {HabitDeleteArgs} args - Arguments to delete one Habit.
+     * @example
+     * // Delete one Habit
+     * const Habit = await prisma.habit.delete({
+     *   where: {
+     *     // ... filter to delete one Habit
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HabitDeleteArgs>(args: SelectSubset<T, HabitDeleteArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Habit.
+     * @param {HabitUpdateArgs} args - Arguments to update one Habit.
+     * @example
+     * // Update one Habit
+     * const habit = await prisma.habit.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HabitUpdateArgs>(args: SelectSubset<T, HabitUpdateArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Habits.
+     * @param {HabitDeleteManyArgs} args - Arguments to filter Habits to delete.
+     * @example
+     * // Delete a few Habits
+     * const { count } = await prisma.habit.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HabitDeleteManyArgs>(args?: SelectSubset<T, HabitDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Habits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Habits
+     * const habit = await prisma.habit.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HabitUpdateManyArgs>(args: SelectSubset<T, HabitUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Habits and returns the data updated in the database.
+     * @param {HabitUpdateManyAndReturnArgs} args - Arguments to update many Habits.
+     * @example
+     * // Update many Habits
+     * const habit = await prisma.habit.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Habits and only return the `id`
+     * const habitWithIdOnly = await prisma.habit.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends HabitUpdateManyAndReturnArgs>(args: SelectSubset<T, HabitUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Habit.
+     * @param {HabitUpsertArgs} args - Arguments to update or create a Habit.
+     * @example
+     * // Update or create a Habit
+     * const habit = await prisma.habit.upsert({
+     *   create: {
+     *     // ... data to create a Habit
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Habit we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HabitUpsertArgs>(args: SelectSubset<T, HabitUpsertArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Habits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitCountArgs} args - Arguments to filter Habits to count.
+     * @example
+     * // Count the number of Habits
+     * const count = await prisma.habit.count({
+     *   where: {
+     *     // ... the filter for the Habits we want to count
+     *   }
+     * })
+    **/
+    count<T extends HabitCountArgs>(
+      args?: Subset<T, HabitCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HabitCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Habit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HabitAggregateArgs>(args: Subset<T, HabitAggregateArgs>): Prisma.PrismaPromise<GetHabitAggregateType<T>>
+
+    /**
+     * Group by Habit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HabitGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HabitGroupByArgs['orderBy'] }
+        : { orderBy?: HabitGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HabitGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHabitGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Habit model
+   */
+  readonly fields: HabitFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Habit.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HabitClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    goal<T extends GoalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, GoalDefaultArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    checkIns<T extends Habit$checkInsArgs<ExtArgs> = {}>(args?: Subset<T, Habit$checkInsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitCheckInPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    checklists<T extends Habit$checklistsArgs<ExtArgs> = {}>(args?: Subset<T, Habit$checklistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Habit model
+   */
+  interface HabitFieldRefs {
+    readonly id: FieldRef<"Habit", 'String'>
+    readonly name: FieldRef<"Habit", 'String'>
+    readonly category: FieldRef<"Habit", 'String'>
+    readonly mode: FieldRef<"Habit", 'String'>
+    readonly cue: FieldRef<"Habit", 'String'>
+    readonly time: FieldRef<"Habit", 'String'>
+    readonly location: FieldRef<"Habit", 'String'>
+    readonly createdAt: FieldRef<"Habit", 'DateTime'>
+    readonly updatedAt: FieldRef<"Habit", 'DateTime'>
+    readonly userId: FieldRef<"Habit", 'String'>
+    readonly goalId: FieldRef<"Habit", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Habit findUnique
+   */
+  export type HabitFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * Filter, which Habit to fetch.
+     */
+    where: HabitWhereUniqueInput
+  }
+
+  /**
+   * Habit findUniqueOrThrow
+   */
+  export type HabitFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * Filter, which Habit to fetch.
+     */
+    where: HabitWhereUniqueInput
+  }
+
+  /**
+   * Habit findFirst
+   */
+  export type HabitFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * Filter, which Habit to fetch.
+     */
+    where?: HabitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Habits to fetch.
+     */
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Habits.
+     */
+    cursor?: HabitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Habits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Habits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Habits.
+     */
+    distinct?: HabitScalarFieldEnum | HabitScalarFieldEnum[]
+  }
+
+  /**
+   * Habit findFirstOrThrow
+   */
+  export type HabitFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * Filter, which Habit to fetch.
+     */
+    where?: HabitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Habits to fetch.
+     */
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Habits.
+     */
+    cursor?: HabitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Habits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Habits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Habits.
+     */
+    distinct?: HabitScalarFieldEnum | HabitScalarFieldEnum[]
+  }
+
+  /**
+   * Habit findMany
+   */
+  export type HabitFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * Filter, which Habits to fetch.
+     */
+    where?: HabitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Habits to fetch.
+     */
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Habits.
+     */
+    cursor?: HabitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Habits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Habits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Habits.
+     */
+    distinct?: HabitScalarFieldEnum | HabitScalarFieldEnum[]
+  }
+
+  /**
+   * Habit create
+   */
+  export type HabitCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Habit.
+     */
+    data: XOR<HabitCreateInput, HabitUncheckedCreateInput>
+  }
+
+  /**
+   * Habit createMany
+   */
+  export type HabitCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Habits.
+     */
+    data: HabitCreateManyInput | HabitCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Habit createManyAndReturn
+   */
+  export type HabitCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * The data used to create many Habits.
+     */
+    data: HabitCreateManyInput | HabitCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Habit update
+   */
+  export type HabitUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Habit.
+     */
+    data: XOR<HabitUpdateInput, HabitUncheckedUpdateInput>
+    /**
+     * Choose, which Habit to update.
+     */
+    where: HabitWhereUniqueInput
+  }
+
+  /**
+   * Habit updateMany
+   */
+  export type HabitUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Habits.
+     */
+    data: XOR<HabitUpdateManyMutationInput, HabitUncheckedUpdateManyInput>
+    /**
+     * Filter which Habits to update
+     */
+    where?: HabitWhereInput
+    /**
+     * Limit how many Habits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Habit updateManyAndReturn
+   */
+  export type HabitUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * The data used to update Habits.
+     */
+    data: XOR<HabitUpdateManyMutationInput, HabitUncheckedUpdateManyInput>
+    /**
+     * Filter which Habits to update
+     */
+    where?: HabitWhereInput
+    /**
+     * Limit how many Habits to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Habit upsert
+   */
+  export type HabitUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Habit to update in case it exists.
+     */
+    where: HabitWhereUniqueInput
+    /**
+     * In case the Habit found by the `where` argument doesn't exist, create a new Habit with this data.
+     */
+    create: XOR<HabitCreateInput, HabitUncheckedCreateInput>
+    /**
+     * In case the Habit was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HabitUpdateInput, HabitUncheckedUpdateInput>
+  }
+
+  /**
+   * Habit delete
+   */
+  export type HabitDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * Filter which Habit to delete.
+     */
+    where: HabitWhereUniqueInput
+  }
+
+  /**
+   * Habit deleteMany
+   */
+  export type HabitDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Habits to delete
+     */
+    where?: HabitWhereInput
+    /**
+     * Limit how many Habits to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Habit.checkIns
+   */
+  export type Habit$checkInsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitCheckIn
+     */
+    select?: HabitCheckInSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HabitCheckIn
+     */
+    omit?: HabitCheckInOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitCheckInInclude<ExtArgs> | null
+    where?: HabitCheckInWhereInput
+    orderBy?: HabitCheckInOrderByWithRelationInput | HabitCheckInOrderByWithRelationInput[]
+    cursor?: HabitCheckInWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HabitCheckInScalarFieldEnum | HabitCheckInScalarFieldEnum[]
+  }
+
+  /**
+   * Habit.checklists
+   */
+  export type Habit$checklistsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Checklist
+     */
+    select?: ChecklistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Checklist
+     */
+    omit?: ChecklistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistInclude<ExtArgs> | null
+    where?: ChecklistWhereInput
+    orderBy?: ChecklistOrderByWithRelationInput | ChecklistOrderByWithRelationInput[]
+    cursor?: ChecklistWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ChecklistScalarFieldEnum | ChecklistScalarFieldEnum[]
+  }
+
+  /**
+   * Habit without action
+   */
+  export type HabitDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Identity
+   */
+
+  export type AggregateIdentity = {
+    _count: IdentityCountAggregateOutputType | null
+    _min: IdentityMinAggregateOutputType | null
+    _max: IdentityMaxAggregateOutputType | null
+  }
+
+  export type IdentityMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    category: string | null
+    userId: string | null
+  }
+
+  export type IdentityMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    category: string | null
+    userId: string | null
+  }
+
+  export type IdentityCountAggregateOutputType = {
+    id: number
+    name: number
+    category: number
     userId: number
     _all: number
   }
 
 
-  export type AssessmentNextStepMinAggregateInputType = {
+  export type IdentityMinAggregateInputType = {
     id?: true
-    createdAt?: true
-    updatedAt?: true
-    completedAt?: true
+    name?: true
+    category?: true
     userId?: true
   }
 
-  export type AssessmentNextStepMaxAggregateInputType = {
+  export type IdentityMaxAggregateInputType = {
     id?: true
-    createdAt?: true
-    updatedAt?: true
-    completedAt?: true
+    name?: true
+    category?: true
     userId?: true
   }
 
-  export type AssessmentNextStepCountAggregateInputType = {
+  export type IdentityCountAggregateInputType = {
     id?: true
-    createdAt?: true
-    updatedAt?: true
-    completedAt?: true
+    name?: true
+    category?: true
     userId?: true
     _all?: true
   }
 
-  export type AssessmentNextStepAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which AssessmentNextStep to aggregate.
+     * Filter which Identity to aggregate.
      */
-    where?: AssessmentNextStepWhereInput
+    where?: IdentityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AssessmentNextSteps to fetch.
+     * Determine the order of Identities to fetch.
      */
-    orderBy?: AssessmentNextStepOrderByWithRelationInput | AssessmentNextStepOrderByWithRelationInput[]
+    orderBy?: IdentityOrderByWithRelationInput | IdentityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: AssessmentNextStepWhereUniqueInput
+    cursor?: IdentityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AssessmentNextSteps from the position of the cursor.
+     * Take `±n` Identities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AssessmentNextSteps.
+     * Skip the first `n` Identities.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned AssessmentNextSteps
+     * Count returned Identities
     **/
-    _count?: true | AssessmentNextStepCountAggregateInputType
+    _count?: true | IdentityCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: AssessmentNextStepMinAggregateInputType
+    _min?: IdentityMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: AssessmentNextStepMaxAggregateInputType
+    _max?: IdentityMaxAggregateInputType
   }
 
-  export type GetAssessmentNextStepAggregateType<T extends AssessmentNextStepAggregateArgs> = {
-        [P in keyof T & keyof AggregateAssessmentNextStep]: P extends '_count' | 'count'
+  export type GetIdentityAggregateType<T extends IdentityAggregateArgs> = {
+        [P in keyof T & keyof AggregateIdentity]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateAssessmentNextStep[P]>
-      : GetScalarType<T[P], AggregateAssessmentNextStep[P]>
+        : GetScalarType<T[P], AggregateIdentity[P]>
+      : GetScalarType<T[P], AggregateIdentity[P]>
   }
 
 
 
 
-  export type AssessmentNextStepGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AssessmentNextStepWhereInput
-    orderBy?: AssessmentNextStepOrderByWithAggregationInput | AssessmentNextStepOrderByWithAggregationInput[]
-    by: AssessmentNextStepScalarFieldEnum[] | AssessmentNextStepScalarFieldEnum
-    having?: AssessmentNextStepScalarWhereWithAggregatesInput
+  export type IdentityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdentityWhereInput
+    orderBy?: IdentityOrderByWithAggregationInput | IdentityOrderByWithAggregationInput[]
+    by: IdentityScalarFieldEnum[] | IdentityScalarFieldEnum
+    having?: IdentityScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: AssessmentNextStepCountAggregateInputType | true
-    _min?: AssessmentNextStepMinAggregateInputType
-    _max?: AssessmentNextStepMaxAggregateInputType
+    _count?: IdentityCountAggregateInputType | true
+    _min?: IdentityMinAggregateInputType
+    _max?: IdentityMaxAggregateInputType
   }
 
-  export type AssessmentNextStepGroupByOutputType = {
+  export type IdentityGroupByOutputType = {
     id: string
-    createdAt: Date
-    updatedAt: Date
-    completedAt: Date | null
+    name: string
+    category: string | null
     userId: string
-    _count: AssessmentNextStepCountAggregateOutputType | null
-    _min: AssessmentNextStepMinAggregateOutputType | null
-    _max: AssessmentNextStepMaxAggregateOutputType | null
+    _count: IdentityCountAggregateOutputType | null
+    _min: IdentityMinAggregateOutputType | null
+    _max: IdentityMaxAggregateOutputType | null
   }
 
-  type GetAssessmentNextStepGroupByPayload<T extends AssessmentNextStepGroupByArgs> = Prisma.PrismaPromise<
+  type GetIdentityGroupByPayload<T extends IdentityGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<AssessmentNextStepGroupByOutputType, T['by']> &
+      PickEnumerable<IdentityGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof AssessmentNextStepGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof IdentityGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], AssessmentNextStepGroupByOutputType[P]>
-            : GetScalarType<T[P], AssessmentNextStepGroupByOutputType[P]>
+              : GetScalarType<T[P], IdentityGroupByOutputType[P]>
+            : GetScalarType<T[P], IdentityGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type AssessmentNextStepSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type IdentitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    completedAt?: boolean
+    name?: boolean
+    category?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    goalEntries?: boolean | AssessmentNextStep$goalEntriesArgs<ExtArgs>
-    _count?: boolean | AssessmentNextStepCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["assessmentNextStep"]>
+    goals?: boolean | Identity$goalsArgs<ExtArgs>
+    _count?: boolean | IdentityCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["identity"]>
 
-  export type AssessmentNextStepSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type IdentitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    completedAt?: boolean
+    name?: boolean
+    category?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["assessmentNextStep"]>
+  }, ExtArgs["result"]["identity"]>
 
-  export type AssessmentNextStepSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type IdentitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    completedAt?: boolean
+    name?: boolean
+    category?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["assessmentNextStep"]>
+  }, ExtArgs["result"]["identity"]>
 
-  export type AssessmentNextStepSelectScalar = {
+  export type IdentitySelectScalar = {
     id?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    completedAt?: boolean
+    name?: boolean
+    category?: boolean
     userId?: boolean
   }
 
-  export type AssessmentNextStepOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "completedAt" | "userId", ExtArgs["result"]["assessmentNextStep"]>
-  export type AssessmentNextStepInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "category" | "userId", ExtArgs["result"]["identity"]>
+  export type IdentityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    goalEntries?: boolean | AssessmentNextStep$goalEntriesArgs<ExtArgs>
-    _count?: boolean | AssessmentNextStepCountOutputTypeDefaultArgs<ExtArgs>
+    goals?: boolean | Identity$goalsArgs<ExtArgs>
+    _count?: boolean | IdentityCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type AssessmentNextStepIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
-  export type AssessmentNextStepIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
-  export type $AssessmentNextStepPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AssessmentNextStep"
+  export type $IdentityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Identity"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      goalEntries: Prisma.$NextStepGoalEntryPayload<ExtArgs>[]
+      goals: Prisma.$GoalPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      createdAt: Date
-      updatedAt: Date
-      completedAt: Date | null
+      name: string
+      category: string | null
       userId: string
-    }, ExtArgs["result"]["assessmentNextStep"]>
+    }, ExtArgs["result"]["identity"]>
     composites: {}
   }
 
-  type AssessmentNextStepGetPayload<S extends boolean | null | undefined | AssessmentNextStepDefaultArgs> = $Result.GetResult<Prisma.$AssessmentNextStepPayload, S>
+  type IdentityGetPayload<S extends boolean | null | undefined | IdentityDefaultArgs> = $Result.GetResult<Prisma.$IdentityPayload, S>
 
-  type AssessmentNextStepCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AssessmentNextStepFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AssessmentNextStepCountAggregateInputType | true
+  type IdentityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IdentityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IdentityCountAggregateInputType | true
     }
 
-  export interface AssessmentNextStepDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AssessmentNextStep'], meta: { name: 'AssessmentNextStep' } }
+  export interface IdentityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Identity'], meta: { name: 'Identity' } }
     /**
-     * Find zero or one AssessmentNextStep that matches the filter.
-     * @param {AssessmentNextStepFindUniqueArgs} args - Arguments to find a AssessmentNextStep
+     * Find zero or one Identity that matches the filter.
+     * @param {IdentityFindUniqueArgs} args - Arguments to find a Identity
      * @example
-     * // Get one AssessmentNextStep
-     * const assessmentNextStep = await prisma.assessmentNextStep.findUnique({
+     * // Get one Identity
+     * const identity = await prisma.identity.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends AssessmentNextStepFindUniqueArgs>(args: SelectSubset<T, AssessmentNextStepFindUniqueArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends IdentityFindUniqueArgs>(args: SelectSubset<T, IdentityFindUniqueArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one AssessmentNextStep that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Identity that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {AssessmentNextStepFindUniqueOrThrowArgs} args - Arguments to find a AssessmentNextStep
+     * @param {IdentityFindUniqueOrThrowArgs} args - Arguments to find a Identity
      * @example
-     * // Get one AssessmentNextStep
-     * const assessmentNextStep = await prisma.assessmentNextStep.findUniqueOrThrow({
+     * // Get one Identity
+     * const identity = await prisma.identity.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends AssessmentNextStepFindUniqueOrThrowArgs>(args: SelectSubset<T, AssessmentNextStepFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends IdentityFindUniqueOrThrowArgs>(args: SelectSubset<T, IdentityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first AssessmentNextStep that matches the filter.
+     * Find the first Identity that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssessmentNextStepFindFirstArgs} args - Arguments to find a AssessmentNextStep
+     * @param {IdentityFindFirstArgs} args - Arguments to find a Identity
      * @example
-     * // Get one AssessmentNextStep
-     * const assessmentNextStep = await prisma.assessmentNextStep.findFirst({
+     * // Get one Identity
+     * const identity = await prisma.identity.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends AssessmentNextStepFindFirstArgs>(args?: SelectSubset<T, AssessmentNextStepFindFirstArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends IdentityFindFirstArgs>(args?: SelectSubset<T, IdentityFindFirstArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first AssessmentNextStep that matches the filter or
+     * Find the first Identity that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssessmentNextStepFindFirstOrThrowArgs} args - Arguments to find a AssessmentNextStep
+     * @param {IdentityFindFirstOrThrowArgs} args - Arguments to find a Identity
      * @example
-     * // Get one AssessmentNextStep
-     * const assessmentNextStep = await prisma.assessmentNextStep.findFirstOrThrow({
+     * // Get one Identity
+     * const identity = await prisma.identity.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends AssessmentNextStepFindFirstOrThrowArgs>(args?: SelectSubset<T, AssessmentNextStepFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends IdentityFindFirstOrThrowArgs>(args?: SelectSubset<T, IdentityFindFirstOrThrowArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more AssessmentNextSteps that matches the filter.
+     * Find zero or more Identities that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssessmentNextStepFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {IdentityFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all AssessmentNextSteps
-     * const assessmentNextSteps = await prisma.assessmentNextStep.findMany()
+     * // Get all Identities
+     * const identities = await prisma.identity.findMany()
      * 
-     * // Get first 10 AssessmentNextSteps
-     * const assessmentNextSteps = await prisma.assessmentNextStep.findMany({ take: 10 })
+     * // Get first 10 Identities
+     * const identities = await prisma.identity.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const assessmentNextStepWithIdOnly = await prisma.assessmentNextStep.findMany({ select: { id: true } })
+     * const identityWithIdOnly = await prisma.identity.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends AssessmentNextStepFindManyArgs>(args?: SelectSubset<T, AssessmentNextStepFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends IdentityFindManyArgs>(args?: SelectSubset<T, IdentityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a AssessmentNextStep.
-     * @param {AssessmentNextStepCreateArgs} args - Arguments to create a AssessmentNextStep.
+     * Create a Identity.
+     * @param {IdentityCreateArgs} args - Arguments to create a Identity.
      * @example
-     * // Create one AssessmentNextStep
-     * const AssessmentNextStep = await prisma.assessmentNextStep.create({
+     * // Create one Identity
+     * const Identity = await prisma.identity.create({
      *   data: {
-     *     // ... data to create a AssessmentNextStep
+     *     // ... data to create a Identity
      *   }
      * })
      * 
      */
-    create<T extends AssessmentNextStepCreateArgs>(args: SelectSubset<T, AssessmentNextStepCreateArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends IdentityCreateArgs>(args: SelectSubset<T, IdentityCreateArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many AssessmentNextSteps.
-     * @param {AssessmentNextStepCreateManyArgs} args - Arguments to create many AssessmentNextSteps.
+     * Create many Identities.
+     * @param {IdentityCreateManyArgs} args - Arguments to create many Identities.
      * @example
-     * // Create many AssessmentNextSteps
-     * const assessmentNextStep = await prisma.assessmentNextStep.createMany({
+     * // Create many Identities
+     * const identity = await prisma.identity.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends AssessmentNextStepCreateManyArgs>(args?: SelectSubset<T, AssessmentNextStepCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends IdentityCreateManyArgs>(args?: SelectSubset<T, IdentityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many AssessmentNextSteps and returns the data saved in the database.
-     * @param {AssessmentNextStepCreateManyAndReturnArgs} args - Arguments to create many AssessmentNextSteps.
+     * Create many Identities and returns the data saved in the database.
+     * @param {IdentityCreateManyAndReturnArgs} args - Arguments to create many Identities.
      * @example
-     * // Create many AssessmentNextSteps
-     * const assessmentNextStep = await prisma.assessmentNextStep.createManyAndReturn({
+     * // Create many Identities
+     * const identity = await prisma.identity.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many AssessmentNextSteps and only return the `id`
-     * const assessmentNextStepWithIdOnly = await prisma.assessmentNextStep.createManyAndReturn({
+     * // Create many Identities and only return the `id`
+     * const identityWithIdOnly = await prisma.identity.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -24450,28 +25540,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends AssessmentNextStepCreateManyAndReturnArgs>(args?: SelectSubset<T, AssessmentNextStepCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends IdentityCreateManyAndReturnArgs>(args?: SelectSubset<T, IdentityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a AssessmentNextStep.
-     * @param {AssessmentNextStepDeleteArgs} args - Arguments to delete one AssessmentNextStep.
+     * Delete a Identity.
+     * @param {IdentityDeleteArgs} args - Arguments to delete one Identity.
      * @example
-     * // Delete one AssessmentNextStep
-     * const AssessmentNextStep = await prisma.assessmentNextStep.delete({
+     * // Delete one Identity
+     * const Identity = await prisma.identity.delete({
      *   where: {
-     *     // ... filter to delete one AssessmentNextStep
+     *     // ... filter to delete one Identity
      *   }
      * })
      * 
      */
-    delete<T extends AssessmentNextStepDeleteArgs>(args: SelectSubset<T, AssessmentNextStepDeleteArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends IdentityDeleteArgs>(args: SelectSubset<T, IdentityDeleteArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one AssessmentNextStep.
-     * @param {AssessmentNextStepUpdateArgs} args - Arguments to update one AssessmentNextStep.
+     * Update one Identity.
+     * @param {IdentityUpdateArgs} args - Arguments to update one Identity.
      * @example
-     * // Update one AssessmentNextStep
-     * const assessmentNextStep = await prisma.assessmentNextStep.update({
+     * // Update one Identity
+     * const identity = await prisma.identity.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -24481,30 +25571,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends AssessmentNextStepUpdateArgs>(args: SelectSubset<T, AssessmentNextStepUpdateArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends IdentityUpdateArgs>(args: SelectSubset<T, IdentityUpdateArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more AssessmentNextSteps.
-     * @param {AssessmentNextStepDeleteManyArgs} args - Arguments to filter AssessmentNextSteps to delete.
+     * Delete zero or more Identities.
+     * @param {IdentityDeleteManyArgs} args - Arguments to filter Identities to delete.
      * @example
-     * // Delete a few AssessmentNextSteps
-     * const { count } = await prisma.assessmentNextStep.deleteMany({
+     * // Delete a few Identities
+     * const { count } = await prisma.identity.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends AssessmentNextStepDeleteManyArgs>(args?: SelectSubset<T, AssessmentNextStepDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends IdentityDeleteManyArgs>(args?: SelectSubset<T, IdentityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more AssessmentNextSteps.
+     * Update zero or more Identities.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssessmentNextStepUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {IdentityUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many AssessmentNextSteps
-     * const assessmentNextStep = await prisma.assessmentNextStep.updateMany({
+     * // Update many Identities
+     * const identity = await prisma.identity.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -24514,14 +25604,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends AssessmentNextStepUpdateManyArgs>(args: SelectSubset<T, AssessmentNextStepUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends IdentityUpdateManyArgs>(args: SelectSubset<T, IdentityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more AssessmentNextSteps and returns the data updated in the database.
-     * @param {AssessmentNextStepUpdateManyAndReturnArgs} args - Arguments to update many AssessmentNextSteps.
+     * Update zero or more Identities and returns the data updated in the database.
+     * @param {IdentityUpdateManyAndReturnArgs} args - Arguments to update many Identities.
      * @example
-     * // Update many AssessmentNextSteps
-     * const assessmentNextStep = await prisma.assessmentNextStep.updateManyAndReturn({
+     * // Update many Identities
+     * const identity = await prisma.identity.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -24530,8 +25620,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more AssessmentNextSteps and only return the `id`
-     * const assessmentNextStepWithIdOnly = await prisma.assessmentNextStep.updateManyAndReturn({
+     * // Update zero or more Identities and only return the `id`
+     * const identityWithIdOnly = await prisma.identity.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -24544,56 +25634,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends AssessmentNextStepUpdateManyAndReturnArgs>(args: SelectSubset<T, AssessmentNextStepUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends IdentityUpdateManyAndReturnArgs>(args: SelectSubset<T, IdentityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one AssessmentNextStep.
-     * @param {AssessmentNextStepUpsertArgs} args - Arguments to update or create a AssessmentNextStep.
+     * Create or update one Identity.
+     * @param {IdentityUpsertArgs} args - Arguments to update or create a Identity.
      * @example
-     * // Update or create a AssessmentNextStep
-     * const assessmentNextStep = await prisma.assessmentNextStep.upsert({
+     * // Update or create a Identity
+     * const identity = await prisma.identity.upsert({
      *   create: {
-     *     // ... data to create a AssessmentNextStep
+     *     // ... data to create a Identity
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the AssessmentNextStep we want to update
+     *     // ... the filter for the Identity we want to update
      *   }
      * })
      */
-    upsert<T extends AssessmentNextStepUpsertArgs>(args: SelectSubset<T, AssessmentNextStepUpsertArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends IdentityUpsertArgs>(args: SelectSubset<T, IdentityUpsertArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of AssessmentNextSteps.
+     * Count the number of Identities.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssessmentNextStepCountArgs} args - Arguments to filter AssessmentNextSteps to count.
+     * @param {IdentityCountArgs} args - Arguments to filter Identities to count.
      * @example
-     * // Count the number of AssessmentNextSteps
-     * const count = await prisma.assessmentNextStep.count({
+     * // Count the number of Identities
+     * const count = await prisma.identity.count({
      *   where: {
-     *     // ... the filter for the AssessmentNextSteps we want to count
+     *     // ... the filter for the Identities we want to count
      *   }
      * })
     **/
-    count<T extends AssessmentNextStepCountArgs>(
-      args?: Subset<T, AssessmentNextStepCountArgs>,
+    count<T extends IdentityCountArgs>(
+      args?: Subset<T, IdentityCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], AssessmentNextStepCountAggregateOutputType>
+          : GetScalarType<T['select'], IdentityCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a AssessmentNextStep.
+     * Allows you to perform aggregations operations on a Identity.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssessmentNextStepAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {IdentityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -24613,13 +25703,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends AssessmentNextStepAggregateArgs>(args: Subset<T, AssessmentNextStepAggregateArgs>): Prisma.PrismaPromise<GetAssessmentNextStepAggregateType<T>>
+    aggregate<T extends IdentityAggregateArgs>(args: Subset<T, IdentityAggregateArgs>): Prisma.PrismaPromise<GetIdentityAggregateType<T>>
 
     /**
-     * Group by AssessmentNextStep.
+     * Group by Identity.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssessmentNextStepGroupByArgs} args - Group by arguments.
+     * @param {IdentityGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -24634,14 +25724,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends AssessmentNextStepGroupByArgs,
+      T extends IdentityGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AssessmentNextStepGroupByArgs['orderBy'] }
-        : { orderBy?: AssessmentNextStepGroupByArgs['orderBy'] },
+        ? { orderBy: IdentityGroupByArgs['orderBy'] }
+        : { orderBy?: IdentityGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -24690,23 +25780,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, AssessmentNextStepGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssessmentNextStepGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, IdentityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIdentityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the AssessmentNextStep model
+   * Fields of the Identity model
    */
-  readonly fields: AssessmentNextStepFieldRefs;
+  readonly fields: IdentityFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for AssessmentNextStep.
+   * The delegate class that acts as a "Promise-like" for Identity.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__AssessmentNextStepClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__IdentityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    goalEntries<T extends AssessmentNextStep$goalEntriesArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentNextStep$goalEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    goals<T extends Identity$goalsArgs<ExtArgs> = {}>(args?: Subset<T, Identity$goalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -24733,454 +25823,453 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the AssessmentNextStep model
+   * Fields of the Identity model
    */
-  interface AssessmentNextStepFieldRefs {
-    readonly id: FieldRef<"AssessmentNextStep", 'String'>
-    readonly createdAt: FieldRef<"AssessmentNextStep", 'DateTime'>
-    readonly updatedAt: FieldRef<"AssessmentNextStep", 'DateTime'>
-    readonly completedAt: FieldRef<"AssessmentNextStep", 'DateTime'>
-    readonly userId: FieldRef<"AssessmentNextStep", 'String'>
+  interface IdentityFieldRefs {
+    readonly id: FieldRef<"Identity", 'String'>
+    readonly name: FieldRef<"Identity", 'String'>
+    readonly category: FieldRef<"Identity", 'String'>
+    readonly userId: FieldRef<"Identity", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * AssessmentNextStep findUnique
+   * Identity findUnique
    */
-  export type AssessmentNextStepFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssessmentNextStep
+     * Select specific fields to fetch from the Identity
      */
-    select?: AssessmentNextStepSelect<ExtArgs> | null
+    select?: IdentitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssessmentNextStep
+     * Omit specific fields from the Identity
      */
-    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    omit?: IdentityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssessmentNextStepInclude<ExtArgs> | null
+    include?: IdentityInclude<ExtArgs> | null
     /**
-     * Filter, which AssessmentNextStep to fetch.
+     * Filter, which Identity to fetch.
      */
-    where: AssessmentNextStepWhereUniqueInput
+    where: IdentityWhereUniqueInput
   }
 
   /**
-   * AssessmentNextStep findUniqueOrThrow
+   * Identity findUniqueOrThrow
    */
-  export type AssessmentNextStepFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssessmentNextStep
+     * Select specific fields to fetch from the Identity
      */
-    select?: AssessmentNextStepSelect<ExtArgs> | null
+    select?: IdentitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssessmentNextStep
+     * Omit specific fields from the Identity
      */
-    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    omit?: IdentityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssessmentNextStepInclude<ExtArgs> | null
+    include?: IdentityInclude<ExtArgs> | null
     /**
-     * Filter, which AssessmentNextStep to fetch.
+     * Filter, which Identity to fetch.
      */
-    where: AssessmentNextStepWhereUniqueInput
+    where: IdentityWhereUniqueInput
   }
 
   /**
-   * AssessmentNextStep findFirst
+   * Identity findFirst
    */
-  export type AssessmentNextStepFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssessmentNextStep
+     * Select specific fields to fetch from the Identity
      */
-    select?: AssessmentNextStepSelect<ExtArgs> | null
+    select?: IdentitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssessmentNextStep
+     * Omit specific fields from the Identity
      */
-    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    omit?: IdentityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssessmentNextStepInclude<ExtArgs> | null
+    include?: IdentityInclude<ExtArgs> | null
     /**
-     * Filter, which AssessmentNextStep to fetch.
+     * Filter, which Identity to fetch.
      */
-    where?: AssessmentNextStepWhereInput
+    where?: IdentityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AssessmentNextSteps to fetch.
+     * Determine the order of Identities to fetch.
      */
-    orderBy?: AssessmentNextStepOrderByWithRelationInput | AssessmentNextStepOrderByWithRelationInput[]
+    orderBy?: IdentityOrderByWithRelationInput | IdentityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for AssessmentNextSteps.
+     * Sets the position for searching for Identities.
      */
-    cursor?: AssessmentNextStepWhereUniqueInput
+    cursor?: IdentityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AssessmentNextSteps from the position of the cursor.
+     * Take `±n` Identities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AssessmentNextSteps.
+     * Skip the first `n` Identities.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of AssessmentNextSteps.
+     * Filter by unique combinations of Identities.
      */
-    distinct?: AssessmentNextStepScalarFieldEnum | AssessmentNextStepScalarFieldEnum[]
+    distinct?: IdentityScalarFieldEnum | IdentityScalarFieldEnum[]
   }
 
   /**
-   * AssessmentNextStep findFirstOrThrow
+   * Identity findFirstOrThrow
    */
-  export type AssessmentNextStepFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssessmentNextStep
+     * Select specific fields to fetch from the Identity
      */
-    select?: AssessmentNextStepSelect<ExtArgs> | null
+    select?: IdentitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssessmentNextStep
+     * Omit specific fields from the Identity
      */
-    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    omit?: IdentityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssessmentNextStepInclude<ExtArgs> | null
+    include?: IdentityInclude<ExtArgs> | null
     /**
-     * Filter, which AssessmentNextStep to fetch.
+     * Filter, which Identity to fetch.
      */
-    where?: AssessmentNextStepWhereInput
+    where?: IdentityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AssessmentNextSteps to fetch.
+     * Determine the order of Identities to fetch.
      */
-    orderBy?: AssessmentNextStepOrderByWithRelationInput | AssessmentNextStepOrderByWithRelationInput[]
+    orderBy?: IdentityOrderByWithRelationInput | IdentityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for AssessmentNextSteps.
+     * Sets the position for searching for Identities.
      */
-    cursor?: AssessmentNextStepWhereUniqueInput
+    cursor?: IdentityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AssessmentNextSteps from the position of the cursor.
+     * Take `±n` Identities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AssessmentNextSteps.
+     * Skip the first `n` Identities.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of AssessmentNextSteps.
+     * Filter by unique combinations of Identities.
      */
-    distinct?: AssessmentNextStepScalarFieldEnum | AssessmentNextStepScalarFieldEnum[]
+    distinct?: IdentityScalarFieldEnum | IdentityScalarFieldEnum[]
   }
 
   /**
-   * AssessmentNextStep findMany
+   * Identity findMany
    */
-  export type AssessmentNextStepFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssessmentNextStep
+     * Select specific fields to fetch from the Identity
      */
-    select?: AssessmentNextStepSelect<ExtArgs> | null
+    select?: IdentitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssessmentNextStep
+     * Omit specific fields from the Identity
      */
-    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    omit?: IdentityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssessmentNextStepInclude<ExtArgs> | null
+    include?: IdentityInclude<ExtArgs> | null
     /**
-     * Filter, which AssessmentNextSteps to fetch.
+     * Filter, which Identities to fetch.
      */
-    where?: AssessmentNextStepWhereInput
+    where?: IdentityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AssessmentNextSteps to fetch.
+     * Determine the order of Identities to fetch.
      */
-    orderBy?: AssessmentNextStepOrderByWithRelationInput | AssessmentNextStepOrderByWithRelationInput[]
+    orderBy?: IdentityOrderByWithRelationInput | IdentityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing AssessmentNextSteps.
+     * Sets the position for listing Identities.
      */
-    cursor?: AssessmentNextStepWhereUniqueInput
+    cursor?: IdentityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AssessmentNextSteps from the position of the cursor.
+     * Take `±n` Identities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AssessmentNextSteps.
+     * Skip the first `n` Identities.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of AssessmentNextSteps.
+     * Filter by unique combinations of Identities.
      */
-    distinct?: AssessmentNextStepScalarFieldEnum | AssessmentNextStepScalarFieldEnum[]
+    distinct?: IdentityScalarFieldEnum | IdentityScalarFieldEnum[]
   }
 
   /**
-   * AssessmentNextStep create
+   * Identity create
    */
-  export type AssessmentNextStepCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssessmentNextStep
+     * Select specific fields to fetch from the Identity
      */
-    select?: AssessmentNextStepSelect<ExtArgs> | null
+    select?: IdentitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssessmentNextStep
+     * Omit specific fields from the Identity
      */
-    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    omit?: IdentityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssessmentNextStepInclude<ExtArgs> | null
+    include?: IdentityInclude<ExtArgs> | null
     /**
-     * The data needed to create a AssessmentNextStep.
+     * The data needed to create a Identity.
      */
-    data: XOR<AssessmentNextStepCreateInput, AssessmentNextStepUncheckedCreateInput>
+    data: XOR<IdentityCreateInput, IdentityUncheckedCreateInput>
   }
 
   /**
-   * AssessmentNextStep createMany
+   * Identity createMany
    */
-  export type AssessmentNextStepCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many AssessmentNextSteps.
+     * The data used to create many Identities.
      */
-    data: AssessmentNextStepCreateManyInput | AssessmentNextStepCreateManyInput[]
+    data: IdentityCreateManyInput | IdentityCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * AssessmentNextStep createManyAndReturn
+   * Identity createManyAndReturn
    */
-  export type AssessmentNextStepCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssessmentNextStep
+     * Select specific fields to fetch from the Identity
      */
-    select?: AssessmentNextStepSelectCreateManyAndReturn<ExtArgs> | null
+    select?: IdentitySelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the AssessmentNextStep
+     * Omit specific fields from the Identity
      */
-    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    omit?: IdentityOmit<ExtArgs> | null
     /**
-     * The data used to create many AssessmentNextSteps.
+     * The data used to create many Identities.
      */
-    data: AssessmentNextStepCreateManyInput | AssessmentNextStepCreateManyInput[]
+    data: IdentityCreateManyInput | IdentityCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssessmentNextStepIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: IdentityIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * AssessmentNextStep update
+   * Identity update
    */
-  export type AssessmentNextStepUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssessmentNextStep
+     * Select specific fields to fetch from the Identity
      */
-    select?: AssessmentNextStepSelect<ExtArgs> | null
+    select?: IdentitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssessmentNextStep
+     * Omit specific fields from the Identity
      */
-    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    omit?: IdentityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssessmentNextStepInclude<ExtArgs> | null
+    include?: IdentityInclude<ExtArgs> | null
     /**
-     * The data needed to update a AssessmentNextStep.
+     * The data needed to update a Identity.
      */
-    data: XOR<AssessmentNextStepUpdateInput, AssessmentNextStepUncheckedUpdateInput>
+    data: XOR<IdentityUpdateInput, IdentityUncheckedUpdateInput>
     /**
-     * Choose, which AssessmentNextStep to update.
+     * Choose, which Identity to update.
      */
-    where: AssessmentNextStepWhereUniqueInput
+    where: IdentityWhereUniqueInput
   }
 
   /**
-   * AssessmentNextStep updateMany
+   * Identity updateMany
    */
-  export type AssessmentNextStepUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update AssessmentNextSteps.
+     * The data used to update Identities.
      */
-    data: XOR<AssessmentNextStepUpdateManyMutationInput, AssessmentNextStepUncheckedUpdateManyInput>
+    data: XOR<IdentityUpdateManyMutationInput, IdentityUncheckedUpdateManyInput>
     /**
-     * Filter which AssessmentNextSteps to update
+     * Filter which Identities to update
      */
-    where?: AssessmentNextStepWhereInput
+    where?: IdentityWhereInput
     /**
-     * Limit how many AssessmentNextSteps to update.
+     * Limit how many Identities to update.
      */
     limit?: number
   }
 
   /**
-   * AssessmentNextStep updateManyAndReturn
+   * Identity updateManyAndReturn
    */
-  export type AssessmentNextStepUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssessmentNextStep
+     * Select specific fields to fetch from the Identity
      */
-    select?: AssessmentNextStepSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: IdentitySelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the AssessmentNextStep
+     * Omit specific fields from the Identity
      */
-    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    omit?: IdentityOmit<ExtArgs> | null
     /**
-     * The data used to update AssessmentNextSteps.
+     * The data used to update Identities.
      */
-    data: XOR<AssessmentNextStepUpdateManyMutationInput, AssessmentNextStepUncheckedUpdateManyInput>
+    data: XOR<IdentityUpdateManyMutationInput, IdentityUncheckedUpdateManyInput>
     /**
-     * Filter which AssessmentNextSteps to update
+     * Filter which Identities to update
      */
-    where?: AssessmentNextStepWhereInput
+    where?: IdentityWhereInput
     /**
-     * Limit how many AssessmentNextSteps to update.
+     * Limit how many Identities to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssessmentNextStepIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: IdentityIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * AssessmentNextStep upsert
+   * Identity upsert
    */
-  export type AssessmentNextStepUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssessmentNextStep
+     * Select specific fields to fetch from the Identity
      */
-    select?: AssessmentNextStepSelect<ExtArgs> | null
+    select?: IdentitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssessmentNextStep
+     * Omit specific fields from the Identity
      */
-    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    omit?: IdentityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssessmentNextStepInclude<ExtArgs> | null
+    include?: IdentityInclude<ExtArgs> | null
     /**
-     * The filter to search for the AssessmentNextStep to update in case it exists.
+     * The filter to search for the Identity to update in case it exists.
      */
-    where: AssessmentNextStepWhereUniqueInput
+    where: IdentityWhereUniqueInput
     /**
-     * In case the AssessmentNextStep found by the `where` argument doesn't exist, create a new AssessmentNextStep with this data.
+     * In case the Identity found by the `where` argument doesn't exist, create a new Identity with this data.
      */
-    create: XOR<AssessmentNextStepCreateInput, AssessmentNextStepUncheckedCreateInput>
+    create: XOR<IdentityCreateInput, IdentityUncheckedCreateInput>
     /**
-     * In case the AssessmentNextStep was found with the provided `where` argument, update it with this data.
+     * In case the Identity was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<AssessmentNextStepUpdateInput, AssessmentNextStepUncheckedUpdateInput>
+    update: XOR<IdentityUpdateInput, IdentityUncheckedUpdateInput>
   }
 
   /**
-   * AssessmentNextStep delete
+   * Identity delete
    */
-  export type AssessmentNextStepDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssessmentNextStep
+     * Select specific fields to fetch from the Identity
      */
-    select?: AssessmentNextStepSelect<ExtArgs> | null
+    select?: IdentitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssessmentNextStep
+     * Omit specific fields from the Identity
      */
-    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    omit?: IdentityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssessmentNextStepInclude<ExtArgs> | null
+    include?: IdentityInclude<ExtArgs> | null
     /**
-     * Filter which AssessmentNextStep to delete.
+     * Filter which Identity to delete.
      */
-    where: AssessmentNextStepWhereUniqueInput
+    where: IdentityWhereUniqueInput
   }
 
   /**
-   * AssessmentNextStep deleteMany
+   * Identity deleteMany
    */
-  export type AssessmentNextStepDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which AssessmentNextSteps to delete
+     * Filter which Identities to delete
      */
-    where?: AssessmentNextStepWhereInput
+    where?: IdentityWhereInput
     /**
-     * Limit how many AssessmentNextSteps to delete.
+     * Limit how many Identities to delete.
      */
     limit?: number
   }
 
   /**
-   * AssessmentNextStep.goalEntries
+   * Identity.goals
    */
-  export type AssessmentNextStep$goalEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Identity$goalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the NextStepGoalEntry
+     * Select specific fields to fetch from the Goal
      */
-    select?: NextStepGoalEntrySelect<ExtArgs> | null
+    select?: GoalSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the NextStepGoalEntry
+     * Omit specific fields from the Goal
      */
-    omit?: NextStepGoalEntryOmit<ExtArgs> | null
+    omit?: GoalOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: NextStepGoalEntryInclude<ExtArgs> | null
-    where?: NextStepGoalEntryWhereInput
-    orderBy?: NextStepGoalEntryOrderByWithRelationInput | NextStepGoalEntryOrderByWithRelationInput[]
-    cursor?: NextStepGoalEntryWhereUniqueInput
+    include?: GoalInclude<ExtArgs> | null
+    where?: GoalWhereInput
+    orderBy?: GoalOrderByWithRelationInput | GoalOrderByWithRelationInput[]
+    cursor?: GoalWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: NextStepGoalEntryScalarFieldEnum | NextStepGoalEntryScalarFieldEnum[]
+    distinct?: GoalScalarFieldEnum | GoalScalarFieldEnum[]
   }
 
   /**
-   * AssessmentNextStep without action
+   * Identity without action
    */
-  export type AssessmentNextStepDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IdentityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssessmentNextStep
+     * Select specific fields to fetch from the Identity
      */
-    select?: AssessmentNextStepSelect<ExtArgs> | null
+    select?: IdentitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssessmentNextStep
+     * Omit specific fields from the Identity
      */
-    omit?: AssessmentNextStepOmit<ExtArgs> | null
+    omit?: IdentityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssessmentNextStepInclude<ExtArgs> | null
+    include?: IdentityInclude<ExtArgs> | null
   }
 
 
@@ -25418,10 +26507,6 @@ export namespace Prisma {
     componentHabits?: boolean
     nextStepId?: boolean
     identityId?: boolean
-    nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
-    identity?: boolean | NextStepGoalEntry$identityArgs<ExtArgs>
-    trackedHabits?: boolean | NextStepGoalEntry$trackedHabitsArgs<ExtArgs>
-    _count?: boolean | NextStepGoalEntryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["nextStepGoalEntry"]>
 
   export type NextStepGoalEntrySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -25435,8 +26520,6 @@ export namespace Prisma {
     componentHabits?: boolean
     nextStepId?: boolean
     identityId?: boolean
-    nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
-    identity?: boolean | NextStepGoalEntry$identityArgs<ExtArgs>
   }, ExtArgs["result"]["nextStepGoalEntry"]>
 
   export type NextStepGoalEntrySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -25450,8 +26533,6 @@ export namespace Prisma {
     componentHabits?: boolean
     nextStepId?: boolean
     identityId?: boolean
-    nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
-    identity?: boolean | NextStepGoalEntry$identityArgs<ExtArgs>
   }, ExtArgs["result"]["nextStepGoalEntry"]>
 
   export type NextStepGoalEntrySelectScalar = {
@@ -25468,28 +26549,10 @@ export namespace Prisma {
   }
 
   export type NextStepGoalEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "goal" | "category" | "currentSystem" | "systemEval" | "systemRating" | "idealSystem" | "componentHabits" | "nextStepId" | "identityId", ExtArgs["result"]["nextStepGoalEntry"]>
-  export type NextStepGoalEntryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
-    identity?: boolean | NextStepGoalEntry$identityArgs<ExtArgs>
-    trackedHabits?: boolean | NextStepGoalEntry$trackedHabitsArgs<ExtArgs>
-    _count?: boolean | NextStepGoalEntryCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type NextStepGoalEntryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
-    identity?: boolean | NextStepGoalEntry$identityArgs<ExtArgs>
-  }
-  export type NextStepGoalEntryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    nextStep?: boolean | AssessmentNextStepDefaultArgs<ExtArgs>
-    identity?: boolean | NextStepGoalEntry$identityArgs<ExtArgs>
-  }
 
   export type $NextStepGoalEntryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "NextStepGoalEntry"
-    objects: {
-      nextStep: Prisma.$AssessmentNextStepPayload<ExtArgs>
-      identity: Prisma.$IdentityRecordPayload<ExtArgs> | null
-      trackedHabits: Prisma.$TrackedHabitPayload<ExtArgs>[]
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
       /**
@@ -25913,9 +26976,6 @@ export namespace Prisma {
    */
   export interface Prisma__NextStepGoalEntryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    nextStep<T extends AssessmentNextStepDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssessmentNextStepDefaultArgs<ExtArgs>>): Prisma__AssessmentNextStepClient<$Result.GetResult<Prisma.$AssessmentNextStepPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    identity<T extends NextStepGoalEntry$identityArgs<ExtArgs> = {}>(args?: Subset<T, NextStepGoalEntry$identityArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    trackedHabits<T extends NextStepGoalEntry$trackedHabitsArgs<ExtArgs> = {}>(args?: Subset<T, NextStepGoalEntry$trackedHabitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -25972,10 +27032,6 @@ export namespace Prisma {
      */
     omit?: NextStepGoalEntryOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NextStepGoalEntryInclude<ExtArgs> | null
-    /**
      * Filter, which NextStepGoalEntry to fetch.
      */
     where: NextStepGoalEntryWhereUniqueInput
@@ -25994,10 +27050,6 @@ export namespace Prisma {
      */
     omit?: NextStepGoalEntryOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NextStepGoalEntryInclude<ExtArgs> | null
-    /**
      * Filter, which NextStepGoalEntry to fetch.
      */
     where: NextStepGoalEntryWhereUniqueInput
@@ -26015,10 +27067,6 @@ export namespace Prisma {
      * Omit specific fields from the NextStepGoalEntry
      */
     omit?: NextStepGoalEntryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NextStepGoalEntryInclude<ExtArgs> | null
     /**
      * Filter, which NextStepGoalEntry to fetch.
      */
@@ -26068,10 +27116,6 @@ export namespace Prisma {
      */
     omit?: NextStepGoalEntryOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NextStepGoalEntryInclude<ExtArgs> | null
-    /**
      * Filter, which NextStepGoalEntry to fetch.
      */
     where?: NextStepGoalEntryWhereInput
@@ -26119,10 +27163,6 @@ export namespace Prisma {
      * Omit specific fields from the NextStepGoalEntry
      */
     omit?: NextStepGoalEntryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NextStepGoalEntryInclude<ExtArgs> | null
     /**
      * Filter, which NextStepGoalEntries to fetch.
      */
@@ -26172,10 +27212,6 @@ export namespace Prisma {
      */
     omit?: NextStepGoalEntryOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NextStepGoalEntryInclude<ExtArgs> | null
-    /**
      * The data needed to create a NextStepGoalEntry.
      */
     data: XOR<NextStepGoalEntryCreateInput, NextStepGoalEntryUncheckedCreateInput>
@@ -26209,10 +27245,6 @@ export namespace Prisma {
      */
     data: NextStepGoalEntryCreateManyInput | NextStepGoalEntryCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NextStepGoalEntryIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -26227,10 +27259,6 @@ export namespace Prisma {
      * Omit specific fields from the NextStepGoalEntry
      */
     omit?: NextStepGoalEntryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NextStepGoalEntryInclude<ExtArgs> | null
     /**
      * The data needed to update a NextStepGoalEntry.
      */
@@ -26283,10 +27311,6 @@ export namespace Prisma {
      * Limit how many NextStepGoalEntries to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NextStepGoalEntryIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -26301,10 +27325,6 @@ export namespace Prisma {
      * Omit specific fields from the NextStepGoalEntry
      */
     omit?: NextStepGoalEntryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NextStepGoalEntryInclude<ExtArgs> | null
     /**
      * The filter to search for the NextStepGoalEntry to update in case it exists.
      */
@@ -26332,10 +27352,6 @@ export namespace Prisma {
      */
     omit?: NextStepGoalEntryOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NextStepGoalEntryInclude<ExtArgs> | null
-    /**
      * Filter which NextStepGoalEntry to delete.
      */
     where: NextStepGoalEntryWhereUniqueInput
@@ -26356,49 +27372,6 @@ export namespace Prisma {
   }
 
   /**
-   * NextStepGoalEntry.identity
-   */
-  export type NextStepGoalEntry$identityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityRecord
-     */
-    select?: IdentityRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityRecord
-     */
-    omit?: IdentityRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityRecordInclude<ExtArgs> | null
-    where?: IdentityRecordWhereInput
-  }
-
-  /**
-   * NextStepGoalEntry.trackedHabits
-   */
-  export type NextStepGoalEntry$trackedHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabit
-     */
-    select?: TrackedHabitSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrackedHabit
-     */
-    omit?: TrackedHabitOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrackedHabitInclude<ExtArgs> | null
-    where?: TrackedHabitWhereInput
-    orderBy?: TrackedHabitOrderByWithRelationInput | TrackedHabitOrderByWithRelationInput[]
-    cursor?: TrackedHabitWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TrackedHabitScalarFieldEnum | TrackedHabitScalarFieldEnum[]
-  }
-
-  /**
    * NextStepGoalEntry without action
    */
   export type NextStepGoalEntryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -26410,10 +27383,6 @@ export namespace Prisma {
      * Omit specific fields from the NextStepGoalEntry
      */
     omit?: NextStepGoalEntryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NextStepGoalEntryInclude<ExtArgs> | null
   }
 
 
@@ -27544,40 +28513,40 @@ export namespace Prisma {
   export type ChecklistMinAggregateOutputType = {
     id: string | null
     title: string | null
-    templateType: string | null
+    mode: string | null
     content: string | null
+    customEntries: string | null
     createdAt: Date | null
     updatedAt: Date | null
     userId: string | null
-    mode: string | null
+    habitId: string | null
     templateId: string | null
-    customEntries: string | null
   }
 
   export type ChecklistMaxAggregateOutputType = {
     id: string | null
     title: string | null
-    templateType: string | null
+    mode: string | null
     content: string | null
+    customEntries: string | null
     createdAt: Date | null
     updatedAt: Date | null
     userId: string | null
-    mode: string | null
+    habitId: string | null
     templateId: string | null
-    customEntries: string | null
   }
 
   export type ChecklistCountAggregateOutputType = {
     id: number
     title: number
-    templateType: number
+    mode: number
     content: number
+    customEntries: number
     createdAt: number
     updatedAt: number
     userId: number
-    mode: number
+    habitId: number
     templateId: number
-    customEntries: number
     _all: number
   }
 
@@ -27585,40 +28554,40 @@ export namespace Prisma {
   export type ChecklistMinAggregateInputType = {
     id?: true
     title?: true
-    templateType?: true
+    mode?: true
     content?: true
+    customEntries?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
-    mode?: true
+    habitId?: true
     templateId?: true
-    customEntries?: true
   }
 
   export type ChecklistMaxAggregateInputType = {
     id?: true
     title?: true
-    templateType?: true
+    mode?: true
     content?: true
+    customEntries?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
-    mode?: true
+    habitId?: true
     templateId?: true
-    customEntries?: true
   }
 
   export type ChecklistCountAggregateInputType = {
     id?: true
     title?: true
-    templateType?: true
+    mode?: true
     content?: true
+    customEntries?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
-    mode?: true
+    habitId?: true
     templateId?: true
-    customEntries?: true
     _all?: true
   }
 
@@ -27697,14 +28666,14 @@ export namespace Prisma {
   export type ChecklistGroupByOutputType = {
     id: string
     title: string
-    templateType: string
+    mode: string
     content: string
+    customEntries: string
     createdAt: Date
     updatedAt: Date
     userId: string
-    mode: string
+    habitId: string | null
     templateId: string | null
-    customEntries: string
     _count: ChecklistCountAggregateOutputType | null
     _min: ChecklistMinAggregateOutputType | null
     _max: ChecklistMaxAggregateOutputType | null
@@ -27727,72 +28696,78 @@ export namespace Prisma {
   export type ChecklistSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    templateType?: boolean
+    mode?: boolean
     content?: boolean
+    customEntries?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
-    mode?: boolean
+    habitId?: boolean
     templateId?: boolean
-    customEntries?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    habit?: boolean | Checklist$habitArgs<ExtArgs>
     template?: boolean | Checklist$templateArgs<ExtArgs>
   }, ExtArgs["result"]["checklist"]>
 
   export type ChecklistSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    templateType?: boolean
+    mode?: boolean
     content?: boolean
+    customEntries?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
-    mode?: boolean
+    habitId?: boolean
     templateId?: boolean
-    customEntries?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    habit?: boolean | Checklist$habitArgs<ExtArgs>
     template?: boolean | Checklist$templateArgs<ExtArgs>
   }, ExtArgs["result"]["checklist"]>
 
   export type ChecklistSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    templateType?: boolean
+    mode?: boolean
     content?: boolean
+    customEntries?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
-    mode?: boolean
+    habitId?: boolean
     templateId?: boolean
-    customEntries?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    habit?: boolean | Checklist$habitArgs<ExtArgs>
     template?: boolean | Checklist$templateArgs<ExtArgs>
   }, ExtArgs["result"]["checklist"]>
 
   export type ChecklistSelectScalar = {
     id?: boolean
     title?: boolean
-    templateType?: boolean
+    mode?: boolean
     content?: boolean
+    customEntries?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
-    mode?: boolean
+    habitId?: boolean
     templateId?: boolean
-    customEntries?: boolean
   }
 
-  export type ChecklistOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "templateType" | "content" | "createdAt" | "updatedAt" | "userId" | "mode" | "templateId" | "customEntries", ExtArgs["result"]["checklist"]>
+  export type ChecklistOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "mode" | "content" | "customEntries" | "createdAt" | "updatedAt" | "userId" | "habitId" | "templateId", ExtArgs["result"]["checklist"]>
   export type ChecklistInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    habit?: boolean | Checklist$habitArgs<ExtArgs>
     template?: boolean | Checklist$templateArgs<ExtArgs>
   }
   export type ChecklistIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    habit?: boolean | Checklist$habitArgs<ExtArgs>
     template?: boolean | Checklist$templateArgs<ExtArgs>
   }
   export type ChecklistIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    habit?: boolean | Checklist$habitArgs<ExtArgs>
     template?: boolean | Checklist$templateArgs<ExtArgs>
   }
 
@@ -27800,22 +28775,20 @@ export namespace Prisma {
     name: "Checklist"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      habit: Prisma.$HabitPayload<ExtArgs> | null
       template: Prisma.$ChecklistTemplatePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
-      templateType: string
-      /**
-       * JSON: ChecklistHabitEntry[] — stored as a serialised string
-       */
+      mode: string
       content: string
+      customEntries: string
       createdAt: Date
       updatedAt: Date
       userId: string
-      mode: string
+      habitId: string | null
       templateId: string | null
-      customEntries: string
     }, ExtArgs["result"]["checklist"]>
     composites: {}
   }
@@ -28211,6 +29184,7 @@ export namespace Prisma {
   export interface Prisma__ChecklistClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    habit<T extends Checklist$habitArgs<ExtArgs> = {}>(args?: Subset<T, Checklist$habitArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     template<T extends Checklist$templateArgs<ExtArgs> = {}>(args?: Subset<T, Checklist$templateArgs<ExtArgs>>): Prisma__ChecklistTemplateClient<$Result.GetResult<Prisma.$ChecklistTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -28243,14 +29217,14 @@ export namespace Prisma {
   interface ChecklistFieldRefs {
     readonly id: FieldRef<"Checklist", 'String'>
     readonly title: FieldRef<"Checklist", 'String'>
-    readonly templateType: FieldRef<"Checklist", 'String'>
+    readonly mode: FieldRef<"Checklist", 'String'>
     readonly content: FieldRef<"Checklist", 'String'>
+    readonly customEntries: FieldRef<"Checklist", 'String'>
     readonly createdAt: FieldRef<"Checklist", 'DateTime'>
     readonly updatedAt: FieldRef<"Checklist", 'DateTime'>
     readonly userId: FieldRef<"Checklist", 'String'>
-    readonly mode: FieldRef<"Checklist", 'String'>
+    readonly habitId: FieldRef<"Checklist", 'String'>
     readonly templateId: FieldRef<"Checklist", 'String'>
-    readonly customEntries: FieldRef<"Checklist", 'String'>
   }
     
 
@@ -28652,6 +29626,25 @@ export namespace Prisma {
   }
 
   /**
+   * Checklist.habit
+   */
+  export type Checklist$habitArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    where?: HabitWhereInput
+  }
+
+  /**
    * Checklist.template
    */
   export type Checklist$templateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -28686,2335 +29679,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ChecklistInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model TrackedHabit
-   */
-
-  export type AggregateTrackedHabit = {
-    _count: TrackedHabitCountAggregateOutputType | null
-    _min: TrackedHabitMinAggregateOutputType | null
-    _max: TrackedHabitMaxAggregateOutputType | null
-  }
-
-  export type TrackedHabitMinAggregateOutputType = {
-    id: string | null
-    name: string | null
-    category: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    userId: string | null
-    goalEntryId: string | null
-    identityId: string | null
-  }
-
-  export type TrackedHabitMaxAggregateOutputType = {
-    id: string | null
-    name: string | null
-    category: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    userId: string | null
-    goalEntryId: string | null
-    identityId: string | null
-  }
-
-  export type TrackedHabitCountAggregateOutputType = {
-    id: number
-    name: number
-    category: number
-    createdAt: number
-    updatedAt: number
-    userId: number
-    goalEntryId: number
-    identityId: number
-    _all: number
-  }
-
-
-  export type TrackedHabitMinAggregateInputType = {
-    id?: true
-    name?: true
-    category?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-    goalEntryId?: true
-    identityId?: true
-  }
-
-  export type TrackedHabitMaxAggregateInputType = {
-    id?: true
-    name?: true
-    category?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-    goalEntryId?: true
-    identityId?: true
-  }
-
-  export type TrackedHabitCountAggregateInputType = {
-    id?: true
-    name?: true
-    category?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-    goalEntryId?: true
-    identityId?: true
-    _all?: true
-  }
-
-  export type TrackedHabitAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which TrackedHabit to aggregate.
-     */
-    where?: TrackedHabitWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TrackedHabits to fetch.
-     */
-    orderBy?: TrackedHabitOrderByWithRelationInput | TrackedHabitOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: TrackedHabitWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TrackedHabits from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TrackedHabits.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned TrackedHabits
-    **/
-    _count?: true | TrackedHabitCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: TrackedHabitMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: TrackedHabitMaxAggregateInputType
-  }
-
-  export type GetTrackedHabitAggregateType<T extends TrackedHabitAggregateArgs> = {
-        [P in keyof T & keyof AggregateTrackedHabit]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTrackedHabit[P]>
-      : GetScalarType<T[P], AggregateTrackedHabit[P]>
-  }
-
-
-
-
-  export type TrackedHabitGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TrackedHabitWhereInput
-    orderBy?: TrackedHabitOrderByWithAggregationInput | TrackedHabitOrderByWithAggregationInput[]
-    by: TrackedHabitScalarFieldEnum[] | TrackedHabitScalarFieldEnum
-    having?: TrackedHabitScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: TrackedHabitCountAggregateInputType | true
-    _min?: TrackedHabitMinAggregateInputType
-    _max?: TrackedHabitMaxAggregateInputType
-  }
-
-  export type TrackedHabitGroupByOutputType = {
-    id: string
-    name: string
-    category: string | null
-    createdAt: Date
-    updatedAt: Date
-    userId: string
-    goalEntryId: string | null
-    identityId: string | null
-    _count: TrackedHabitCountAggregateOutputType | null
-    _min: TrackedHabitMinAggregateOutputType | null
-    _max: TrackedHabitMaxAggregateOutputType | null
-  }
-
-  type GetTrackedHabitGroupByPayload<T extends TrackedHabitGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<TrackedHabitGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof TrackedHabitGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], TrackedHabitGroupByOutputType[P]>
-            : GetScalarType<T[P], TrackedHabitGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type TrackedHabitSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    category?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-    goalEntryId?: boolean
-    identityId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    goalEntry?: boolean | TrackedHabit$goalEntryArgs<ExtArgs>
-    identity?: boolean | TrackedHabit$identityArgs<ExtArgs>
-    cues?: boolean | TrackedHabit$cuesArgs<ExtArgs>
-    checkIns?: boolean | TrackedHabit$checkInsArgs<ExtArgs>
-    _count?: boolean | TrackedHabitCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["trackedHabit"]>
-
-  export type TrackedHabitSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    category?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-    goalEntryId?: boolean
-    identityId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    goalEntry?: boolean | TrackedHabit$goalEntryArgs<ExtArgs>
-    identity?: boolean | TrackedHabit$identityArgs<ExtArgs>
-  }, ExtArgs["result"]["trackedHabit"]>
-
-  export type TrackedHabitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    category?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-    goalEntryId?: boolean
-    identityId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    goalEntry?: boolean | TrackedHabit$goalEntryArgs<ExtArgs>
-    identity?: boolean | TrackedHabit$identityArgs<ExtArgs>
-  }, ExtArgs["result"]["trackedHabit"]>
-
-  export type TrackedHabitSelectScalar = {
-    id?: boolean
-    name?: boolean
-    category?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-    goalEntryId?: boolean
-    identityId?: boolean
-  }
-
-  export type TrackedHabitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "category" | "createdAt" | "updatedAt" | "userId" | "goalEntryId" | "identityId", ExtArgs["result"]["trackedHabit"]>
-  export type TrackedHabitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    goalEntry?: boolean | TrackedHabit$goalEntryArgs<ExtArgs>
-    identity?: boolean | TrackedHabit$identityArgs<ExtArgs>
-    cues?: boolean | TrackedHabit$cuesArgs<ExtArgs>
-    checkIns?: boolean | TrackedHabit$checkInsArgs<ExtArgs>
-    _count?: boolean | TrackedHabitCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type TrackedHabitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    goalEntry?: boolean | TrackedHabit$goalEntryArgs<ExtArgs>
-    identity?: boolean | TrackedHabit$identityArgs<ExtArgs>
-  }
-  export type TrackedHabitIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    goalEntry?: boolean | TrackedHabit$goalEntryArgs<ExtArgs>
-    identity?: boolean | TrackedHabit$identityArgs<ExtArgs>
-  }
-
-  export type $TrackedHabitPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "TrackedHabit"
-    objects: {
-      user: Prisma.$UserPayload<ExtArgs>
-      goalEntry: Prisma.$NextStepGoalEntryPayload<ExtArgs> | null
-      identity: Prisma.$IdentityRecordPayload<ExtArgs> | null
-      cues: Prisma.$HabitCuePayload<ExtArgs>[]
-      checkIns: Prisma.$HabitCheckInPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      name: string
-      category: string | null
-      createdAt: Date
-      updatedAt: Date
-      userId: string
-      goalEntryId: string | null
-      identityId: string | null
-    }, ExtArgs["result"]["trackedHabit"]>
-    composites: {}
-  }
-
-  type TrackedHabitGetPayload<S extends boolean | null | undefined | TrackedHabitDefaultArgs> = $Result.GetResult<Prisma.$TrackedHabitPayload, S>
-
-  type TrackedHabitCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<TrackedHabitFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: TrackedHabitCountAggregateInputType | true
-    }
-
-  export interface TrackedHabitDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TrackedHabit'], meta: { name: 'TrackedHabit' } }
-    /**
-     * Find zero or one TrackedHabit that matches the filter.
-     * @param {TrackedHabitFindUniqueArgs} args - Arguments to find a TrackedHabit
-     * @example
-     * // Get one TrackedHabit
-     * const trackedHabit = await prisma.trackedHabit.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends TrackedHabitFindUniqueArgs>(args: SelectSubset<T, TrackedHabitFindUniqueArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one TrackedHabit that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {TrackedHabitFindUniqueOrThrowArgs} args - Arguments to find a TrackedHabit
-     * @example
-     * // Get one TrackedHabit
-     * const trackedHabit = await prisma.trackedHabit.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends TrackedHabitFindUniqueOrThrowArgs>(args: SelectSubset<T, TrackedHabitFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first TrackedHabit that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TrackedHabitFindFirstArgs} args - Arguments to find a TrackedHabit
-     * @example
-     * // Get one TrackedHabit
-     * const trackedHabit = await prisma.trackedHabit.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends TrackedHabitFindFirstArgs>(args?: SelectSubset<T, TrackedHabitFindFirstArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first TrackedHabit that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TrackedHabitFindFirstOrThrowArgs} args - Arguments to find a TrackedHabit
-     * @example
-     * // Get one TrackedHabit
-     * const trackedHabit = await prisma.trackedHabit.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends TrackedHabitFindFirstOrThrowArgs>(args?: SelectSubset<T, TrackedHabitFindFirstOrThrowArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more TrackedHabits that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TrackedHabitFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all TrackedHabits
-     * const trackedHabits = await prisma.trackedHabit.findMany()
-     * 
-     * // Get first 10 TrackedHabits
-     * const trackedHabits = await prisma.trackedHabit.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const trackedHabitWithIdOnly = await prisma.trackedHabit.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends TrackedHabitFindManyArgs>(args?: SelectSubset<T, TrackedHabitFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a TrackedHabit.
-     * @param {TrackedHabitCreateArgs} args - Arguments to create a TrackedHabit.
-     * @example
-     * // Create one TrackedHabit
-     * const TrackedHabit = await prisma.trackedHabit.create({
-     *   data: {
-     *     // ... data to create a TrackedHabit
-     *   }
-     * })
-     * 
-     */
-    create<T extends TrackedHabitCreateArgs>(args: SelectSubset<T, TrackedHabitCreateArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many TrackedHabits.
-     * @param {TrackedHabitCreateManyArgs} args - Arguments to create many TrackedHabits.
-     * @example
-     * // Create many TrackedHabits
-     * const trackedHabit = await prisma.trackedHabit.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends TrackedHabitCreateManyArgs>(args?: SelectSubset<T, TrackedHabitCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many TrackedHabits and returns the data saved in the database.
-     * @param {TrackedHabitCreateManyAndReturnArgs} args - Arguments to create many TrackedHabits.
-     * @example
-     * // Create many TrackedHabits
-     * const trackedHabit = await prisma.trackedHabit.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many TrackedHabits and only return the `id`
-     * const trackedHabitWithIdOnly = await prisma.trackedHabit.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends TrackedHabitCreateManyAndReturnArgs>(args?: SelectSubset<T, TrackedHabitCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a TrackedHabit.
-     * @param {TrackedHabitDeleteArgs} args - Arguments to delete one TrackedHabit.
-     * @example
-     * // Delete one TrackedHabit
-     * const TrackedHabit = await prisma.trackedHabit.delete({
-     *   where: {
-     *     // ... filter to delete one TrackedHabit
-     *   }
-     * })
-     * 
-     */
-    delete<T extends TrackedHabitDeleteArgs>(args: SelectSubset<T, TrackedHabitDeleteArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one TrackedHabit.
-     * @param {TrackedHabitUpdateArgs} args - Arguments to update one TrackedHabit.
-     * @example
-     * // Update one TrackedHabit
-     * const trackedHabit = await prisma.trackedHabit.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends TrackedHabitUpdateArgs>(args: SelectSubset<T, TrackedHabitUpdateArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more TrackedHabits.
-     * @param {TrackedHabitDeleteManyArgs} args - Arguments to filter TrackedHabits to delete.
-     * @example
-     * // Delete a few TrackedHabits
-     * const { count } = await prisma.trackedHabit.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends TrackedHabitDeleteManyArgs>(args?: SelectSubset<T, TrackedHabitDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more TrackedHabits.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TrackedHabitUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many TrackedHabits
-     * const trackedHabit = await prisma.trackedHabit.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends TrackedHabitUpdateManyArgs>(args: SelectSubset<T, TrackedHabitUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more TrackedHabits and returns the data updated in the database.
-     * @param {TrackedHabitUpdateManyAndReturnArgs} args - Arguments to update many TrackedHabits.
-     * @example
-     * // Update many TrackedHabits
-     * const trackedHabit = await prisma.trackedHabit.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more TrackedHabits and only return the `id`
-     * const trackedHabitWithIdOnly = await prisma.trackedHabit.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends TrackedHabitUpdateManyAndReturnArgs>(args: SelectSubset<T, TrackedHabitUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one TrackedHabit.
-     * @param {TrackedHabitUpsertArgs} args - Arguments to update or create a TrackedHabit.
-     * @example
-     * // Update or create a TrackedHabit
-     * const trackedHabit = await prisma.trackedHabit.upsert({
-     *   create: {
-     *     // ... data to create a TrackedHabit
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the TrackedHabit we want to update
-     *   }
-     * })
-     */
-    upsert<T extends TrackedHabitUpsertArgs>(args: SelectSubset<T, TrackedHabitUpsertArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of TrackedHabits.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TrackedHabitCountArgs} args - Arguments to filter TrackedHabits to count.
-     * @example
-     * // Count the number of TrackedHabits
-     * const count = await prisma.trackedHabit.count({
-     *   where: {
-     *     // ... the filter for the TrackedHabits we want to count
-     *   }
-     * })
-    **/
-    count<T extends TrackedHabitCountArgs>(
-      args?: Subset<T, TrackedHabitCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], TrackedHabitCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a TrackedHabit.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TrackedHabitAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends TrackedHabitAggregateArgs>(args: Subset<T, TrackedHabitAggregateArgs>): Prisma.PrismaPromise<GetTrackedHabitAggregateType<T>>
-
-    /**
-     * Group by TrackedHabit.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TrackedHabitGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends TrackedHabitGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TrackedHabitGroupByArgs['orderBy'] }
-        : { orderBy?: TrackedHabitGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, TrackedHabitGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTrackedHabitGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the TrackedHabit model
-   */
-  readonly fields: TrackedHabitFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for TrackedHabit.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__TrackedHabitClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    goalEntry<T extends TrackedHabit$goalEntryArgs<ExtArgs> = {}>(args?: Subset<T, TrackedHabit$goalEntryArgs<ExtArgs>>): Prisma__NextStepGoalEntryClient<$Result.GetResult<Prisma.$NextStepGoalEntryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    identity<T extends TrackedHabit$identityArgs<ExtArgs> = {}>(args?: Subset<T, TrackedHabit$identityArgs<ExtArgs>>): Prisma__IdentityRecordClient<$Result.GetResult<Prisma.$IdentityRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    cues<T extends TrackedHabit$cuesArgs<ExtArgs> = {}>(args?: Subset<T, TrackedHabit$cuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitCuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    checkIns<T extends TrackedHabit$checkInsArgs<ExtArgs> = {}>(args?: Subset<T, TrackedHabit$checkInsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitCheckInPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the TrackedHabit model
-   */
-  interface TrackedHabitFieldRefs {
-    readonly id: FieldRef<"TrackedHabit", 'String'>
-    readonly name: FieldRef<"TrackedHabit", 'String'>
-    readonly category: FieldRef<"TrackedHabit", 'String'>
-    readonly createdAt: FieldRef<"TrackedHabit", 'DateTime'>
-    readonly updatedAt: FieldRef<"TrackedHabit", 'DateTime'>
-    readonly userId: FieldRef<"TrackedHabit", 'String'>
-    readonly goalEntryId: FieldRef<"TrackedHabit", 'String'>
-    readonly identityId: FieldRef<"TrackedHabit", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * TrackedHabit findUnique
-   */
-  export type TrackedHabitFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabit
-     */
-    select?: TrackedHabitSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrackedHabit
-     */
-    omit?: TrackedHabitOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrackedHabitInclude<ExtArgs> | null
-    /**
-     * Filter, which TrackedHabit to fetch.
-     */
-    where: TrackedHabitWhereUniqueInput
-  }
-
-  /**
-   * TrackedHabit findUniqueOrThrow
-   */
-  export type TrackedHabitFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabit
-     */
-    select?: TrackedHabitSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrackedHabit
-     */
-    omit?: TrackedHabitOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrackedHabitInclude<ExtArgs> | null
-    /**
-     * Filter, which TrackedHabit to fetch.
-     */
-    where: TrackedHabitWhereUniqueInput
-  }
-
-  /**
-   * TrackedHabit findFirst
-   */
-  export type TrackedHabitFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabit
-     */
-    select?: TrackedHabitSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrackedHabit
-     */
-    omit?: TrackedHabitOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrackedHabitInclude<ExtArgs> | null
-    /**
-     * Filter, which TrackedHabit to fetch.
-     */
-    where?: TrackedHabitWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TrackedHabits to fetch.
-     */
-    orderBy?: TrackedHabitOrderByWithRelationInput | TrackedHabitOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TrackedHabits.
-     */
-    cursor?: TrackedHabitWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TrackedHabits from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TrackedHabits.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TrackedHabits.
-     */
-    distinct?: TrackedHabitScalarFieldEnum | TrackedHabitScalarFieldEnum[]
-  }
-
-  /**
-   * TrackedHabit findFirstOrThrow
-   */
-  export type TrackedHabitFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabit
-     */
-    select?: TrackedHabitSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrackedHabit
-     */
-    omit?: TrackedHabitOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrackedHabitInclude<ExtArgs> | null
-    /**
-     * Filter, which TrackedHabit to fetch.
-     */
-    where?: TrackedHabitWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TrackedHabits to fetch.
-     */
-    orderBy?: TrackedHabitOrderByWithRelationInput | TrackedHabitOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TrackedHabits.
-     */
-    cursor?: TrackedHabitWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TrackedHabits from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TrackedHabits.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TrackedHabits.
-     */
-    distinct?: TrackedHabitScalarFieldEnum | TrackedHabitScalarFieldEnum[]
-  }
-
-  /**
-   * TrackedHabit findMany
-   */
-  export type TrackedHabitFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabit
-     */
-    select?: TrackedHabitSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrackedHabit
-     */
-    omit?: TrackedHabitOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrackedHabitInclude<ExtArgs> | null
-    /**
-     * Filter, which TrackedHabits to fetch.
-     */
-    where?: TrackedHabitWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TrackedHabits to fetch.
-     */
-    orderBy?: TrackedHabitOrderByWithRelationInput | TrackedHabitOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing TrackedHabits.
-     */
-    cursor?: TrackedHabitWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TrackedHabits from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TrackedHabits.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TrackedHabits.
-     */
-    distinct?: TrackedHabitScalarFieldEnum | TrackedHabitScalarFieldEnum[]
-  }
-
-  /**
-   * TrackedHabit create
-   */
-  export type TrackedHabitCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabit
-     */
-    select?: TrackedHabitSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrackedHabit
-     */
-    omit?: TrackedHabitOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrackedHabitInclude<ExtArgs> | null
-    /**
-     * The data needed to create a TrackedHabit.
-     */
-    data: XOR<TrackedHabitCreateInput, TrackedHabitUncheckedCreateInput>
-  }
-
-  /**
-   * TrackedHabit createMany
-   */
-  export type TrackedHabitCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many TrackedHabits.
-     */
-    data: TrackedHabitCreateManyInput | TrackedHabitCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * TrackedHabit createManyAndReturn
-   */
-  export type TrackedHabitCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabit
-     */
-    select?: TrackedHabitSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrackedHabit
-     */
-    omit?: TrackedHabitOmit<ExtArgs> | null
-    /**
-     * The data used to create many TrackedHabits.
-     */
-    data: TrackedHabitCreateManyInput | TrackedHabitCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrackedHabitIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * TrackedHabit update
-   */
-  export type TrackedHabitUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabit
-     */
-    select?: TrackedHabitSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrackedHabit
-     */
-    omit?: TrackedHabitOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrackedHabitInclude<ExtArgs> | null
-    /**
-     * The data needed to update a TrackedHabit.
-     */
-    data: XOR<TrackedHabitUpdateInput, TrackedHabitUncheckedUpdateInput>
-    /**
-     * Choose, which TrackedHabit to update.
-     */
-    where: TrackedHabitWhereUniqueInput
-  }
-
-  /**
-   * TrackedHabit updateMany
-   */
-  export type TrackedHabitUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update TrackedHabits.
-     */
-    data: XOR<TrackedHabitUpdateManyMutationInput, TrackedHabitUncheckedUpdateManyInput>
-    /**
-     * Filter which TrackedHabits to update
-     */
-    where?: TrackedHabitWhereInput
-    /**
-     * Limit how many TrackedHabits to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * TrackedHabit updateManyAndReturn
-   */
-  export type TrackedHabitUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabit
-     */
-    select?: TrackedHabitSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrackedHabit
-     */
-    omit?: TrackedHabitOmit<ExtArgs> | null
-    /**
-     * The data used to update TrackedHabits.
-     */
-    data: XOR<TrackedHabitUpdateManyMutationInput, TrackedHabitUncheckedUpdateManyInput>
-    /**
-     * Filter which TrackedHabits to update
-     */
-    where?: TrackedHabitWhereInput
-    /**
-     * Limit how many TrackedHabits to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrackedHabitIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * TrackedHabit upsert
-   */
-  export type TrackedHabitUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabit
-     */
-    select?: TrackedHabitSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrackedHabit
-     */
-    omit?: TrackedHabitOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrackedHabitInclude<ExtArgs> | null
-    /**
-     * The filter to search for the TrackedHabit to update in case it exists.
-     */
-    where: TrackedHabitWhereUniqueInput
-    /**
-     * In case the TrackedHabit found by the `where` argument doesn't exist, create a new TrackedHabit with this data.
-     */
-    create: XOR<TrackedHabitCreateInput, TrackedHabitUncheckedCreateInput>
-    /**
-     * In case the TrackedHabit was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<TrackedHabitUpdateInput, TrackedHabitUncheckedUpdateInput>
-  }
-
-  /**
-   * TrackedHabit delete
-   */
-  export type TrackedHabitDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabit
-     */
-    select?: TrackedHabitSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrackedHabit
-     */
-    omit?: TrackedHabitOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrackedHabitInclude<ExtArgs> | null
-    /**
-     * Filter which TrackedHabit to delete.
-     */
-    where: TrackedHabitWhereUniqueInput
-  }
-
-  /**
-   * TrackedHabit deleteMany
-   */
-  export type TrackedHabitDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which TrackedHabits to delete
-     */
-    where?: TrackedHabitWhereInput
-    /**
-     * Limit how many TrackedHabits to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * TrackedHabit.goalEntry
-   */
-  export type TrackedHabit$goalEntryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NextStepGoalEntry
-     */
-    select?: NextStepGoalEntrySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the NextStepGoalEntry
-     */
-    omit?: NextStepGoalEntryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NextStepGoalEntryInclude<ExtArgs> | null
-    where?: NextStepGoalEntryWhereInput
-  }
-
-  /**
-   * TrackedHabit.identity
-   */
-  export type TrackedHabit$identityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityRecord
-     */
-    select?: IdentityRecordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityRecord
-     */
-    omit?: IdentityRecordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityRecordInclude<ExtArgs> | null
-    where?: IdentityRecordWhereInput
-  }
-
-  /**
-   * TrackedHabit.cues
-   */
-  export type TrackedHabit$cuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCue
-     */
-    select?: HabitCueSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCue
-     */
-    omit?: HabitCueOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCueInclude<ExtArgs> | null
-    where?: HabitCueWhereInput
-    orderBy?: HabitCueOrderByWithRelationInput | HabitCueOrderByWithRelationInput[]
-    cursor?: HabitCueWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: HabitCueScalarFieldEnum | HabitCueScalarFieldEnum[]
-  }
-
-  /**
-   * TrackedHabit.checkIns
-   */
-  export type TrackedHabit$checkInsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCheckIn
-     */
-    select?: HabitCheckInSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCheckIn
-     */
-    omit?: HabitCheckInOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCheckInInclude<ExtArgs> | null
-    where?: HabitCheckInWhereInput
-    orderBy?: HabitCheckInOrderByWithRelationInput | HabitCheckInOrderByWithRelationInput[]
-    cursor?: HabitCheckInWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: HabitCheckInScalarFieldEnum | HabitCheckInScalarFieldEnum[]
-  }
-
-  /**
-   * TrackedHabit without action
-   */
-  export type TrackedHabitDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrackedHabit
-     */
-    select?: TrackedHabitSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrackedHabit
-     */
-    omit?: TrackedHabitOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrackedHabitInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model HabitCue
-   */
-
-  export type AggregateHabitCue = {
-    _count: HabitCueCountAggregateOutputType | null
-    _min: HabitCueMinAggregateOutputType | null
-    _max: HabitCueMaxAggregateOutputType | null
-  }
-
-  export type HabitCueMinAggregateOutputType = {
-    id: string | null
-    behavior: string | null
-    time: string | null
-    location: string | null
-    isBreaking: boolean | null
-    reflection: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    habitId: string | null
-  }
-
-  export type HabitCueMaxAggregateOutputType = {
-    id: string | null
-    behavior: string | null
-    time: string | null
-    location: string | null
-    isBreaking: boolean | null
-    reflection: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    habitId: string | null
-  }
-
-  export type HabitCueCountAggregateOutputType = {
-    id: number
-    behavior: number
-    time: number
-    location: number
-    isBreaking: number
-    reflection: number
-    createdAt: number
-    updatedAt: number
-    habitId: number
-    _all: number
-  }
-
-
-  export type HabitCueMinAggregateInputType = {
-    id?: true
-    behavior?: true
-    time?: true
-    location?: true
-    isBreaking?: true
-    reflection?: true
-    createdAt?: true
-    updatedAt?: true
-    habitId?: true
-  }
-
-  export type HabitCueMaxAggregateInputType = {
-    id?: true
-    behavior?: true
-    time?: true
-    location?: true
-    isBreaking?: true
-    reflection?: true
-    createdAt?: true
-    updatedAt?: true
-    habitId?: true
-  }
-
-  export type HabitCueCountAggregateInputType = {
-    id?: true
-    behavior?: true
-    time?: true
-    location?: true
-    isBreaking?: true
-    reflection?: true
-    createdAt?: true
-    updatedAt?: true
-    habitId?: true
-    _all?: true
-  }
-
-  export type HabitCueAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which HabitCue to aggregate.
-     */
-    where?: HabitCueWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of HabitCues to fetch.
-     */
-    orderBy?: HabitCueOrderByWithRelationInput | HabitCueOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: HabitCueWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` HabitCues from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` HabitCues.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned HabitCues
-    **/
-    _count?: true | HabitCueCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: HabitCueMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: HabitCueMaxAggregateInputType
-  }
-
-  export type GetHabitCueAggregateType<T extends HabitCueAggregateArgs> = {
-        [P in keyof T & keyof AggregateHabitCue]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateHabitCue[P]>
-      : GetScalarType<T[P], AggregateHabitCue[P]>
-  }
-
-
-
-
-  export type HabitCueGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: HabitCueWhereInput
-    orderBy?: HabitCueOrderByWithAggregationInput | HabitCueOrderByWithAggregationInput[]
-    by: HabitCueScalarFieldEnum[] | HabitCueScalarFieldEnum
-    having?: HabitCueScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: HabitCueCountAggregateInputType | true
-    _min?: HabitCueMinAggregateInputType
-    _max?: HabitCueMaxAggregateInputType
-  }
-
-  export type HabitCueGroupByOutputType = {
-    id: string
-    behavior: string
-    time: string
-    location: string
-    isBreaking: boolean
-    reflection: string
-    createdAt: Date
-    updatedAt: Date
-    habitId: string
-    _count: HabitCueCountAggregateOutputType | null
-    _min: HabitCueMinAggregateOutputType | null
-    _max: HabitCueMaxAggregateOutputType | null
-  }
-
-  type GetHabitCueGroupByPayload<T extends HabitCueGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<HabitCueGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof HabitCueGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], HabitCueGroupByOutputType[P]>
-            : GetScalarType<T[P], HabitCueGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type HabitCueSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    behavior?: boolean
-    time?: boolean
-    location?: boolean
-    isBreaking?: boolean
-    reflection?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    habitId?: boolean
-    habit?: boolean | TrackedHabitDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["habitCue"]>
-
-  export type HabitCueSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    behavior?: boolean
-    time?: boolean
-    location?: boolean
-    isBreaking?: boolean
-    reflection?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    habitId?: boolean
-    habit?: boolean | TrackedHabitDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["habitCue"]>
-
-  export type HabitCueSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    behavior?: boolean
-    time?: boolean
-    location?: boolean
-    isBreaking?: boolean
-    reflection?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    habitId?: boolean
-    habit?: boolean | TrackedHabitDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["habitCue"]>
-
-  export type HabitCueSelectScalar = {
-    id?: boolean
-    behavior?: boolean
-    time?: boolean
-    location?: boolean
-    isBreaking?: boolean
-    reflection?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    habitId?: boolean
-  }
-
-  export type HabitCueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "behavior" | "time" | "location" | "isBreaking" | "reflection" | "createdAt" | "updatedAt" | "habitId", ExtArgs["result"]["habitCue"]>
-  export type HabitCueInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    habit?: boolean | TrackedHabitDefaultArgs<ExtArgs>
-  }
-  export type HabitCueIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    habit?: boolean | TrackedHabitDefaultArgs<ExtArgs>
-  }
-  export type HabitCueIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    habit?: boolean | TrackedHabitDefaultArgs<ExtArgs>
-  }
-
-  export type $HabitCuePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "HabitCue"
-    objects: {
-      habit: Prisma.$TrackedHabitPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      behavior: string
-      time: string
-      location: string
-      isBreaking: boolean
-      reflection: string
-      createdAt: Date
-      updatedAt: Date
-      habitId: string
-    }, ExtArgs["result"]["habitCue"]>
-    composites: {}
-  }
-
-  type HabitCueGetPayload<S extends boolean | null | undefined | HabitCueDefaultArgs> = $Result.GetResult<Prisma.$HabitCuePayload, S>
-
-  type HabitCueCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<HabitCueFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: HabitCueCountAggregateInputType | true
-    }
-
-  export interface HabitCueDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HabitCue'], meta: { name: 'HabitCue' } }
-    /**
-     * Find zero or one HabitCue that matches the filter.
-     * @param {HabitCueFindUniqueArgs} args - Arguments to find a HabitCue
-     * @example
-     * // Get one HabitCue
-     * const habitCue = await prisma.habitCue.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends HabitCueFindUniqueArgs>(args: SelectSubset<T, HabitCueFindUniqueArgs<ExtArgs>>): Prisma__HabitCueClient<$Result.GetResult<Prisma.$HabitCuePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one HabitCue that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {HabitCueFindUniqueOrThrowArgs} args - Arguments to find a HabitCue
-     * @example
-     * // Get one HabitCue
-     * const habitCue = await prisma.habitCue.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends HabitCueFindUniqueOrThrowArgs>(args: SelectSubset<T, HabitCueFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HabitCueClient<$Result.GetResult<Prisma.$HabitCuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first HabitCue that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HabitCueFindFirstArgs} args - Arguments to find a HabitCue
-     * @example
-     * // Get one HabitCue
-     * const habitCue = await prisma.habitCue.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends HabitCueFindFirstArgs>(args?: SelectSubset<T, HabitCueFindFirstArgs<ExtArgs>>): Prisma__HabitCueClient<$Result.GetResult<Prisma.$HabitCuePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first HabitCue that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HabitCueFindFirstOrThrowArgs} args - Arguments to find a HabitCue
-     * @example
-     * // Get one HabitCue
-     * const habitCue = await prisma.habitCue.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends HabitCueFindFirstOrThrowArgs>(args?: SelectSubset<T, HabitCueFindFirstOrThrowArgs<ExtArgs>>): Prisma__HabitCueClient<$Result.GetResult<Prisma.$HabitCuePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more HabitCues that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HabitCueFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all HabitCues
-     * const habitCues = await prisma.habitCue.findMany()
-     * 
-     * // Get first 10 HabitCues
-     * const habitCues = await prisma.habitCue.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const habitCueWithIdOnly = await prisma.habitCue.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends HabitCueFindManyArgs>(args?: SelectSubset<T, HabitCueFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitCuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a HabitCue.
-     * @param {HabitCueCreateArgs} args - Arguments to create a HabitCue.
-     * @example
-     * // Create one HabitCue
-     * const HabitCue = await prisma.habitCue.create({
-     *   data: {
-     *     // ... data to create a HabitCue
-     *   }
-     * })
-     * 
-     */
-    create<T extends HabitCueCreateArgs>(args: SelectSubset<T, HabitCueCreateArgs<ExtArgs>>): Prisma__HabitCueClient<$Result.GetResult<Prisma.$HabitCuePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many HabitCues.
-     * @param {HabitCueCreateManyArgs} args - Arguments to create many HabitCues.
-     * @example
-     * // Create many HabitCues
-     * const habitCue = await prisma.habitCue.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends HabitCueCreateManyArgs>(args?: SelectSubset<T, HabitCueCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many HabitCues and returns the data saved in the database.
-     * @param {HabitCueCreateManyAndReturnArgs} args - Arguments to create many HabitCues.
-     * @example
-     * // Create many HabitCues
-     * const habitCue = await prisma.habitCue.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many HabitCues and only return the `id`
-     * const habitCueWithIdOnly = await prisma.habitCue.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends HabitCueCreateManyAndReturnArgs>(args?: SelectSubset<T, HabitCueCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitCuePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a HabitCue.
-     * @param {HabitCueDeleteArgs} args - Arguments to delete one HabitCue.
-     * @example
-     * // Delete one HabitCue
-     * const HabitCue = await prisma.habitCue.delete({
-     *   where: {
-     *     // ... filter to delete one HabitCue
-     *   }
-     * })
-     * 
-     */
-    delete<T extends HabitCueDeleteArgs>(args: SelectSubset<T, HabitCueDeleteArgs<ExtArgs>>): Prisma__HabitCueClient<$Result.GetResult<Prisma.$HabitCuePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one HabitCue.
-     * @param {HabitCueUpdateArgs} args - Arguments to update one HabitCue.
-     * @example
-     * // Update one HabitCue
-     * const habitCue = await prisma.habitCue.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends HabitCueUpdateArgs>(args: SelectSubset<T, HabitCueUpdateArgs<ExtArgs>>): Prisma__HabitCueClient<$Result.GetResult<Prisma.$HabitCuePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more HabitCues.
-     * @param {HabitCueDeleteManyArgs} args - Arguments to filter HabitCues to delete.
-     * @example
-     * // Delete a few HabitCues
-     * const { count } = await prisma.habitCue.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends HabitCueDeleteManyArgs>(args?: SelectSubset<T, HabitCueDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more HabitCues.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HabitCueUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many HabitCues
-     * const habitCue = await prisma.habitCue.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends HabitCueUpdateManyArgs>(args: SelectSubset<T, HabitCueUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more HabitCues and returns the data updated in the database.
-     * @param {HabitCueUpdateManyAndReturnArgs} args - Arguments to update many HabitCues.
-     * @example
-     * // Update many HabitCues
-     * const habitCue = await prisma.habitCue.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more HabitCues and only return the `id`
-     * const habitCueWithIdOnly = await prisma.habitCue.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends HabitCueUpdateManyAndReturnArgs>(args: SelectSubset<T, HabitCueUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitCuePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one HabitCue.
-     * @param {HabitCueUpsertArgs} args - Arguments to update or create a HabitCue.
-     * @example
-     * // Update or create a HabitCue
-     * const habitCue = await prisma.habitCue.upsert({
-     *   create: {
-     *     // ... data to create a HabitCue
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the HabitCue we want to update
-     *   }
-     * })
-     */
-    upsert<T extends HabitCueUpsertArgs>(args: SelectSubset<T, HabitCueUpsertArgs<ExtArgs>>): Prisma__HabitCueClient<$Result.GetResult<Prisma.$HabitCuePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of HabitCues.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HabitCueCountArgs} args - Arguments to filter HabitCues to count.
-     * @example
-     * // Count the number of HabitCues
-     * const count = await prisma.habitCue.count({
-     *   where: {
-     *     // ... the filter for the HabitCues we want to count
-     *   }
-     * })
-    **/
-    count<T extends HabitCueCountArgs>(
-      args?: Subset<T, HabitCueCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], HabitCueCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a HabitCue.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HabitCueAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends HabitCueAggregateArgs>(args: Subset<T, HabitCueAggregateArgs>): Prisma.PrismaPromise<GetHabitCueAggregateType<T>>
-
-    /**
-     * Group by HabitCue.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HabitCueGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends HabitCueGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: HabitCueGroupByArgs['orderBy'] }
-        : { orderBy?: HabitCueGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, HabitCueGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHabitCueGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the HabitCue model
-   */
-  readonly fields: HabitCueFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for HabitCue.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__HabitCueClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    habit<T extends TrackedHabitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TrackedHabitDefaultArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the HabitCue model
-   */
-  interface HabitCueFieldRefs {
-    readonly id: FieldRef<"HabitCue", 'String'>
-    readonly behavior: FieldRef<"HabitCue", 'String'>
-    readonly time: FieldRef<"HabitCue", 'String'>
-    readonly location: FieldRef<"HabitCue", 'String'>
-    readonly isBreaking: FieldRef<"HabitCue", 'Boolean'>
-    readonly reflection: FieldRef<"HabitCue", 'String'>
-    readonly createdAt: FieldRef<"HabitCue", 'DateTime'>
-    readonly updatedAt: FieldRef<"HabitCue", 'DateTime'>
-    readonly habitId: FieldRef<"HabitCue", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * HabitCue findUnique
-   */
-  export type HabitCueFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCue
-     */
-    select?: HabitCueSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCue
-     */
-    omit?: HabitCueOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCueInclude<ExtArgs> | null
-    /**
-     * Filter, which HabitCue to fetch.
-     */
-    where: HabitCueWhereUniqueInput
-  }
-
-  /**
-   * HabitCue findUniqueOrThrow
-   */
-  export type HabitCueFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCue
-     */
-    select?: HabitCueSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCue
-     */
-    omit?: HabitCueOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCueInclude<ExtArgs> | null
-    /**
-     * Filter, which HabitCue to fetch.
-     */
-    where: HabitCueWhereUniqueInput
-  }
-
-  /**
-   * HabitCue findFirst
-   */
-  export type HabitCueFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCue
-     */
-    select?: HabitCueSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCue
-     */
-    omit?: HabitCueOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCueInclude<ExtArgs> | null
-    /**
-     * Filter, which HabitCue to fetch.
-     */
-    where?: HabitCueWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of HabitCues to fetch.
-     */
-    orderBy?: HabitCueOrderByWithRelationInput | HabitCueOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for HabitCues.
-     */
-    cursor?: HabitCueWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` HabitCues from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` HabitCues.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of HabitCues.
-     */
-    distinct?: HabitCueScalarFieldEnum | HabitCueScalarFieldEnum[]
-  }
-
-  /**
-   * HabitCue findFirstOrThrow
-   */
-  export type HabitCueFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCue
-     */
-    select?: HabitCueSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCue
-     */
-    omit?: HabitCueOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCueInclude<ExtArgs> | null
-    /**
-     * Filter, which HabitCue to fetch.
-     */
-    where?: HabitCueWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of HabitCues to fetch.
-     */
-    orderBy?: HabitCueOrderByWithRelationInput | HabitCueOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for HabitCues.
-     */
-    cursor?: HabitCueWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` HabitCues from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` HabitCues.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of HabitCues.
-     */
-    distinct?: HabitCueScalarFieldEnum | HabitCueScalarFieldEnum[]
-  }
-
-  /**
-   * HabitCue findMany
-   */
-  export type HabitCueFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCue
-     */
-    select?: HabitCueSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCue
-     */
-    omit?: HabitCueOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCueInclude<ExtArgs> | null
-    /**
-     * Filter, which HabitCues to fetch.
-     */
-    where?: HabitCueWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of HabitCues to fetch.
-     */
-    orderBy?: HabitCueOrderByWithRelationInput | HabitCueOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing HabitCues.
-     */
-    cursor?: HabitCueWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` HabitCues from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` HabitCues.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of HabitCues.
-     */
-    distinct?: HabitCueScalarFieldEnum | HabitCueScalarFieldEnum[]
-  }
-
-  /**
-   * HabitCue create
-   */
-  export type HabitCueCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCue
-     */
-    select?: HabitCueSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCue
-     */
-    omit?: HabitCueOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCueInclude<ExtArgs> | null
-    /**
-     * The data needed to create a HabitCue.
-     */
-    data: XOR<HabitCueCreateInput, HabitCueUncheckedCreateInput>
-  }
-
-  /**
-   * HabitCue createMany
-   */
-  export type HabitCueCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many HabitCues.
-     */
-    data: HabitCueCreateManyInput | HabitCueCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * HabitCue createManyAndReturn
-   */
-  export type HabitCueCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCue
-     */
-    select?: HabitCueSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCue
-     */
-    omit?: HabitCueOmit<ExtArgs> | null
-    /**
-     * The data used to create many HabitCues.
-     */
-    data: HabitCueCreateManyInput | HabitCueCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCueIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * HabitCue update
-   */
-  export type HabitCueUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCue
-     */
-    select?: HabitCueSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCue
-     */
-    omit?: HabitCueOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCueInclude<ExtArgs> | null
-    /**
-     * The data needed to update a HabitCue.
-     */
-    data: XOR<HabitCueUpdateInput, HabitCueUncheckedUpdateInput>
-    /**
-     * Choose, which HabitCue to update.
-     */
-    where: HabitCueWhereUniqueInput
-  }
-
-  /**
-   * HabitCue updateMany
-   */
-  export type HabitCueUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update HabitCues.
-     */
-    data: XOR<HabitCueUpdateManyMutationInput, HabitCueUncheckedUpdateManyInput>
-    /**
-     * Filter which HabitCues to update
-     */
-    where?: HabitCueWhereInput
-    /**
-     * Limit how many HabitCues to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * HabitCue updateManyAndReturn
-   */
-  export type HabitCueUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCue
-     */
-    select?: HabitCueSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCue
-     */
-    omit?: HabitCueOmit<ExtArgs> | null
-    /**
-     * The data used to update HabitCues.
-     */
-    data: XOR<HabitCueUpdateManyMutationInput, HabitCueUncheckedUpdateManyInput>
-    /**
-     * Filter which HabitCues to update
-     */
-    where?: HabitCueWhereInput
-    /**
-     * Limit how many HabitCues to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCueIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * HabitCue upsert
-   */
-  export type HabitCueUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCue
-     */
-    select?: HabitCueSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCue
-     */
-    omit?: HabitCueOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCueInclude<ExtArgs> | null
-    /**
-     * The filter to search for the HabitCue to update in case it exists.
-     */
-    where: HabitCueWhereUniqueInput
-    /**
-     * In case the HabitCue found by the `where` argument doesn't exist, create a new HabitCue with this data.
-     */
-    create: XOR<HabitCueCreateInput, HabitCueUncheckedCreateInput>
-    /**
-     * In case the HabitCue was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<HabitCueUpdateInput, HabitCueUncheckedUpdateInput>
-  }
-
-  /**
-   * HabitCue delete
-   */
-  export type HabitCueDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCue
-     */
-    select?: HabitCueSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCue
-     */
-    omit?: HabitCueOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCueInclude<ExtArgs> | null
-    /**
-     * Filter which HabitCue to delete.
-     */
-    where: HabitCueWhereUniqueInput
-  }
-
-  /**
-   * HabitCue deleteMany
-   */
-  export type HabitCueDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which HabitCues to delete
-     */
-    where?: HabitCueWhereInput
-    /**
-     * Limit how many HabitCues to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * HabitCue without action
-   */
-  export type HabitCueDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HabitCue
-     */
-    select?: HabitCueSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the HabitCue
-     */
-    omit?: HabitCueOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HabitCueInclude<ExtArgs> | null
   }
 
 
@@ -31198,7 +29862,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     habitId?: boolean
-    habit?: boolean | TrackedHabitDefaultArgs<ExtArgs>
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["habitCheckIn"]>
 
   export type HabitCheckInSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -31209,7 +29873,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     habitId?: boolean
-    habit?: boolean | TrackedHabitDefaultArgs<ExtArgs>
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["habitCheckIn"]>
 
   export type HabitCheckInSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -31220,7 +29884,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     habitId?: boolean
-    habit?: boolean | TrackedHabitDefaultArgs<ExtArgs>
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["habitCheckIn"]>
 
   export type HabitCheckInSelectScalar = {
@@ -31235,25 +29899,22 @@ export namespace Prisma {
 
   export type HabitCheckInOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "completed" | "note" | "createdAt" | "updatedAt" | "habitId", ExtArgs["result"]["habitCheckIn"]>
   export type HabitCheckInInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    habit?: boolean | TrackedHabitDefaultArgs<ExtArgs>
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
   }
   export type HabitCheckInIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    habit?: boolean | TrackedHabitDefaultArgs<ExtArgs>
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
   }
   export type HabitCheckInIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    habit?: boolean | TrackedHabitDefaultArgs<ExtArgs>
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
   }
 
   export type $HabitCheckInPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "HabitCheckIn"
     objects: {
-      habit: Prisma.$TrackedHabitPayload<ExtArgs>
+      habit: Prisma.$HabitPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      /**
-       * YYYY-MM-DD
-       */
       date: string
       completed: boolean
       note: string
@@ -31654,7 +30315,7 @@ export namespace Prisma {
    */
   export interface Prisma__HabitCheckInClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    habit<T extends TrackedHabitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TrackedHabitDefaultArgs<ExtArgs>>): Prisma__TrackedHabitClient<$Result.GetResult<Prisma.$TrackedHabitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    habit<T extends HabitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, HabitDefaultArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -32366,26 +31027,45 @@ export namespace Prisma {
   export type DomainVisionEntryScalarFieldEnum = (typeof DomainVisionEntryScalarFieldEnum)[keyof typeof DomainVisionEntryScalarFieldEnum]
 
 
-  export const IdentityRecordScalarFieldEnum: {
+  export const GoalScalarFieldEnum: {
     id: 'id',
-    identity: 'identity',
-    habits: 'habits',
+    text: 'text',
     category: 'category',
-    assessmentId: 'assessmentId'
+    currentSystem: 'currentSystem',
+    systemEval: 'systemEval',
+    systemRating: 'systemRating',
+    idealSystem: 'idealSystem',
+    identityId: 'identityId'
   };
 
-  export type IdentityRecordScalarFieldEnum = (typeof IdentityRecordScalarFieldEnum)[keyof typeof IdentityRecordScalarFieldEnum]
+  export type GoalScalarFieldEnum = (typeof GoalScalarFieldEnum)[keyof typeof GoalScalarFieldEnum]
 
 
-  export const AssessmentNextStepScalarFieldEnum: {
+  export const HabitScalarFieldEnum: {
     id: 'id',
+    name: 'name',
+    category: 'category',
+    mode: 'mode',
+    cue: 'cue',
+    time: 'time',
+    location: 'location',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    completedAt: 'completedAt',
+    userId: 'userId',
+    goalId: 'goalId'
+  };
+
+  export type HabitScalarFieldEnum = (typeof HabitScalarFieldEnum)[keyof typeof HabitScalarFieldEnum]
+
+
+  export const IdentityScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    category: 'category',
     userId: 'userId'
   };
 
-  export type AssessmentNextStepScalarFieldEnum = (typeof AssessmentNextStepScalarFieldEnum)[keyof typeof AssessmentNextStepScalarFieldEnum]
+  export type IdentityScalarFieldEnum = (typeof IdentityScalarFieldEnum)[keyof typeof IdentityScalarFieldEnum]
 
 
   export const NextStepGoalEntryScalarFieldEnum: {
@@ -32421,46 +31101,17 @@ export namespace Prisma {
   export const ChecklistScalarFieldEnum: {
     id: 'id',
     title: 'title',
-    templateType: 'templateType',
+    mode: 'mode',
     content: 'content',
+    customEntries: 'customEntries',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     userId: 'userId',
-    mode: 'mode',
-    templateId: 'templateId',
-    customEntries: 'customEntries'
+    habitId: 'habitId',
+    templateId: 'templateId'
   };
 
   export type ChecklistScalarFieldEnum = (typeof ChecklistScalarFieldEnum)[keyof typeof ChecklistScalarFieldEnum]
-
-
-  export const TrackedHabitScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    category: 'category',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    userId: 'userId',
-    goalEntryId: 'goalEntryId',
-    identityId: 'identityId'
-  };
-
-  export type TrackedHabitScalarFieldEnum = (typeof TrackedHabitScalarFieldEnum)[keyof typeof TrackedHabitScalarFieldEnum]
-
-
-  export const HabitCueScalarFieldEnum: {
-    id: 'id',
-    behavior: 'behavior',
-    time: 'time',
-    location: 'location',
-    isBreaking: 'isBreaking',
-    reflection: 'reflection',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    habitId: 'habitId'
-  };
-
-  export type HabitCueScalarFieldEnum = (typeof HabitCueScalarFieldEnum)[keyof typeof HabitCueScalarFieldEnum]
 
 
   export const HabitCheckInScalarFieldEnum: {
@@ -32589,9 +31240,9 @@ export namespace Prisma {
     assessmentPartTwo?: XOR<AssessmentPartTwoNullableScalarRelationFilter, AssessmentPartTwoWhereInput> | null
     assessmentPartThree?: XOR<AssessmentPartThreeNullableScalarRelationFilter, AssessmentPartThreeWhereInput> | null
     assessmentPartFour?: XOR<AssessmentPartFourNullableScalarRelationFilter, AssessmentPartFourWhereInput> | null
-    assessmentNextStep?: XOR<AssessmentNextStepNullableScalarRelationFilter, AssessmentNextStepWhereInput> | null
     checklists?: ChecklistListRelationFilter
-    trackedHabits?: TrackedHabitListRelationFilter
+    identities?: IdentityListRelationFilter
+    habits?: HabitListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -32609,9 +31260,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoOrderByWithRelationInput
     assessmentPartThree?: AssessmentPartThreeOrderByWithRelationInput
     assessmentPartFour?: AssessmentPartFourOrderByWithRelationInput
-    assessmentNextStep?: AssessmentNextStepOrderByWithRelationInput
     checklists?: ChecklistOrderByRelationAggregateInput
-    trackedHabits?: TrackedHabitOrderByRelationAggregateInput
+    identities?: IdentityOrderByRelationAggregateInput
+    habits?: HabitOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -32632,9 +31283,9 @@ export namespace Prisma {
     assessmentPartTwo?: XOR<AssessmentPartTwoNullableScalarRelationFilter, AssessmentPartTwoWhereInput> | null
     assessmentPartThree?: XOR<AssessmentPartThreeNullableScalarRelationFilter, AssessmentPartThreeWhereInput> | null
     assessmentPartFour?: XOR<AssessmentPartFourNullableScalarRelationFilter, AssessmentPartFourWhereInput> | null
-    assessmentNextStep?: XOR<AssessmentNextStepNullableScalarRelationFilter, AssessmentNextStepWhereInput> | null
     checklists?: ChecklistListRelationFilter
-    trackedHabits?: TrackedHabitListRelationFilter
+    identities?: IdentityListRelationFilter
+    habits?: HabitListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -33698,7 +32349,6 @@ export namespace Prisma {
     userId?: StringFilter<"AssessmentPartFour"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     domainVisions?: DomainVisionEntryListRelationFilter
-    identities?: IdentityRecordListRelationFilter
   }
 
   export type AssessmentPartFourOrderByWithRelationInput = {
@@ -33724,7 +32374,6 @@ export namespace Prisma {
     userId?: SortOrder
     user?: UserOrderByWithRelationInput
     domainVisions?: DomainVisionEntryOrderByRelationAggregateInput
-    identities?: IdentityRecordOrderByRelationAggregateInput
   }
 
   export type AssessmentPartFourWhereUniqueInput = Prisma.AtLeast<{
@@ -33753,7 +32402,6 @@ export namespace Prisma {
     completedAt?: DateTimeNullableFilter<"AssessmentPartFour"> | Date | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     domainVisions?: DomainVisionEntryListRelationFilter
-    identities?: IdentityRecordListRelationFilter
   }, "id" | "userId">
 
   export type AssessmentPartFourOrderByWithAggregationInput = {
@@ -33858,123 +32506,226 @@ export namespace Prisma {
     assessmentId?: StringWithAggregatesFilter<"DomainVisionEntry"> | string
   }
 
-  export type IdentityRecordWhereInput = {
-    AND?: IdentityRecordWhereInput | IdentityRecordWhereInput[]
-    OR?: IdentityRecordWhereInput[]
-    NOT?: IdentityRecordWhereInput | IdentityRecordWhereInput[]
-    id?: StringFilter<"IdentityRecord"> | string
-    identity?: StringFilter<"IdentityRecord"> | string
-    habits?: StringNullableListFilter<"IdentityRecord">
-    category?: StringNullableFilter<"IdentityRecord"> | string | null
-    assessmentId?: StringFilter<"IdentityRecord"> | string
-    assessment?: XOR<AssessmentPartFourScalarRelationFilter, AssessmentPartFourWhereInput>
-    goals?: NextStepGoalEntryListRelationFilter
-    trackedHabits?: TrackedHabitListRelationFilter
+  export type GoalWhereInput = {
+    AND?: GoalWhereInput | GoalWhereInput[]
+    OR?: GoalWhereInput[]
+    NOT?: GoalWhereInput | GoalWhereInput[]
+    id?: StringFilter<"Goal"> | string
+    text?: StringFilter<"Goal"> | string
+    category?: StringNullableFilter<"Goal"> | string | null
+    currentSystem?: StringFilter<"Goal"> | string
+    systemEval?: StringFilter<"Goal"> | string
+    systemRating?: IntFilter<"Goal"> | number
+    idealSystem?: StringFilter<"Goal"> | string
+    identityId?: StringFilter<"Goal"> | string
+    identity?: XOR<IdentityScalarRelationFilter, IdentityWhereInput>
+    habits?: HabitListRelationFilter
   }
 
-  export type IdentityRecordOrderByWithRelationInput = {
+  export type GoalOrderByWithRelationInput = {
     id?: SortOrder
-    identity?: SortOrder
-    habits?: SortOrder
+    text?: SortOrder
     category?: SortOrderInput | SortOrder
-    assessmentId?: SortOrder
-    assessment?: AssessmentPartFourOrderByWithRelationInput
-    goals?: NextStepGoalEntryOrderByRelationAggregateInput
-    trackedHabits?: TrackedHabitOrderByRelationAggregateInput
+    currentSystem?: SortOrder
+    systemEval?: SortOrder
+    systemRating?: SortOrder
+    idealSystem?: SortOrder
+    identityId?: SortOrder
+    identity?: IdentityOrderByWithRelationInput
+    habits?: HabitOrderByRelationAggregateInput
   }
 
-  export type IdentityRecordWhereUniqueInput = Prisma.AtLeast<{
+  export type GoalWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: IdentityRecordWhereInput | IdentityRecordWhereInput[]
-    OR?: IdentityRecordWhereInput[]
-    NOT?: IdentityRecordWhereInput | IdentityRecordWhereInput[]
-    identity?: StringFilter<"IdentityRecord"> | string
-    habits?: StringNullableListFilter<"IdentityRecord">
-    category?: StringNullableFilter<"IdentityRecord"> | string | null
-    assessmentId?: StringFilter<"IdentityRecord"> | string
-    assessment?: XOR<AssessmentPartFourScalarRelationFilter, AssessmentPartFourWhereInput>
-    goals?: NextStepGoalEntryListRelationFilter
-    trackedHabits?: TrackedHabitListRelationFilter
+    AND?: GoalWhereInput | GoalWhereInput[]
+    OR?: GoalWhereInput[]
+    NOT?: GoalWhereInput | GoalWhereInput[]
+    text?: StringFilter<"Goal"> | string
+    category?: StringNullableFilter<"Goal"> | string | null
+    currentSystem?: StringFilter<"Goal"> | string
+    systemEval?: StringFilter<"Goal"> | string
+    systemRating?: IntFilter<"Goal"> | number
+    idealSystem?: StringFilter<"Goal"> | string
+    identityId?: StringFilter<"Goal"> | string
+    identity?: XOR<IdentityScalarRelationFilter, IdentityWhereInput>
+    habits?: HabitListRelationFilter
   }, "id">
 
-  export type IdentityRecordOrderByWithAggregationInput = {
+  export type GoalOrderByWithAggregationInput = {
     id?: SortOrder
-    identity?: SortOrder
-    habits?: SortOrder
+    text?: SortOrder
     category?: SortOrderInput | SortOrder
-    assessmentId?: SortOrder
-    _count?: IdentityRecordCountOrderByAggregateInput
-    _max?: IdentityRecordMaxOrderByAggregateInput
-    _min?: IdentityRecordMinOrderByAggregateInput
+    currentSystem?: SortOrder
+    systemEval?: SortOrder
+    systemRating?: SortOrder
+    idealSystem?: SortOrder
+    identityId?: SortOrder
+    _count?: GoalCountOrderByAggregateInput
+    _avg?: GoalAvgOrderByAggregateInput
+    _max?: GoalMaxOrderByAggregateInput
+    _min?: GoalMinOrderByAggregateInput
+    _sum?: GoalSumOrderByAggregateInput
   }
 
-  export type IdentityRecordScalarWhereWithAggregatesInput = {
-    AND?: IdentityRecordScalarWhereWithAggregatesInput | IdentityRecordScalarWhereWithAggregatesInput[]
-    OR?: IdentityRecordScalarWhereWithAggregatesInput[]
-    NOT?: IdentityRecordScalarWhereWithAggregatesInput | IdentityRecordScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"IdentityRecord"> | string
-    identity?: StringWithAggregatesFilter<"IdentityRecord"> | string
-    habits?: StringNullableListFilter<"IdentityRecord">
-    category?: StringNullableWithAggregatesFilter<"IdentityRecord"> | string | null
-    assessmentId?: StringWithAggregatesFilter<"IdentityRecord"> | string
+  export type GoalScalarWhereWithAggregatesInput = {
+    AND?: GoalScalarWhereWithAggregatesInput | GoalScalarWhereWithAggregatesInput[]
+    OR?: GoalScalarWhereWithAggregatesInput[]
+    NOT?: GoalScalarWhereWithAggregatesInput | GoalScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Goal"> | string
+    text?: StringWithAggregatesFilter<"Goal"> | string
+    category?: StringNullableWithAggregatesFilter<"Goal"> | string | null
+    currentSystem?: StringWithAggregatesFilter<"Goal"> | string
+    systemEval?: StringWithAggregatesFilter<"Goal"> | string
+    systemRating?: IntWithAggregatesFilter<"Goal"> | number
+    idealSystem?: StringWithAggregatesFilter<"Goal"> | string
+    identityId?: StringWithAggregatesFilter<"Goal"> | string
   }
 
-  export type AssessmentNextStepWhereInput = {
-    AND?: AssessmentNextStepWhereInput | AssessmentNextStepWhereInput[]
-    OR?: AssessmentNextStepWhereInput[]
-    NOT?: AssessmentNextStepWhereInput | AssessmentNextStepWhereInput[]
-    id?: StringFilter<"AssessmentNextStep"> | string
-    createdAt?: DateTimeFilter<"AssessmentNextStep"> | Date | string
-    updatedAt?: DateTimeFilter<"AssessmentNextStep"> | Date | string
-    completedAt?: DateTimeNullableFilter<"AssessmentNextStep"> | Date | string | null
-    userId?: StringFilter<"AssessmentNextStep"> | string
+  export type HabitWhereInput = {
+    AND?: HabitWhereInput | HabitWhereInput[]
+    OR?: HabitWhereInput[]
+    NOT?: HabitWhereInput | HabitWhereInput[]
+    id?: StringFilter<"Habit"> | string
+    name?: StringFilter<"Habit"> | string
+    category?: StringNullableFilter<"Habit"> | string | null
+    mode?: StringFilter<"Habit"> | string
+    cue?: StringFilter<"Habit"> | string
+    time?: StringFilter<"Habit"> | string
+    location?: StringFilter<"Habit"> | string
+    createdAt?: DateTimeFilter<"Habit"> | Date | string
+    updatedAt?: DateTimeFilter<"Habit"> | Date | string
+    userId?: StringFilter<"Habit"> | string
+    goalId?: StringFilter<"Habit"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    goalEntries?: NextStepGoalEntryListRelationFilter
+    goal?: XOR<GoalScalarRelationFilter, GoalWhereInput>
+    checkIns?: HabitCheckInListRelationFilter
+    checklists?: ChecklistListRelationFilter
   }
 
-  export type AssessmentNextStepOrderByWithRelationInput = {
+  export type HabitOrderByWithRelationInput = {
     id?: SortOrder
+    name?: SortOrder
+    category?: SortOrderInput | SortOrder
+    mode?: SortOrder
+    cue?: SortOrder
+    time?: SortOrder
+    location?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    completedAt?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    goalId?: SortOrder
+    user?: UserOrderByWithRelationInput
+    goal?: GoalOrderByWithRelationInput
+    checkIns?: HabitCheckInOrderByRelationAggregateInput
+    checklists?: ChecklistOrderByRelationAggregateInput
+  }
+
+  export type HabitWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: HabitWhereInput | HabitWhereInput[]
+    OR?: HabitWhereInput[]
+    NOT?: HabitWhereInput | HabitWhereInput[]
+    name?: StringFilter<"Habit"> | string
+    category?: StringNullableFilter<"Habit"> | string | null
+    mode?: StringFilter<"Habit"> | string
+    cue?: StringFilter<"Habit"> | string
+    time?: StringFilter<"Habit"> | string
+    location?: StringFilter<"Habit"> | string
+    createdAt?: DateTimeFilter<"Habit"> | Date | string
+    updatedAt?: DateTimeFilter<"Habit"> | Date | string
+    userId?: StringFilter<"Habit"> | string
+    goalId?: StringFilter<"Habit"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    goal?: XOR<GoalScalarRelationFilter, GoalWhereInput>
+    checkIns?: HabitCheckInListRelationFilter
+    checklists?: ChecklistListRelationFilter
+  }, "id">
+
+  export type HabitOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrderInput | SortOrder
+    mode?: SortOrder
+    cue?: SortOrder
+    time?: SortOrder
+    location?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    goalId?: SortOrder
+    _count?: HabitCountOrderByAggregateInput
+    _max?: HabitMaxOrderByAggregateInput
+    _min?: HabitMinOrderByAggregateInput
+  }
+
+  export type HabitScalarWhereWithAggregatesInput = {
+    AND?: HabitScalarWhereWithAggregatesInput | HabitScalarWhereWithAggregatesInput[]
+    OR?: HabitScalarWhereWithAggregatesInput[]
+    NOT?: HabitScalarWhereWithAggregatesInput | HabitScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Habit"> | string
+    name?: StringWithAggregatesFilter<"Habit"> | string
+    category?: StringNullableWithAggregatesFilter<"Habit"> | string | null
+    mode?: StringWithAggregatesFilter<"Habit"> | string
+    cue?: StringWithAggregatesFilter<"Habit"> | string
+    time?: StringWithAggregatesFilter<"Habit"> | string
+    location?: StringWithAggregatesFilter<"Habit"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Habit"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Habit"> | Date | string
+    userId?: StringWithAggregatesFilter<"Habit"> | string
+    goalId?: StringWithAggregatesFilter<"Habit"> | string
+  }
+
+  export type IdentityWhereInput = {
+    AND?: IdentityWhereInput | IdentityWhereInput[]
+    OR?: IdentityWhereInput[]
+    NOT?: IdentityWhereInput | IdentityWhereInput[]
+    id?: StringFilter<"Identity"> | string
+    name?: StringFilter<"Identity"> | string
+    category?: StringNullableFilter<"Identity"> | string | null
+    userId?: StringFilter<"Identity"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    goals?: GoalListRelationFilter
+  }
+
+  export type IdentityOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrderInput | SortOrder
     userId?: SortOrder
     user?: UserOrderByWithRelationInput
-    goalEntries?: NextStepGoalEntryOrderByRelationAggregateInput
+    goals?: GoalOrderByRelationAggregateInput
   }
 
-  export type AssessmentNextStepWhereUniqueInput = Prisma.AtLeast<{
+  export type IdentityWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    userId?: string
-    AND?: AssessmentNextStepWhereInput | AssessmentNextStepWhereInput[]
-    OR?: AssessmentNextStepWhereInput[]
-    NOT?: AssessmentNextStepWhereInput | AssessmentNextStepWhereInput[]
-    createdAt?: DateTimeFilter<"AssessmentNextStep"> | Date | string
-    updatedAt?: DateTimeFilter<"AssessmentNextStep"> | Date | string
-    completedAt?: DateTimeNullableFilter<"AssessmentNextStep"> | Date | string | null
+    AND?: IdentityWhereInput | IdentityWhereInput[]
+    OR?: IdentityWhereInput[]
+    NOT?: IdentityWhereInput | IdentityWhereInput[]
+    name?: StringFilter<"Identity"> | string
+    category?: StringNullableFilter<"Identity"> | string | null
+    userId?: StringFilter<"Identity"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    goalEntries?: NextStepGoalEntryListRelationFilter
-  }, "id" | "userId">
+    goals?: GoalListRelationFilter
+  }, "id">
 
-  export type AssessmentNextStepOrderByWithAggregationInput = {
+  export type IdentityOrderByWithAggregationInput = {
     id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    completedAt?: SortOrderInput | SortOrder
+    name?: SortOrder
+    category?: SortOrderInput | SortOrder
     userId?: SortOrder
-    _count?: AssessmentNextStepCountOrderByAggregateInput
-    _max?: AssessmentNextStepMaxOrderByAggregateInput
-    _min?: AssessmentNextStepMinOrderByAggregateInput
+    _count?: IdentityCountOrderByAggregateInput
+    _max?: IdentityMaxOrderByAggregateInput
+    _min?: IdentityMinOrderByAggregateInput
   }
 
-  export type AssessmentNextStepScalarWhereWithAggregatesInput = {
-    AND?: AssessmentNextStepScalarWhereWithAggregatesInput | AssessmentNextStepScalarWhereWithAggregatesInput[]
-    OR?: AssessmentNextStepScalarWhereWithAggregatesInput[]
-    NOT?: AssessmentNextStepScalarWhereWithAggregatesInput | AssessmentNextStepScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AssessmentNextStep"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"AssessmentNextStep"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"AssessmentNextStep"> | Date | string
-    completedAt?: DateTimeNullableWithAggregatesFilter<"AssessmentNextStep"> | Date | string | null
-    userId?: StringWithAggregatesFilter<"AssessmentNextStep"> | string
+  export type IdentityScalarWhereWithAggregatesInput = {
+    AND?: IdentityScalarWhereWithAggregatesInput | IdentityScalarWhereWithAggregatesInput[]
+    OR?: IdentityScalarWhereWithAggregatesInput[]
+    NOT?: IdentityScalarWhereWithAggregatesInput | IdentityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Identity"> | string
+    name?: StringWithAggregatesFilter<"Identity"> | string
+    category?: StringNullableWithAggregatesFilter<"Identity"> | string | null
+    userId?: StringWithAggregatesFilter<"Identity"> | string
   }
 
   export type NextStepGoalEntryWhereInput = {
@@ -33991,9 +32742,6 @@ export namespace Prisma {
     componentHabits?: StringNullableListFilter<"NextStepGoalEntry">
     nextStepId?: StringFilter<"NextStepGoalEntry"> | string
     identityId?: StringNullableFilter<"NextStepGoalEntry"> | string | null
-    nextStep?: XOR<AssessmentNextStepScalarRelationFilter, AssessmentNextStepWhereInput>
-    identity?: XOR<IdentityRecordNullableScalarRelationFilter, IdentityRecordWhereInput> | null
-    trackedHabits?: TrackedHabitListRelationFilter
   }
 
   export type NextStepGoalEntryOrderByWithRelationInput = {
@@ -34007,9 +32755,6 @@ export namespace Prisma {
     componentHabits?: SortOrder
     nextStepId?: SortOrder
     identityId?: SortOrderInput | SortOrder
-    nextStep?: AssessmentNextStepOrderByWithRelationInput
-    identity?: IdentityRecordOrderByWithRelationInput
-    trackedHabits?: TrackedHabitOrderByRelationAggregateInput
   }
 
   export type NextStepGoalEntryWhereUniqueInput = Prisma.AtLeast<{
@@ -34026,9 +32771,6 @@ export namespace Prisma {
     componentHabits?: StringNullableListFilter<"NextStepGoalEntry">
     nextStepId?: StringFilter<"NextStepGoalEntry"> | string
     identityId?: StringNullableFilter<"NextStepGoalEntry"> | string | null
-    nextStep?: XOR<AssessmentNextStepScalarRelationFilter, AssessmentNextStepWhereInput>
-    identity?: XOR<IdentityRecordNullableScalarRelationFilter, IdentityRecordWhereInput> | null
-    trackedHabits?: TrackedHabitListRelationFilter
   }, "id">
 
   export type NextStepGoalEntryOrderByWithAggregationInput = {
@@ -34141,30 +32883,32 @@ export namespace Prisma {
     NOT?: ChecklistWhereInput | ChecklistWhereInput[]
     id?: StringFilter<"Checklist"> | string
     title?: StringFilter<"Checklist"> | string
-    templateType?: StringFilter<"Checklist"> | string
+    mode?: StringFilter<"Checklist"> | string
     content?: StringFilter<"Checklist"> | string
+    customEntries?: StringFilter<"Checklist"> | string
     createdAt?: DateTimeFilter<"Checklist"> | Date | string
     updatedAt?: DateTimeFilter<"Checklist"> | Date | string
     userId?: StringFilter<"Checklist"> | string
-    mode?: StringFilter<"Checklist"> | string
+    habitId?: StringNullableFilter<"Checklist"> | string | null
     templateId?: StringNullableFilter<"Checklist"> | string | null
-    customEntries?: StringFilter<"Checklist"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    habit?: XOR<HabitNullableScalarRelationFilter, HabitWhereInput> | null
     template?: XOR<ChecklistTemplateNullableScalarRelationFilter, ChecklistTemplateWhereInput> | null
   }
 
   export type ChecklistOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
-    templateType?: SortOrder
+    mode?: SortOrder
     content?: SortOrder
+    customEntries?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
-    mode?: SortOrder
+    habitId?: SortOrderInput | SortOrder
     templateId?: SortOrderInput | SortOrder
-    customEntries?: SortOrder
     user?: UserOrderByWithRelationInput
+    habit?: HabitOrderByWithRelationInput
     template?: ChecklistTemplateOrderByWithRelationInput
   }
 
@@ -34174,29 +32918,30 @@ export namespace Prisma {
     OR?: ChecklistWhereInput[]
     NOT?: ChecklistWhereInput | ChecklistWhereInput[]
     title?: StringFilter<"Checklist"> | string
-    templateType?: StringFilter<"Checklist"> | string
+    mode?: StringFilter<"Checklist"> | string
     content?: StringFilter<"Checklist"> | string
+    customEntries?: StringFilter<"Checklist"> | string
     createdAt?: DateTimeFilter<"Checklist"> | Date | string
     updatedAt?: DateTimeFilter<"Checklist"> | Date | string
     userId?: StringFilter<"Checklist"> | string
-    mode?: StringFilter<"Checklist"> | string
+    habitId?: StringNullableFilter<"Checklist"> | string | null
     templateId?: StringNullableFilter<"Checklist"> | string | null
-    customEntries?: StringFilter<"Checklist"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    habit?: XOR<HabitNullableScalarRelationFilter, HabitWhereInput> | null
     template?: XOR<ChecklistTemplateNullableScalarRelationFilter, ChecklistTemplateWhereInput> | null
   }, "id">
 
   export type ChecklistOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
-    templateType?: SortOrder
+    mode?: SortOrder
     content?: SortOrder
+    customEntries?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
-    mode?: SortOrder
+    habitId?: SortOrderInput | SortOrder
     templateId?: SortOrderInput | SortOrder
-    customEntries?: SortOrder
     _count?: ChecklistCountOrderByAggregateInput
     _max?: ChecklistMaxOrderByAggregateInput
     _min?: ChecklistMinOrderByAggregateInput
@@ -34208,172 +32953,14 @@ export namespace Prisma {
     NOT?: ChecklistScalarWhereWithAggregatesInput | ChecklistScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Checklist"> | string
     title?: StringWithAggregatesFilter<"Checklist"> | string
-    templateType?: StringWithAggregatesFilter<"Checklist"> | string
+    mode?: StringWithAggregatesFilter<"Checklist"> | string
     content?: StringWithAggregatesFilter<"Checklist"> | string
+    customEntries?: StringWithAggregatesFilter<"Checklist"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Checklist"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Checklist"> | Date | string
     userId?: StringWithAggregatesFilter<"Checklist"> | string
-    mode?: StringWithAggregatesFilter<"Checklist"> | string
+    habitId?: StringNullableWithAggregatesFilter<"Checklist"> | string | null
     templateId?: StringNullableWithAggregatesFilter<"Checklist"> | string | null
-    customEntries?: StringWithAggregatesFilter<"Checklist"> | string
-  }
-
-  export type TrackedHabitWhereInput = {
-    AND?: TrackedHabitWhereInput | TrackedHabitWhereInput[]
-    OR?: TrackedHabitWhereInput[]
-    NOT?: TrackedHabitWhereInput | TrackedHabitWhereInput[]
-    id?: StringFilter<"TrackedHabit"> | string
-    name?: StringFilter<"TrackedHabit"> | string
-    category?: StringNullableFilter<"TrackedHabit"> | string | null
-    createdAt?: DateTimeFilter<"TrackedHabit"> | Date | string
-    updatedAt?: DateTimeFilter<"TrackedHabit"> | Date | string
-    userId?: StringFilter<"TrackedHabit"> | string
-    goalEntryId?: StringNullableFilter<"TrackedHabit"> | string | null
-    identityId?: StringNullableFilter<"TrackedHabit"> | string | null
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    goalEntry?: XOR<NextStepGoalEntryNullableScalarRelationFilter, NextStepGoalEntryWhereInput> | null
-    identity?: XOR<IdentityRecordNullableScalarRelationFilter, IdentityRecordWhereInput> | null
-    cues?: HabitCueListRelationFilter
-    checkIns?: HabitCheckInListRelationFilter
-  }
-
-  export type TrackedHabitOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    category?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    goalEntryId?: SortOrderInput | SortOrder
-    identityId?: SortOrderInput | SortOrder
-    user?: UserOrderByWithRelationInput
-    goalEntry?: NextStepGoalEntryOrderByWithRelationInput
-    identity?: IdentityRecordOrderByWithRelationInput
-    cues?: HabitCueOrderByRelationAggregateInput
-    checkIns?: HabitCheckInOrderByRelationAggregateInput
-  }
-
-  export type TrackedHabitWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    userId_name?: TrackedHabitUserIdNameCompoundUniqueInput
-    AND?: TrackedHabitWhereInput | TrackedHabitWhereInput[]
-    OR?: TrackedHabitWhereInput[]
-    NOT?: TrackedHabitWhereInput | TrackedHabitWhereInput[]
-    name?: StringFilter<"TrackedHabit"> | string
-    category?: StringNullableFilter<"TrackedHabit"> | string | null
-    createdAt?: DateTimeFilter<"TrackedHabit"> | Date | string
-    updatedAt?: DateTimeFilter<"TrackedHabit"> | Date | string
-    userId?: StringFilter<"TrackedHabit"> | string
-    goalEntryId?: StringNullableFilter<"TrackedHabit"> | string | null
-    identityId?: StringNullableFilter<"TrackedHabit"> | string | null
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    goalEntry?: XOR<NextStepGoalEntryNullableScalarRelationFilter, NextStepGoalEntryWhereInput> | null
-    identity?: XOR<IdentityRecordNullableScalarRelationFilter, IdentityRecordWhereInput> | null
-    cues?: HabitCueListRelationFilter
-    checkIns?: HabitCheckInListRelationFilter
-  }, "id" | "userId_name">
-
-  export type TrackedHabitOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    category?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    goalEntryId?: SortOrderInput | SortOrder
-    identityId?: SortOrderInput | SortOrder
-    _count?: TrackedHabitCountOrderByAggregateInput
-    _max?: TrackedHabitMaxOrderByAggregateInput
-    _min?: TrackedHabitMinOrderByAggregateInput
-  }
-
-  export type TrackedHabitScalarWhereWithAggregatesInput = {
-    AND?: TrackedHabitScalarWhereWithAggregatesInput | TrackedHabitScalarWhereWithAggregatesInput[]
-    OR?: TrackedHabitScalarWhereWithAggregatesInput[]
-    NOT?: TrackedHabitScalarWhereWithAggregatesInput | TrackedHabitScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"TrackedHabit"> | string
-    name?: StringWithAggregatesFilter<"TrackedHabit"> | string
-    category?: StringNullableWithAggregatesFilter<"TrackedHabit"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"TrackedHabit"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"TrackedHabit"> | Date | string
-    userId?: StringWithAggregatesFilter<"TrackedHabit"> | string
-    goalEntryId?: StringNullableWithAggregatesFilter<"TrackedHabit"> | string | null
-    identityId?: StringNullableWithAggregatesFilter<"TrackedHabit"> | string | null
-  }
-
-  export type HabitCueWhereInput = {
-    AND?: HabitCueWhereInput | HabitCueWhereInput[]
-    OR?: HabitCueWhereInput[]
-    NOT?: HabitCueWhereInput | HabitCueWhereInput[]
-    id?: StringFilter<"HabitCue"> | string
-    behavior?: StringFilter<"HabitCue"> | string
-    time?: StringFilter<"HabitCue"> | string
-    location?: StringFilter<"HabitCue"> | string
-    isBreaking?: BoolFilter<"HabitCue"> | boolean
-    reflection?: StringFilter<"HabitCue"> | string
-    createdAt?: DateTimeFilter<"HabitCue"> | Date | string
-    updatedAt?: DateTimeFilter<"HabitCue"> | Date | string
-    habitId?: StringFilter<"HabitCue"> | string
-    habit?: XOR<TrackedHabitScalarRelationFilter, TrackedHabitWhereInput>
-  }
-
-  export type HabitCueOrderByWithRelationInput = {
-    id?: SortOrder
-    behavior?: SortOrder
-    time?: SortOrder
-    location?: SortOrder
-    isBreaking?: SortOrder
-    reflection?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    habitId?: SortOrder
-    habit?: TrackedHabitOrderByWithRelationInput
-  }
-
-  export type HabitCueWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: HabitCueWhereInput | HabitCueWhereInput[]
-    OR?: HabitCueWhereInput[]
-    NOT?: HabitCueWhereInput | HabitCueWhereInput[]
-    behavior?: StringFilter<"HabitCue"> | string
-    time?: StringFilter<"HabitCue"> | string
-    location?: StringFilter<"HabitCue"> | string
-    isBreaking?: BoolFilter<"HabitCue"> | boolean
-    reflection?: StringFilter<"HabitCue"> | string
-    createdAt?: DateTimeFilter<"HabitCue"> | Date | string
-    updatedAt?: DateTimeFilter<"HabitCue"> | Date | string
-    habitId?: StringFilter<"HabitCue"> | string
-    habit?: XOR<TrackedHabitScalarRelationFilter, TrackedHabitWhereInput>
-  }, "id">
-
-  export type HabitCueOrderByWithAggregationInput = {
-    id?: SortOrder
-    behavior?: SortOrder
-    time?: SortOrder
-    location?: SortOrder
-    isBreaking?: SortOrder
-    reflection?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    habitId?: SortOrder
-    _count?: HabitCueCountOrderByAggregateInput
-    _max?: HabitCueMaxOrderByAggregateInput
-    _min?: HabitCueMinOrderByAggregateInput
-  }
-
-  export type HabitCueScalarWhereWithAggregatesInput = {
-    AND?: HabitCueScalarWhereWithAggregatesInput | HabitCueScalarWhereWithAggregatesInput[]
-    OR?: HabitCueScalarWhereWithAggregatesInput[]
-    NOT?: HabitCueScalarWhereWithAggregatesInput | HabitCueScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"HabitCue"> | string
-    behavior?: StringWithAggregatesFilter<"HabitCue"> | string
-    time?: StringWithAggregatesFilter<"HabitCue"> | string
-    location?: StringWithAggregatesFilter<"HabitCue"> | string
-    isBreaking?: BoolWithAggregatesFilter<"HabitCue"> | boolean
-    reflection?: StringWithAggregatesFilter<"HabitCue"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"HabitCue"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"HabitCue"> | Date | string
-    habitId?: StringWithAggregatesFilter<"HabitCue"> | string
   }
 
   export type HabitCheckInWhereInput = {
@@ -34387,7 +32974,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"HabitCheckIn"> | Date | string
     updatedAt?: DateTimeFilter<"HabitCheckIn"> | Date | string
     habitId?: StringFilter<"HabitCheckIn"> | string
-    habit?: XOR<TrackedHabitScalarRelationFilter, TrackedHabitWhereInput>
+    habit?: XOR<HabitScalarRelationFilter, HabitWhereInput>
   }
 
   export type HabitCheckInOrderByWithRelationInput = {
@@ -34398,7 +32985,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     habitId?: SortOrder
-    habit?: TrackedHabitOrderByWithRelationInput
+    habit?: HabitOrderByWithRelationInput
   }
 
   export type HabitCheckInWhereUniqueInput = Prisma.AtLeast<{
@@ -34413,7 +33000,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"HabitCheckIn"> | Date | string
     updatedAt?: DateTimeFilter<"HabitCheckIn"> | Date | string
     habitId?: StringFilter<"HabitCheckIn"> | string
-    habit?: XOR<TrackedHabitScalarRelationFilter, TrackedHabitWhereInput>
+    habit?: XOR<HabitScalarRelationFilter, HabitWhereInput>
   }, "id" | "habitId_date">
 
   export type HabitCheckInOrderByWithAggregationInput = {
@@ -34457,9 +33044,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
+    identities?: IdentityCreateNestedManyWithoutUserInput
+    habits?: HabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -34477,9 +33064,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutUserInput
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -34497,9 +33084,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
+    identities?: IdentityUpdateManyWithoutUserNestedInput
+    habits?: HabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -34517,9 +33104,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutUserNestedInput
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -35655,7 +34242,6 @@ export namespace Prisma {
     completedAt?: Date | string | null
     user: UserCreateNestedOneWithoutAssessmentPartFourInput
     domainVisions?: DomainVisionEntryCreateNestedManyWithoutAssessmentInput
-    identities?: IdentityRecordCreateNestedManyWithoutAssessmentInput
   }
 
   export type AssessmentPartFourUncheckedCreateInput = {
@@ -35680,7 +34266,6 @@ export namespace Prisma {
     completedAt?: Date | string | null
     userId: string
     domainVisions?: DomainVisionEntryUncheckedCreateNestedManyWithoutAssessmentInput
-    identities?: IdentityRecordUncheckedCreateNestedManyWithoutAssessmentInput
   }
 
   export type AssessmentPartFourUpdateInput = {
@@ -35705,7 +34290,6 @@ export namespace Prisma {
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneRequiredWithoutAssessmentPartFourNestedInput
     domainVisions?: DomainVisionEntryUpdateManyWithoutAssessmentNestedInput
-    identities?: IdentityRecordUpdateManyWithoutAssessmentNestedInput
   }
 
   export type AssessmentPartFourUncheckedUpdateInput = {
@@ -35730,7 +34314,6 @@ export namespace Prisma {
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
     domainVisions?: DomainVisionEntryUncheckedUpdateManyWithoutAssessmentNestedInput
-    identities?: IdentityRecordUncheckedUpdateManyWithoutAssessmentNestedInput
   }
 
   export type AssessmentPartFourCreateManyInput = {
@@ -35849,125 +34432,239 @@ export namespace Prisma {
     assessmentId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type IdentityRecordCreateInput = {
+  export type GoalCreateInput = {
     id?: string
-    identity: string
-    habits?: IdentityRecordCreatehabitsInput | string[]
+    text: string
     category?: string | null
-    assessment: AssessmentPartFourCreateNestedOneWithoutIdentitiesInput
-    goals?: NextStepGoalEntryCreateNestedManyWithoutIdentityInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutIdentityInput
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    identity: IdentityCreateNestedOneWithoutGoalsInput
+    habits?: HabitCreateNestedManyWithoutGoalInput
   }
 
-  export type IdentityRecordUncheckedCreateInput = {
+  export type GoalUncheckedCreateInput = {
     id?: string
-    identity: string
-    habits?: IdentityRecordCreatehabitsInput | string[]
+    text: string
     category?: string | null
-    assessmentId: string
-    goals?: NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutIdentityInput
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    identityId: string
+    habits?: HabitUncheckedCreateNestedManyWithoutGoalInput
   }
 
-  export type IdentityRecordUpdateInput = {
+  export type GoalUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    identity?: StringFieldUpdateOperationsInput | string
-    habits?: IdentityRecordUpdatehabitsInput | string[]
+    text?: StringFieldUpdateOperationsInput | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
-    assessment?: AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput
-    goals?: NextStepGoalEntryUpdateManyWithoutIdentityNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutIdentityNestedInput
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    identity?: IdentityUpdateOneRequiredWithoutGoalsNestedInput
+    habits?: HabitUpdateManyWithoutGoalNestedInput
   }
 
-  export type IdentityRecordUncheckedUpdateInput = {
+  export type GoalUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    identity?: StringFieldUpdateOperationsInput | string
-    habits?: IdentityRecordUpdatehabitsInput | string[]
+    text?: StringFieldUpdateOperationsInput | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
-    assessmentId?: StringFieldUpdateOperationsInput | string
-    goals?: NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutIdentityNestedInput
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    identityId?: StringFieldUpdateOperationsInput | string
+    habits?: HabitUncheckedUpdateManyWithoutGoalNestedInput
   }
 
-  export type IdentityRecordCreateManyInput = {
+  export type GoalCreateManyInput = {
     id?: string
-    identity: string
-    habits?: IdentityRecordCreatehabitsInput | string[]
+    text: string
     category?: string | null
-    assessmentId: string
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    identityId: string
   }
 
-  export type IdentityRecordUpdateManyMutationInput = {
+  export type GoalUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    identity?: StringFieldUpdateOperationsInput | string
-    habits?: IdentityRecordUpdatehabitsInput | string[]
+    text?: StringFieldUpdateOperationsInput | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
   }
 
-  export type IdentityRecordUncheckedUpdateManyInput = {
+  export type GoalUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    identity?: StringFieldUpdateOperationsInput | string
-    habits?: IdentityRecordUpdatehabitsInput | string[]
+    text?: StringFieldUpdateOperationsInput | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
-    assessmentId?: StringFieldUpdateOperationsInput | string
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    identityId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type AssessmentNextStepCreateInput = {
+  export type HabitCreateInput = {
     id?: string
+    name: string
+    category?: string | null
+    mode?: string
+    cue?: string
+    time?: string
+    location?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    completedAt?: Date | string | null
-    user: UserCreateNestedOneWithoutAssessmentNextStepInput
-    goalEntries?: NextStepGoalEntryCreateNestedManyWithoutNextStepInput
+    user: UserCreateNestedOneWithoutHabitsInput
+    goal: GoalCreateNestedOneWithoutHabitsInput
+    checkIns?: HabitCheckInCreateNestedManyWithoutHabitInput
+    checklists?: ChecklistCreateNestedManyWithoutHabitInput
   }
 
-  export type AssessmentNextStepUncheckedCreateInput = {
+  export type HabitUncheckedCreateInput = {
     id?: string
+    name: string
+    category?: string | null
+    mode?: string
+    cue?: string
+    time?: string
+    location?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    completedAt?: Date | string | null
     userId: string
-    goalEntries?: NextStepGoalEntryUncheckedCreateNestedManyWithoutNextStepInput
+    goalId: string
+    checkIns?: HabitCheckInUncheckedCreateNestedManyWithoutHabitInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutHabitInput
   }
 
-  export type AssessmentNextStepUpdateInput = {
+  export type HabitUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    user?: UserUpdateOneRequiredWithoutAssessmentNextStepNestedInput
-    goalEntries?: NextStepGoalEntryUpdateManyWithoutNextStepNestedInput
+    user?: UserUpdateOneRequiredWithoutHabitsNestedInput
+    goal?: GoalUpdateOneRequiredWithoutHabitsNestedInput
+    checkIns?: HabitCheckInUpdateManyWithoutHabitNestedInput
+    checklists?: ChecklistUpdateManyWithoutHabitNestedInput
   }
 
-  export type AssessmentNextStepUncheckedUpdateInput = {
+  export type HabitUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
-    goalEntries?: NextStepGoalEntryUncheckedUpdateManyWithoutNextStepNestedInput
+    goalId?: StringFieldUpdateOperationsInput | string
+    checkIns?: HabitCheckInUncheckedUpdateManyWithoutHabitNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutHabitNestedInput
   }
 
-  export type AssessmentNextStepCreateManyInput = {
+  export type HabitCreateManyInput = {
     id?: string
+    name: string
+    category?: string | null
+    mode?: string
+    cue?: string
+    time?: string
+    location?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    completedAt?: Date | string | null
+    userId: string
+    goalId: string
+  }
+
+  export type HabitUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HabitUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    goalId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type IdentityCreateInput = {
+    id?: string
+    name: string
+    category?: string | null
+    user: UserCreateNestedOneWithoutIdentitiesInput
+    goals?: GoalCreateNestedManyWithoutIdentityInput
+  }
+
+  export type IdentityUncheckedCreateInput = {
+    id?: string
+    name: string
+    category?: string | null
+    userId: string
+    goals?: GoalUncheckedCreateNestedManyWithoutIdentityInput
+  }
+
+  export type IdentityUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutIdentitiesNestedInput
+    goals?: GoalUpdateManyWithoutIdentityNestedInput
+  }
+
+  export type IdentityUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    goals?: GoalUncheckedUpdateManyWithoutIdentityNestedInput
+  }
+
+  export type IdentityCreateManyInput = {
+    id?: string
+    name: string
+    category?: string | null
     userId: string
   }
 
-  export type AssessmentNextStepUpdateManyMutationInput = {
+  export type IdentityUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type AssessmentNextStepUncheckedUpdateManyInput = {
+  export type IdentityUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -35980,9 +34677,8 @@ export namespace Prisma {
     systemRating?: number
     idealSystem?: string
     componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
-    nextStep: AssessmentNextStepCreateNestedOneWithoutGoalEntriesInput
-    identity?: IdentityRecordCreateNestedOneWithoutGoalsInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutGoalEntryInput
+    nextStepId: string
+    identityId?: string | null
   }
 
   export type NextStepGoalEntryUncheckedCreateInput = {
@@ -35996,7 +34692,6 @@ export namespace Prisma {
     componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
     nextStepId: string
     identityId?: string | null
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutGoalEntryInput
   }
 
   export type NextStepGoalEntryUpdateInput = {
@@ -36008,9 +34703,8 @@ export namespace Prisma {
     systemRating?: IntFieldUpdateOperationsInput | number
     idealSystem?: StringFieldUpdateOperationsInput | string
     componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
-    nextStep?: AssessmentNextStepUpdateOneRequiredWithoutGoalEntriesNestedInput
-    identity?: IdentityRecordUpdateOneWithoutGoalsNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutGoalEntryNestedInput
+    nextStepId?: StringFieldUpdateOperationsInput | string
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type NextStepGoalEntryUncheckedUpdateInput = {
@@ -36024,7 +34718,6 @@ export namespace Prisma {
     componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
     nextStepId?: StringFieldUpdateOperationsInput | string
     identityId?: NullableStringFieldUpdateOperationsInput | string | null
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutGoalEntryNestedInput
   }
 
   export type NextStepGoalEntryCreateManyInput = {
@@ -36049,6 +34742,8 @@ export namespace Prisma {
     systemRating?: IntFieldUpdateOperationsInput | number
     idealSystem?: StringFieldUpdateOperationsInput | string
     componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
+    nextStepId?: StringFieldUpdateOperationsInput | string
+    identityId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type NextStepGoalEntryUncheckedUpdateManyInput = {
@@ -36148,255 +34843,89 @@ export namespace Prisma {
   export type ChecklistCreateInput = {
     id?: string
     title?: string
-    templateType?: string
+    mode?: string
     content?: string
+    customEntries?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    mode?: string
-    customEntries?: string
     user: UserCreateNestedOneWithoutChecklistsInput
+    habit?: HabitCreateNestedOneWithoutChecklistsInput
     template?: ChecklistTemplateCreateNestedOneWithoutChecklistsInput
   }
 
   export type ChecklistUncheckedCreateInput = {
     id?: string
     title?: string
-    templateType?: string
+    mode?: string
     content?: string
+    customEntries?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    mode?: string
+    habitId?: string | null
     templateId?: string | null
-    customEntries?: string
   }
 
   export type ChecklistUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    templateType?: StringFieldUpdateOperationsInput | string
+    mode?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    customEntries?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    mode?: StringFieldUpdateOperationsInput | string
-    customEntries?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutChecklistsNestedInput
+    habit?: HabitUpdateOneWithoutChecklistsNestedInput
     template?: ChecklistTemplateUpdateOneWithoutChecklistsNestedInput
   }
 
   export type ChecklistUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    templateType?: StringFieldUpdateOperationsInput | string
+    mode?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    customEntries?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    mode?: StringFieldUpdateOperationsInput | string
+    habitId?: NullableStringFieldUpdateOperationsInput | string | null
     templateId?: NullableStringFieldUpdateOperationsInput | string | null
-    customEntries?: StringFieldUpdateOperationsInput | string
   }
 
   export type ChecklistCreateManyInput = {
     id?: string
     title?: string
-    templateType?: string
+    mode?: string
     content?: string
+    customEntries?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    mode?: string
+    habitId?: string | null
     templateId?: string | null
-    customEntries?: string
   }
 
   export type ChecklistUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    templateType?: StringFieldUpdateOperationsInput | string
+    mode?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    customEntries?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    mode?: StringFieldUpdateOperationsInput | string
-    customEntries?: StringFieldUpdateOperationsInput | string
   }
 
   export type ChecklistUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    templateType?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
     mode?: StringFieldUpdateOperationsInput | string
-    templateId?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
     customEntries?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type TrackedHabitCreateInput = {
-    id?: string
-    name: string
-    category?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTrackedHabitsInput
-    goalEntry?: NextStepGoalEntryCreateNestedOneWithoutTrackedHabitsInput
-    identity?: IdentityRecordCreateNestedOneWithoutTrackedHabitsInput
-    cues?: HabitCueCreateNestedManyWithoutHabitInput
-    checkIns?: HabitCheckInCreateNestedManyWithoutHabitInput
-  }
-
-  export type TrackedHabitUncheckedCreateInput = {
-    id?: string
-    name: string
-    category?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    goalEntryId?: string | null
-    identityId?: string | null
-    cues?: HabitCueUncheckedCreateNestedManyWithoutHabitInput
-    checkIns?: HabitCheckInUncheckedCreateNestedManyWithoutHabitInput
-  }
-
-  export type TrackedHabitUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTrackedHabitsNestedInput
-    goalEntry?: NextStepGoalEntryUpdateOneWithoutTrackedHabitsNestedInput
-    identity?: IdentityRecordUpdateOneWithoutTrackedHabitsNestedInput
-    cues?: HabitCueUpdateManyWithoutHabitNestedInput
-    checkIns?: HabitCheckInUpdateManyWithoutHabitNestedInput
-  }
-
-  export type TrackedHabitUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
-    identityId?: NullableStringFieldUpdateOperationsInput | string | null
-    cues?: HabitCueUncheckedUpdateManyWithoutHabitNestedInput
-    checkIns?: HabitCheckInUncheckedUpdateManyWithoutHabitNestedInput
-  }
-
-  export type TrackedHabitCreateManyInput = {
-    id?: string
-    name: string
-    category?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    goalEntryId?: string | null
-    identityId?: string | null
-  }
-
-  export type TrackedHabitUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TrackedHabitUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
-    identityId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type HabitCueCreateInput = {
-    id?: string
-    behavior: string
-    time: string
-    location: string
-    isBreaking?: boolean
-    reflection?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    habit: TrackedHabitCreateNestedOneWithoutCuesInput
-  }
-
-  export type HabitCueUncheckedCreateInput = {
-    id?: string
-    behavior: string
-    time: string
-    location: string
-    isBreaking?: boolean
-    reflection?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    habitId: string
-  }
-
-  export type HabitCueUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    behavior?: StringFieldUpdateOperationsInput | string
-    time?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    isBreaking?: BoolFieldUpdateOperationsInput | boolean
-    reflection?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    habit?: TrackedHabitUpdateOneRequiredWithoutCuesNestedInput
-  }
-
-  export type HabitCueUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    behavior?: StringFieldUpdateOperationsInput | string
-    time?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    isBreaking?: BoolFieldUpdateOperationsInput | boolean
-    reflection?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    habitId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type HabitCueCreateManyInput = {
-    id?: string
-    behavior: string
-    time: string
-    location: string
-    isBreaking?: boolean
-    reflection?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    habitId: string
-  }
-
-  export type HabitCueUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    behavior?: StringFieldUpdateOperationsInput | string
-    time?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    isBreaking?: BoolFieldUpdateOperationsInput | boolean
-    reflection?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type HabitCueUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    behavior?: StringFieldUpdateOperationsInput | string
-    time?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    isBreaking?: BoolFieldUpdateOperationsInput | boolean
-    reflection?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    habitId?: StringFieldUpdateOperationsInput | string
+    habitId?: NullableStringFieldUpdateOperationsInput | string | null
+    templateId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type HabitCheckInCreateInput = {
@@ -36406,7 +34935,7 @@ export namespace Prisma {
     note?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    habit: TrackedHabitCreateNestedOneWithoutCheckInsInput
+    habit: HabitCreateNestedOneWithoutCheckInsInput
   }
 
   export type HabitCheckInUncheckedCreateInput = {
@@ -36426,7 +34955,7 @@ export namespace Prisma {
     note?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    habit?: TrackedHabitUpdateOneRequiredWithoutCheckInsNestedInput
+    habit?: HabitUpdateOneRequiredWithoutCheckInsNestedInput
   }
 
   export type HabitCheckInUncheckedUpdateInput = {
@@ -36558,21 +35087,22 @@ export namespace Prisma {
     isNot?: AssessmentPartFourWhereInput | null
   }
 
-  export type AssessmentNextStepNullableScalarRelationFilter = {
-    is?: AssessmentNextStepWhereInput | null
-    isNot?: AssessmentNextStepWhereInput | null
-  }
-
   export type ChecklistListRelationFilter = {
     every?: ChecklistWhereInput
     some?: ChecklistWhereInput
     none?: ChecklistWhereInput
   }
 
-  export type TrackedHabitListRelationFilter = {
-    every?: TrackedHabitWhereInput
-    some?: TrackedHabitWhereInput
-    none?: TrackedHabitWhereInput
+  export type IdentityListRelationFilter = {
+    every?: IdentityWhereInput
+    some?: IdentityWhereInput
+    none?: IdentityWhereInput
+  }
+
+  export type HabitListRelationFilter = {
+    every?: HabitWhereInput
+    some?: HabitWhereInput
+    none?: HabitWhereInput
   }
 
   export type SortOrderInput = {
@@ -36596,7 +35126,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type TrackedHabitOrderByRelationAggregateInput = {
+  export type IdentityOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type HabitOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -37308,17 +35842,7 @@ export namespace Prisma {
     none?: DomainVisionEntryWhereInput
   }
 
-  export type IdentityRecordListRelationFilter = {
-    every?: IdentityRecordWhereInput
-    some?: IdentityRecordWhereInput
-    none?: IdentityRecordWhereInput
-  }
-
   export type DomainVisionEntryOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type IdentityRecordOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -37405,62 +35929,6 @@ export namespace Prisma {
     assessmentId?: SortOrder
   }
 
-  export type NextStepGoalEntryListRelationFilter = {
-    every?: NextStepGoalEntryWhereInput
-    some?: NextStepGoalEntryWhereInput
-    none?: NextStepGoalEntryWhereInput
-  }
-
-  export type NextStepGoalEntryOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type IdentityRecordCountOrderByAggregateInput = {
-    id?: SortOrder
-    identity?: SortOrder
-    habits?: SortOrder
-    category?: SortOrder
-    assessmentId?: SortOrder
-  }
-
-  export type IdentityRecordMaxOrderByAggregateInput = {
-    id?: SortOrder
-    identity?: SortOrder
-    category?: SortOrder
-    assessmentId?: SortOrder
-  }
-
-  export type IdentityRecordMinOrderByAggregateInput = {
-    id?: SortOrder
-    identity?: SortOrder
-    category?: SortOrder
-    assessmentId?: SortOrder
-  }
-
-  export type AssessmentNextStepCountOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    completedAt?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type AssessmentNextStepMaxOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    completedAt?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type AssessmentNextStepMinOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    completedAt?: SortOrder
-    userId?: SortOrder
-  }
-
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -37472,14 +35940,154 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type AssessmentNextStepScalarRelationFilter = {
-    is?: AssessmentNextStepWhereInput
-    isNot?: AssessmentNextStepWhereInput
+  export type IdentityScalarRelationFilter = {
+    is?: IdentityWhereInput
+    isNot?: IdentityWhereInput
   }
 
-  export type IdentityRecordNullableScalarRelationFilter = {
-    is?: IdentityRecordWhereInput | null
-    isNot?: IdentityRecordWhereInput | null
+  export type GoalCountOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    category?: SortOrder
+    currentSystem?: SortOrder
+    systemEval?: SortOrder
+    systemRating?: SortOrder
+    idealSystem?: SortOrder
+    identityId?: SortOrder
+  }
+
+  export type GoalAvgOrderByAggregateInput = {
+    systemRating?: SortOrder
+  }
+
+  export type GoalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    category?: SortOrder
+    currentSystem?: SortOrder
+    systemEval?: SortOrder
+    systemRating?: SortOrder
+    idealSystem?: SortOrder
+    identityId?: SortOrder
+  }
+
+  export type GoalMinOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    category?: SortOrder
+    currentSystem?: SortOrder
+    systemEval?: SortOrder
+    systemRating?: SortOrder
+    idealSystem?: SortOrder
+    identityId?: SortOrder
+  }
+
+  export type GoalSumOrderByAggregateInput = {
+    systemRating?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type GoalScalarRelationFilter = {
+    is?: GoalWhereInput
+    isNot?: GoalWhereInput
+  }
+
+  export type HabitCheckInListRelationFilter = {
+    every?: HabitCheckInWhereInput
+    some?: HabitCheckInWhereInput
+    none?: HabitCheckInWhereInput
+  }
+
+  export type HabitCheckInOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type HabitCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    mode?: SortOrder
+    cue?: SortOrder
+    time?: SortOrder
+    location?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    goalId?: SortOrder
+  }
+
+  export type HabitMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    mode?: SortOrder
+    cue?: SortOrder
+    time?: SortOrder
+    location?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    goalId?: SortOrder
+  }
+
+  export type HabitMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    mode?: SortOrder
+    cue?: SortOrder
+    time?: SortOrder
+    location?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    goalId?: SortOrder
+  }
+
+  export type GoalListRelationFilter = {
+    every?: GoalWhereInput
+    some?: GoalWhereInput
+    none?: GoalWhereInput
+  }
+
+  export type GoalOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type IdentityCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type IdentityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type IdentityMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    userId?: SortOrder
   }
 
   export type NextStepGoalEntryCountOrderByAggregateInput = {
@@ -37527,22 +36135,6 @@ export namespace Prisma {
     systemRating?: SortOrder
   }
 
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
   export type ChecklistTemplateCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -37576,6 +36168,11 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type HabitNullableScalarRelationFilter = {
+    is?: HabitWhereInput | null
+    isNot?: HabitWhereInput | null
+  }
+
   export type ChecklistTemplateNullableScalarRelationFilter = {
     is?: ChecklistTemplateWhereInput | null
     isNot?: ChecklistTemplateWhereInput | null
@@ -37584,144 +36181,45 @@ export namespace Prisma {
   export type ChecklistCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    templateType?: SortOrder
+    mode?: SortOrder
     content?: SortOrder
+    customEntries?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
-    mode?: SortOrder
+    habitId?: SortOrder
     templateId?: SortOrder
-    customEntries?: SortOrder
   }
 
   export type ChecklistMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    templateType?: SortOrder
+    mode?: SortOrder
     content?: SortOrder
+    customEntries?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
-    mode?: SortOrder
+    habitId?: SortOrder
     templateId?: SortOrder
-    customEntries?: SortOrder
   }
 
   export type ChecklistMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    templateType?: SortOrder
-    content?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
     mode?: SortOrder
-    templateId?: SortOrder
+    content?: SortOrder
     customEntries?: SortOrder
-  }
-
-  export type NextStepGoalEntryNullableScalarRelationFilter = {
-    is?: NextStepGoalEntryWhereInput | null
-    isNot?: NextStepGoalEntryWhereInput | null
-  }
-
-  export type HabitCueListRelationFilter = {
-    every?: HabitCueWhereInput
-    some?: HabitCueWhereInput
-    none?: HabitCueWhereInput
-  }
-
-  export type HabitCheckInListRelationFilter = {
-    every?: HabitCheckInWhereInput
-    some?: HabitCheckInWhereInput
-    none?: HabitCheckInWhereInput
-  }
-
-  export type HabitCueOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type HabitCheckInOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type TrackedHabitUserIdNameCompoundUniqueInput = {
-    userId: string
-    name: string
-  }
-
-  export type TrackedHabitCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
-    goalEntryId?: SortOrder
-    identityId?: SortOrder
-  }
-
-  export type TrackedHabitMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    category?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    goalEntryId?: SortOrder
-    identityId?: SortOrder
-  }
-
-  export type TrackedHabitMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    category?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    goalEntryId?: SortOrder
-    identityId?: SortOrder
-  }
-
-  export type TrackedHabitScalarRelationFilter = {
-    is?: TrackedHabitWhereInput
-    isNot?: TrackedHabitWhereInput
-  }
-
-  export type HabitCueCountOrderByAggregateInput = {
-    id?: SortOrder
-    behavior?: SortOrder
-    time?: SortOrder
-    location?: SortOrder
-    isBreaking?: SortOrder
-    reflection?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
     habitId?: SortOrder
+    templateId?: SortOrder
   }
 
-  export type HabitCueMaxOrderByAggregateInput = {
-    id?: SortOrder
-    behavior?: SortOrder
-    time?: SortOrder
-    location?: SortOrder
-    isBreaking?: SortOrder
-    reflection?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    habitId?: SortOrder
-  }
-
-  export type HabitCueMinOrderByAggregateInput = {
-    id?: SortOrder
-    behavior?: SortOrder
-    time?: SortOrder
-    location?: SortOrder
-    isBreaking?: SortOrder
-    reflection?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    habitId?: SortOrder
+  export type HabitScalarRelationFilter = {
+    is?: HabitWhereInput
+    isNot?: HabitWhereInput
   }
 
   export type HabitCheckInHabitIdDateCompoundUniqueInput = {
@@ -37804,12 +36302,6 @@ export namespace Prisma {
     connect?: AssessmentPartFourWhereUniqueInput
   }
 
-  export type AssessmentNextStepCreateNestedOneWithoutUserInput = {
-    create?: XOR<AssessmentNextStepCreateWithoutUserInput, AssessmentNextStepUncheckedCreateWithoutUserInput>
-    connectOrCreate?: AssessmentNextStepCreateOrConnectWithoutUserInput
-    connect?: AssessmentNextStepWhereUniqueInput
-  }
-
   export type ChecklistCreateNestedManyWithoutUserInput = {
     create?: XOR<ChecklistCreateWithoutUserInput, ChecklistUncheckedCreateWithoutUserInput> | ChecklistCreateWithoutUserInput[] | ChecklistUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ChecklistCreateOrConnectWithoutUserInput | ChecklistCreateOrConnectWithoutUserInput[]
@@ -37817,11 +36309,18 @@ export namespace Prisma {
     connect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
   }
 
-  export type TrackedHabitCreateNestedManyWithoutUserInput = {
-    create?: XOR<TrackedHabitCreateWithoutUserInput, TrackedHabitUncheckedCreateWithoutUserInput> | TrackedHabitCreateWithoutUserInput[] | TrackedHabitUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutUserInput | TrackedHabitCreateOrConnectWithoutUserInput[]
-    createMany?: TrackedHabitCreateManyUserInputEnvelope
-    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+  export type IdentityCreateNestedManyWithoutUserInput = {
+    create?: XOR<IdentityCreateWithoutUserInput, IdentityUncheckedCreateWithoutUserInput> | IdentityCreateWithoutUserInput[] | IdentityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutUserInput | IdentityCreateOrConnectWithoutUserInput[]
+    createMany?: IdentityCreateManyUserInputEnvelope
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+  }
+
+  export type HabitCreateNestedManyWithoutUserInput = {
+    create?: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput> | HabitCreateWithoutUserInput[] | HabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutUserInput | HabitCreateOrConnectWithoutUserInput[]
+    createMany?: HabitCreateManyUserInputEnvelope
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
   }
 
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
@@ -37869,12 +36368,6 @@ export namespace Prisma {
     connect?: AssessmentPartFourWhereUniqueInput
   }
 
-  export type AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput = {
-    create?: XOR<AssessmentNextStepCreateWithoutUserInput, AssessmentNextStepUncheckedCreateWithoutUserInput>
-    connectOrCreate?: AssessmentNextStepCreateOrConnectWithoutUserInput
-    connect?: AssessmentNextStepWhereUniqueInput
-  }
-
   export type ChecklistUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<ChecklistCreateWithoutUserInput, ChecklistUncheckedCreateWithoutUserInput> | ChecklistCreateWithoutUserInput[] | ChecklistUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ChecklistCreateOrConnectWithoutUserInput | ChecklistCreateOrConnectWithoutUserInput[]
@@ -37882,11 +36375,18 @@ export namespace Prisma {
     connect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
   }
 
-  export type TrackedHabitUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<TrackedHabitCreateWithoutUserInput, TrackedHabitUncheckedCreateWithoutUserInput> | TrackedHabitCreateWithoutUserInput[] | TrackedHabitUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutUserInput | TrackedHabitCreateOrConnectWithoutUserInput[]
-    createMany?: TrackedHabitCreateManyUserInputEnvelope
-    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+  export type IdentityUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<IdentityCreateWithoutUserInput, IdentityUncheckedCreateWithoutUserInput> | IdentityCreateWithoutUserInput[] | IdentityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutUserInput | IdentityCreateOrConnectWithoutUserInput[]
+    createMany?: IdentityCreateManyUserInputEnvelope
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+  }
+
+  export type HabitUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput> | HabitCreateWithoutUserInput[] | HabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutUserInput | HabitCreateOrConnectWithoutUserInput[]
+    createMany?: HabitCreateManyUserInputEnvelope
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -37987,16 +36487,6 @@ export namespace Prisma {
     update?: XOR<XOR<AssessmentPartFourUpdateToOneWithWhereWithoutUserInput, AssessmentPartFourUpdateWithoutUserInput>, AssessmentPartFourUncheckedUpdateWithoutUserInput>
   }
 
-  export type AssessmentNextStepUpdateOneWithoutUserNestedInput = {
-    create?: XOR<AssessmentNextStepCreateWithoutUserInput, AssessmentNextStepUncheckedCreateWithoutUserInput>
-    connectOrCreate?: AssessmentNextStepCreateOrConnectWithoutUserInput
-    upsert?: AssessmentNextStepUpsertWithoutUserInput
-    disconnect?: AssessmentNextStepWhereInput | boolean
-    delete?: AssessmentNextStepWhereInput | boolean
-    connect?: AssessmentNextStepWhereUniqueInput
-    update?: XOR<XOR<AssessmentNextStepUpdateToOneWithWhereWithoutUserInput, AssessmentNextStepUpdateWithoutUserInput>, AssessmentNextStepUncheckedUpdateWithoutUserInput>
-  }
-
   export type ChecklistUpdateManyWithoutUserNestedInput = {
     create?: XOR<ChecklistCreateWithoutUserInput, ChecklistUncheckedCreateWithoutUserInput> | ChecklistCreateWithoutUserInput[] | ChecklistUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ChecklistCreateOrConnectWithoutUserInput | ChecklistCreateOrConnectWithoutUserInput[]
@@ -38011,18 +36501,32 @@ export namespace Prisma {
     deleteMany?: ChecklistScalarWhereInput | ChecklistScalarWhereInput[]
   }
 
-  export type TrackedHabitUpdateManyWithoutUserNestedInput = {
-    create?: XOR<TrackedHabitCreateWithoutUserInput, TrackedHabitUncheckedCreateWithoutUserInput> | TrackedHabitCreateWithoutUserInput[] | TrackedHabitUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutUserInput | TrackedHabitCreateOrConnectWithoutUserInput[]
-    upsert?: TrackedHabitUpsertWithWhereUniqueWithoutUserInput | TrackedHabitUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: TrackedHabitCreateManyUserInputEnvelope
-    set?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    disconnect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    delete?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    update?: TrackedHabitUpdateWithWhereUniqueWithoutUserInput | TrackedHabitUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: TrackedHabitUpdateManyWithWhereWithoutUserInput | TrackedHabitUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
+  export type IdentityUpdateManyWithoutUserNestedInput = {
+    create?: XOR<IdentityCreateWithoutUserInput, IdentityUncheckedCreateWithoutUserInput> | IdentityCreateWithoutUserInput[] | IdentityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutUserInput | IdentityCreateOrConnectWithoutUserInput[]
+    upsert?: IdentityUpsertWithWhereUniqueWithoutUserInput | IdentityUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: IdentityCreateManyUserInputEnvelope
+    set?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    disconnect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    delete?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    update?: IdentityUpdateWithWhereUniqueWithoutUserInput | IdentityUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: IdentityUpdateManyWithWhereWithoutUserInput | IdentityUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
+  }
+
+  export type HabitUpdateManyWithoutUserNestedInput = {
+    create?: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput> | HabitCreateWithoutUserInput[] | HabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutUserInput | HabitCreateOrConnectWithoutUserInput[]
+    upsert?: HabitUpsertWithWhereUniqueWithoutUserInput | HabitUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: HabitCreateManyUserInputEnvelope
+    set?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    disconnect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    delete?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    update?: HabitUpdateWithWhereUniqueWithoutUserInput | HabitUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: HabitUpdateManyWithWhereWithoutUserInput | HabitUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: HabitScalarWhereInput | HabitScalarWhereInput[]
   }
 
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
@@ -38107,16 +36611,6 @@ export namespace Prisma {
     update?: XOR<XOR<AssessmentPartFourUpdateToOneWithWhereWithoutUserInput, AssessmentPartFourUpdateWithoutUserInput>, AssessmentPartFourUncheckedUpdateWithoutUserInput>
   }
 
-  export type AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<AssessmentNextStepCreateWithoutUserInput, AssessmentNextStepUncheckedCreateWithoutUserInput>
-    connectOrCreate?: AssessmentNextStepCreateOrConnectWithoutUserInput
-    upsert?: AssessmentNextStepUpsertWithoutUserInput
-    disconnect?: AssessmentNextStepWhereInput | boolean
-    delete?: AssessmentNextStepWhereInput | boolean
-    connect?: AssessmentNextStepWhereUniqueInput
-    update?: XOR<XOR<AssessmentNextStepUpdateToOneWithWhereWithoutUserInput, AssessmentNextStepUpdateWithoutUserInput>, AssessmentNextStepUncheckedUpdateWithoutUserInput>
-  }
-
   export type ChecklistUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<ChecklistCreateWithoutUserInput, ChecklistUncheckedCreateWithoutUserInput> | ChecklistCreateWithoutUserInput[] | ChecklistUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ChecklistCreateOrConnectWithoutUserInput | ChecklistCreateOrConnectWithoutUserInput[]
@@ -38131,18 +36625,32 @@ export namespace Prisma {
     deleteMany?: ChecklistScalarWhereInput | ChecklistScalarWhereInput[]
   }
 
-  export type TrackedHabitUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<TrackedHabitCreateWithoutUserInput, TrackedHabitUncheckedCreateWithoutUserInput> | TrackedHabitCreateWithoutUserInput[] | TrackedHabitUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutUserInput | TrackedHabitCreateOrConnectWithoutUserInput[]
-    upsert?: TrackedHabitUpsertWithWhereUniqueWithoutUserInput | TrackedHabitUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: TrackedHabitCreateManyUserInputEnvelope
-    set?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    disconnect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    delete?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    update?: TrackedHabitUpdateWithWhereUniqueWithoutUserInput | TrackedHabitUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: TrackedHabitUpdateManyWithWhereWithoutUserInput | TrackedHabitUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
+  export type IdentityUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<IdentityCreateWithoutUserInput, IdentityUncheckedCreateWithoutUserInput> | IdentityCreateWithoutUserInput[] | IdentityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutUserInput | IdentityCreateOrConnectWithoutUserInput[]
+    upsert?: IdentityUpsertWithWhereUniqueWithoutUserInput | IdentityUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: IdentityCreateManyUserInputEnvelope
+    set?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    disconnect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    delete?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    update?: IdentityUpdateWithWhereUniqueWithoutUserInput | IdentityUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: IdentityUpdateManyWithWhereWithoutUserInput | IdentityUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
+  }
+
+  export type HabitUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput> | HabitCreateWithoutUserInput[] | HabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutUserInput | HabitCreateOrConnectWithoutUserInput[]
+    upsert?: HabitUpsertWithWhereUniqueWithoutUserInput | HabitUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: HabitCreateManyUserInputEnvelope
+    set?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    disconnect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    delete?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    update?: HabitUpdateWithWhereUniqueWithoutUserInput | HabitUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: HabitUpdateManyWithWhereWithoutUserInput | HabitUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: HabitScalarWhereInput | HabitScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -38926,25 +37434,11 @@ export namespace Prisma {
     connect?: DomainVisionEntryWhereUniqueInput | DomainVisionEntryWhereUniqueInput[]
   }
 
-  export type IdentityRecordCreateNestedManyWithoutAssessmentInput = {
-    create?: XOR<IdentityRecordCreateWithoutAssessmentInput, IdentityRecordUncheckedCreateWithoutAssessmentInput> | IdentityRecordCreateWithoutAssessmentInput[] | IdentityRecordUncheckedCreateWithoutAssessmentInput[]
-    connectOrCreate?: IdentityRecordCreateOrConnectWithoutAssessmentInput | IdentityRecordCreateOrConnectWithoutAssessmentInput[]
-    createMany?: IdentityRecordCreateManyAssessmentInputEnvelope
-    connect?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
-  }
-
   export type DomainVisionEntryUncheckedCreateNestedManyWithoutAssessmentInput = {
     create?: XOR<DomainVisionEntryCreateWithoutAssessmentInput, DomainVisionEntryUncheckedCreateWithoutAssessmentInput> | DomainVisionEntryCreateWithoutAssessmentInput[] | DomainVisionEntryUncheckedCreateWithoutAssessmentInput[]
     connectOrCreate?: DomainVisionEntryCreateOrConnectWithoutAssessmentInput | DomainVisionEntryCreateOrConnectWithoutAssessmentInput[]
     createMany?: DomainVisionEntryCreateManyAssessmentInputEnvelope
     connect?: DomainVisionEntryWhereUniqueInput | DomainVisionEntryWhereUniqueInput[]
-  }
-
-  export type IdentityRecordUncheckedCreateNestedManyWithoutAssessmentInput = {
-    create?: XOR<IdentityRecordCreateWithoutAssessmentInput, IdentityRecordUncheckedCreateWithoutAssessmentInput> | IdentityRecordCreateWithoutAssessmentInput[] | IdentityRecordUncheckedCreateWithoutAssessmentInput[]
-    connectOrCreate?: IdentityRecordCreateOrConnectWithoutAssessmentInput | IdentityRecordCreateOrConnectWithoutAssessmentInput[]
-    createMany?: IdentityRecordCreateManyAssessmentInputEnvelope
-    connect?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
   }
 
   export type AssessmentPartFourUpdateexistingCommitmentsInput = {
@@ -38999,20 +37493,6 @@ export namespace Prisma {
     deleteMany?: DomainVisionEntryScalarWhereInput | DomainVisionEntryScalarWhereInput[]
   }
 
-  export type IdentityRecordUpdateManyWithoutAssessmentNestedInput = {
-    create?: XOR<IdentityRecordCreateWithoutAssessmentInput, IdentityRecordUncheckedCreateWithoutAssessmentInput> | IdentityRecordCreateWithoutAssessmentInput[] | IdentityRecordUncheckedCreateWithoutAssessmentInput[]
-    connectOrCreate?: IdentityRecordCreateOrConnectWithoutAssessmentInput | IdentityRecordCreateOrConnectWithoutAssessmentInput[]
-    upsert?: IdentityRecordUpsertWithWhereUniqueWithoutAssessmentInput | IdentityRecordUpsertWithWhereUniqueWithoutAssessmentInput[]
-    createMany?: IdentityRecordCreateManyAssessmentInputEnvelope
-    set?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
-    disconnect?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
-    delete?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
-    connect?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
-    update?: IdentityRecordUpdateWithWhereUniqueWithoutAssessmentInput | IdentityRecordUpdateWithWhereUniqueWithoutAssessmentInput[]
-    updateMany?: IdentityRecordUpdateManyWithWhereWithoutAssessmentInput | IdentityRecordUpdateManyWithWhereWithoutAssessmentInput[]
-    deleteMany?: IdentityRecordScalarWhereInput | IdentityRecordScalarWhereInput[]
-  }
-
   export type DomainVisionEntryUncheckedUpdateManyWithoutAssessmentNestedInput = {
     create?: XOR<DomainVisionEntryCreateWithoutAssessmentInput, DomainVisionEntryUncheckedCreateWithoutAssessmentInput> | DomainVisionEntryCreateWithoutAssessmentInput[] | DomainVisionEntryUncheckedCreateWithoutAssessmentInput[]
     connectOrCreate?: DomainVisionEntryCreateOrConnectWithoutAssessmentInput | DomainVisionEntryCreateOrConnectWithoutAssessmentInput[]
@@ -39025,20 +37505,6 @@ export namespace Prisma {
     update?: DomainVisionEntryUpdateWithWhereUniqueWithoutAssessmentInput | DomainVisionEntryUpdateWithWhereUniqueWithoutAssessmentInput[]
     updateMany?: DomainVisionEntryUpdateManyWithWhereWithoutAssessmentInput | DomainVisionEntryUpdateManyWithWhereWithoutAssessmentInput[]
     deleteMany?: DomainVisionEntryScalarWhereInput | DomainVisionEntryScalarWhereInput[]
-  }
-
-  export type IdentityRecordUncheckedUpdateManyWithoutAssessmentNestedInput = {
-    create?: XOR<IdentityRecordCreateWithoutAssessmentInput, IdentityRecordUncheckedCreateWithoutAssessmentInput> | IdentityRecordCreateWithoutAssessmentInput[] | IdentityRecordUncheckedCreateWithoutAssessmentInput[]
-    connectOrCreate?: IdentityRecordCreateOrConnectWithoutAssessmentInput | IdentityRecordCreateOrConnectWithoutAssessmentInput[]
-    upsert?: IdentityRecordUpsertWithWhereUniqueWithoutAssessmentInput | IdentityRecordUpsertWithWhereUniqueWithoutAssessmentInput[]
-    createMany?: IdentityRecordCreateManyAssessmentInputEnvelope
-    set?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
-    disconnect?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
-    delete?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
-    connect?: IdentityRecordWhereUniqueInput | IdentityRecordWhereUniqueInput[]
-    update?: IdentityRecordUpdateWithWhereUniqueWithoutAssessmentInput | IdentityRecordUpdateWithWhereUniqueWithoutAssessmentInput[]
-    updateMany?: IdentityRecordUpdateManyWithWhereWithoutAssessmentInput | IdentityRecordUpdateManyWithWhereWithoutAssessmentInput[]
-    deleteMany?: IdentityRecordScalarWhereInput | IdentityRecordScalarWhereInput[]
   }
 
   export type AssessmentPartFourCreateNestedOneWithoutDomainVisionsInput = {
@@ -39055,197 +37521,24 @@ export namespace Prisma {
     update?: XOR<XOR<AssessmentPartFourUpdateToOneWithWhereWithoutDomainVisionsInput, AssessmentPartFourUpdateWithoutDomainVisionsInput>, AssessmentPartFourUncheckedUpdateWithoutDomainVisionsInput>
   }
 
-  export type IdentityRecordCreatehabitsInput = {
-    set: string[]
+  export type IdentityCreateNestedOneWithoutGoalsInput = {
+    create?: XOR<IdentityCreateWithoutGoalsInput, IdentityUncheckedCreateWithoutGoalsInput>
+    connectOrCreate?: IdentityCreateOrConnectWithoutGoalsInput
+    connect?: IdentityWhereUniqueInput
   }
 
-  export type AssessmentPartFourCreateNestedOneWithoutIdentitiesInput = {
-    create?: XOR<AssessmentPartFourCreateWithoutIdentitiesInput, AssessmentPartFourUncheckedCreateWithoutIdentitiesInput>
-    connectOrCreate?: AssessmentPartFourCreateOrConnectWithoutIdentitiesInput
-    connect?: AssessmentPartFourWhereUniqueInput
+  export type HabitCreateNestedManyWithoutGoalInput = {
+    create?: XOR<HabitCreateWithoutGoalInput, HabitUncheckedCreateWithoutGoalInput> | HabitCreateWithoutGoalInput[] | HabitUncheckedCreateWithoutGoalInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutGoalInput | HabitCreateOrConnectWithoutGoalInput[]
+    createMany?: HabitCreateManyGoalInputEnvelope
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
   }
 
-  export type NextStepGoalEntryCreateNestedManyWithoutIdentityInput = {
-    create?: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput> | NextStepGoalEntryCreateWithoutIdentityInput[] | NextStepGoalEntryUncheckedCreateWithoutIdentityInput[]
-    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutIdentityInput | NextStepGoalEntryCreateOrConnectWithoutIdentityInput[]
-    createMany?: NextStepGoalEntryCreateManyIdentityInputEnvelope
-    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-  }
-
-  export type TrackedHabitCreateNestedManyWithoutIdentityInput = {
-    create?: XOR<TrackedHabitCreateWithoutIdentityInput, TrackedHabitUncheckedCreateWithoutIdentityInput> | TrackedHabitCreateWithoutIdentityInput[] | TrackedHabitUncheckedCreateWithoutIdentityInput[]
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutIdentityInput | TrackedHabitCreateOrConnectWithoutIdentityInput[]
-    createMany?: TrackedHabitCreateManyIdentityInputEnvelope
-    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-  }
-
-  export type NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput = {
-    create?: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput> | NextStepGoalEntryCreateWithoutIdentityInput[] | NextStepGoalEntryUncheckedCreateWithoutIdentityInput[]
-    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutIdentityInput | NextStepGoalEntryCreateOrConnectWithoutIdentityInput[]
-    createMany?: NextStepGoalEntryCreateManyIdentityInputEnvelope
-    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-  }
-
-  export type TrackedHabitUncheckedCreateNestedManyWithoutIdentityInput = {
-    create?: XOR<TrackedHabitCreateWithoutIdentityInput, TrackedHabitUncheckedCreateWithoutIdentityInput> | TrackedHabitCreateWithoutIdentityInput[] | TrackedHabitUncheckedCreateWithoutIdentityInput[]
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutIdentityInput | TrackedHabitCreateOrConnectWithoutIdentityInput[]
-    createMany?: TrackedHabitCreateManyIdentityInputEnvelope
-    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-  }
-
-  export type IdentityRecordUpdatehabitsInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
-  export type AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput = {
-    create?: XOR<AssessmentPartFourCreateWithoutIdentitiesInput, AssessmentPartFourUncheckedCreateWithoutIdentitiesInput>
-    connectOrCreate?: AssessmentPartFourCreateOrConnectWithoutIdentitiesInput
-    upsert?: AssessmentPartFourUpsertWithoutIdentitiesInput
-    connect?: AssessmentPartFourWhereUniqueInput
-    update?: XOR<XOR<AssessmentPartFourUpdateToOneWithWhereWithoutIdentitiesInput, AssessmentPartFourUpdateWithoutIdentitiesInput>, AssessmentPartFourUncheckedUpdateWithoutIdentitiesInput>
-  }
-
-  export type NextStepGoalEntryUpdateManyWithoutIdentityNestedInput = {
-    create?: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput> | NextStepGoalEntryCreateWithoutIdentityInput[] | NextStepGoalEntryUncheckedCreateWithoutIdentityInput[]
-    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutIdentityInput | NextStepGoalEntryCreateOrConnectWithoutIdentityInput[]
-    upsert?: NextStepGoalEntryUpsertWithWhereUniqueWithoutIdentityInput | NextStepGoalEntryUpsertWithWhereUniqueWithoutIdentityInput[]
-    createMany?: NextStepGoalEntryCreateManyIdentityInputEnvelope
-    set?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    disconnect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    delete?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    update?: NextStepGoalEntryUpdateWithWhereUniqueWithoutIdentityInput | NextStepGoalEntryUpdateWithWhereUniqueWithoutIdentityInput[]
-    updateMany?: NextStepGoalEntryUpdateManyWithWhereWithoutIdentityInput | NextStepGoalEntryUpdateManyWithWhereWithoutIdentityInput[]
-    deleteMany?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
-  }
-
-  export type TrackedHabitUpdateManyWithoutIdentityNestedInput = {
-    create?: XOR<TrackedHabitCreateWithoutIdentityInput, TrackedHabitUncheckedCreateWithoutIdentityInput> | TrackedHabitCreateWithoutIdentityInput[] | TrackedHabitUncheckedCreateWithoutIdentityInput[]
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutIdentityInput | TrackedHabitCreateOrConnectWithoutIdentityInput[]
-    upsert?: TrackedHabitUpsertWithWhereUniqueWithoutIdentityInput | TrackedHabitUpsertWithWhereUniqueWithoutIdentityInput[]
-    createMany?: TrackedHabitCreateManyIdentityInputEnvelope
-    set?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    disconnect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    delete?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    update?: TrackedHabitUpdateWithWhereUniqueWithoutIdentityInput | TrackedHabitUpdateWithWhereUniqueWithoutIdentityInput[]
-    updateMany?: TrackedHabitUpdateManyWithWhereWithoutIdentityInput | TrackedHabitUpdateManyWithWhereWithoutIdentityInput[]
-    deleteMany?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
-  }
-
-  export type NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput = {
-    create?: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput> | NextStepGoalEntryCreateWithoutIdentityInput[] | NextStepGoalEntryUncheckedCreateWithoutIdentityInput[]
-    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutIdentityInput | NextStepGoalEntryCreateOrConnectWithoutIdentityInput[]
-    upsert?: NextStepGoalEntryUpsertWithWhereUniqueWithoutIdentityInput | NextStepGoalEntryUpsertWithWhereUniqueWithoutIdentityInput[]
-    createMany?: NextStepGoalEntryCreateManyIdentityInputEnvelope
-    set?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    disconnect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    delete?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    update?: NextStepGoalEntryUpdateWithWhereUniqueWithoutIdentityInput | NextStepGoalEntryUpdateWithWhereUniqueWithoutIdentityInput[]
-    updateMany?: NextStepGoalEntryUpdateManyWithWhereWithoutIdentityInput | NextStepGoalEntryUpdateManyWithWhereWithoutIdentityInput[]
-    deleteMany?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
-  }
-
-  export type TrackedHabitUncheckedUpdateManyWithoutIdentityNestedInput = {
-    create?: XOR<TrackedHabitCreateWithoutIdentityInput, TrackedHabitUncheckedCreateWithoutIdentityInput> | TrackedHabitCreateWithoutIdentityInput[] | TrackedHabitUncheckedCreateWithoutIdentityInput[]
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutIdentityInput | TrackedHabitCreateOrConnectWithoutIdentityInput[]
-    upsert?: TrackedHabitUpsertWithWhereUniqueWithoutIdentityInput | TrackedHabitUpsertWithWhereUniqueWithoutIdentityInput[]
-    createMany?: TrackedHabitCreateManyIdentityInputEnvelope
-    set?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    disconnect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    delete?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    update?: TrackedHabitUpdateWithWhereUniqueWithoutIdentityInput | TrackedHabitUpdateWithWhereUniqueWithoutIdentityInput[]
-    updateMany?: TrackedHabitUpdateManyWithWhereWithoutIdentityInput | TrackedHabitUpdateManyWithWhereWithoutIdentityInput[]
-    deleteMany?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
-  }
-
-  export type UserCreateNestedOneWithoutAssessmentNextStepInput = {
-    create?: XOR<UserCreateWithoutAssessmentNextStepInput, UserUncheckedCreateWithoutAssessmentNextStepInput>
-    connectOrCreate?: UserCreateOrConnectWithoutAssessmentNextStepInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type NextStepGoalEntryCreateNestedManyWithoutNextStepInput = {
-    create?: XOR<NextStepGoalEntryCreateWithoutNextStepInput, NextStepGoalEntryUncheckedCreateWithoutNextStepInput> | NextStepGoalEntryCreateWithoutNextStepInput[] | NextStepGoalEntryUncheckedCreateWithoutNextStepInput[]
-    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutNextStepInput | NextStepGoalEntryCreateOrConnectWithoutNextStepInput[]
-    createMany?: NextStepGoalEntryCreateManyNextStepInputEnvelope
-    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-  }
-
-  export type NextStepGoalEntryUncheckedCreateNestedManyWithoutNextStepInput = {
-    create?: XOR<NextStepGoalEntryCreateWithoutNextStepInput, NextStepGoalEntryUncheckedCreateWithoutNextStepInput> | NextStepGoalEntryCreateWithoutNextStepInput[] | NextStepGoalEntryUncheckedCreateWithoutNextStepInput[]
-    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutNextStepInput | NextStepGoalEntryCreateOrConnectWithoutNextStepInput[]
-    createMany?: NextStepGoalEntryCreateManyNextStepInputEnvelope
-    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-  }
-
-  export type UserUpdateOneRequiredWithoutAssessmentNextStepNestedInput = {
-    create?: XOR<UserCreateWithoutAssessmentNextStepInput, UserUncheckedCreateWithoutAssessmentNextStepInput>
-    connectOrCreate?: UserCreateOrConnectWithoutAssessmentNextStepInput
-    upsert?: UserUpsertWithoutAssessmentNextStepInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssessmentNextStepInput, UserUpdateWithoutAssessmentNextStepInput>, UserUncheckedUpdateWithoutAssessmentNextStepInput>
-  }
-
-  export type NextStepGoalEntryUpdateManyWithoutNextStepNestedInput = {
-    create?: XOR<NextStepGoalEntryCreateWithoutNextStepInput, NextStepGoalEntryUncheckedCreateWithoutNextStepInput> | NextStepGoalEntryCreateWithoutNextStepInput[] | NextStepGoalEntryUncheckedCreateWithoutNextStepInput[]
-    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutNextStepInput | NextStepGoalEntryCreateOrConnectWithoutNextStepInput[]
-    upsert?: NextStepGoalEntryUpsertWithWhereUniqueWithoutNextStepInput | NextStepGoalEntryUpsertWithWhereUniqueWithoutNextStepInput[]
-    createMany?: NextStepGoalEntryCreateManyNextStepInputEnvelope
-    set?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    disconnect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    delete?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    update?: NextStepGoalEntryUpdateWithWhereUniqueWithoutNextStepInput | NextStepGoalEntryUpdateWithWhereUniqueWithoutNextStepInput[]
-    updateMany?: NextStepGoalEntryUpdateManyWithWhereWithoutNextStepInput | NextStepGoalEntryUpdateManyWithWhereWithoutNextStepInput[]
-    deleteMany?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
-  }
-
-  export type NextStepGoalEntryUncheckedUpdateManyWithoutNextStepNestedInput = {
-    create?: XOR<NextStepGoalEntryCreateWithoutNextStepInput, NextStepGoalEntryUncheckedCreateWithoutNextStepInput> | NextStepGoalEntryCreateWithoutNextStepInput[] | NextStepGoalEntryUncheckedCreateWithoutNextStepInput[]
-    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutNextStepInput | NextStepGoalEntryCreateOrConnectWithoutNextStepInput[]
-    upsert?: NextStepGoalEntryUpsertWithWhereUniqueWithoutNextStepInput | NextStepGoalEntryUpsertWithWhereUniqueWithoutNextStepInput[]
-    createMany?: NextStepGoalEntryCreateManyNextStepInputEnvelope
-    set?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    disconnect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    delete?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    connect?: NextStepGoalEntryWhereUniqueInput | NextStepGoalEntryWhereUniqueInput[]
-    update?: NextStepGoalEntryUpdateWithWhereUniqueWithoutNextStepInput | NextStepGoalEntryUpdateWithWhereUniqueWithoutNextStepInput[]
-    updateMany?: NextStepGoalEntryUpdateManyWithWhereWithoutNextStepInput | NextStepGoalEntryUpdateManyWithWhereWithoutNextStepInput[]
-    deleteMany?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
-  }
-
-  export type NextStepGoalEntryCreatecomponentHabitsInput = {
-    set: string[]
-  }
-
-  export type AssessmentNextStepCreateNestedOneWithoutGoalEntriesInput = {
-    create?: XOR<AssessmentNextStepCreateWithoutGoalEntriesInput, AssessmentNextStepUncheckedCreateWithoutGoalEntriesInput>
-    connectOrCreate?: AssessmentNextStepCreateOrConnectWithoutGoalEntriesInput
-    connect?: AssessmentNextStepWhereUniqueInput
-  }
-
-  export type IdentityRecordCreateNestedOneWithoutGoalsInput = {
-    create?: XOR<IdentityRecordCreateWithoutGoalsInput, IdentityRecordUncheckedCreateWithoutGoalsInput>
-    connectOrCreate?: IdentityRecordCreateOrConnectWithoutGoalsInput
-    connect?: IdentityRecordWhereUniqueInput
-  }
-
-  export type TrackedHabitCreateNestedManyWithoutGoalEntryInput = {
-    create?: XOR<TrackedHabitCreateWithoutGoalEntryInput, TrackedHabitUncheckedCreateWithoutGoalEntryInput> | TrackedHabitCreateWithoutGoalEntryInput[] | TrackedHabitUncheckedCreateWithoutGoalEntryInput[]
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutGoalEntryInput | TrackedHabitCreateOrConnectWithoutGoalEntryInput[]
-    createMany?: TrackedHabitCreateManyGoalEntryInputEnvelope
-    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-  }
-
-  export type TrackedHabitUncheckedCreateNestedManyWithoutGoalEntryInput = {
-    create?: XOR<TrackedHabitCreateWithoutGoalEntryInput, TrackedHabitUncheckedCreateWithoutGoalEntryInput> | TrackedHabitCreateWithoutGoalEntryInput[] | TrackedHabitUncheckedCreateWithoutGoalEntryInput[]
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutGoalEntryInput | TrackedHabitCreateOrConnectWithoutGoalEntryInput[]
-    createMany?: TrackedHabitCreateManyGoalEntryInputEnvelope
-    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
+  export type HabitUncheckedCreateNestedManyWithoutGoalInput = {
+    create?: XOR<HabitCreateWithoutGoalInput, HabitUncheckedCreateWithoutGoalInput> | HabitCreateWithoutGoalInput[] | HabitUncheckedCreateWithoutGoalInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutGoalInput | HabitCreateOrConnectWithoutGoalInput[]
+    createMany?: HabitCreateManyGoalInputEnvelope
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -39256,55 +37549,217 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type IdentityUpdateOneRequiredWithoutGoalsNestedInput = {
+    create?: XOR<IdentityCreateWithoutGoalsInput, IdentityUncheckedCreateWithoutGoalsInput>
+    connectOrCreate?: IdentityCreateOrConnectWithoutGoalsInput
+    upsert?: IdentityUpsertWithoutGoalsInput
+    connect?: IdentityWhereUniqueInput
+    update?: XOR<XOR<IdentityUpdateToOneWithWhereWithoutGoalsInput, IdentityUpdateWithoutGoalsInput>, IdentityUncheckedUpdateWithoutGoalsInput>
+  }
+
+  export type HabitUpdateManyWithoutGoalNestedInput = {
+    create?: XOR<HabitCreateWithoutGoalInput, HabitUncheckedCreateWithoutGoalInput> | HabitCreateWithoutGoalInput[] | HabitUncheckedCreateWithoutGoalInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutGoalInput | HabitCreateOrConnectWithoutGoalInput[]
+    upsert?: HabitUpsertWithWhereUniqueWithoutGoalInput | HabitUpsertWithWhereUniqueWithoutGoalInput[]
+    createMany?: HabitCreateManyGoalInputEnvelope
+    set?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    disconnect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    delete?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    update?: HabitUpdateWithWhereUniqueWithoutGoalInput | HabitUpdateWithWhereUniqueWithoutGoalInput[]
+    updateMany?: HabitUpdateManyWithWhereWithoutGoalInput | HabitUpdateManyWithWhereWithoutGoalInput[]
+    deleteMany?: HabitScalarWhereInput | HabitScalarWhereInput[]
+  }
+
+  export type HabitUncheckedUpdateManyWithoutGoalNestedInput = {
+    create?: XOR<HabitCreateWithoutGoalInput, HabitUncheckedCreateWithoutGoalInput> | HabitCreateWithoutGoalInput[] | HabitUncheckedCreateWithoutGoalInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutGoalInput | HabitCreateOrConnectWithoutGoalInput[]
+    upsert?: HabitUpsertWithWhereUniqueWithoutGoalInput | HabitUpsertWithWhereUniqueWithoutGoalInput[]
+    createMany?: HabitCreateManyGoalInputEnvelope
+    set?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    disconnect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    delete?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    update?: HabitUpdateWithWhereUniqueWithoutGoalInput | HabitUpdateWithWhereUniqueWithoutGoalInput[]
+    updateMany?: HabitUpdateManyWithWhereWithoutGoalInput | HabitUpdateManyWithWhereWithoutGoalInput[]
+    deleteMany?: HabitScalarWhereInput | HabitScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutHabitsInput = {
+    create?: XOR<UserCreateWithoutHabitsInput, UserUncheckedCreateWithoutHabitsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHabitsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type GoalCreateNestedOneWithoutHabitsInput = {
+    create?: XOR<GoalCreateWithoutHabitsInput, GoalUncheckedCreateWithoutHabitsInput>
+    connectOrCreate?: GoalCreateOrConnectWithoutHabitsInput
+    connect?: GoalWhereUniqueInput
+  }
+
+  export type HabitCheckInCreateNestedManyWithoutHabitInput = {
+    create?: XOR<HabitCheckInCreateWithoutHabitInput, HabitCheckInUncheckedCreateWithoutHabitInput> | HabitCheckInCreateWithoutHabitInput[] | HabitCheckInUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: HabitCheckInCreateOrConnectWithoutHabitInput | HabitCheckInCreateOrConnectWithoutHabitInput[]
+    createMany?: HabitCheckInCreateManyHabitInputEnvelope
+    connect?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
+  }
+
+  export type ChecklistCreateNestedManyWithoutHabitInput = {
+    create?: XOR<ChecklistCreateWithoutHabitInput, ChecklistUncheckedCreateWithoutHabitInput> | ChecklistCreateWithoutHabitInput[] | ChecklistUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: ChecklistCreateOrConnectWithoutHabitInput | ChecklistCreateOrConnectWithoutHabitInput[]
+    createMany?: ChecklistCreateManyHabitInputEnvelope
+    connect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+  }
+
+  export type HabitCheckInUncheckedCreateNestedManyWithoutHabitInput = {
+    create?: XOR<HabitCheckInCreateWithoutHabitInput, HabitCheckInUncheckedCreateWithoutHabitInput> | HabitCheckInCreateWithoutHabitInput[] | HabitCheckInUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: HabitCheckInCreateOrConnectWithoutHabitInput | HabitCheckInCreateOrConnectWithoutHabitInput[]
+    createMany?: HabitCheckInCreateManyHabitInputEnvelope
+    connect?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
+  }
+
+  export type ChecklistUncheckedCreateNestedManyWithoutHabitInput = {
+    create?: XOR<ChecklistCreateWithoutHabitInput, ChecklistUncheckedCreateWithoutHabitInput> | ChecklistCreateWithoutHabitInput[] | ChecklistUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: ChecklistCreateOrConnectWithoutHabitInput | ChecklistCreateOrConnectWithoutHabitInput[]
+    createMany?: ChecklistCreateManyHabitInputEnvelope
+    connect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutHabitsNestedInput = {
+    create?: XOR<UserCreateWithoutHabitsInput, UserUncheckedCreateWithoutHabitsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHabitsInput
+    upsert?: UserUpsertWithoutHabitsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutHabitsInput, UserUpdateWithoutHabitsInput>, UserUncheckedUpdateWithoutHabitsInput>
+  }
+
+  export type GoalUpdateOneRequiredWithoutHabitsNestedInput = {
+    create?: XOR<GoalCreateWithoutHabitsInput, GoalUncheckedCreateWithoutHabitsInput>
+    connectOrCreate?: GoalCreateOrConnectWithoutHabitsInput
+    upsert?: GoalUpsertWithoutHabitsInput
+    connect?: GoalWhereUniqueInput
+    update?: XOR<XOR<GoalUpdateToOneWithWhereWithoutHabitsInput, GoalUpdateWithoutHabitsInput>, GoalUncheckedUpdateWithoutHabitsInput>
+  }
+
+  export type HabitCheckInUpdateManyWithoutHabitNestedInput = {
+    create?: XOR<HabitCheckInCreateWithoutHabitInput, HabitCheckInUncheckedCreateWithoutHabitInput> | HabitCheckInCreateWithoutHabitInput[] | HabitCheckInUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: HabitCheckInCreateOrConnectWithoutHabitInput | HabitCheckInCreateOrConnectWithoutHabitInput[]
+    upsert?: HabitCheckInUpsertWithWhereUniqueWithoutHabitInput | HabitCheckInUpsertWithWhereUniqueWithoutHabitInput[]
+    createMany?: HabitCheckInCreateManyHabitInputEnvelope
+    set?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
+    disconnect?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
+    delete?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
+    connect?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
+    update?: HabitCheckInUpdateWithWhereUniqueWithoutHabitInput | HabitCheckInUpdateWithWhereUniqueWithoutHabitInput[]
+    updateMany?: HabitCheckInUpdateManyWithWhereWithoutHabitInput | HabitCheckInUpdateManyWithWhereWithoutHabitInput[]
+    deleteMany?: HabitCheckInScalarWhereInput | HabitCheckInScalarWhereInput[]
+  }
+
+  export type ChecklistUpdateManyWithoutHabitNestedInput = {
+    create?: XOR<ChecklistCreateWithoutHabitInput, ChecklistUncheckedCreateWithoutHabitInput> | ChecklistCreateWithoutHabitInput[] | ChecklistUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: ChecklistCreateOrConnectWithoutHabitInput | ChecklistCreateOrConnectWithoutHabitInput[]
+    upsert?: ChecklistUpsertWithWhereUniqueWithoutHabitInput | ChecklistUpsertWithWhereUniqueWithoutHabitInput[]
+    createMany?: ChecklistCreateManyHabitInputEnvelope
+    set?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    disconnect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    delete?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    connect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    update?: ChecklistUpdateWithWhereUniqueWithoutHabitInput | ChecklistUpdateWithWhereUniqueWithoutHabitInput[]
+    updateMany?: ChecklistUpdateManyWithWhereWithoutHabitInput | ChecklistUpdateManyWithWhereWithoutHabitInput[]
+    deleteMany?: ChecklistScalarWhereInput | ChecklistScalarWhereInput[]
+  }
+
+  export type HabitCheckInUncheckedUpdateManyWithoutHabitNestedInput = {
+    create?: XOR<HabitCheckInCreateWithoutHabitInput, HabitCheckInUncheckedCreateWithoutHabitInput> | HabitCheckInCreateWithoutHabitInput[] | HabitCheckInUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: HabitCheckInCreateOrConnectWithoutHabitInput | HabitCheckInCreateOrConnectWithoutHabitInput[]
+    upsert?: HabitCheckInUpsertWithWhereUniqueWithoutHabitInput | HabitCheckInUpsertWithWhereUniqueWithoutHabitInput[]
+    createMany?: HabitCheckInCreateManyHabitInputEnvelope
+    set?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
+    disconnect?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
+    delete?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
+    connect?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
+    update?: HabitCheckInUpdateWithWhereUniqueWithoutHabitInput | HabitCheckInUpdateWithWhereUniqueWithoutHabitInput[]
+    updateMany?: HabitCheckInUpdateManyWithWhereWithoutHabitInput | HabitCheckInUpdateManyWithWhereWithoutHabitInput[]
+    deleteMany?: HabitCheckInScalarWhereInput | HabitCheckInScalarWhereInput[]
+  }
+
+  export type ChecklistUncheckedUpdateManyWithoutHabitNestedInput = {
+    create?: XOR<ChecklistCreateWithoutHabitInput, ChecklistUncheckedCreateWithoutHabitInput> | ChecklistCreateWithoutHabitInput[] | ChecklistUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: ChecklistCreateOrConnectWithoutHabitInput | ChecklistCreateOrConnectWithoutHabitInput[]
+    upsert?: ChecklistUpsertWithWhereUniqueWithoutHabitInput | ChecklistUpsertWithWhereUniqueWithoutHabitInput[]
+    createMany?: ChecklistCreateManyHabitInputEnvelope
+    set?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    disconnect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    delete?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    connect?: ChecklistWhereUniqueInput | ChecklistWhereUniqueInput[]
+    update?: ChecklistUpdateWithWhereUniqueWithoutHabitInput | ChecklistUpdateWithWhereUniqueWithoutHabitInput[]
+    updateMany?: ChecklistUpdateManyWithWhereWithoutHabitInput | ChecklistUpdateManyWithWhereWithoutHabitInput[]
+    deleteMany?: ChecklistScalarWhereInput | ChecklistScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutIdentitiesInput = {
+    create?: XOR<UserCreateWithoutIdentitiesInput, UserUncheckedCreateWithoutIdentitiesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutIdentitiesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type GoalCreateNestedManyWithoutIdentityInput = {
+    create?: XOR<GoalCreateWithoutIdentityInput, GoalUncheckedCreateWithoutIdentityInput> | GoalCreateWithoutIdentityInput[] | GoalUncheckedCreateWithoutIdentityInput[]
+    connectOrCreate?: GoalCreateOrConnectWithoutIdentityInput | GoalCreateOrConnectWithoutIdentityInput[]
+    createMany?: GoalCreateManyIdentityInputEnvelope
+    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+  }
+
+  export type GoalUncheckedCreateNestedManyWithoutIdentityInput = {
+    create?: XOR<GoalCreateWithoutIdentityInput, GoalUncheckedCreateWithoutIdentityInput> | GoalCreateWithoutIdentityInput[] | GoalUncheckedCreateWithoutIdentityInput[]
+    connectOrCreate?: GoalCreateOrConnectWithoutIdentityInput | GoalCreateOrConnectWithoutIdentityInput[]
+    createMany?: GoalCreateManyIdentityInputEnvelope
+    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutIdentitiesNestedInput = {
+    create?: XOR<UserCreateWithoutIdentitiesInput, UserUncheckedCreateWithoutIdentitiesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutIdentitiesInput
+    upsert?: UserUpsertWithoutIdentitiesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutIdentitiesInput, UserUpdateWithoutIdentitiesInput>, UserUncheckedUpdateWithoutIdentitiesInput>
+  }
+
+  export type GoalUpdateManyWithoutIdentityNestedInput = {
+    create?: XOR<GoalCreateWithoutIdentityInput, GoalUncheckedCreateWithoutIdentityInput> | GoalCreateWithoutIdentityInput[] | GoalUncheckedCreateWithoutIdentityInput[]
+    connectOrCreate?: GoalCreateOrConnectWithoutIdentityInput | GoalCreateOrConnectWithoutIdentityInput[]
+    upsert?: GoalUpsertWithWhereUniqueWithoutIdentityInput | GoalUpsertWithWhereUniqueWithoutIdentityInput[]
+    createMany?: GoalCreateManyIdentityInputEnvelope
+    set?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    disconnect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    delete?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    update?: GoalUpdateWithWhereUniqueWithoutIdentityInput | GoalUpdateWithWhereUniqueWithoutIdentityInput[]
+    updateMany?: GoalUpdateManyWithWhereWithoutIdentityInput | GoalUpdateManyWithWhereWithoutIdentityInput[]
+    deleteMany?: GoalScalarWhereInput | GoalScalarWhereInput[]
+  }
+
+  export type GoalUncheckedUpdateManyWithoutIdentityNestedInput = {
+    create?: XOR<GoalCreateWithoutIdentityInput, GoalUncheckedCreateWithoutIdentityInput> | GoalCreateWithoutIdentityInput[] | GoalUncheckedCreateWithoutIdentityInput[]
+    connectOrCreate?: GoalCreateOrConnectWithoutIdentityInput | GoalCreateOrConnectWithoutIdentityInput[]
+    upsert?: GoalUpsertWithWhereUniqueWithoutIdentityInput | GoalUpsertWithWhereUniqueWithoutIdentityInput[]
+    createMany?: GoalCreateManyIdentityInputEnvelope
+    set?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    disconnect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    delete?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+    update?: GoalUpdateWithWhereUniqueWithoutIdentityInput | GoalUpdateWithWhereUniqueWithoutIdentityInput[]
+    updateMany?: GoalUpdateManyWithWhereWithoutIdentityInput | GoalUpdateManyWithWhereWithoutIdentityInput[]
+    deleteMany?: GoalScalarWhereInput | GoalScalarWhereInput[]
+  }
+
+  export type NextStepGoalEntryCreatecomponentHabitsInput = {
+    set: string[]
+  }
+
   export type NextStepGoalEntryUpdatecomponentHabitsInput = {
     set?: string[]
     push?: string | string[]
-  }
-
-  export type AssessmentNextStepUpdateOneRequiredWithoutGoalEntriesNestedInput = {
-    create?: XOR<AssessmentNextStepCreateWithoutGoalEntriesInput, AssessmentNextStepUncheckedCreateWithoutGoalEntriesInput>
-    connectOrCreate?: AssessmentNextStepCreateOrConnectWithoutGoalEntriesInput
-    upsert?: AssessmentNextStepUpsertWithoutGoalEntriesInput
-    connect?: AssessmentNextStepWhereUniqueInput
-    update?: XOR<XOR<AssessmentNextStepUpdateToOneWithWhereWithoutGoalEntriesInput, AssessmentNextStepUpdateWithoutGoalEntriesInput>, AssessmentNextStepUncheckedUpdateWithoutGoalEntriesInput>
-  }
-
-  export type IdentityRecordUpdateOneWithoutGoalsNestedInput = {
-    create?: XOR<IdentityRecordCreateWithoutGoalsInput, IdentityRecordUncheckedCreateWithoutGoalsInput>
-    connectOrCreate?: IdentityRecordCreateOrConnectWithoutGoalsInput
-    upsert?: IdentityRecordUpsertWithoutGoalsInput
-    disconnect?: IdentityRecordWhereInput | boolean
-    delete?: IdentityRecordWhereInput | boolean
-    connect?: IdentityRecordWhereUniqueInput
-    update?: XOR<XOR<IdentityRecordUpdateToOneWithWhereWithoutGoalsInput, IdentityRecordUpdateWithoutGoalsInput>, IdentityRecordUncheckedUpdateWithoutGoalsInput>
-  }
-
-  export type TrackedHabitUpdateManyWithoutGoalEntryNestedInput = {
-    create?: XOR<TrackedHabitCreateWithoutGoalEntryInput, TrackedHabitUncheckedCreateWithoutGoalEntryInput> | TrackedHabitCreateWithoutGoalEntryInput[] | TrackedHabitUncheckedCreateWithoutGoalEntryInput[]
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutGoalEntryInput | TrackedHabitCreateOrConnectWithoutGoalEntryInput[]
-    upsert?: TrackedHabitUpsertWithWhereUniqueWithoutGoalEntryInput | TrackedHabitUpsertWithWhereUniqueWithoutGoalEntryInput[]
-    createMany?: TrackedHabitCreateManyGoalEntryInputEnvelope
-    set?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    disconnect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    delete?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    update?: TrackedHabitUpdateWithWhereUniqueWithoutGoalEntryInput | TrackedHabitUpdateWithWhereUniqueWithoutGoalEntryInput[]
-    updateMany?: TrackedHabitUpdateManyWithWhereWithoutGoalEntryInput | TrackedHabitUpdateManyWithWhereWithoutGoalEntryInput[]
-    deleteMany?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
-  }
-
-  export type TrackedHabitUncheckedUpdateManyWithoutGoalEntryNestedInput = {
-    create?: XOR<TrackedHabitCreateWithoutGoalEntryInput, TrackedHabitUncheckedCreateWithoutGoalEntryInput> | TrackedHabitCreateWithoutGoalEntryInput[] | TrackedHabitUncheckedCreateWithoutGoalEntryInput[]
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutGoalEntryInput | TrackedHabitCreateOrConnectWithoutGoalEntryInput[]
-    upsert?: TrackedHabitUpsertWithWhereUniqueWithoutGoalEntryInput | TrackedHabitUpsertWithWhereUniqueWithoutGoalEntryInput[]
-    createMany?: TrackedHabitCreateManyGoalEntryInputEnvelope
-    set?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    disconnect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    delete?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    connect?: TrackedHabitWhereUniqueInput | TrackedHabitWhereUniqueInput[]
-    update?: TrackedHabitUpdateWithWhereUniqueWithoutGoalEntryInput | TrackedHabitUpdateWithWhereUniqueWithoutGoalEntryInput[]
-    updateMany?: TrackedHabitUpdateManyWithWhereWithoutGoalEntryInput | TrackedHabitUpdateManyWithWhereWithoutGoalEntryInput[]
-    deleteMany?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
   }
 
   export type ChecklistCreateNestedManyWithoutTemplateInput = {
@@ -39355,6 +37810,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type HabitCreateNestedOneWithoutChecklistsInput = {
+    create?: XOR<HabitCreateWithoutChecklistsInput, HabitUncheckedCreateWithoutChecklistsInput>
+    connectOrCreate?: HabitCreateOrConnectWithoutChecklistsInput
+    connect?: HabitWhereUniqueInput
+  }
+
   export type ChecklistTemplateCreateNestedOneWithoutChecklistsInput = {
     create?: XOR<ChecklistTemplateCreateWithoutChecklistsInput, ChecklistTemplateUncheckedCreateWithoutChecklistsInput>
     connectOrCreate?: ChecklistTemplateCreateOrConnectWithoutChecklistsInput
@@ -39369,6 +37830,16 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutChecklistsInput, UserUpdateWithoutChecklistsInput>, UserUncheckedUpdateWithoutChecklistsInput>
   }
 
+  export type HabitUpdateOneWithoutChecklistsNestedInput = {
+    create?: XOR<HabitCreateWithoutChecklistsInput, HabitUncheckedCreateWithoutChecklistsInput>
+    connectOrCreate?: HabitCreateOrConnectWithoutChecklistsInput
+    upsert?: HabitUpsertWithoutChecklistsInput
+    disconnect?: HabitWhereInput | boolean
+    delete?: HabitWhereInput | boolean
+    connect?: HabitWhereUniqueInput
+    update?: XOR<XOR<HabitUpdateToOneWithWhereWithoutChecklistsInput, HabitUpdateWithoutChecklistsInput>, HabitUncheckedUpdateWithoutChecklistsInput>
+  }
+
   export type ChecklistTemplateUpdateOneWithoutChecklistsNestedInput = {
     create?: XOR<ChecklistTemplateCreateWithoutChecklistsInput, ChecklistTemplateUncheckedCreateWithoutChecklistsInput>
     connectOrCreate?: ChecklistTemplateCreateOrConnectWithoutChecklistsInput
@@ -39379,162 +37850,18 @@ export namespace Prisma {
     update?: XOR<XOR<ChecklistTemplateUpdateToOneWithWhereWithoutChecklistsInput, ChecklistTemplateUpdateWithoutChecklistsInput>, ChecklistTemplateUncheckedUpdateWithoutChecklistsInput>
   }
 
-  export type UserCreateNestedOneWithoutTrackedHabitsInput = {
-    create?: XOR<UserCreateWithoutTrackedHabitsInput, UserUncheckedCreateWithoutTrackedHabitsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTrackedHabitsInput
-    connect?: UserWhereUniqueInput
+  export type HabitCreateNestedOneWithoutCheckInsInput = {
+    create?: XOR<HabitCreateWithoutCheckInsInput, HabitUncheckedCreateWithoutCheckInsInput>
+    connectOrCreate?: HabitCreateOrConnectWithoutCheckInsInput
+    connect?: HabitWhereUniqueInput
   }
 
-  export type NextStepGoalEntryCreateNestedOneWithoutTrackedHabitsInput = {
-    create?: XOR<NextStepGoalEntryCreateWithoutTrackedHabitsInput, NextStepGoalEntryUncheckedCreateWithoutTrackedHabitsInput>
-    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutTrackedHabitsInput
-    connect?: NextStepGoalEntryWhereUniqueInput
-  }
-
-  export type IdentityRecordCreateNestedOneWithoutTrackedHabitsInput = {
-    create?: XOR<IdentityRecordCreateWithoutTrackedHabitsInput, IdentityRecordUncheckedCreateWithoutTrackedHabitsInput>
-    connectOrCreate?: IdentityRecordCreateOrConnectWithoutTrackedHabitsInput
-    connect?: IdentityRecordWhereUniqueInput
-  }
-
-  export type HabitCueCreateNestedManyWithoutHabitInput = {
-    create?: XOR<HabitCueCreateWithoutHabitInput, HabitCueUncheckedCreateWithoutHabitInput> | HabitCueCreateWithoutHabitInput[] | HabitCueUncheckedCreateWithoutHabitInput[]
-    connectOrCreate?: HabitCueCreateOrConnectWithoutHabitInput | HabitCueCreateOrConnectWithoutHabitInput[]
-    createMany?: HabitCueCreateManyHabitInputEnvelope
-    connect?: HabitCueWhereUniqueInput | HabitCueWhereUniqueInput[]
-  }
-
-  export type HabitCheckInCreateNestedManyWithoutHabitInput = {
-    create?: XOR<HabitCheckInCreateWithoutHabitInput, HabitCheckInUncheckedCreateWithoutHabitInput> | HabitCheckInCreateWithoutHabitInput[] | HabitCheckInUncheckedCreateWithoutHabitInput[]
-    connectOrCreate?: HabitCheckInCreateOrConnectWithoutHabitInput | HabitCheckInCreateOrConnectWithoutHabitInput[]
-    createMany?: HabitCheckInCreateManyHabitInputEnvelope
-    connect?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
-  }
-
-  export type HabitCueUncheckedCreateNestedManyWithoutHabitInput = {
-    create?: XOR<HabitCueCreateWithoutHabitInput, HabitCueUncheckedCreateWithoutHabitInput> | HabitCueCreateWithoutHabitInput[] | HabitCueUncheckedCreateWithoutHabitInput[]
-    connectOrCreate?: HabitCueCreateOrConnectWithoutHabitInput | HabitCueCreateOrConnectWithoutHabitInput[]
-    createMany?: HabitCueCreateManyHabitInputEnvelope
-    connect?: HabitCueWhereUniqueInput | HabitCueWhereUniqueInput[]
-  }
-
-  export type HabitCheckInUncheckedCreateNestedManyWithoutHabitInput = {
-    create?: XOR<HabitCheckInCreateWithoutHabitInput, HabitCheckInUncheckedCreateWithoutHabitInput> | HabitCheckInCreateWithoutHabitInput[] | HabitCheckInUncheckedCreateWithoutHabitInput[]
-    connectOrCreate?: HabitCheckInCreateOrConnectWithoutHabitInput | HabitCheckInCreateOrConnectWithoutHabitInput[]
-    createMany?: HabitCheckInCreateManyHabitInputEnvelope
-    connect?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
-  }
-
-  export type UserUpdateOneRequiredWithoutTrackedHabitsNestedInput = {
-    create?: XOR<UserCreateWithoutTrackedHabitsInput, UserUncheckedCreateWithoutTrackedHabitsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTrackedHabitsInput
-    upsert?: UserUpsertWithoutTrackedHabitsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTrackedHabitsInput, UserUpdateWithoutTrackedHabitsInput>, UserUncheckedUpdateWithoutTrackedHabitsInput>
-  }
-
-  export type NextStepGoalEntryUpdateOneWithoutTrackedHabitsNestedInput = {
-    create?: XOR<NextStepGoalEntryCreateWithoutTrackedHabitsInput, NextStepGoalEntryUncheckedCreateWithoutTrackedHabitsInput>
-    connectOrCreate?: NextStepGoalEntryCreateOrConnectWithoutTrackedHabitsInput
-    upsert?: NextStepGoalEntryUpsertWithoutTrackedHabitsInput
-    disconnect?: NextStepGoalEntryWhereInput | boolean
-    delete?: NextStepGoalEntryWhereInput | boolean
-    connect?: NextStepGoalEntryWhereUniqueInput
-    update?: XOR<XOR<NextStepGoalEntryUpdateToOneWithWhereWithoutTrackedHabitsInput, NextStepGoalEntryUpdateWithoutTrackedHabitsInput>, NextStepGoalEntryUncheckedUpdateWithoutTrackedHabitsInput>
-  }
-
-  export type IdentityRecordUpdateOneWithoutTrackedHabitsNestedInput = {
-    create?: XOR<IdentityRecordCreateWithoutTrackedHabitsInput, IdentityRecordUncheckedCreateWithoutTrackedHabitsInput>
-    connectOrCreate?: IdentityRecordCreateOrConnectWithoutTrackedHabitsInput
-    upsert?: IdentityRecordUpsertWithoutTrackedHabitsInput
-    disconnect?: IdentityRecordWhereInput | boolean
-    delete?: IdentityRecordWhereInput | boolean
-    connect?: IdentityRecordWhereUniqueInput
-    update?: XOR<XOR<IdentityRecordUpdateToOneWithWhereWithoutTrackedHabitsInput, IdentityRecordUpdateWithoutTrackedHabitsInput>, IdentityRecordUncheckedUpdateWithoutTrackedHabitsInput>
-  }
-
-  export type HabitCueUpdateManyWithoutHabitNestedInput = {
-    create?: XOR<HabitCueCreateWithoutHabitInput, HabitCueUncheckedCreateWithoutHabitInput> | HabitCueCreateWithoutHabitInput[] | HabitCueUncheckedCreateWithoutHabitInput[]
-    connectOrCreate?: HabitCueCreateOrConnectWithoutHabitInput | HabitCueCreateOrConnectWithoutHabitInput[]
-    upsert?: HabitCueUpsertWithWhereUniqueWithoutHabitInput | HabitCueUpsertWithWhereUniqueWithoutHabitInput[]
-    createMany?: HabitCueCreateManyHabitInputEnvelope
-    set?: HabitCueWhereUniqueInput | HabitCueWhereUniqueInput[]
-    disconnect?: HabitCueWhereUniqueInput | HabitCueWhereUniqueInput[]
-    delete?: HabitCueWhereUniqueInput | HabitCueWhereUniqueInput[]
-    connect?: HabitCueWhereUniqueInput | HabitCueWhereUniqueInput[]
-    update?: HabitCueUpdateWithWhereUniqueWithoutHabitInput | HabitCueUpdateWithWhereUniqueWithoutHabitInput[]
-    updateMany?: HabitCueUpdateManyWithWhereWithoutHabitInput | HabitCueUpdateManyWithWhereWithoutHabitInput[]
-    deleteMany?: HabitCueScalarWhereInput | HabitCueScalarWhereInput[]
-  }
-
-  export type HabitCheckInUpdateManyWithoutHabitNestedInput = {
-    create?: XOR<HabitCheckInCreateWithoutHabitInput, HabitCheckInUncheckedCreateWithoutHabitInput> | HabitCheckInCreateWithoutHabitInput[] | HabitCheckInUncheckedCreateWithoutHabitInput[]
-    connectOrCreate?: HabitCheckInCreateOrConnectWithoutHabitInput | HabitCheckInCreateOrConnectWithoutHabitInput[]
-    upsert?: HabitCheckInUpsertWithWhereUniqueWithoutHabitInput | HabitCheckInUpsertWithWhereUniqueWithoutHabitInput[]
-    createMany?: HabitCheckInCreateManyHabitInputEnvelope
-    set?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
-    disconnect?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
-    delete?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
-    connect?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
-    update?: HabitCheckInUpdateWithWhereUniqueWithoutHabitInput | HabitCheckInUpdateWithWhereUniqueWithoutHabitInput[]
-    updateMany?: HabitCheckInUpdateManyWithWhereWithoutHabitInput | HabitCheckInUpdateManyWithWhereWithoutHabitInput[]
-    deleteMany?: HabitCheckInScalarWhereInput | HabitCheckInScalarWhereInput[]
-  }
-
-  export type HabitCueUncheckedUpdateManyWithoutHabitNestedInput = {
-    create?: XOR<HabitCueCreateWithoutHabitInput, HabitCueUncheckedCreateWithoutHabitInput> | HabitCueCreateWithoutHabitInput[] | HabitCueUncheckedCreateWithoutHabitInput[]
-    connectOrCreate?: HabitCueCreateOrConnectWithoutHabitInput | HabitCueCreateOrConnectWithoutHabitInput[]
-    upsert?: HabitCueUpsertWithWhereUniqueWithoutHabitInput | HabitCueUpsertWithWhereUniqueWithoutHabitInput[]
-    createMany?: HabitCueCreateManyHabitInputEnvelope
-    set?: HabitCueWhereUniqueInput | HabitCueWhereUniqueInput[]
-    disconnect?: HabitCueWhereUniqueInput | HabitCueWhereUniqueInput[]
-    delete?: HabitCueWhereUniqueInput | HabitCueWhereUniqueInput[]
-    connect?: HabitCueWhereUniqueInput | HabitCueWhereUniqueInput[]
-    update?: HabitCueUpdateWithWhereUniqueWithoutHabitInput | HabitCueUpdateWithWhereUniqueWithoutHabitInput[]
-    updateMany?: HabitCueUpdateManyWithWhereWithoutHabitInput | HabitCueUpdateManyWithWhereWithoutHabitInput[]
-    deleteMany?: HabitCueScalarWhereInput | HabitCueScalarWhereInput[]
-  }
-
-  export type HabitCheckInUncheckedUpdateManyWithoutHabitNestedInput = {
-    create?: XOR<HabitCheckInCreateWithoutHabitInput, HabitCheckInUncheckedCreateWithoutHabitInput> | HabitCheckInCreateWithoutHabitInput[] | HabitCheckInUncheckedCreateWithoutHabitInput[]
-    connectOrCreate?: HabitCheckInCreateOrConnectWithoutHabitInput | HabitCheckInCreateOrConnectWithoutHabitInput[]
-    upsert?: HabitCheckInUpsertWithWhereUniqueWithoutHabitInput | HabitCheckInUpsertWithWhereUniqueWithoutHabitInput[]
-    createMany?: HabitCheckInCreateManyHabitInputEnvelope
-    set?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
-    disconnect?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
-    delete?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
-    connect?: HabitCheckInWhereUniqueInput | HabitCheckInWhereUniqueInput[]
-    update?: HabitCheckInUpdateWithWhereUniqueWithoutHabitInput | HabitCheckInUpdateWithWhereUniqueWithoutHabitInput[]
-    updateMany?: HabitCheckInUpdateManyWithWhereWithoutHabitInput | HabitCheckInUpdateManyWithWhereWithoutHabitInput[]
-    deleteMany?: HabitCheckInScalarWhereInput | HabitCheckInScalarWhereInput[]
-  }
-
-  export type TrackedHabitCreateNestedOneWithoutCuesInput = {
-    create?: XOR<TrackedHabitCreateWithoutCuesInput, TrackedHabitUncheckedCreateWithoutCuesInput>
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutCuesInput
-    connect?: TrackedHabitWhereUniqueInput
-  }
-
-  export type TrackedHabitUpdateOneRequiredWithoutCuesNestedInput = {
-    create?: XOR<TrackedHabitCreateWithoutCuesInput, TrackedHabitUncheckedCreateWithoutCuesInput>
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutCuesInput
-    upsert?: TrackedHabitUpsertWithoutCuesInput
-    connect?: TrackedHabitWhereUniqueInput
-    update?: XOR<XOR<TrackedHabitUpdateToOneWithWhereWithoutCuesInput, TrackedHabitUpdateWithoutCuesInput>, TrackedHabitUncheckedUpdateWithoutCuesInput>
-  }
-
-  export type TrackedHabitCreateNestedOneWithoutCheckInsInput = {
-    create?: XOR<TrackedHabitCreateWithoutCheckInsInput, TrackedHabitUncheckedCreateWithoutCheckInsInput>
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutCheckInsInput
-    connect?: TrackedHabitWhereUniqueInput
-  }
-
-  export type TrackedHabitUpdateOneRequiredWithoutCheckInsNestedInput = {
-    create?: XOR<TrackedHabitCreateWithoutCheckInsInput, TrackedHabitUncheckedCreateWithoutCheckInsInput>
-    connectOrCreate?: TrackedHabitCreateOrConnectWithoutCheckInsInput
-    upsert?: TrackedHabitUpsertWithoutCheckInsInput
-    connect?: TrackedHabitWhereUniqueInput
-    update?: XOR<XOR<TrackedHabitUpdateToOneWithWhereWithoutCheckInsInput, TrackedHabitUpdateWithoutCheckInsInput>, TrackedHabitUncheckedUpdateWithoutCheckInsInput>
+  export type HabitUpdateOneRequiredWithoutCheckInsNestedInput = {
+    create?: XOR<HabitCreateWithoutCheckInsInput, HabitUncheckedCreateWithoutCheckInsInput>
+    connectOrCreate?: HabitCreateOrConnectWithoutCheckInsInput
+    upsert?: HabitUpsertWithoutCheckInsInput
+    connect?: HabitWhereUniqueInput
+    update?: XOR<XOR<HabitUpdateToOneWithWhereWithoutCheckInsInput, HabitUpdateWithoutCheckInsInput>, HabitUncheckedUpdateWithoutCheckInsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -39984,7 +38311,6 @@ export namespace Prisma {
     reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
     completedAt?: Date | string | null
     domainVisions?: DomainVisionEntryCreateNestedManyWithoutAssessmentInput
-    identities?: IdentityRecordCreateNestedManyWithoutAssessmentInput
   }
 
   export type AssessmentPartFourUncheckedCreateWithoutUserInput = {
@@ -40008,7 +38334,6 @@ export namespace Prisma {
     reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
     completedAt?: Date | string | null
     domainVisions?: DomainVisionEntryUncheckedCreateNestedManyWithoutAssessmentInput
-    identities?: IdentityRecordUncheckedCreateNestedManyWithoutAssessmentInput
   }
 
   export type AssessmentPartFourCreateOrConnectWithoutUserInput = {
@@ -40016,49 +38341,28 @@ export namespace Prisma {
     create: XOR<AssessmentPartFourCreateWithoutUserInput, AssessmentPartFourUncheckedCreateWithoutUserInput>
   }
 
-  export type AssessmentNextStepCreateWithoutUserInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    completedAt?: Date | string | null
-    goalEntries?: NextStepGoalEntryCreateNestedManyWithoutNextStepInput
-  }
-
-  export type AssessmentNextStepUncheckedCreateWithoutUserInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    completedAt?: Date | string | null
-    goalEntries?: NextStepGoalEntryUncheckedCreateNestedManyWithoutNextStepInput
-  }
-
-  export type AssessmentNextStepCreateOrConnectWithoutUserInput = {
-    where: AssessmentNextStepWhereUniqueInput
-    create: XOR<AssessmentNextStepCreateWithoutUserInput, AssessmentNextStepUncheckedCreateWithoutUserInput>
-  }
-
   export type ChecklistCreateWithoutUserInput = {
     id?: string
     title?: string
-    templateType?: string
+    mode?: string
     content?: string
+    customEntries?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    mode?: string
-    customEntries?: string
+    habit?: HabitCreateNestedOneWithoutChecklistsInput
     template?: ChecklistTemplateCreateNestedOneWithoutChecklistsInput
   }
 
   export type ChecklistUncheckedCreateWithoutUserInput = {
     id?: string
     title?: string
-    templateType?: string
+    mode?: string
     content?: string
+    customEntries?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    mode?: string
+    habitId?: string | null
     templateId?: string | null
-    customEntries?: string
   }
 
   export type ChecklistCreateOrConnectWithoutUserInput = {
@@ -40071,37 +38375,67 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type TrackedHabitCreateWithoutUserInput = {
+  export type IdentityCreateWithoutUserInput = {
     id?: string
     name: string
     category?: string | null
+    goals?: GoalCreateNestedManyWithoutIdentityInput
+  }
+
+  export type IdentityUncheckedCreateWithoutUserInput = {
+    id?: string
+    name: string
+    category?: string | null
+    goals?: GoalUncheckedCreateNestedManyWithoutIdentityInput
+  }
+
+  export type IdentityCreateOrConnectWithoutUserInput = {
+    where: IdentityWhereUniqueInput
+    create: XOR<IdentityCreateWithoutUserInput, IdentityUncheckedCreateWithoutUserInput>
+  }
+
+  export type IdentityCreateManyUserInputEnvelope = {
+    data: IdentityCreateManyUserInput | IdentityCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type HabitCreateWithoutUserInput = {
+    id?: string
+    name: string
+    category?: string | null
+    mode?: string
+    cue?: string
+    time?: string
+    location?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goalEntry?: NextStepGoalEntryCreateNestedOneWithoutTrackedHabitsInput
-    identity?: IdentityRecordCreateNestedOneWithoutTrackedHabitsInput
-    cues?: HabitCueCreateNestedManyWithoutHabitInput
+    goal: GoalCreateNestedOneWithoutHabitsInput
     checkIns?: HabitCheckInCreateNestedManyWithoutHabitInput
+    checklists?: ChecklistCreateNestedManyWithoutHabitInput
   }
 
-  export type TrackedHabitUncheckedCreateWithoutUserInput = {
+  export type HabitUncheckedCreateWithoutUserInput = {
     id?: string
     name: string
     category?: string | null
+    mode?: string
+    cue?: string
+    time?: string
+    location?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goalEntryId?: string | null
-    identityId?: string | null
-    cues?: HabitCueUncheckedCreateNestedManyWithoutHabitInput
+    goalId: string
     checkIns?: HabitCheckInUncheckedCreateNestedManyWithoutHabitInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutHabitInput
   }
 
-  export type TrackedHabitCreateOrConnectWithoutUserInput = {
-    where: TrackedHabitWhereUniqueInput
-    create: XOR<TrackedHabitCreateWithoutUserInput, TrackedHabitUncheckedCreateWithoutUserInput>
+  export type HabitCreateOrConnectWithoutUserInput = {
+    where: HabitWhereUniqueInput
+    create: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput>
   }
 
-  export type TrackedHabitCreateManyUserInputEnvelope = {
-    data: TrackedHabitCreateManyUserInput | TrackedHabitCreateManyUserInput[]
+  export type HabitCreateManyUserInputEnvelope = {
+    data: HabitCreateManyUserInput | HabitCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -40377,7 +38711,6 @@ export namespace Prisma {
     reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     domainVisions?: DomainVisionEntryUpdateManyWithoutAssessmentNestedInput
-    identities?: IdentityRecordUpdateManyWithoutAssessmentNestedInput
   }
 
   export type AssessmentPartFourUncheckedUpdateWithoutUserInput = {
@@ -40401,34 +38734,6 @@ export namespace Prisma {
     reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     domainVisions?: DomainVisionEntryUncheckedUpdateManyWithoutAssessmentNestedInput
-    identities?: IdentityRecordUncheckedUpdateManyWithoutAssessmentNestedInput
-  }
-
-  export type AssessmentNextStepUpsertWithoutUserInput = {
-    update: XOR<AssessmentNextStepUpdateWithoutUserInput, AssessmentNextStepUncheckedUpdateWithoutUserInput>
-    create: XOR<AssessmentNextStepCreateWithoutUserInput, AssessmentNextStepUncheckedCreateWithoutUserInput>
-    where?: AssessmentNextStepWhereInput
-  }
-
-  export type AssessmentNextStepUpdateToOneWithWhereWithoutUserInput = {
-    where?: AssessmentNextStepWhereInput
-    data: XOR<AssessmentNextStepUpdateWithoutUserInput, AssessmentNextStepUncheckedUpdateWithoutUserInput>
-  }
-
-  export type AssessmentNextStepUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    goalEntries?: NextStepGoalEntryUpdateManyWithoutNextStepNestedInput
-  }
-
-  export type AssessmentNextStepUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    goalEntries?: NextStepGoalEntryUncheckedUpdateManyWithoutNextStepNestedInput
   }
 
   export type ChecklistUpsertWithWhereUniqueWithoutUserInput = {
@@ -40453,44 +38758,73 @@ export namespace Prisma {
     NOT?: ChecklistScalarWhereInput | ChecklistScalarWhereInput[]
     id?: StringFilter<"Checklist"> | string
     title?: StringFilter<"Checklist"> | string
-    templateType?: StringFilter<"Checklist"> | string
+    mode?: StringFilter<"Checklist"> | string
     content?: StringFilter<"Checklist"> | string
+    customEntries?: StringFilter<"Checklist"> | string
     createdAt?: DateTimeFilter<"Checklist"> | Date | string
     updatedAt?: DateTimeFilter<"Checklist"> | Date | string
     userId?: StringFilter<"Checklist"> | string
-    mode?: StringFilter<"Checklist"> | string
+    habitId?: StringNullableFilter<"Checklist"> | string | null
     templateId?: StringNullableFilter<"Checklist"> | string | null
-    customEntries?: StringFilter<"Checklist"> | string
   }
 
-  export type TrackedHabitUpsertWithWhereUniqueWithoutUserInput = {
-    where: TrackedHabitWhereUniqueInput
-    update: XOR<TrackedHabitUpdateWithoutUserInput, TrackedHabitUncheckedUpdateWithoutUserInput>
-    create: XOR<TrackedHabitCreateWithoutUserInput, TrackedHabitUncheckedCreateWithoutUserInput>
+  export type IdentityUpsertWithWhereUniqueWithoutUserInput = {
+    where: IdentityWhereUniqueInput
+    update: XOR<IdentityUpdateWithoutUserInput, IdentityUncheckedUpdateWithoutUserInput>
+    create: XOR<IdentityCreateWithoutUserInput, IdentityUncheckedCreateWithoutUserInput>
   }
 
-  export type TrackedHabitUpdateWithWhereUniqueWithoutUserInput = {
-    where: TrackedHabitWhereUniqueInput
-    data: XOR<TrackedHabitUpdateWithoutUserInput, TrackedHabitUncheckedUpdateWithoutUserInput>
+  export type IdentityUpdateWithWhereUniqueWithoutUserInput = {
+    where: IdentityWhereUniqueInput
+    data: XOR<IdentityUpdateWithoutUserInput, IdentityUncheckedUpdateWithoutUserInput>
   }
 
-  export type TrackedHabitUpdateManyWithWhereWithoutUserInput = {
-    where: TrackedHabitScalarWhereInput
-    data: XOR<TrackedHabitUpdateManyMutationInput, TrackedHabitUncheckedUpdateManyWithoutUserInput>
+  export type IdentityUpdateManyWithWhereWithoutUserInput = {
+    where: IdentityScalarWhereInput
+    data: XOR<IdentityUpdateManyMutationInput, IdentityUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type TrackedHabitScalarWhereInput = {
-    AND?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
-    OR?: TrackedHabitScalarWhereInput[]
-    NOT?: TrackedHabitScalarWhereInput | TrackedHabitScalarWhereInput[]
-    id?: StringFilter<"TrackedHabit"> | string
-    name?: StringFilter<"TrackedHabit"> | string
-    category?: StringNullableFilter<"TrackedHabit"> | string | null
-    createdAt?: DateTimeFilter<"TrackedHabit"> | Date | string
-    updatedAt?: DateTimeFilter<"TrackedHabit"> | Date | string
-    userId?: StringFilter<"TrackedHabit"> | string
-    goalEntryId?: StringNullableFilter<"TrackedHabit"> | string | null
-    identityId?: StringNullableFilter<"TrackedHabit"> | string | null
+  export type IdentityScalarWhereInput = {
+    AND?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
+    OR?: IdentityScalarWhereInput[]
+    NOT?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
+    id?: StringFilter<"Identity"> | string
+    name?: StringFilter<"Identity"> | string
+    category?: StringNullableFilter<"Identity"> | string | null
+    userId?: StringFilter<"Identity"> | string
+  }
+
+  export type HabitUpsertWithWhereUniqueWithoutUserInput = {
+    where: HabitWhereUniqueInput
+    update: XOR<HabitUpdateWithoutUserInput, HabitUncheckedUpdateWithoutUserInput>
+    create: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput>
+  }
+
+  export type HabitUpdateWithWhereUniqueWithoutUserInput = {
+    where: HabitWhereUniqueInput
+    data: XOR<HabitUpdateWithoutUserInput, HabitUncheckedUpdateWithoutUserInput>
+  }
+
+  export type HabitUpdateManyWithWhereWithoutUserInput = {
+    where: HabitScalarWhereInput
+    data: XOR<HabitUpdateManyMutationInput, HabitUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type HabitScalarWhereInput = {
+    AND?: HabitScalarWhereInput | HabitScalarWhereInput[]
+    OR?: HabitScalarWhereInput[]
+    NOT?: HabitScalarWhereInput | HabitScalarWhereInput[]
+    id?: StringFilter<"Habit"> | string
+    name?: StringFilter<"Habit"> | string
+    category?: StringNullableFilter<"Habit"> | string | null
+    mode?: StringFilter<"Habit"> | string
+    cue?: StringFilter<"Habit"> | string
+    time?: StringFilter<"Habit"> | string
+    location?: StringFilter<"Habit"> | string
+    createdAt?: DateTimeFilter<"Habit"> | Date | string
+    updatedAt?: DateTimeFilter<"Habit"> | Date | string
+    userId?: StringFilter<"Habit"> | string
+    goalId?: StringFilter<"Habit"> | string
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -40507,9 +38841,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
+    identities?: IdentityCreateNestedManyWithoutUserInput
+    habits?: HabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -40526,9 +38860,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutUserInput
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -40561,9 +38895,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
+    identities?: IdentityUpdateManyWithoutUserNestedInput
+    habits?: HabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -40580,9 +38914,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutUserNestedInput
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -40599,9 +38933,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
+    identities?: IdentityCreateNestedManyWithoutUserInput
+    habits?: HabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -40618,9 +38952,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutUserInput
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -40653,9 +38987,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
+    identities?: IdentityUpdateManyWithoutUserNestedInput
+    habits?: HabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -40672,9 +39006,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutUserNestedInput
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotesInput = {
@@ -40691,9 +39025,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
+    identities?: IdentityCreateNestedManyWithoutUserInput
+    habits?: HabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotesInput = {
@@ -40710,9 +39044,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutUserInput
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotesInput = {
@@ -40745,9 +39079,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
+    identities?: IdentityUpdateManyWithoutUserNestedInput
+    habits?: HabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotesInput = {
@@ -40764,9 +39098,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutUserNestedInput
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAssessmentPartOneInput = {
@@ -40783,9 +39117,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
+    identities?: IdentityCreateNestedManyWithoutUserInput
+    habits?: HabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartOneInput = {
@@ -40802,9 +39136,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutUserInput
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartOneInput = {
@@ -40859,9 +39193,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
+    identities?: IdentityUpdateManyWithoutUserNestedInput
+    habits?: HabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartOneInput = {
@@ -40878,9 +39212,9 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutUserNestedInput
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProjectUpsertWithWhereUniqueWithoutAssessmentInput = {
@@ -41031,9 +39365,9 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
+    identities?: IdentityCreateNestedManyWithoutUserInput
+    habits?: HabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartTwoInput = {
@@ -41050,9 +39384,9 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutUserInput
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartTwoInput = {
@@ -41107,9 +39441,9 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
+    identities?: IdentityUpdateManyWithoutUserNestedInput
+    habits?: HabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartTwoInput = {
@@ -41126,9 +39460,9 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutUserNestedInput
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DayLogUpsertWithWhereUniqueWithoutAssessmentInput = {
@@ -41309,9 +39643,9 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
+    identities?: IdentityCreateNestedManyWithoutUserInput
+    habits?: HabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartThreeInput = {
@@ -41328,9 +39662,9 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutUserInput
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartThreeInput = {
@@ -41518,9 +39852,9 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
+    identities?: IdentityUpdateManyWithoutUserNestedInput
+    habits?: HabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartThreeInput = {
@@ -41537,9 +39871,9 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutUserNestedInput
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type HabitRecordUpsertWithWhereUniqueWithoutBeneficialForInput = {
@@ -42557,9 +40891,9 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
+    identities?: IdentityCreateNestedManyWithoutUserInput
+    habits?: HabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentPartFourInput = {
@@ -42576,9 +40910,9 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutUserInput
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentPartFourInput = {
@@ -42608,34 +40942,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type IdentityRecordCreateWithoutAssessmentInput = {
-    id?: string
-    identity: string
-    habits?: IdentityRecordCreatehabitsInput | string[]
-    category?: string | null
-    goals?: NextStepGoalEntryCreateNestedManyWithoutIdentityInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutIdentityInput
-  }
-
-  export type IdentityRecordUncheckedCreateWithoutAssessmentInput = {
-    id?: string
-    identity: string
-    habits?: IdentityRecordCreatehabitsInput | string[]
-    category?: string | null
-    goals?: NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutIdentityInput
-  }
-
-  export type IdentityRecordCreateOrConnectWithoutAssessmentInput = {
-    where: IdentityRecordWhereUniqueInput
-    create: XOR<IdentityRecordCreateWithoutAssessmentInput, IdentityRecordUncheckedCreateWithoutAssessmentInput>
-  }
-
-  export type IdentityRecordCreateManyAssessmentInputEnvelope = {
-    data: IdentityRecordCreateManyAssessmentInput | IdentityRecordCreateManyAssessmentInput[]
-    skipDuplicates?: boolean
-  }
-
   export type UserUpsertWithoutAssessmentPartFourInput = {
     update: XOR<UserUpdateWithoutAssessmentPartFourInput, UserUncheckedUpdateWithoutAssessmentPartFourInput>
     create: XOR<UserCreateWithoutAssessmentPartFourInput, UserUncheckedCreateWithoutAssessmentPartFourInput>
@@ -42661,9 +40967,9 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
+    identities?: IdentityUpdateManyWithoutUserNestedInput
+    habits?: HabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentPartFourInput = {
@@ -42680,9 +40986,9 @@ export namespace Prisma {
     assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutUserNestedInput
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DomainVisionEntryUpsertWithWhereUniqueWithoutAssessmentInput = {
@@ -42711,33 +41017,6 @@ export namespace Prisma {
     assessmentId?: StringFilter<"DomainVisionEntry"> | string
   }
 
-  export type IdentityRecordUpsertWithWhereUniqueWithoutAssessmentInput = {
-    where: IdentityRecordWhereUniqueInput
-    update: XOR<IdentityRecordUpdateWithoutAssessmentInput, IdentityRecordUncheckedUpdateWithoutAssessmentInput>
-    create: XOR<IdentityRecordCreateWithoutAssessmentInput, IdentityRecordUncheckedCreateWithoutAssessmentInput>
-  }
-
-  export type IdentityRecordUpdateWithWhereUniqueWithoutAssessmentInput = {
-    where: IdentityRecordWhereUniqueInput
-    data: XOR<IdentityRecordUpdateWithoutAssessmentInput, IdentityRecordUncheckedUpdateWithoutAssessmentInput>
-  }
-
-  export type IdentityRecordUpdateManyWithWhereWithoutAssessmentInput = {
-    where: IdentityRecordScalarWhereInput
-    data: XOR<IdentityRecordUpdateManyMutationInput, IdentityRecordUncheckedUpdateManyWithoutAssessmentInput>
-  }
-
-  export type IdentityRecordScalarWhereInput = {
-    AND?: IdentityRecordScalarWhereInput | IdentityRecordScalarWhereInput[]
-    OR?: IdentityRecordScalarWhereInput[]
-    NOT?: IdentityRecordScalarWhereInput | IdentityRecordScalarWhereInput[]
-    id?: StringFilter<"IdentityRecord"> | string
-    identity?: StringFilter<"IdentityRecord"> | string
-    habits?: StringNullableListFilter<"IdentityRecord">
-    category?: StringNullableFilter<"IdentityRecord"> | string | null
-    assessmentId?: StringFilter<"IdentityRecord"> | string
-  }
-
   export type AssessmentPartFourCreateWithoutDomainVisionsInput = {
     id?: string
     createdAt?: Date | string
@@ -42759,7 +41038,6 @@ export namespace Prisma {
     reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
     completedAt?: Date | string | null
     user: UserCreateNestedOneWithoutAssessmentPartFourInput
-    identities?: IdentityRecordCreateNestedManyWithoutAssessmentInput
   }
 
   export type AssessmentPartFourUncheckedCreateWithoutDomainVisionsInput = {
@@ -42783,7 +41061,6 @@ export namespace Prisma {
     reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
     completedAt?: Date | string | null
     userId: string
-    identities?: IdentityRecordUncheckedCreateNestedManyWithoutAssessmentInput
   }
 
   export type AssessmentPartFourCreateOrConnectWithoutDomainVisionsInput = {
@@ -42823,7 +41100,6 @@ export namespace Prisma {
     reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneRequiredWithoutAssessmentPartFourNestedInput
-    identities?: IdentityRecordUpdateManyWithoutAssessmentNestedInput
   }
 
   export type AssessmentPartFourUncheckedUpdateWithoutDomainVisionsInput = {
@@ -42847,240 +41123,109 @@ export namespace Prisma {
     reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
-    identities?: IdentityRecordUncheckedUpdateManyWithoutAssessmentNestedInput
   }
 
-  export type AssessmentPartFourCreateWithoutIdentitiesInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    existingCommitments?: AssessmentPartFourCreateexistingCommitmentsInput | string[]
-    desiredCommitments?: AssessmentPartFourCreatedesiredCommitmentsInput | string[]
-    unwantedCommitments?: AssessmentPartFourCreateunwantedCommitmentsInput | string[]
-    idealMorning?: string
-    idealAfternoon?: string
-    idealEvening?: string
-    cleanSlateReflection?: string
-    majorGoals?: AssessmentPartFourCreatemajorGoalsInput | string[]
-    vision6Months?: string
-    vision2Years?: string
-    vision5Years?: string
-    majorChanges?: AssessmentPartFourCreatemajorChangesInput | string[]
-    successDefinition?: string
-    futureReflection?: string
-    reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
-    completedAt?: Date | string | null
-    user: UserCreateNestedOneWithoutAssessmentPartFourInput
-    domainVisions?: DomainVisionEntryCreateNestedManyWithoutAssessmentInput
-  }
-
-  export type AssessmentPartFourUncheckedCreateWithoutIdentitiesInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    existingCommitments?: AssessmentPartFourCreateexistingCommitmentsInput | string[]
-    desiredCommitments?: AssessmentPartFourCreatedesiredCommitmentsInput | string[]
-    unwantedCommitments?: AssessmentPartFourCreateunwantedCommitmentsInput | string[]
-    idealMorning?: string
-    idealAfternoon?: string
-    idealEvening?: string
-    cleanSlateReflection?: string
-    majorGoals?: AssessmentPartFourCreatemajorGoalsInput | string[]
-    vision6Months?: string
-    vision2Years?: string
-    vision5Years?: string
-    majorChanges?: AssessmentPartFourCreatemajorChangesInput | string[]
-    successDefinition?: string
-    futureReflection?: string
-    reflectionGoals?: AssessmentPartFourCreatereflectionGoalsInput | string[]
-    completedAt?: Date | string | null
-    userId: string
-    domainVisions?: DomainVisionEntryUncheckedCreateNestedManyWithoutAssessmentInput
-  }
-
-  export type AssessmentPartFourCreateOrConnectWithoutIdentitiesInput = {
-    where: AssessmentPartFourWhereUniqueInput
-    create: XOR<AssessmentPartFourCreateWithoutIdentitiesInput, AssessmentPartFourUncheckedCreateWithoutIdentitiesInput>
-  }
-
-  export type NextStepGoalEntryCreateWithoutIdentityInput = {
-    id?: string
-    goal: string
-    category?: string | null
-    currentSystem?: string
-    systemEval?: string
-    systemRating?: number
-    idealSystem?: string
-    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
-    nextStep: AssessmentNextStepCreateNestedOneWithoutGoalEntriesInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutGoalEntryInput
-  }
-
-  export type NextStepGoalEntryUncheckedCreateWithoutIdentityInput = {
-    id?: string
-    goal: string
-    category?: string | null
-    currentSystem?: string
-    systemEval?: string
-    systemRating?: number
-    idealSystem?: string
-    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
-    nextStepId: string
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutGoalEntryInput
-  }
-
-  export type NextStepGoalEntryCreateOrConnectWithoutIdentityInput = {
-    where: NextStepGoalEntryWhereUniqueInput
-    create: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput>
-  }
-
-  export type NextStepGoalEntryCreateManyIdentityInputEnvelope = {
-    data: NextStepGoalEntryCreateManyIdentityInput | NextStepGoalEntryCreateManyIdentityInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type TrackedHabitCreateWithoutIdentityInput = {
+  export type IdentityCreateWithoutGoalsInput = {
     id?: string
     name: string
     category?: string | null
+    user: UserCreateNestedOneWithoutIdentitiesInput
+  }
+
+  export type IdentityUncheckedCreateWithoutGoalsInput = {
+    id?: string
+    name: string
+    category?: string | null
+    userId: string
+  }
+
+  export type IdentityCreateOrConnectWithoutGoalsInput = {
+    where: IdentityWhereUniqueInput
+    create: XOR<IdentityCreateWithoutGoalsInput, IdentityUncheckedCreateWithoutGoalsInput>
+  }
+
+  export type HabitCreateWithoutGoalInput = {
+    id?: string
+    name: string
+    category?: string | null
+    mode?: string
+    cue?: string
+    time?: string
+    location?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTrackedHabitsInput
-    goalEntry?: NextStepGoalEntryCreateNestedOneWithoutTrackedHabitsInput
-    cues?: HabitCueCreateNestedManyWithoutHabitInput
+    user: UserCreateNestedOneWithoutHabitsInput
     checkIns?: HabitCheckInCreateNestedManyWithoutHabitInput
+    checklists?: ChecklistCreateNestedManyWithoutHabitInput
   }
 
-  export type TrackedHabitUncheckedCreateWithoutIdentityInput = {
+  export type HabitUncheckedCreateWithoutGoalInput = {
     id?: string
     name: string
     category?: string | null
+    mode?: string
+    cue?: string
+    time?: string
+    location?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    goalEntryId?: string | null
-    cues?: HabitCueUncheckedCreateNestedManyWithoutHabitInput
     checkIns?: HabitCheckInUncheckedCreateNestedManyWithoutHabitInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutHabitInput
   }
 
-  export type TrackedHabitCreateOrConnectWithoutIdentityInput = {
-    where: TrackedHabitWhereUniqueInput
-    create: XOR<TrackedHabitCreateWithoutIdentityInput, TrackedHabitUncheckedCreateWithoutIdentityInput>
+  export type HabitCreateOrConnectWithoutGoalInput = {
+    where: HabitWhereUniqueInput
+    create: XOR<HabitCreateWithoutGoalInput, HabitUncheckedCreateWithoutGoalInput>
   }
 
-  export type TrackedHabitCreateManyIdentityInputEnvelope = {
-    data: TrackedHabitCreateManyIdentityInput | TrackedHabitCreateManyIdentityInput[]
+  export type HabitCreateManyGoalInputEnvelope = {
+    data: HabitCreateManyGoalInput | HabitCreateManyGoalInput[]
     skipDuplicates?: boolean
   }
 
-  export type AssessmentPartFourUpsertWithoutIdentitiesInput = {
-    update: XOR<AssessmentPartFourUpdateWithoutIdentitiesInput, AssessmentPartFourUncheckedUpdateWithoutIdentitiesInput>
-    create: XOR<AssessmentPartFourCreateWithoutIdentitiesInput, AssessmentPartFourUncheckedCreateWithoutIdentitiesInput>
-    where?: AssessmentPartFourWhereInput
+  export type IdentityUpsertWithoutGoalsInput = {
+    update: XOR<IdentityUpdateWithoutGoalsInput, IdentityUncheckedUpdateWithoutGoalsInput>
+    create: XOR<IdentityCreateWithoutGoalsInput, IdentityUncheckedCreateWithoutGoalsInput>
+    where?: IdentityWhereInput
   }
 
-  export type AssessmentPartFourUpdateToOneWithWhereWithoutIdentitiesInput = {
-    where?: AssessmentPartFourWhereInput
-    data: XOR<AssessmentPartFourUpdateWithoutIdentitiesInput, AssessmentPartFourUncheckedUpdateWithoutIdentitiesInput>
+  export type IdentityUpdateToOneWithWhereWithoutGoalsInput = {
+    where?: IdentityWhereInput
+    data: XOR<IdentityUpdateWithoutGoalsInput, IdentityUncheckedUpdateWithoutGoalsInput>
   }
 
-  export type AssessmentPartFourUpdateWithoutIdentitiesInput = {
+  export type IdentityUpdateWithoutGoalsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    existingCommitments?: AssessmentPartFourUpdateexistingCommitmentsInput | string[]
-    desiredCommitments?: AssessmentPartFourUpdatedesiredCommitmentsInput | string[]
-    unwantedCommitments?: AssessmentPartFourUpdateunwantedCommitmentsInput | string[]
-    idealMorning?: StringFieldUpdateOperationsInput | string
-    idealAfternoon?: StringFieldUpdateOperationsInput | string
-    idealEvening?: StringFieldUpdateOperationsInput | string
-    cleanSlateReflection?: StringFieldUpdateOperationsInput | string
-    majorGoals?: AssessmentPartFourUpdatemajorGoalsInput | string[]
-    vision6Months?: StringFieldUpdateOperationsInput | string
-    vision2Years?: StringFieldUpdateOperationsInput | string
-    vision5Years?: StringFieldUpdateOperationsInput | string
-    majorChanges?: AssessmentPartFourUpdatemajorChangesInput | string[]
-    successDefinition?: StringFieldUpdateOperationsInput | string
-    futureReflection?: StringFieldUpdateOperationsInput | string
-    reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    user?: UserUpdateOneRequiredWithoutAssessmentPartFourNestedInput
-    domainVisions?: DomainVisionEntryUpdateManyWithoutAssessmentNestedInput
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutIdentitiesNestedInput
   }
 
-  export type AssessmentPartFourUncheckedUpdateWithoutIdentitiesInput = {
+  export type IdentityUncheckedUpdateWithoutGoalsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    existingCommitments?: AssessmentPartFourUpdateexistingCommitmentsInput | string[]
-    desiredCommitments?: AssessmentPartFourUpdatedesiredCommitmentsInput | string[]
-    unwantedCommitments?: AssessmentPartFourUpdateunwantedCommitmentsInput | string[]
-    idealMorning?: StringFieldUpdateOperationsInput | string
-    idealAfternoon?: StringFieldUpdateOperationsInput | string
-    idealEvening?: StringFieldUpdateOperationsInput | string
-    cleanSlateReflection?: StringFieldUpdateOperationsInput | string
-    majorGoals?: AssessmentPartFourUpdatemajorGoalsInput | string[]
-    vision6Months?: StringFieldUpdateOperationsInput | string
-    vision2Years?: StringFieldUpdateOperationsInput | string
-    vision5Years?: StringFieldUpdateOperationsInput | string
-    majorChanges?: AssessmentPartFourUpdatemajorChangesInput | string[]
-    successDefinition?: StringFieldUpdateOperationsInput | string
-    futureReflection?: StringFieldUpdateOperationsInput | string
-    reflectionGoals?: AssessmentPartFourUpdatereflectionGoalsInput | string[]
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
-    domainVisions?: DomainVisionEntryUncheckedUpdateManyWithoutAssessmentNestedInput
   }
 
-  export type NextStepGoalEntryUpsertWithWhereUniqueWithoutIdentityInput = {
-    where: NextStepGoalEntryWhereUniqueInput
-    update: XOR<NextStepGoalEntryUpdateWithoutIdentityInput, NextStepGoalEntryUncheckedUpdateWithoutIdentityInput>
-    create: XOR<NextStepGoalEntryCreateWithoutIdentityInput, NextStepGoalEntryUncheckedCreateWithoutIdentityInput>
+  export type HabitUpsertWithWhereUniqueWithoutGoalInput = {
+    where: HabitWhereUniqueInput
+    update: XOR<HabitUpdateWithoutGoalInput, HabitUncheckedUpdateWithoutGoalInput>
+    create: XOR<HabitCreateWithoutGoalInput, HabitUncheckedCreateWithoutGoalInput>
   }
 
-  export type NextStepGoalEntryUpdateWithWhereUniqueWithoutIdentityInput = {
-    where: NextStepGoalEntryWhereUniqueInput
-    data: XOR<NextStepGoalEntryUpdateWithoutIdentityInput, NextStepGoalEntryUncheckedUpdateWithoutIdentityInput>
+  export type HabitUpdateWithWhereUniqueWithoutGoalInput = {
+    where: HabitWhereUniqueInput
+    data: XOR<HabitUpdateWithoutGoalInput, HabitUncheckedUpdateWithoutGoalInput>
   }
 
-  export type NextStepGoalEntryUpdateManyWithWhereWithoutIdentityInput = {
-    where: NextStepGoalEntryScalarWhereInput
-    data: XOR<NextStepGoalEntryUpdateManyMutationInput, NextStepGoalEntryUncheckedUpdateManyWithoutIdentityInput>
+  export type HabitUpdateManyWithWhereWithoutGoalInput = {
+    where: HabitScalarWhereInput
+    data: XOR<HabitUpdateManyMutationInput, HabitUncheckedUpdateManyWithoutGoalInput>
   }
 
-  export type NextStepGoalEntryScalarWhereInput = {
-    AND?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
-    OR?: NextStepGoalEntryScalarWhereInput[]
-    NOT?: NextStepGoalEntryScalarWhereInput | NextStepGoalEntryScalarWhereInput[]
-    id?: StringFilter<"NextStepGoalEntry"> | string
-    goal?: StringFilter<"NextStepGoalEntry"> | string
-    category?: StringNullableFilter<"NextStepGoalEntry"> | string | null
-    currentSystem?: StringFilter<"NextStepGoalEntry"> | string
-    systemEval?: StringFilter<"NextStepGoalEntry"> | string
-    systemRating?: IntFilter<"NextStepGoalEntry"> | number
-    idealSystem?: StringFilter<"NextStepGoalEntry"> | string
-    componentHabits?: StringNullableListFilter<"NextStepGoalEntry">
-    nextStepId?: StringFilter<"NextStepGoalEntry"> | string
-    identityId?: StringNullableFilter<"NextStepGoalEntry"> | string | null
-  }
-
-  export type TrackedHabitUpsertWithWhereUniqueWithoutIdentityInput = {
-    where: TrackedHabitWhereUniqueInput
-    update: XOR<TrackedHabitUpdateWithoutIdentityInput, TrackedHabitUncheckedUpdateWithoutIdentityInput>
-    create: XOR<TrackedHabitCreateWithoutIdentityInput, TrackedHabitUncheckedCreateWithoutIdentityInput>
-  }
-
-  export type TrackedHabitUpdateWithWhereUniqueWithoutIdentityInput = {
-    where: TrackedHabitWhereUniqueInput
-    data: XOR<TrackedHabitUpdateWithoutIdentityInput, TrackedHabitUncheckedUpdateWithoutIdentityInput>
-  }
-
-  export type TrackedHabitUpdateManyWithWhereWithoutIdentityInput = {
-    where: TrackedHabitScalarWhereInput
-    data: XOR<TrackedHabitUpdateManyMutationInput, TrackedHabitUncheckedUpdateManyWithoutIdentityInput>
-  }
-
-  export type UserCreateWithoutAssessmentNextStepInput = {
+  export type UserCreateWithoutHabitsInput = {
     id?: string
     email: string
     name?: string | null
@@ -43096,10 +41241,10 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
+    identities?: IdentityCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutAssessmentNextStepInput = {
+  export type UserUncheckedCreateWithoutHabitsInput = {
     id?: string
     email: string
     name?: string | null
@@ -43115,62 +41260,115 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutAssessmentNextStepInput = {
+  export type UserCreateOrConnectWithoutHabitsInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutAssessmentNextStepInput, UserUncheckedCreateWithoutAssessmentNextStepInput>
+    create: XOR<UserCreateWithoutHabitsInput, UserUncheckedCreateWithoutHabitsInput>
   }
 
-  export type NextStepGoalEntryCreateWithoutNextStepInput = {
+  export type GoalCreateWithoutHabitsInput = {
     id?: string
-    goal: string
+    text: string
     category?: string | null
     currentSystem?: string
     systemEval?: string
     systemRating?: number
     idealSystem?: string
-    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
-    identity?: IdentityRecordCreateNestedOneWithoutGoalsInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutGoalEntryInput
+    identity: IdentityCreateNestedOneWithoutGoalsInput
   }
 
-  export type NextStepGoalEntryUncheckedCreateWithoutNextStepInput = {
+  export type GoalUncheckedCreateWithoutHabitsInput = {
     id?: string
-    goal: string
+    text: string
     category?: string | null
     currentSystem?: string
     systemEval?: string
     systemRating?: number
     idealSystem?: string
-    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
-    identityId?: string | null
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutGoalEntryInput
+    identityId: string
   }
 
-  export type NextStepGoalEntryCreateOrConnectWithoutNextStepInput = {
-    where: NextStepGoalEntryWhereUniqueInput
-    create: XOR<NextStepGoalEntryCreateWithoutNextStepInput, NextStepGoalEntryUncheckedCreateWithoutNextStepInput>
+  export type GoalCreateOrConnectWithoutHabitsInput = {
+    where: GoalWhereUniqueInput
+    create: XOR<GoalCreateWithoutHabitsInput, GoalUncheckedCreateWithoutHabitsInput>
   }
 
-  export type NextStepGoalEntryCreateManyNextStepInputEnvelope = {
-    data: NextStepGoalEntryCreateManyNextStepInput | NextStepGoalEntryCreateManyNextStepInput[]
+  export type HabitCheckInCreateWithoutHabitInput = {
+    id?: string
+    date: string
+    completed?: boolean
+    note?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HabitCheckInUncheckedCreateWithoutHabitInput = {
+    id?: string
+    date: string
+    completed?: boolean
+    note?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HabitCheckInCreateOrConnectWithoutHabitInput = {
+    where: HabitCheckInWhereUniqueInput
+    create: XOR<HabitCheckInCreateWithoutHabitInput, HabitCheckInUncheckedCreateWithoutHabitInput>
+  }
+
+  export type HabitCheckInCreateManyHabitInputEnvelope = {
+    data: HabitCheckInCreateManyHabitInput | HabitCheckInCreateManyHabitInput[]
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutAssessmentNextStepInput = {
-    update: XOR<UserUpdateWithoutAssessmentNextStepInput, UserUncheckedUpdateWithoutAssessmentNextStepInput>
-    create: XOR<UserCreateWithoutAssessmentNextStepInput, UserUncheckedCreateWithoutAssessmentNextStepInput>
+  export type ChecklistCreateWithoutHabitInput = {
+    id?: string
+    title?: string
+    mode?: string
+    content?: string
+    customEntries?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutChecklistsInput
+    template?: ChecklistTemplateCreateNestedOneWithoutChecklistsInput
+  }
+
+  export type ChecklistUncheckedCreateWithoutHabitInput = {
+    id?: string
+    title?: string
+    mode?: string
+    content?: string
+    customEntries?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    templateId?: string | null
+  }
+
+  export type ChecklistCreateOrConnectWithoutHabitInput = {
+    where: ChecklistWhereUniqueInput
+    create: XOR<ChecklistCreateWithoutHabitInput, ChecklistUncheckedCreateWithoutHabitInput>
+  }
+
+  export type ChecklistCreateManyHabitInputEnvelope = {
+    data: ChecklistCreateManyHabitInput | ChecklistCreateManyHabitInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutHabitsInput = {
+    update: XOR<UserUpdateWithoutHabitsInput, UserUncheckedUpdateWithoutHabitsInput>
+    create: XOR<UserCreateWithoutHabitsInput, UserUncheckedCreateWithoutHabitsInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutAssessmentNextStepInput = {
+  export type UserUpdateToOneWithWhereWithoutHabitsInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutAssessmentNextStepInput, UserUncheckedUpdateWithoutAssessmentNextStepInput>
+    data: XOR<UserUpdateWithoutHabitsInput, UserUncheckedUpdateWithoutHabitsInput>
   }
 
-  export type UserUpdateWithoutAssessmentNextStepInput = {
+  export type UserUpdateWithoutHabitsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43186,10 +41384,10 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
+    identities?: IdentityUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutAssessmentNextStepInput = {
+  export type UserUncheckedUpdateWithoutHabitsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43205,197 +41403,263 @@ export namespace Prisma {
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type NextStepGoalEntryUpsertWithWhereUniqueWithoutNextStepInput = {
-    where: NextStepGoalEntryWhereUniqueInput
-    update: XOR<NextStepGoalEntryUpdateWithoutNextStepInput, NextStepGoalEntryUncheckedUpdateWithoutNextStepInput>
-    create: XOR<NextStepGoalEntryCreateWithoutNextStepInput, NextStepGoalEntryUncheckedCreateWithoutNextStepInput>
+  export type GoalUpsertWithoutHabitsInput = {
+    update: XOR<GoalUpdateWithoutHabitsInput, GoalUncheckedUpdateWithoutHabitsInput>
+    create: XOR<GoalCreateWithoutHabitsInput, GoalUncheckedCreateWithoutHabitsInput>
+    where?: GoalWhereInput
   }
 
-  export type NextStepGoalEntryUpdateWithWhereUniqueWithoutNextStepInput = {
-    where: NextStepGoalEntryWhereUniqueInput
-    data: XOR<NextStepGoalEntryUpdateWithoutNextStepInput, NextStepGoalEntryUncheckedUpdateWithoutNextStepInput>
+  export type GoalUpdateToOneWithWhereWithoutHabitsInput = {
+    where?: GoalWhereInput
+    data: XOR<GoalUpdateWithoutHabitsInput, GoalUncheckedUpdateWithoutHabitsInput>
   }
 
-  export type NextStepGoalEntryUpdateManyWithWhereWithoutNextStepInput = {
-    where: NextStepGoalEntryScalarWhereInput
-    data: XOR<NextStepGoalEntryUpdateManyMutationInput, NextStepGoalEntryUncheckedUpdateManyWithoutNextStepInput>
+  export type GoalUpdateWithoutHabitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    identity?: IdentityUpdateOneRequiredWithoutGoalsNestedInput
   }
 
-  export type AssessmentNextStepCreateWithoutGoalEntriesInput = {
+  export type GoalUncheckedUpdateWithoutHabitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    identityId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HabitCheckInUpsertWithWhereUniqueWithoutHabitInput = {
+    where: HabitCheckInWhereUniqueInput
+    update: XOR<HabitCheckInUpdateWithoutHabitInput, HabitCheckInUncheckedUpdateWithoutHabitInput>
+    create: XOR<HabitCheckInCreateWithoutHabitInput, HabitCheckInUncheckedCreateWithoutHabitInput>
+  }
+
+  export type HabitCheckInUpdateWithWhereUniqueWithoutHabitInput = {
+    where: HabitCheckInWhereUniqueInput
+    data: XOR<HabitCheckInUpdateWithoutHabitInput, HabitCheckInUncheckedUpdateWithoutHabitInput>
+  }
+
+  export type HabitCheckInUpdateManyWithWhereWithoutHabitInput = {
+    where: HabitCheckInScalarWhereInput
+    data: XOR<HabitCheckInUpdateManyMutationInput, HabitCheckInUncheckedUpdateManyWithoutHabitInput>
+  }
+
+  export type HabitCheckInScalarWhereInput = {
+    AND?: HabitCheckInScalarWhereInput | HabitCheckInScalarWhereInput[]
+    OR?: HabitCheckInScalarWhereInput[]
+    NOT?: HabitCheckInScalarWhereInput | HabitCheckInScalarWhereInput[]
+    id?: StringFilter<"HabitCheckIn"> | string
+    date?: StringFilter<"HabitCheckIn"> | string
+    completed?: BoolFilter<"HabitCheckIn"> | boolean
+    note?: StringFilter<"HabitCheckIn"> | string
+    createdAt?: DateTimeFilter<"HabitCheckIn"> | Date | string
+    updatedAt?: DateTimeFilter<"HabitCheckIn"> | Date | string
+    habitId?: StringFilter<"HabitCheckIn"> | string
+  }
+
+  export type ChecklistUpsertWithWhereUniqueWithoutHabitInput = {
+    where: ChecklistWhereUniqueInput
+    update: XOR<ChecklistUpdateWithoutHabitInput, ChecklistUncheckedUpdateWithoutHabitInput>
+    create: XOR<ChecklistCreateWithoutHabitInput, ChecklistUncheckedCreateWithoutHabitInput>
+  }
+
+  export type ChecklistUpdateWithWhereUniqueWithoutHabitInput = {
+    where: ChecklistWhereUniqueInput
+    data: XOR<ChecklistUpdateWithoutHabitInput, ChecklistUncheckedUpdateWithoutHabitInput>
+  }
+
+  export type ChecklistUpdateManyWithWhereWithoutHabitInput = {
+    where: ChecklistScalarWhereInput
+    data: XOR<ChecklistUpdateManyMutationInput, ChecklistUncheckedUpdateManyWithoutHabitInput>
+  }
+
+  export type UserCreateWithoutIdentitiesInput = {
     id?: string
+    email: string
+    name?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    completedAt?: Date | string | null
-    user: UserCreateNestedOneWithoutAssessmentNextStepInput
+    emailVerified?: Date | string | null
+    image?: string | null
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notes?: NoteCreateNestedManyWithoutUserInput
+    assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
+    assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
+    assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
+    habits?: HabitCreateNestedManyWithoutUserInput
   }
 
-  export type AssessmentNextStepUncheckedCreateWithoutGoalEntriesInput = {
+  export type UserUncheckedCreateWithoutIdentitiesInput = {
     id?: string
+    email: string
+    name?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    completedAt?: Date | string | null
-    userId: string
+    emailVerified?: Date | string | null
+    image?: string | null
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
+    assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type AssessmentNextStepCreateOrConnectWithoutGoalEntriesInput = {
-    where: AssessmentNextStepWhereUniqueInput
-    create: XOR<AssessmentNextStepCreateWithoutGoalEntriesInput, AssessmentNextStepUncheckedCreateWithoutGoalEntriesInput>
+  export type UserCreateOrConnectWithoutIdentitiesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutIdentitiesInput, UserUncheckedCreateWithoutIdentitiesInput>
   }
 
-  export type IdentityRecordCreateWithoutGoalsInput = {
+  export type GoalCreateWithoutIdentityInput = {
     id?: string
-    identity: string
-    habits?: IdentityRecordCreatehabitsInput | string[]
+    text: string
     category?: string | null
-    assessment: AssessmentPartFourCreateNestedOneWithoutIdentitiesInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutIdentityInput
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    habits?: HabitCreateNestedManyWithoutGoalInput
   }
 
-  export type IdentityRecordUncheckedCreateWithoutGoalsInput = {
+  export type GoalUncheckedCreateWithoutIdentityInput = {
     id?: string
-    identity: string
-    habits?: IdentityRecordCreatehabitsInput | string[]
+    text: string
     category?: string | null
-    assessmentId: string
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutIdentityInput
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+    habits?: HabitUncheckedCreateNestedManyWithoutGoalInput
   }
 
-  export type IdentityRecordCreateOrConnectWithoutGoalsInput = {
-    where: IdentityRecordWhereUniqueInput
-    create: XOR<IdentityRecordCreateWithoutGoalsInput, IdentityRecordUncheckedCreateWithoutGoalsInput>
+  export type GoalCreateOrConnectWithoutIdentityInput = {
+    where: GoalWhereUniqueInput
+    create: XOR<GoalCreateWithoutIdentityInput, GoalUncheckedCreateWithoutIdentityInput>
   }
 
-  export type TrackedHabitCreateWithoutGoalEntryInput = {
-    id?: string
-    name: string
-    category?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTrackedHabitsInput
-    identity?: IdentityRecordCreateNestedOneWithoutTrackedHabitsInput
-    cues?: HabitCueCreateNestedManyWithoutHabitInput
-    checkIns?: HabitCheckInCreateNestedManyWithoutHabitInput
-  }
-
-  export type TrackedHabitUncheckedCreateWithoutGoalEntryInput = {
-    id?: string
-    name: string
-    category?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    identityId?: string | null
-    cues?: HabitCueUncheckedCreateNestedManyWithoutHabitInput
-    checkIns?: HabitCheckInUncheckedCreateNestedManyWithoutHabitInput
-  }
-
-  export type TrackedHabitCreateOrConnectWithoutGoalEntryInput = {
-    where: TrackedHabitWhereUniqueInput
-    create: XOR<TrackedHabitCreateWithoutGoalEntryInput, TrackedHabitUncheckedCreateWithoutGoalEntryInput>
-  }
-
-  export type TrackedHabitCreateManyGoalEntryInputEnvelope = {
-    data: TrackedHabitCreateManyGoalEntryInput | TrackedHabitCreateManyGoalEntryInput[]
+  export type GoalCreateManyIdentityInputEnvelope = {
+    data: GoalCreateManyIdentityInput | GoalCreateManyIdentityInput[]
     skipDuplicates?: boolean
   }
 
-  export type AssessmentNextStepUpsertWithoutGoalEntriesInput = {
-    update: XOR<AssessmentNextStepUpdateWithoutGoalEntriesInput, AssessmentNextStepUncheckedUpdateWithoutGoalEntriesInput>
-    create: XOR<AssessmentNextStepCreateWithoutGoalEntriesInput, AssessmentNextStepUncheckedCreateWithoutGoalEntriesInput>
-    where?: AssessmentNextStepWhereInput
+  export type UserUpsertWithoutIdentitiesInput = {
+    update: XOR<UserUpdateWithoutIdentitiesInput, UserUncheckedUpdateWithoutIdentitiesInput>
+    create: XOR<UserCreateWithoutIdentitiesInput, UserUncheckedCreateWithoutIdentitiesInput>
+    where?: UserWhereInput
   }
 
-  export type AssessmentNextStepUpdateToOneWithWhereWithoutGoalEntriesInput = {
-    where?: AssessmentNextStepWhereInput
-    data: XOR<AssessmentNextStepUpdateWithoutGoalEntriesInput, AssessmentNextStepUncheckedUpdateWithoutGoalEntriesInput>
+  export type UserUpdateToOneWithWhereWithoutIdentitiesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutIdentitiesInput, UserUncheckedUpdateWithoutIdentitiesInput>
   }
 
-  export type AssessmentNextStepUpdateWithoutGoalEntriesInput = {
+  export type UserUpdateWithoutIdentitiesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    user?: UserUpdateOneRequiredWithoutAssessmentNextStepNestedInput
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notes?: NoteUpdateManyWithoutUserNestedInput
+    assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
+    assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
+    assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
+    habits?: HabitUpdateManyWithoutUserNestedInput
   }
 
-  export type AssessmentNextStepUncheckedUpdateWithoutGoalEntriesInput = {
+  export type UserUncheckedUpdateWithoutIdentitiesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    userId?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
+    assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type IdentityRecordUpsertWithoutGoalsInput = {
-    update: XOR<IdentityRecordUpdateWithoutGoalsInput, IdentityRecordUncheckedUpdateWithoutGoalsInput>
-    create: XOR<IdentityRecordCreateWithoutGoalsInput, IdentityRecordUncheckedCreateWithoutGoalsInput>
-    where?: IdentityRecordWhereInput
+  export type GoalUpsertWithWhereUniqueWithoutIdentityInput = {
+    where: GoalWhereUniqueInput
+    update: XOR<GoalUpdateWithoutIdentityInput, GoalUncheckedUpdateWithoutIdentityInput>
+    create: XOR<GoalCreateWithoutIdentityInput, GoalUncheckedCreateWithoutIdentityInput>
   }
 
-  export type IdentityRecordUpdateToOneWithWhereWithoutGoalsInput = {
-    where?: IdentityRecordWhereInput
-    data: XOR<IdentityRecordUpdateWithoutGoalsInput, IdentityRecordUncheckedUpdateWithoutGoalsInput>
+  export type GoalUpdateWithWhereUniqueWithoutIdentityInput = {
+    where: GoalWhereUniqueInput
+    data: XOR<GoalUpdateWithoutIdentityInput, GoalUncheckedUpdateWithoutIdentityInput>
   }
 
-  export type IdentityRecordUpdateWithoutGoalsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    identity?: StringFieldUpdateOperationsInput | string
-    habits?: IdentityRecordUpdatehabitsInput | string[]
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    assessment?: AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutIdentityNestedInput
+  export type GoalUpdateManyWithWhereWithoutIdentityInput = {
+    where: GoalScalarWhereInput
+    data: XOR<GoalUpdateManyMutationInput, GoalUncheckedUpdateManyWithoutIdentityInput>
   }
 
-  export type IdentityRecordUncheckedUpdateWithoutGoalsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    identity?: StringFieldUpdateOperationsInput | string
-    habits?: IdentityRecordUpdatehabitsInput | string[]
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    assessmentId?: StringFieldUpdateOperationsInput | string
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutIdentityNestedInput
-  }
-
-  export type TrackedHabitUpsertWithWhereUniqueWithoutGoalEntryInput = {
-    where: TrackedHabitWhereUniqueInput
-    update: XOR<TrackedHabitUpdateWithoutGoalEntryInput, TrackedHabitUncheckedUpdateWithoutGoalEntryInput>
-    create: XOR<TrackedHabitCreateWithoutGoalEntryInput, TrackedHabitUncheckedCreateWithoutGoalEntryInput>
-  }
-
-  export type TrackedHabitUpdateWithWhereUniqueWithoutGoalEntryInput = {
-    where: TrackedHabitWhereUniqueInput
-    data: XOR<TrackedHabitUpdateWithoutGoalEntryInput, TrackedHabitUncheckedUpdateWithoutGoalEntryInput>
-  }
-
-  export type TrackedHabitUpdateManyWithWhereWithoutGoalEntryInput = {
-    where: TrackedHabitScalarWhereInput
-    data: XOR<TrackedHabitUpdateManyMutationInput, TrackedHabitUncheckedUpdateManyWithoutGoalEntryInput>
+  export type GoalScalarWhereInput = {
+    AND?: GoalScalarWhereInput | GoalScalarWhereInput[]
+    OR?: GoalScalarWhereInput[]
+    NOT?: GoalScalarWhereInput | GoalScalarWhereInput[]
+    id?: StringFilter<"Goal"> | string
+    text?: StringFilter<"Goal"> | string
+    category?: StringNullableFilter<"Goal"> | string | null
+    currentSystem?: StringFilter<"Goal"> | string
+    systemEval?: StringFilter<"Goal"> | string
+    systemRating?: IntFilter<"Goal"> | number
+    idealSystem?: StringFilter<"Goal"> | string
+    identityId?: StringFilter<"Goal"> | string
   }
 
   export type ChecklistCreateWithoutTemplateInput = {
     id?: string
     title?: string
-    templateType?: string
+    mode?: string
     content?: string
+    customEntries?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    mode?: string
-    customEntries?: string
     user: UserCreateNestedOneWithoutChecklistsInput
+    habit?: HabitCreateNestedOneWithoutChecklistsInput
   }
 
   export type ChecklistUncheckedCreateWithoutTemplateInput = {
     id?: string
     title?: string
-    templateType?: string
+    mode?: string
     content?: string
+    customEntries?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    mode?: string
-    customEntries?: string
+    habitId?: string | null
   }
 
   export type ChecklistCreateOrConnectWithoutTemplateInput = {
@@ -43439,8 +41703,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
-    trackedHabits?: TrackedHabitCreateNestedManyWithoutUserInput
+    identities?: IdentityCreateNestedManyWithoutUserInput
+    habits?: HabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChecklistsInput = {
@@ -43458,13 +41722,48 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
     assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
     assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
-    trackedHabits?: TrackedHabitUncheckedCreateNestedManyWithoutUserInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutUserInput
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChecklistsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutChecklistsInput, UserUncheckedCreateWithoutChecklistsInput>
+  }
+
+  export type HabitCreateWithoutChecklistsInput = {
+    id?: string
+    name: string
+    category?: string | null
+    mode?: string
+    cue?: string
+    time?: string
+    location?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutHabitsInput
+    goal: GoalCreateNestedOneWithoutHabitsInput
+    checkIns?: HabitCheckInCreateNestedManyWithoutHabitInput
+  }
+
+  export type HabitUncheckedCreateWithoutChecklistsInput = {
+    id?: string
+    name: string
+    category?: string | null
+    mode?: string
+    cue?: string
+    time?: string
+    location?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    goalId: string
+    checkIns?: HabitCheckInUncheckedCreateNestedManyWithoutHabitInput
+  }
+
+  export type HabitCreateOrConnectWithoutChecklistsInput = {
+    where: HabitWhereUniqueInput
+    create: XOR<HabitCreateWithoutChecklistsInput, HabitUncheckedCreateWithoutChecklistsInput>
   }
 
   export type ChecklistTemplateCreateWithoutChecklistsInput = {
@@ -43520,8 +41819,8 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutUserNestedInput
+    identities?: IdentityUpdateManyWithoutUserNestedInput
+    habits?: HabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChecklistsInput = {
@@ -43539,8 +41838,49 @@ export namespace Prisma {
     assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
     assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutUserNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutUserNestedInput
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type HabitUpsertWithoutChecklistsInput = {
+    update: XOR<HabitUpdateWithoutChecklistsInput, HabitUncheckedUpdateWithoutChecklistsInput>
+    create: XOR<HabitCreateWithoutChecklistsInput, HabitUncheckedCreateWithoutChecklistsInput>
+    where?: HabitWhereInput
+  }
+
+  export type HabitUpdateToOneWithWhereWithoutChecklistsInput = {
+    where?: HabitWhereInput
+    data: XOR<HabitUpdateWithoutChecklistsInput, HabitUncheckedUpdateWithoutChecklistsInput>
+  }
+
+  export type HabitUpdateWithoutChecklistsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutHabitsNestedInput
+    goal?: GoalUpdateOneRequiredWithoutHabitsNestedInput
+    checkIns?: HabitCheckInUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitUncheckedUpdateWithoutChecklistsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    goalId?: StringFieldUpdateOperationsInput | string
+    checkIns?: HabitCheckInUncheckedUpdateManyWithoutHabitNestedInput
   }
 
   export type ChecklistTemplateUpsertWithoutChecklistsInput = {
@@ -43576,464 +41916,80 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserCreateWithoutTrackedHabitsInput = {
-    id?: string
-    email: string
-    name?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    emailVerified?: Date | string | null
-    image?: string | null
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    notes?: NoteCreateNestedManyWithoutUserInput
-    assessmentPartOne?: AssessmentPartOneCreateNestedOneWithoutUserInput
-    assessmentPartTwo?: AssessmentPartTwoCreateNestedOneWithoutUserInput
-    assessmentPartThree?: AssessmentPartThreeCreateNestedOneWithoutUserInput
-    assessmentPartFour?: AssessmentPartFourCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepCreateNestedOneWithoutUserInput
-    checklists?: ChecklistCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutTrackedHabitsInput = {
-    id?: string
-    email: string
-    name?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    emailVerified?: Date | string | null
-    image?: string | null
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    notes?: NoteUncheckedCreateNestedManyWithoutUserInput
-    assessmentPartOne?: AssessmentPartOneUncheckedCreateNestedOneWithoutUserInput
-    assessmentPartTwo?: AssessmentPartTwoUncheckedCreateNestedOneWithoutUserInput
-    assessmentPartThree?: AssessmentPartThreeUncheckedCreateNestedOneWithoutUserInput
-    assessmentPartFour?: AssessmentPartFourUncheckedCreateNestedOneWithoutUserInput
-    assessmentNextStep?: AssessmentNextStepUncheckedCreateNestedOneWithoutUserInput
-    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutTrackedHabitsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutTrackedHabitsInput, UserUncheckedCreateWithoutTrackedHabitsInput>
-  }
-
-  export type NextStepGoalEntryCreateWithoutTrackedHabitsInput = {
-    id?: string
-    goal: string
-    category?: string | null
-    currentSystem?: string
-    systemEval?: string
-    systemRating?: number
-    idealSystem?: string
-    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
-    nextStep: AssessmentNextStepCreateNestedOneWithoutGoalEntriesInput
-    identity?: IdentityRecordCreateNestedOneWithoutGoalsInput
-  }
-
-  export type NextStepGoalEntryUncheckedCreateWithoutTrackedHabitsInput = {
-    id?: string
-    goal: string
-    category?: string | null
-    currentSystem?: string
-    systemEval?: string
-    systemRating?: number
-    idealSystem?: string
-    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
-    nextStepId: string
-    identityId?: string | null
-  }
-
-  export type NextStepGoalEntryCreateOrConnectWithoutTrackedHabitsInput = {
-    where: NextStepGoalEntryWhereUniqueInput
-    create: XOR<NextStepGoalEntryCreateWithoutTrackedHabitsInput, NextStepGoalEntryUncheckedCreateWithoutTrackedHabitsInput>
-  }
-
-  export type IdentityRecordCreateWithoutTrackedHabitsInput = {
-    id?: string
-    identity: string
-    habits?: IdentityRecordCreatehabitsInput | string[]
-    category?: string | null
-    assessment: AssessmentPartFourCreateNestedOneWithoutIdentitiesInput
-    goals?: NextStepGoalEntryCreateNestedManyWithoutIdentityInput
-  }
-
-  export type IdentityRecordUncheckedCreateWithoutTrackedHabitsInput = {
-    id?: string
-    identity: string
-    habits?: IdentityRecordCreatehabitsInput | string[]
-    category?: string | null
-    assessmentId: string
-    goals?: NextStepGoalEntryUncheckedCreateNestedManyWithoutIdentityInput
-  }
-
-  export type IdentityRecordCreateOrConnectWithoutTrackedHabitsInput = {
-    where: IdentityRecordWhereUniqueInput
-    create: XOR<IdentityRecordCreateWithoutTrackedHabitsInput, IdentityRecordUncheckedCreateWithoutTrackedHabitsInput>
-  }
-
-  export type HabitCueCreateWithoutHabitInput = {
-    id?: string
-    behavior: string
-    time: string
-    location: string
-    isBreaking?: boolean
-    reflection?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type HabitCueUncheckedCreateWithoutHabitInput = {
-    id?: string
-    behavior: string
-    time: string
-    location: string
-    isBreaking?: boolean
-    reflection?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type HabitCueCreateOrConnectWithoutHabitInput = {
-    where: HabitCueWhereUniqueInput
-    create: XOR<HabitCueCreateWithoutHabitInput, HabitCueUncheckedCreateWithoutHabitInput>
-  }
-
-  export type HabitCueCreateManyHabitInputEnvelope = {
-    data: HabitCueCreateManyHabitInput | HabitCueCreateManyHabitInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type HabitCheckInCreateWithoutHabitInput = {
-    id?: string
-    date: string
-    completed?: boolean
-    note?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type HabitCheckInUncheckedCreateWithoutHabitInput = {
-    id?: string
-    date: string
-    completed?: boolean
-    note?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type HabitCheckInCreateOrConnectWithoutHabitInput = {
-    where: HabitCheckInWhereUniqueInput
-    create: XOR<HabitCheckInCreateWithoutHabitInput, HabitCheckInUncheckedCreateWithoutHabitInput>
-  }
-
-  export type HabitCheckInCreateManyHabitInputEnvelope = {
-    data: HabitCheckInCreateManyHabitInput | HabitCheckInCreateManyHabitInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type UserUpsertWithoutTrackedHabitsInput = {
-    update: XOR<UserUpdateWithoutTrackedHabitsInput, UserUncheckedUpdateWithoutTrackedHabitsInput>
-    create: XOR<UserCreateWithoutTrackedHabitsInput, UserUncheckedCreateWithoutTrackedHabitsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutTrackedHabitsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutTrackedHabitsInput, UserUncheckedUpdateWithoutTrackedHabitsInput>
-  }
-
-  export type UserUpdateWithoutTrackedHabitsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    notes?: NoteUpdateManyWithoutUserNestedInput
-    assessmentPartOne?: AssessmentPartOneUpdateOneWithoutUserNestedInput
-    assessmentPartTwo?: AssessmentPartTwoUpdateOneWithoutUserNestedInput
-    assessmentPartThree?: AssessmentPartThreeUpdateOneWithoutUserNestedInput
-    assessmentPartFour?: AssessmentPartFourUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUpdateOneWithoutUserNestedInput
-    checklists?: ChecklistUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutTrackedHabitsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
-    assessmentPartOne?: AssessmentPartOneUncheckedUpdateOneWithoutUserNestedInput
-    assessmentPartTwo?: AssessmentPartTwoUncheckedUpdateOneWithoutUserNestedInput
-    assessmentPartThree?: AssessmentPartThreeUncheckedUpdateOneWithoutUserNestedInput
-    assessmentPartFour?: AssessmentPartFourUncheckedUpdateOneWithoutUserNestedInput
-    assessmentNextStep?: AssessmentNextStepUncheckedUpdateOneWithoutUserNestedInput
-    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type NextStepGoalEntryUpsertWithoutTrackedHabitsInput = {
-    update: XOR<NextStepGoalEntryUpdateWithoutTrackedHabitsInput, NextStepGoalEntryUncheckedUpdateWithoutTrackedHabitsInput>
-    create: XOR<NextStepGoalEntryCreateWithoutTrackedHabitsInput, NextStepGoalEntryUncheckedCreateWithoutTrackedHabitsInput>
-    where?: NextStepGoalEntryWhereInput
-  }
-
-  export type NextStepGoalEntryUpdateToOneWithWhereWithoutTrackedHabitsInput = {
-    where?: NextStepGoalEntryWhereInput
-    data: XOR<NextStepGoalEntryUpdateWithoutTrackedHabitsInput, NextStepGoalEntryUncheckedUpdateWithoutTrackedHabitsInput>
-  }
-
-  export type NextStepGoalEntryUpdateWithoutTrackedHabitsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    goal?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    currentSystem?: StringFieldUpdateOperationsInput | string
-    systemEval?: StringFieldUpdateOperationsInput | string
-    systemRating?: IntFieldUpdateOperationsInput | number
-    idealSystem?: StringFieldUpdateOperationsInput | string
-    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
-    nextStep?: AssessmentNextStepUpdateOneRequiredWithoutGoalEntriesNestedInput
-    identity?: IdentityRecordUpdateOneWithoutGoalsNestedInput
-  }
-
-  export type NextStepGoalEntryUncheckedUpdateWithoutTrackedHabitsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    goal?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    currentSystem?: StringFieldUpdateOperationsInput | string
-    systemEval?: StringFieldUpdateOperationsInput | string
-    systemRating?: IntFieldUpdateOperationsInput | number
-    idealSystem?: StringFieldUpdateOperationsInput | string
-    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
-    nextStepId?: StringFieldUpdateOperationsInput | string
-    identityId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type IdentityRecordUpsertWithoutTrackedHabitsInput = {
-    update: XOR<IdentityRecordUpdateWithoutTrackedHabitsInput, IdentityRecordUncheckedUpdateWithoutTrackedHabitsInput>
-    create: XOR<IdentityRecordCreateWithoutTrackedHabitsInput, IdentityRecordUncheckedCreateWithoutTrackedHabitsInput>
-    where?: IdentityRecordWhereInput
-  }
-
-  export type IdentityRecordUpdateToOneWithWhereWithoutTrackedHabitsInput = {
-    where?: IdentityRecordWhereInput
-    data: XOR<IdentityRecordUpdateWithoutTrackedHabitsInput, IdentityRecordUncheckedUpdateWithoutTrackedHabitsInput>
-  }
-
-  export type IdentityRecordUpdateWithoutTrackedHabitsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    identity?: StringFieldUpdateOperationsInput | string
-    habits?: IdentityRecordUpdatehabitsInput | string[]
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    assessment?: AssessmentPartFourUpdateOneRequiredWithoutIdentitiesNestedInput
-    goals?: NextStepGoalEntryUpdateManyWithoutIdentityNestedInput
-  }
-
-  export type IdentityRecordUncheckedUpdateWithoutTrackedHabitsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    identity?: StringFieldUpdateOperationsInput | string
-    habits?: IdentityRecordUpdatehabitsInput | string[]
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    assessmentId?: StringFieldUpdateOperationsInput | string
-    goals?: NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput
-  }
-
-  export type HabitCueUpsertWithWhereUniqueWithoutHabitInput = {
-    where: HabitCueWhereUniqueInput
-    update: XOR<HabitCueUpdateWithoutHabitInput, HabitCueUncheckedUpdateWithoutHabitInput>
-    create: XOR<HabitCueCreateWithoutHabitInput, HabitCueUncheckedCreateWithoutHabitInput>
-  }
-
-  export type HabitCueUpdateWithWhereUniqueWithoutHabitInput = {
-    where: HabitCueWhereUniqueInput
-    data: XOR<HabitCueUpdateWithoutHabitInput, HabitCueUncheckedUpdateWithoutHabitInput>
-  }
-
-  export type HabitCueUpdateManyWithWhereWithoutHabitInput = {
-    where: HabitCueScalarWhereInput
-    data: XOR<HabitCueUpdateManyMutationInput, HabitCueUncheckedUpdateManyWithoutHabitInput>
-  }
-
-  export type HabitCueScalarWhereInput = {
-    AND?: HabitCueScalarWhereInput | HabitCueScalarWhereInput[]
-    OR?: HabitCueScalarWhereInput[]
-    NOT?: HabitCueScalarWhereInput | HabitCueScalarWhereInput[]
-    id?: StringFilter<"HabitCue"> | string
-    behavior?: StringFilter<"HabitCue"> | string
-    time?: StringFilter<"HabitCue"> | string
-    location?: StringFilter<"HabitCue"> | string
-    isBreaking?: BoolFilter<"HabitCue"> | boolean
-    reflection?: StringFilter<"HabitCue"> | string
-    createdAt?: DateTimeFilter<"HabitCue"> | Date | string
-    updatedAt?: DateTimeFilter<"HabitCue"> | Date | string
-    habitId?: StringFilter<"HabitCue"> | string
-  }
-
-  export type HabitCheckInUpsertWithWhereUniqueWithoutHabitInput = {
-    where: HabitCheckInWhereUniqueInput
-    update: XOR<HabitCheckInUpdateWithoutHabitInput, HabitCheckInUncheckedUpdateWithoutHabitInput>
-    create: XOR<HabitCheckInCreateWithoutHabitInput, HabitCheckInUncheckedCreateWithoutHabitInput>
-  }
-
-  export type HabitCheckInUpdateWithWhereUniqueWithoutHabitInput = {
-    where: HabitCheckInWhereUniqueInput
-    data: XOR<HabitCheckInUpdateWithoutHabitInput, HabitCheckInUncheckedUpdateWithoutHabitInput>
-  }
-
-  export type HabitCheckInUpdateManyWithWhereWithoutHabitInput = {
-    where: HabitCheckInScalarWhereInput
-    data: XOR<HabitCheckInUpdateManyMutationInput, HabitCheckInUncheckedUpdateManyWithoutHabitInput>
-  }
-
-  export type HabitCheckInScalarWhereInput = {
-    AND?: HabitCheckInScalarWhereInput | HabitCheckInScalarWhereInput[]
-    OR?: HabitCheckInScalarWhereInput[]
-    NOT?: HabitCheckInScalarWhereInput | HabitCheckInScalarWhereInput[]
-    id?: StringFilter<"HabitCheckIn"> | string
-    date?: StringFilter<"HabitCheckIn"> | string
-    completed?: BoolFilter<"HabitCheckIn"> | boolean
-    note?: StringFilter<"HabitCheckIn"> | string
-    createdAt?: DateTimeFilter<"HabitCheckIn"> | Date | string
-    updatedAt?: DateTimeFilter<"HabitCheckIn"> | Date | string
-    habitId?: StringFilter<"HabitCheckIn"> | string
-  }
-
-  export type TrackedHabitCreateWithoutCuesInput = {
+  export type HabitCreateWithoutCheckInsInput = {
     id?: string
     name: string
     category?: string | null
+    mode?: string
+    cue?: string
+    time?: string
+    location?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTrackedHabitsInput
-    goalEntry?: NextStepGoalEntryCreateNestedOneWithoutTrackedHabitsInput
-    identity?: IdentityRecordCreateNestedOneWithoutTrackedHabitsInput
-    checkIns?: HabitCheckInCreateNestedManyWithoutHabitInput
+    user: UserCreateNestedOneWithoutHabitsInput
+    goal: GoalCreateNestedOneWithoutHabitsInput
+    checklists?: ChecklistCreateNestedManyWithoutHabitInput
   }
 
-  export type TrackedHabitUncheckedCreateWithoutCuesInput = {
+  export type HabitUncheckedCreateWithoutCheckInsInput = {
     id?: string
     name: string
     category?: string | null
+    mode?: string
+    cue?: string
+    time?: string
+    location?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    goalEntryId?: string | null
-    identityId?: string | null
-    checkIns?: HabitCheckInUncheckedCreateNestedManyWithoutHabitInput
+    goalId: string
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutHabitInput
   }
 
-  export type TrackedHabitCreateOrConnectWithoutCuesInput = {
-    where: TrackedHabitWhereUniqueInput
-    create: XOR<TrackedHabitCreateWithoutCuesInput, TrackedHabitUncheckedCreateWithoutCuesInput>
+  export type HabitCreateOrConnectWithoutCheckInsInput = {
+    where: HabitWhereUniqueInput
+    create: XOR<HabitCreateWithoutCheckInsInput, HabitUncheckedCreateWithoutCheckInsInput>
   }
 
-  export type TrackedHabitUpsertWithoutCuesInput = {
-    update: XOR<TrackedHabitUpdateWithoutCuesInput, TrackedHabitUncheckedUpdateWithoutCuesInput>
-    create: XOR<TrackedHabitCreateWithoutCuesInput, TrackedHabitUncheckedCreateWithoutCuesInput>
-    where?: TrackedHabitWhereInput
+  export type HabitUpsertWithoutCheckInsInput = {
+    update: XOR<HabitUpdateWithoutCheckInsInput, HabitUncheckedUpdateWithoutCheckInsInput>
+    create: XOR<HabitCreateWithoutCheckInsInput, HabitUncheckedCreateWithoutCheckInsInput>
+    where?: HabitWhereInput
   }
 
-  export type TrackedHabitUpdateToOneWithWhereWithoutCuesInput = {
-    where?: TrackedHabitWhereInput
-    data: XOR<TrackedHabitUpdateWithoutCuesInput, TrackedHabitUncheckedUpdateWithoutCuesInput>
+  export type HabitUpdateToOneWithWhereWithoutCheckInsInput = {
+    where?: HabitWhereInput
+    data: XOR<HabitUpdateWithoutCheckInsInput, HabitUncheckedUpdateWithoutCheckInsInput>
   }
 
-  export type TrackedHabitUpdateWithoutCuesInput = {
+  export type HabitUpdateWithoutCheckInsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTrackedHabitsNestedInput
-    goalEntry?: NextStepGoalEntryUpdateOneWithoutTrackedHabitsNestedInput
-    identity?: IdentityRecordUpdateOneWithoutTrackedHabitsNestedInput
-    checkIns?: HabitCheckInUpdateManyWithoutHabitNestedInput
+    user?: UserUpdateOneRequiredWithoutHabitsNestedInput
+    goal?: GoalUpdateOneRequiredWithoutHabitsNestedInput
+    checklists?: ChecklistUpdateManyWithoutHabitNestedInput
   }
 
-  export type TrackedHabitUncheckedUpdateWithoutCuesInput = {
+  export type HabitUncheckedUpdateWithoutCheckInsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
-    identityId?: NullableStringFieldUpdateOperationsInput | string | null
-    checkIns?: HabitCheckInUncheckedUpdateManyWithoutHabitNestedInput
-  }
-
-  export type TrackedHabitCreateWithoutCheckInsInput = {
-    id?: string
-    name: string
-    category?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTrackedHabitsInput
-    goalEntry?: NextStepGoalEntryCreateNestedOneWithoutTrackedHabitsInput
-    identity?: IdentityRecordCreateNestedOneWithoutTrackedHabitsInput
-    cues?: HabitCueCreateNestedManyWithoutHabitInput
-  }
-
-  export type TrackedHabitUncheckedCreateWithoutCheckInsInput = {
-    id?: string
-    name: string
-    category?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    goalEntryId?: string | null
-    identityId?: string | null
-    cues?: HabitCueUncheckedCreateNestedManyWithoutHabitInput
-  }
-
-  export type TrackedHabitCreateOrConnectWithoutCheckInsInput = {
-    where: TrackedHabitWhereUniqueInput
-    create: XOR<TrackedHabitCreateWithoutCheckInsInput, TrackedHabitUncheckedCreateWithoutCheckInsInput>
-  }
-
-  export type TrackedHabitUpsertWithoutCheckInsInput = {
-    update: XOR<TrackedHabitUpdateWithoutCheckInsInput, TrackedHabitUncheckedUpdateWithoutCheckInsInput>
-    create: XOR<TrackedHabitCreateWithoutCheckInsInput, TrackedHabitUncheckedCreateWithoutCheckInsInput>
-    where?: TrackedHabitWhereInput
-  }
-
-  export type TrackedHabitUpdateToOneWithWhereWithoutCheckInsInput = {
-    where?: TrackedHabitWhereInput
-    data: XOR<TrackedHabitUpdateWithoutCheckInsInput, TrackedHabitUncheckedUpdateWithoutCheckInsInput>
-  }
-
-  export type TrackedHabitUpdateWithoutCheckInsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTrackedHabitsNestedInput
-    goalEntry?: NextStepGoalEntryUpdateOneWithoutTrackedHabitsNestedInput
-    identity?: IdentityRecordUpdateOneWithoutTrackedHabitsNestedInput
-    cues?: HabitCueUpdateManyWithoutHabitNestedInput
-  }
-
-  export type TrackedHabitUncheckedUpdateWithoutCheckInsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
-    identityId?: NullableStringFieldUpdateOperationsInput | string | null
-    cues?: HabitCueUncheckedUpdateManyWithoutHabitNestedInput
+    goalId?: StringFieldUpdateOperationsInput | string
+    checklists?: ChecklistUncheckedUpdateManyWithoutHabitNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -44072,23 +42028,32 @@ export namespace Prisma {
   export type ChecklistCreateManyUserInput = {
     id?: string
     title?: string
-    templateType?: string
+    mode?: string
     content?: string
+    customEntries?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    mode?: string
+    habitId?: string | null
     templateId?: string | null
-    customEntries?: string
   }
 
-  export type TrackedHabitCreateManyUserInput = {
+  export type IdentityCreateManyUserInput = {
     id?: string
     name: string
     category?: string | null
+  }
+
+  export type HabitCreateManyUserInput = {
+    id?: string
+    name: string
+    category?: string | null
+    mode?: string
+    cue?: string
+    time?: string
+    location?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goalEntryId?: string | null
-    identityId?: string | null
+    goalId: string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -44193,71 +42158,100 @@ export namespace Prisma {
   export type ChecklistUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    templateType?: StringFieldUpdateOperationsInput | string
+    mode?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    customEntries?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    mode?: StringFieldUpdateOperationsInput | string
-    customEntries?: StringFieldUpdateOperationsInput | string
+    habit?: HabitUpdateOneWithoutChecklistsNestedInput
     template?: ChecklistTemplateUpdateOneWithoutChecklistsNestedInput
   }
 
   export type ChecklistUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    templateType?: StringFieldUpdateOperationsInput | string
+    mode?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    customEntries?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    mode?: StringFieldUpdateOperationsInput | string
+    habitId?: NullableStringFieldUpdateOperationsInput | string | null
     templateId?: NullableStringFieldUpdateOperationsInput | string | null
-    customEntries?: StringFieldUpdateOperationsInput | string
   }
 
   export type ChecklistUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    templateType?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     mode?: StringFieldUpdateOperationsInput | string
-    templateId?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: StringFieldUpdateOperationsInput | string
     customEntries?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitId?: NullableStringFieldUpdateOperationsInput | string | null
+    templateId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type TrackedHabitUpdateWithoutUserInput = {
+  export type IdentityUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
+    goals?: GoalUpdateManyWithoutIdentityNestedInput
+  }
+
+  export type IdentityUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    goals?: GoalUncheckedUpdateManyWithoutIdentityNestedInput
+  }
+
+  export type IdentityUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type HabitUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goalEntry?: NextStepGoalEntryUpdateOneWithoutTrackedHabitsNestedInput
-    identity?: IdentityRecordUpdateOneWithoutTrackedHabitsNestedInput
-    cues?: HabitCueUpdateManyWithoutHabitNestedInput
+    goal?: GoalUpdateOneRequiredWithoutHabitsNestedInput
     checkIns?: HabitCheckInUpdateManyWithoutHabitNestedInput
+    checklists?: ChecklistUpdateManyWithoutHabitNestedInput
   }
 
-  export type TrackedHabitUncheckedUpdateWithoutUserInput = {
+  export type HabitUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
-    identityId?: NullableStringFieldUpdateOperationsInput | string | null
-    cues?: HabitCueUncheckedUpdateManyWithoutHabitNestedInput
+    goalId?: StringFieldUpdateOperationsInput | string
     checkIns?: HabitCheckInUncheckedUpdateManyWithoutHabitNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutHabitNestedInput
   }
 
-  export type TrackedHabitUncheckedUpdateManyWithoutUserInput = {
+  export type HabitUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
-    identityId?: NullableStringFieldUpdateOperationsInput | string | null
+    goalId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProjectCreateManyAssessmentInput = {
@@ -44456,13 +42450,6 @@ export namespace Prisma {
     vision?: string
   }
 
-  export type IdentityRecordCreateManyAssessmentInput = {
-    id?: string
-    identity: string
-    habits?: IdentityRecordCreatehabitsInput | string[]
-    category?: string | null
-  }
-
   export type DomainVisionEntryUpdateWithoutAssessmentInput = {
     id?: StringFieldUpdateOperationsInput | string
     domain?: StringFieldUpdateOperationsInput | string
@@ -44481,276 +42468,60 @@ export namespace Prisma {
     vision?: StringFieldUpdateOperationsInput | string
   }
 
-  export type IdentityRecordUpdateWithoutAssessmentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    identity?: StringFieldUpdateOperationsInput | string
-    habits?: IdentityRecordUpdatehabitsInput | string[]
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    goals?: NextStepGoalEntryUpdateManyWithoutIdentityNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutIdentityNestedInput
-  }
-
-  export type IdentityRecordUncheckedUpdateWithoutAssessmentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    identity?: StringFieldUpdateOperationsInput | string
-    habits?: IdentityRecordUpdatehabitsInput | string[]
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    goals?: NextStepGoalEntryUncheckedUpdateManyWithoutIdentityNestedInput
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutIdentityNestedInput
-  }
-
-  export type IdentityRecordUncheckedUpdateManyWithoutAssessmentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    identity?: StringFieldUpdateOperationsInput | string
-    habits?: IdentityRecordUpdatehabitsInput | string[]
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type NextStepGoalEntryCreateManyIdentityInput = {
-    id?: string
-    goal: string
-    category?: string | null
-    currentSystem?: string
-    systemEval?: string
-    systemRating?: number
-    idealSystem?: string
-    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
-    nextStepId: string
-  }
-
-  export type TrackedHabitCreateManyIdentityInput = {
+  export type HabitCreateManyGoalInput = {
     id?: string
     name: string
     category?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    goalEntryId?: string | null
-  }
-
-  export type NextStepGoalEntryUpdateWithoutIdentityInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    goal?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    currentSystem?: StringFieldUpdateOperationsInput | string
-    systemEval?: StringFieldUpdateOperationsInput | string
-    systemRating?: IntFieldUpdateOperationsInput | number
-    idealSystem?: StringFieldUpdateOperationsInput | string
-    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
-    nextStep?: AssessmentNextStepUpdateOneRequiredWithoutGoalEntriesNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutGoalEntryNestedInput
-  }
-
-  export type NextStepGoalEntryUncheckedUpdateWithoutIdentityInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    goal?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    currentSystem?: StringFieldUpdateOperationsInput | string
-    systemEval?: StringFieldUpdateOperationsInput | string
-    systemRating?: IntFieldUpdateOperationsInput | number
-    idealSystem?: StringFieldUpdateOperationsInput | string
-    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
-    nextStepId?: StringFieldUpdateOperationsInput | string
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutGoalEntryNestedInput
-  }
-
-  export type NextStepGoalEntryUncheckedUpdateManyWithoutIdentityInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    goal?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    currentSystem?: StringFieldUpdateOperationsInput | string
-    systemEval?: StringFieldUpdateOperationsInput | string
-    systemRating?: IntFieldUpdateOperationsInput | number
-    idealSystem?: StringFieldUpdateOperationsInput | string
-    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
-    nextStepId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type TrackedHabitUpdateWithoutIdentityInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTrackedHabitsNestedInput
-    goalEntry?: NextStepGoalEntryUpdateOneWithoutTrackedHabitsNestedInput
-    cues?: HabitCueUpdateManyWithoutHabitNestedInput
-    checkIns?: HabitCheckInUpdateManyWithoutHabitNestedInput
-  }
-
-  export type TrackedHabitUncheckedUpdateWithoutIdentityInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
-    cues?: HabitCueUncheckedUpdateManyWithoutHabitNestedInput
-    checkIns?: HabitCheckInUncheckedUpdateManyWithoutHabitNestedInput
-  }
-
-  export type TrackedHabitUncheckedUpdateManyWithoutIdentityInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    goalEntryId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type NextStepGoalEntryCreateManyNextStepInput = {
-    id?: string
-    goal: string
-    category?: string | null
-    currentSystem?: string
-    systemEval?: string
-    systemRating?: number
-    idealSystem?: string
-    componentHabits?: NextStepGoalEntryCreatecomponentHabitsInput | string[]
-    identityId?: string | null
-  }
-
-  export type NextStepGoalEntryUpdateWithoutNextStepInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    goal?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    currentSystem?: StringFieldUpdateOperationsInput | string
-    systemEval?: StringFieldUpdateOperationsInput | string
-    systemRating?: IntFieldUpdateOperationsInput | number
-    idealSystem?: StringFieldUpdateOperationsInput | string
-    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
-    identity?: IdentityRecordUpdateOneWithoutGoalsNestedInput
-    trackedHabits?: TrackedHabitUpdateManyWithoutGoalEntryNestedInput
-  }
-
-  export type NextStepGoalEntryUncheckedUpdateWithoutNextStepInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    goal?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    currentSystem?: StringFieldUpdateOperationsInput | string
-    systemEval?: StringFieldUpdateOperationsInput | string
-    systemRating?: IntFieldUpdateOperationsInput | number
-    idealSystem?: StringFieldUpdateOperationsInput | string
-    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
-    identityId?: NullableStringFieldUpdateOperationsInput | string | null
-    trackedHabits?: TrackedHabitUncheckedUpdateManyWithoutGoalEntryNestedInput
-  }
-
-  export type NextStepGoalEntryUncheckedUpdateManyWithoutNextStepInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    goal?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    currentSystem?: StringFieldUpdateOperationsInput | string
-    systemEval?: StringFieldUpdateOperationsInput | string
-    systemRating?: IntFieldUpdateOperationsInput | number
-    idealSystem?: StringFieldUpdateOperationsInput | string
-    componentHabits?: NextStepGoalEntryUpdatecomponentHabitsInput | string[]
-    identityId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type TrackedHabitCreateManyGoalEntryInput = {
-    id?: string
-    name: string
-    category?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    identityId?: string | null
-  }
-
-  export type TrackedHabitUpdateWithoutGoalEntryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTrackedHabitsNestedInput
-    identity?: IdentityRecordUpdateOneWithoutTrackedHabitsNestedInput
-    cues?: HabitCueUpdateManyWithoutHabitNestedInput
-    checkIns?: HabitCheckInUpdateManyWithoutHabitNestedInput
-  }
-
-  export type TrackedHabitUncheckedUpdateWithoutGoalEntryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    identityId?: NullableStringFieldUpdateOperationsInput | string | null
-    cues?: HabitCueUncheckedUpdateManyWithoutHabitNestedInput
-    checkIns?: HabitCheckInUncheckedUpdateManyWithoutHabitNestedInput
-  }
-
-  export type TrackedHabitUncheckedUpdateManyWithoutGoalEntryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    identityId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type ChecklistCreateManyTemplateInput = {
-    id?: string
-    title?: string
-    templateType?: string
-    content?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
     mode?: string
-    customEntries?: string
-  }
-
-  export type ChecklistUpdateWithoutTemplateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    templateType?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    mode?: StringFieldUpdateOperationsInput | string
-    customEntries?: StringFieldUpdateOperationsInput | string
-    user?: UserUpdateOneRequiredWithoutChecklistsNestedInput
-  }
-
-  export type ChecklistUncheckedUpdateWithoutTemplateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    templateType?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    mode?: StringFieldUpdateOperationsInput | string
-    customEntries?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ChecklistUncheckedUpdateManyWithoutTemplateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    templateType?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    mode?: StringFieldUpdateOperationsInput | string
-    customEntries?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type HabitCueCreateManyHabitInput = {
-    id?: string
-    behavior: string
-    time: string
-    location: string
-    isBreaking?: boolean
-    reflection?: string
+    cue?: string
+    time?: string
+    location?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    userId: string
+  }
+
+  export type HabitUpdateWithoutGoalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutHabitsNestedInput
+    checkIns?: HabitCheckInUpdateManyWithoutHabitNestedInput
+    checklists?: ChecklistUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitUncheckedUpdateWithoutGoalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    checkIns?: HabitCheckInUncheckedUpdateManyWithoutHabitNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitUncheckedUpdateManyWithoutGoalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    mode?: StringFieldUpdateOperationsInput | string
+    cue?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type HabitCheckInCreateManyHabitInput = {
@@ -44762,37 +42533,16 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type HabitCueUpdateWithoutHabitInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    behavior?: StringFieldUpdateOperationsInput | string
-    time?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    isBreaking?: BoolFieldUpdateOperationsInput | boolean
-    reflection?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type HabitCueUncheckedUpdateWithoutHabitInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    behavior?: StringFieldUpdateOperationsInput | string
-    time?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    isBreaking?: BoolFieldUpdateOperationsInput | boolean
-    reflection?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type HabitCueUncheckedUpdateManyWithoutHabitInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    behavior?: StringFieldUpdateOperationsInput | string
-    time?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    isBreaking?: BoolFieldUpdateOperationsInput | boolean
-    reflection?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type ChecklistCreateManyHabitInput = {
+    id?: string
+    title?: string
+    mode?: string
+    content?: string
+    customEntries?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    templateId?: string | null
   }
 
   export type HabitCheckInUpdateWithoutHabitInput = {
@@ -44820,6 +42570,132 @@ export namespace Prisma {
     note?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistUpdateWithoutHabitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    mode?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    customEntries?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutChecklistsNestedInput
+    template?: ChecklistTemplateUpdateOneWithoutChecklistsNestedInput
+  }
+
+  export type ChecklistUncheckedUpdateWithoutHabitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    mode?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    customEntries?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    templateId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ChecklistUncheckedUpdateManyWithoutHabitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    mode?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    customEntries?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    templateId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GoalCreateManyIdentityInput = {
+    id?: string
+    text: string
+    category?: string | null
+    currentSystem?: string
+    systemEval?: string
+    systemRating?: number
+    idealSystem?: string
+  }
+
+  export type GoalUpdateWithoutIdentityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    habits?: HabitUpdateManyWithoutGoalNestedInput
+  }
+
+  export type GoalUncheckedUpdateWithoutIdentityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+    habits?: HabitUncheckedUpdateManyWithoutGoalNestedInput
+  }
+
+  export type GoalUncheckedUpdateManyWithoutIdentityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    currentSystem?: StringFieldUpdateOperationsInput | string
+    systemEval?: StringFieldUpdateOperationsInput | string
+    systemRating?: IntFieldUpdateOperationsInput | number
+    idealSystem?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChecklistCreateManyTemplateInput = {
+    id?: string
+    title?: string
+    mode?: string
+    content?: string
+    customEntries?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    habitId?: string | null
+  }
+
+  export type ChecklistUpdateWithoutTemplateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    mode?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    customEntries?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutChecklistsNestedInput
+    habit?: HabitUpdateOneWithoutChecklistsNestedInput
+  }
+
+  export type ChecklistUncheckedUpdateWithoutTemplateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    mode?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    customEntries?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    habitId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ChecklistUncheckedUpdateManyWithoutTemplateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    mode?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    customEntries?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    habitId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 
