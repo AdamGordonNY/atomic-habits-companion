@@ -11,8 +11,19 @@
 
 import { PrismaClient } from "@/app/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 
-function createPrismaClient() {
+const DEFAULT_POOL_MAX = process.env.NODE_ENV === "production" ? 5 : 2;
+
+function parsePoolMax(): number {
+  const raw = process.env.PG_POOL_MAX;
+  if (!raw) return DEFAULT_POOL_MAX;
+  const parsed = Number(raw);
+  if (!Number.isFinite(parsed) || parsed < 1) return DEFAULT_POOL_MAX;
+  return Math.floor(parsed);
+}
+
+function createPgPool() {
   // Use the session-mode / direct URL for the pg adapter.
   // @prisma/adapter-pg manages its own connection pool; passing the
   // PgBouncer transaction-mode URL (DATABASE_URL with ?pgbouncer=true)
@@ -43,9 +54,18 @@ function createPrismaClient() {
     );
   }
 
-  // Pass the connection string directly (not wrapped in { connectionString })
-  // so the pg driver doesn't fall back to PGHOST/PGDATABASE env vars.
-  const adapter = new PrismaPg(connectionString);
+  // Use a bounded shared pool to avoid exhausting DB connection slots when
+  // many server actions run concurrently in dev/prod.
+  return new Pool({
+    connectionString,
+    max: parsePoolMax(),
+    idleTimeoutMillis: 30_000,
+    connectionTimeoutMillis: 10_000,
+  });
+}
+
+function createPrismaClient(pool: Pool) {
+  const adapter = new PrismaPg(pool);
   return new PrismaClient({
     adapter,
     log:
@@ -56,10 +76,15 @@ function createPrismaClient() {
 }
 
 const globalForPrisma = globalThis as unknown as {
+  pgPool: Pool | undefined;
   prisma: ReturnType<typeof createPrismaClient> | undefined;
 };
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+const pool = globalForPrisma.pgPool ?? createPgPool();
+export const prisma = globalForPrisma.prisma ?? createPrismaClient(pool);
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.pgPool = pool;
+  globalForPrisma.prisma = prisma;
+}
 
