@@ -26,7 +26,7 @@ export default function HabitCard({
     <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       {/* Card header */}
       <div className="flex items-center gap-3 px-4 py-3">
-        <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-slate-950 text-[11px] font-bold text-white">
+        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-950 text-[11px] font-bold text-white">
           {index + 1}
         </span>
         <input

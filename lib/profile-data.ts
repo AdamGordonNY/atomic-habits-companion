@@ -1,8 +1,10 @@
 import "server-only";
 
+import { auth } from "@clerk/nextjs/server";
 import { actionGetTrackedHabits, type TrackedHabitData } from "@/lib/actions/habit-actions";
 import { fetchNextStep, type NextStepData } from "@/lib/actions/next-step-actions";
 import { fetchPartFour } from "@/lib/actions/part-four-actions";
+import { prisma } from "@/lib/prisma";
 import type { HabitAssessmentPartFour } from "@/types/habit";
 
 export interface ProfileSnapshot {
@@ -10,6 +12,7 @@ export interface ProfileSnapshot {
   partFour: HabitAssessmentPartFour | null;
   nextStep: NextStepData | null;
   trackedHabits: TrackedHabitData[];
+  identities: HabitAssessmentPartFour["identities"];
 }
 
 export interface CommitmentsData {
@@ -72,17 +75,51 @@ export interface HabitsData {
 
 export async function fetchProfileSnapshot(): Promise<ProfileSnapshot> {
   try {
-    const [partFour, nextStep, trackedHabits] = await Promise.all([
+    const { userId } = await auth();
+    if (!userId) {
+      return {
+        isAuthed: false,
+        partFour: null,
+        nextStep: null,
+        trackedHabits: [],
+        identities: [],
+      };
+    }
+
+    const [partFour, nextStep, trackedHabits, identityRows] = await Promise.all([
       fetchPartFour(),
       fetchNextStep(),
       actionGetTrackedHabits(),
+      prisma.identity.findMany({
+        where: { userId },
+        orderBy: { name: "asc" },
+        include: {
+          goals: {
+            orderBy: { text: "asc" },
+            include: {
+              habits: {
+                orderBy: { name: "asc" },
+                select: { name: true },
+              },
+            },
+          },
+        },
+      }),
     ]);
+
+    const identities = identityRows.map((identity) => ({
+      id: identity.id,
+      identity: identity.name,
+      category: identity.category,
+      habits: [...new Set(identity.goals.flatMap((goal) => goal.habits.map((habit) => habit.name)))],
+    }));
 
     return {
       isAuthed: true,
       partFour,
       nextStep,
       trackedHabits,
+      identities,
     };
   } catch {
     return {
@@ -90,6 +127,7 @@ export async function fetchProfileSnapshot(): Promise<ProfileSnapshot> {
       partFour: null,
       nextStep: null,
       trackedHabits: [],
+      identities: [],
     };
   }
 }
@@ -138,12 +176,22 @@ export function getVisionData(snapshot: ProfileSnapshot): VisionData | null {
 }
 
 export function getIdentitiesData(snapshot: ProfileSnapshot): IdentitiesData | null {
-  if (!snapshot.partFour) return null;
+  if (snapshot.partFour) {
+    return {
+      id: snapshot.partFour.id,
+      updatedAt: snapshot.partFour.updatedAt,
+      completedAt: snapshot.partFour.completedAt,
+      identities: snapshot.partFour.identities,
+    };
+  }
+
+  if (snapshot.identities.length === 0) return null;
+
   return {
-    id: snapshot.partFour.id,
-    updatedAt: snapshot.partFour.updatedAt,
-    completedAt: snapshot.partFour.completedAt,
-    identities: snapshot.partFour.identities,
+    id: "",
+    updatedAt: new Date().toISOString(),
+    completedAt: null,
+    identities: snapshot.identities,
   };
 }
 

@@ -12,7 +12,7 @@ export function LawShell({ children }: { children: ReactNode }) {
     <div className="flex min-h-screen flex-col bg-slate-50">
       <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 px-5 py-3 backdrop-blur-xl">
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-3">
-          <span className="flex-shrink-0 text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
+          <span className="shrink-0 text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
             Atomic Habits
           </span>
           <nav className="flex flex-wrap items-center gap-1.5 pb-0.5">

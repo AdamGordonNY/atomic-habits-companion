@@ -82,7 +82,7 @@ function SectionCard({
   const meta = sectionMeta(updatedAt, completedAt);
 
   return (
-    <section className="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-sm">
+    <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
       <div className="bg-slate-950 px-6 py-5">
         <div className="flex items-start justify-between gap-4">
           <div>
